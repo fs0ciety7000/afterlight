@@ -1,5 +1,7 @@
 # DEPLOY.md
 
+> **Statut : pas de déploiement.** AFTERLIGHT est un prototype privé ; l'export web (`pnpm build:web`, dossier `build/web/`) se teste en local avec `pnpm serve`. Remplir ce fichier le jour où un déploiement privé (par exemple protégé par Cloudflare Access) est décidé.
+
 > Plan de déploiement du projet. Aucune valeur secrète ici : noms de variables seulement. Voir le skill `deploy-coolify-cloudflare`.
 
 ## Cible
