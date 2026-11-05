@@ -21,6 +21,9 @@ Fans de *Frieren* et joueurs d'idle RPG (type AFK Journey). Session courte sur m
 - Œuvres protégées : aucune image, musique ou réplique copiée de l'anime ou du manga. Les images fournies servent seulement de référence d'ambiance ; tout l'art du jeu est original (placeholders d'abord).
 
 ## Contraintes
+- Interface en **français** uniquement (textes centralisés pour permettre une traduction plus tard).
+- Personnage jouable initial : **Fern** (canon).
+- **Prototype privé** : pas de publication publique ; aucune échéance, avancement jalon par jalon.
 - Web, desktop d'abord, responsive tablette et mobile (interfaces adaptées, pas réduites).
 - 100 % client (site statique) ; pas de backend.
 - Fan-game non commercial : contenu canon (personnages, lieux, sorts nommés dans l'œuvre) séparé du contenu original, et marqué comme tel dans les données.
