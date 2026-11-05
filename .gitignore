@@ -29,3 +29,7 @@ target/
 
 # Claude Code : réglages locaux personnels
 .claude/settings.local.json
+
+# Tests
+playwright-report/
+test-results/
