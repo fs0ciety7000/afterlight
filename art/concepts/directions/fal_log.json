@@ -1,0 +1,50 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "A_world",
+  "seconds": 18.9,
+  "arguments": {
+   "aspect_ratio": "16:9"
+  },
+  "prompt": "Stylized 3D game screenshot from a modern premium fantasy RPG, three-quarter top-down camera at about 50 degrees, anime cel-shaded characters with clean thin ink outlines and flat two-tone shading, painterly hand-painted environment textures, soft volumetric light, readable silhouettes, high detail, 16:9. a young mage woman with long straight violet hair and blunt bangs, black long coat over a white high-collared dress, holding a wooden staff walks along a dirt path through a sunlit meadow village with half-timbered cottages, orchards, wildflowers, a stone bridge over a clear stream and a distant ruined tower, warm golden afternoon light, long soft shadows, drifting petals, Ghibli-like serene atmosphere. Clean elegant fantasy HUD overlay with very little on screen: small round character portrait with level badge top-left, small round minimap with thin gilded frame top-right, one short quest line under it, a centered row of five slim icon buttons at the bottom with thin gold frames. Muted ivory and gold UI, generous spacing, no clutter, no large text.",
+  "files": [
+   "art/concepts/directions/A_world.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "B_combat",
+  "seconds": 18.9,
+  "arguments": {
+   "aspect_ratio": "16:9"
+  },
+  "prompt": "Stylized 3D game screenshot from a modern premium fantasy RPG, three-quarter top-down camera at about 50 degrees, anime cel-shaded characters with clean thin ink outlines and flat two-tone shading, painterly hand-painted environment textures, soft volumetric light, readable silhouettes, high detail, 16:9. Night battle in a ruined moonlit cathedral courtyard with broken arches and vines, deep slate-blue palette lit mainly by magic. a young mage woman with long straight violet hair and blunt bangs, black long coat over a white high-collared dress, holding a wooden staff stands on the left casting a sharp pearl-white magic beam from a large glowing rune circle at three monsters on the right: a dark wolf-like beast, a small stone golem, and a larger armored spectral knight as the elite. Controlled glow, no neon. Clean elegant combat HUD: thin health and mana bars under the mage, four round spell buttons centered at the bottom with a radial cooldown sweep on two of them and a larger ultimate button, slim enemy health bars above each enemy, white floating damage numbers with one gold critical number, small speed x2 and pause buttons top-right, a thin boss health bar at the top. Generous spacing, no clutter. Slate-blue panels with thin pearl-white lines.",
+  "files": [
+   "art/concepts/directions/B_combat.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "B_world",
+  "seconds": 19.3,
+  "arguments": {
+   "aspect_ratio": "16:9"
+  },
+  "prompt": "Stylized 3D game screenshot from a modern premium fantasy RPG, three-quarter top-down camera at about 50 degrees, anime cel-shaded characters with clean thin ink outlines and flat two-tone shading, painterly hand-painted environment textures, soft volumetric light, readable silhouettes, high detail, 16:9. a young mage woman with long straight violet hair and blunt bangs, black long coat over a white high-collared dress, holding a wooden staff walks with a small glowing lantern through a misty lakeside village at blue hour twilight, slate-blue and deep teal palette, warm windows glowing, pale floating mana motes, stone bridge, dark pines, a distant ruined tower with a faint magic circle in the sky. Quiet, melancholic, magical atmosphere. Clean elegant fantasy HUD overlay with very little on screen: small round character portrait with level badge top-left, small round minimap with thin frame top-right, one short quest line under it, a centered row of five slim icon buttons at the bottom with thin frames. Generous spacing, no clutter, no large text. Slate-blue panels with thin pearl-white lines and a soft pale-blue glow, no neon.",
+  "files": [
+   "art/concepts/directions/B_world.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "A_combat",
+  "seconds": 21.3,
+  "arguments": {
+   "aspect_ratio": "16:9"
+  },
+  "prompt": "Stylized 3D game screenshot from a modern premium fantasy RPG, three-quarter top-down camera at about 50 degrees, anime cel-shaded characters with clean thin ink outlines and flat two-tone shading, painterly hand-painted environment textures, soft volumetric light, readable silhouettes, high detail, 16:9. Daylight battle in an overgrown forest clearing in front of moss-covered stone ruins, warm golden sunbeams through leaves. a young mage woman with long straight violet hair and blunt bangs, black long coat over a white high-collared dress, holding a wooden staff stands on the left casting a sharp white-blue magic beam from a glowing circular rune circle at three monsters on the right: a dark wolf-like beast, a small stone golem, and a larger armored spectral knight as the elite. Controlled sparkles, soft light. Clean elegant combat HUD: thin health and mana bars under the mage, four round spell buttons centered at the bottom with a radial cooldown sweep on two of them and a larger ultimate button, slim enemy health bars above each enemy, white floating damage numbers with one gold critical number, small speed x2 and pause buttons top-right, a thin boss health bar at the top. Generous spacing, no clutter. Muted ivory and gold UI.",
+  "files": [
+   "art/concepts/directions/A_combat.jpg"
+  ]
+ }
+]
