@@ -5,41 +5,43 @@ Règles communes à tous les agents de code (Claude Code, Codex, Cursor...). For
 ## Contexte
 
 - **Nom** : AFTERLIGHT
-- **Type** : jeu web (RPG idle / aventure / donjon), prototype privé
-- **Résumé en une phrase** : RPG navigateur dans l'univers de *Frieren* (fan-game non officiel) : atlas illustré, combats 2D temps réel hybrides, butin et builds, progression hors ligne.
+- **Type** : jeu 3D Godot exporté pour le web (RPG idle / aventure / donjon), prototype privé
+- **Résumé en une phrase** : RPG 3D en vue 3/4 dans l'univers de *Frieren* (fan-game non officiel) : monde explorable, personnages cel-shading, combats temps réel hybrides, butin et builds, progression hors ligne.
 
 ## Commandes
 
 ```bash
-install:   pnpm install
-dev:       pnpm dev
-typecheck: pnpm typecheck
-test:      pnpm test          # Vitest (moteur, données, sauvegarde)
-e2e:       pnpm e2e           # Playwright (build + preview, desktop et mobile)
-lint:      pnpm lint          # ESLint, y compris les garde-fous d'architecture
+install:   pnpm install          # Playwright seulement ; Godot et Blender viennent de /opt/tools
+import:    pnpm godot:import     # obligatoire sur un clone neuf (.godot/ n'est pas commité)
+test:      pnpm test             # tests GDScript sans interface (tests/unit)
+lint:      pnpm lint             # gdlint + gdformat --check
 format:    pnpm format
-build:     pnpm build         # dist/ statique
+build:     pnpm build:web        # export web dans build/web/
+serve:     pnpm serve            # sert build/web sur http://localhost:8060
+e2e:       pnpm e2e              # Playwright sur l'export web (desktop et mobile)
 ```
 
 ## Structure du dépôt
 
 ```
 .
-├── docs/                 # brief, GDD, architecture, équilibrage, pipeline de contenu, roadmap
-├── public/assets/        # art original (carte, sprites, icônes) ; remplaçable sans toucher aux données
-├── src/
-│   ├── app/              # A. Application : shell React, routes, écrans
-│   ├── ui/               # composants du design system (tokens dans ui/tokens)
-│   ├── state/            # B. État du jeu : store Zustand (données sérialisables, jamais d'objet Phaser)
-│   ├── engine/           # C. Moteur TS pur : combat, IA, formules (engine/balance), butin, hors ligne, RNG à graine
-│   ├── renderer/         # D. Rendu Phaser 4 : écoute les événements du moteur, ne décide rien
-│   ├── persistence/      # E. Sauvegarde IndexedDB : schéma versionné, migrations, export / import
-│   └── data/             # contenu validé par Zod : canon/ et original/ séparés, ID stables
-├── tests/e2e/            # Playwright
-└── .claude/              # skills et agents du projet
+├── project.godot, export_presets.cfg
+├── game/
+│   ├── app/          # A. Application : scène principale, routeur d'écrans
+│   ├── ui/           # interface (Control, thème)
+│   ├── state/        # B. État du jeu : autoload qui détient l'état du joueur (sérialisable)
+│   ├── engine/       # C. Moteur pur : combat, IA, formules (engine/balance), butin, hors ligne, RNG à graine
+│   ├── world/        # D. Rendu : monde 3D, caméra, personnages
+│   ├── combat/       # D. Rendu du combat : écoute les événements du moteur, ne décide rien
+│   ├── persistence/  # E. Sauvegarde user:// (IndexedDB sur le web), versions, migrations, export / import
+│   └── data/         # contenu JSON validé au chargement : canon/ et original/, ID stables
+├── assets/           # GLB, textures, shaders, polices, audio (originaux, prêts pour le jeu)
+├── art/              # sources : concept art, .blend, journaux de génération
+├── tools/            # lanceur de tests, scripts Blender et fal, serveur statique
+└── tests/            # unit/ (GDScript), e2e/ (Playwright)
 ```
 
-Dépendances autorisées entre couches : `app → state, engine, renderer, persistence, data, ui` ; `state → engine, data` ; `renderer → engine (types et événements)` ; `persistence → state (types), data` ; `engine → data (types)`. Le moteur n'importe rien d'autre.
+Dépendances autorisées : `app → tout` ; `ui → state` ; `state → engine, data` ; `world, combat → engine (événements), state (lecture)` ; `persistence → state, data` ; `engine → data` uniquement.
 
 ## Règles de travail
 

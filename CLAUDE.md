@@ -6,21 +6,22 @@
 
 ## Projet courant
 
-- **Type** : `gamedev-web` (jeu navigateur : React + Phaser 4 + moteur TS pur). Voir `~/.claude/skills-registry.md`.
-- **Stack** : Vite 8, React 19, TypeScript 6 strict, React Router, Zustand 5 + Immer, Zod 4, Phaser 4, IndexedDB (`idb`), Vitest, Playwright. pnpm.
-- **Commandes** : voir `AGENTS.md` (`pnpm install`, `pnpm dev`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm e2e`, `pnpm build`).
-- **Déploiement** : aucun pour l'instant (prototype privé, site statique `dist/`).
+- **Type** : `gamedev-godot` (jeu 3D exporté pour le web). Voir `~/.claude/skills-registry.md`.
+- **Stack** : Godot 4.7.2 (GDScript typé, renderer Compatibility), Blender 5.2 (modélisation, squelette, animation, export GLB), fal.ai (concept art, image → 3D), Playwright (E2E sur l'export web), gdtoolkit (lint).
+- **Commandes** : voir `AGENTS.md` (`pnpm test`, `pnpm lint`, `pnpm build:web`, `pnpm e2e`).
+- **Déploiement** : aucun pour l'instant (prototype privé, export statique `build/web/`).
 
 ## Documents du projet
 
 - `docs/brief.md` : objectif, périmètre, contraintes.
 - `docs/GDD.md`, `docs/ARCHITECTURE.md`, `docs/GAME_BALANCE.md`, `docs/CONTENT_PIPELINE.md`, `docs/ROADMAP.md` : conception et jalons.
-- `DESIGN.md` : direction visuelle. À respecter pour toute interface.
+- `DESIGN.md` : direction visuelle. À respecter pour toute interface et tout asset.
 
 ## Spécifique à ce projet
 
-- **Fan-game non officiel, privé** (univers *Frieren*). Aucune image, musique ou réplique de l'œuvre dans le dépôt : tout l'art est original. Le contenu canon (`src/data/canon/`) est séparé du contenu original (`src/data/original/`) et porte `origin: 'canon' | 'original'`.
-- **Textes du jeu en français**, centralisés (pas de chaînes en dur dans les composants) ; code et commentaires en anglais.
-- **Phaser 4** (pas 3) : utiliser les skills officiels `phaserjs/phaser` dans `.claude/skills/`, pas la doc v3.
-- **Couches** : `src/engine` est pur et déterministe (règles ESLint qui l'imposent) ; tout calcul de jeu passe par l'agent `game-engine-dev`, toute règle nouvelle par `game-designer` d'abord.
-- Pas de variables d'environnement ni de secrets pour l'instant.
+- **Fan-game non officiel, privé** (univers *Frieren*). Aucune image, musique ou réplique de l'œuvre dans le dépôt ; les images de référence de l'utilisateur ne servent jamais d'entrée à la génération. Contenu canon (`game/data/canon/`) séparé de l'original (`game/data/original/`), champ `origin: "canon" | "original"`.
+- **Textes du jeu en français**, centralisés ; code et commentaires en anglais.
+- **Couches** : `game/engine` est de la logique pure et déterministe (`RefCounted`, pas de nœud, pas de `randf()`, pas de `Time`) ; `tests/unit/test_architecture.gd` l'impose. Tout calcul de jeu passe par l'agent `game-engine-dev`, toute règle nouvelle par `game-designer` d'abord.
+- **Outils hors dépôt** : Godot et Blender sont installés dans `/opt/tools` par le script de configuration de l'environnement cloud ; `godot` et `blender` sont dans le `PATH`.
+- **Génération** : `FAL_KEY` est une variable de l'environnement cloud ; ne jamais l'afficher. Chaque génération est journalisée (prompt, modèle, graine) dans `art/` pour être reproductible.
+- Web : renderer Compatibility uniquement (WebGL 2) ; export sans threads (pas de COOP/COEP requis).

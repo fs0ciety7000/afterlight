@@ -2,14 +2,13 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: 'tests/e2e',
-  fullyParallel: true,
-  retries: process.env.CI ? 1 : 0,
-  use: { baseURL: 'http://localhost:4173', trace: 'off' },
+  timeout: 60_000,
+  use: { baseURL: 'http://localhost:8060', trace: 'off' },
   webServer: {
-    command: 'pnpm build && pnpm preview --port 4173 --strictPort',
-    port: 4173,
+    command: 'pnpm build:web && pnpm serve',
+    port: 8060,
     reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    timeout: 180_000,
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },

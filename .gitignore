@@ -21,6 +21,7 @@ build/
 .wrangler/
 target/
 .godot/
+*.translation
 
 # Éditeurs et système
 .DS_Store

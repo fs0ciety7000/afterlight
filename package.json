@@ -1,51 +1,19 @@
 {
   "name": "afterlight",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "description": "AFTERLIGHT : RPG idle / aventure, fan-game non officiel dans l'univers de Frieren.",
+  "description": "Tâches du projet Godot AFTERLIGHT et tests E2E Playwright sur l'export web.",
   "packageManager": "pnpm@10.28.0",
-  "engines": {
-    "node": ">=22.12"
-  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc -b --noEmit",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "godot:import": "godot --headless --path . --import",
+    "test": "pnpm godot:import && godot --headless --path . --script res://tools/test_runner.gd",
+    "lint": "gdlint game tools tests/unit && gdformat --check game tools tests/unit",
+    "format": "gdformat game tools tests/unit",
+    "build:web": "mkdir -p build/web && godot --headless --path . --export-release Web build/web/index.html",
+    "serve": "node tools/serve.mjs build/web 8060",
     "e2e": "playwright test --trace off"
   },
-  "dependencies": {
-    "idb": "8.0.4",
-    "immer": "11.2.9",
-    "phaser": "4.2.1",
-    "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "react-router": "8.5.1",
-    "zod": "4.6.7",
-    "zustand": "5.0.16"
-  },
   "devDependencies": {
-    "@eslint/js": "10.0.1",
     "@playwright/test": "1.63.0",
-    "@testing-library/react": "16.3.3",
-    "@types/node": "22.20.5",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0",
-    "@vitejs/plugin-react": "6.2.1",
-    "eslint": "10.14.0",
-    "eslint-plugin-react-hooks": "7.1.1",
-    "fake-indexeddb": "6.2.7",
-    "globals": "17.14.0",
-    "jsdom": "31.0.0",
-    "prettier": "3.9.10",
-    "typescript": "6.0.3",
-    "typescript-eslint": "8.72.1",
-    "vite": "8.3.6",
-    "vitest": "5.1.0"
+    "@types/node": "22.20.5"
   }
 }
