@@ -39,6 +39,34 @@ func _ready() -> void:
 		)
 		_test_callback = JavaScriptBridge.create_callback(_on_test_command)
 		JavaScriptBridge.get_interface("window").__afterlightSetTest(_test_callback)
+		test_handlers["reveal"] = _reveal
+
+
+## Test channel: scrolls the nearest ScrollContainer so the control shows, as
+## a player would before tapping it.
+func _reveal(id: String) -> void:
+	var ref: Variant = _controls.get(id)
+	if not is_instance_valid(ref):
+		return
+	var c: Control = ref
+	var node := c.get_parent()
+	while node != null:
+		if node is ScrollContainer:
+			(node as ScrollContainer).ensure_control_visible(c)
+		node = node.get_parent()
+
+
+## True when the control's centre lies outside a clipping ancestor (e.g. a
+## ScrollContainer): drawn "visible" but not on screen where it says.
+static func is_clipped(c: Control) -> bool:
+	var centre := c.get_global_rect().get_center()
+	var node := c.get_parent()
+	while node != null:
+		if node is Control and (node as Control).clip_contents:
+			if not (node as Control).get_global_rect().grow(1.0).has_point(centre):
+				return true
+		node = node.get_parent()
+	return false
 
 
 ## `name` or `name:arg`: a handler registered under `name` gets `arg` (a
@@ -90,6 +118,7 @@ func snapshot() -> Dictionary:
 			"w": rect.size.x,
 			"h": rect.size.y,
 			"visible": c.is_visible_in_tree(),
+			"clipped": is_clipped(c),
 		}
 		if c is BaseButton:
 			entry["disabled"] = (c as BaseButton).disabled

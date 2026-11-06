@@ -3,7 +3,7 @@ import { expect, type Page } from '@playwright/test';
 export type Probe = {
   ready: boolean;
   screen: string;
-  controls: Record<string, { x: number; y: number; w: number; h: number; visible: boolean; disabled?: boolean; text?: string }>;
+  controls: Record<string, { x: number; y: number; w: number; h: number; visible: boolean; clipped?: boolean; disabled?: boolean; text?: string }>;
   state: Record<string, unknown>;
   save: { last_saved_at: number; error: string };
   messages: string[];
@@ -34,6 +34,17 @@ export async function click(page: Page, id: string): Promise<void> {
       return Boolean(c && c.visible && !c.disabled);
     }, { timeout: 15_000, message: `control ${id} visible and enabled` })
     .toBe(true);
+  // A control scrolled out of its list is drawn but not where it says: scroll
+  // it into view first, as a player would.
+  if ((await probe(page))!.controls[id].clipped) {
+    await page.evaluate(
+      (n) => (window as unknown as { __afterlightTest?: (n: string) => void }).__afterlightTest?.(n),
+      `reveal:${id}`,
+    );
+    await expect
+      .poll(async () => (await probe(page))!.controls[id]?.clipped, { timeout: 5_000, message: `control ${id} scrolled into view` })
+      .toBe(false);
+  }
   // Let the fade finish so the control has settled.
   await page.waitForTimeout(350);
   const c = (await probe(page))!.controls[id];
