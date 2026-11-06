@@ -6,7 +6,7 @@ village props atlas through tools/blender/kit_mesh.py (stone, wood, terracotta, 
 Metrics (docs/content/dungeon.md 2.4): walls on a 4 m grid, 0.8 m thick, 4.5 m high; doors 4 m.
 Base at y = 0, front = +Z (glTF), one material per piece. Exported to assets/environment/ruins/.
   wall, wall_broken, pillar, arch (4 m opening frame), stairs (4 x 6 m, 3 m rise), brazier,
-  torch_post, fountain, campfire, grille, bell, dial (24 m floor dial stopped at three o'clock),
+  torch_post, fountain, campfire, grille, bell,
   tower_ruin (6 x 6 m collapsed watchtower), rubble, lectern.
 """
 import math
@@ -130,25 +130,7 @@ def build(out: str) -> None:
     box(bm, uv, (0, 0, 1.8), (2.6, 0.3, 0.3), WOOD)
     finish("bell", bm, out, SUB)
 
-    bm, uv = new()  # floor dial, 24 m, laid on the paving: rim and inner ring of stone segments,
-    # twelve iron hour marks, hands stopped at three o'clock, a centre boss (the floor shows through)
-    for ring_r, w, n in ((11.6, 0.8, 40), (8.6, 0.35, 32)):
-        for k in range(n):
-            a = k * math.tau / n
-            chord = 2 * ring_r * math.sin(math.pi / n) + 0.04
-            box(bm, uv, (math.cos(a) * ring_r, math.sin(a) * ring_r, 0.0 + 0.004 * (k % 2)),
-                (w, chord, 0.06), STONE, yaw=a)
-    for k in range(12):
-        a = math.pi / 2 - k * math.tau / 12
-        r = 10.1
-        big = k % 3 == 0
-        box(bm, uv, (math.cos(a) * r, math.sin(a) * r, 0.0), (1.8 if big else 1.1, 0.5 if big else 0.3, 0.05),
-            IRON, yaw=a)
-    # glTF +Z (south) is Blender -Y, so north (-Z) is +Y: minute hand to +Y, hour hand to +X (east)
-    box(bm, uv, (0, 3.9, 0.0), (0.45, 7.8, 0.07), IRON, top_scale=0.6)
-    box(bm, uv, (2.7, 0, 0.0), (5.4, 0.7, 0.08), IRON, top_scale=0.6)
-    prism(bm, uv, (0, 0, 0.0), 0.7, 0.14, 8, STONE)
-    finish("dial", bm, out, SUB)
+    # floor dial: tools/blender/build_cloister_decor.py (painted dial texture, bronze hands)
 
     bm, uv = new()  # collapsed watchtower, 6 x 6 m, walls 0.9 m, door on the front (south)
     h = [[11.5, 9.0, 6.0], [10.0, 7.5, 4.5], [8.0, 5.5, 3.0], [11.0, 10.0, 7.0]]  # back, left, front, right

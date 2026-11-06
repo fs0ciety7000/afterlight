@@ -1,0 +1,186 @@
+[
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "decor_sheet_draft",
+  "seconds": 2.7,
+  "arguments": {
+   "image_size": "landscape_16_9",
+   "seed": 501,
+   "num_images": 1
+  },
+  "prompt": "Isolated asset concept sheet on a plain flat light grey studio background (the whole background is one uniform grey, no scene, no landscape, no sky, no UI). Concept sheet of six separate stylized 3D game set pieces for an abandoned moonlit mountain cloister in an original fantasy RPG, hand-painted soft painterly style (modern anime-inspired 3D RPG, clean chunky readable shapes, slightly stylized proportions). Palette: cool blue-grey and lavender-grey weathered stone, pale moss, aged dark bronze with soft green patina, dark weathered wood. Arrange them in a clean grid of three columns and two rows with wide empty space between all objects, each one complete and fully visible, never overlapping, never cropped:\nrow 1: (1) a tall slender square stone clock tower, ruined and partly collapsed at the top, open belfry arches under the broken roof, a large round clock face on its front with simple carved hour marks and two dark bronze hands stopped at three o'clock; (2) a large broken stone archway, round romanesque arch on two thick piers, the right part of the arch collapsed with a few fallen wedge stones at its foot; (3) a fallen stone column lying on its side, broken in two drums, with its square base and capital beside it.\nrow 2: (4) a weathered stone statue of a hooded robed watcher standing on a square plinth, face hidden in the shadow of the hood, both hands holding a small hourglass against its chest; (5) a stone altar-lectern on a stepped base, an open stone book on its sloped top, a carved round clock-dial motif on its front, a few melted candle stubs; (6) a large aged bronze bell with green patina hanging from a thick dark wooden yoke beam with iron straps.\nEach object seen from a three-quarter front view, camera slightly above (about 25 degrees). Plain flat light grey background, no ground, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels, no numbers.",
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/decor_sheet_draft.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "dial_tex_draft",
+  "seconds": 2.4,
+  "arguments": {
+   "image_size": "square_hd",
+   "seed": 502,
+   "num_images": 1
+  },
+  "prompt": "Hand-painted stylized game texture in a soft painterly style like a modern anime-inspired 3D RPG. Strictly orthographic top-down view, flat even lighting with no directional shadows, no perspective, no horizon. Subject: a huge round stone clock dial carved into the floor of an abandoned cloister, seen from directly above, the circle filling the square frame edge to edge, centred. Concentric carved stone rings in cool blue-grey and lavender-grey stone with fine hairline cracks and a little pale moss in the joints; an outer ring of sixty small engraved minute ticks; a wide ring with twelve large engraved roman-numeral hour marks (XII exactly at the top, III at the right, VI at the bottom, IX at the left), the grooves inlaid with faint pale silver; between the rings a thin engraved band of simple geometric ornament; a smaller inner ring of radial flagstones; a plain round stone boss at the centre. No clock hands. Corners outside the circle: plain dark slate flagstones. No text other than the numerals, no border, no frame, no objects on it.",
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/dial_tex_draft.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "decor_sheet",
+  "seconds": 30.5,
+  "arguments": {
+   "aspect_ratio": "3:2",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 511
+  },
+  "prompt": "Isolated asset concept sheet on a plain flat light grey studio background (the whole background is one uniform grey, no scene, no landscape, no sky, no UI). Concept sheet of six separate stylized 3D game set pieces for an abandoned moonlit mountain cloister in an original fantasy RPG, hand-painted soft painterly style (modern anime-inspired 3D RPG, clean chunky readable shapes, slightly stylized proportions). Palette: cool blue-grey and lavender-grey weathered stone, pale moss, aged dark bronze with soft green patina, dark weathered wood. Arrange them in a clean grid of three columns and two rows with wide empty space between all objects, each one complete and fully visible, never overlapping, never cropped:\nrow 1: (1) a tall slender square stone clock tower, ruined and partly collapsed at the top, open belfry arches under the broken roof, a large round clock face on its front with simple carved hour marks and two dark bronze hands stopped at three o'clock; (2) a large broken stone archway, round romanesque arch on two thick piers, the right part of the arch collapsed with a few fallen wedge stones at its foot; (3) a fallen stone column lying on its side, broken in two drums, with its square base and capital beside it.\nrow 2: (4) a weathered stone statue of a hooded robed watcher standing on a square plinth, face hidden in the shadow of the hood, both hands holding a small hourglass against its chest; (5) a stone altar-lectern on a stepped base, an open stone book on its sloped top, a carved round clock-dial motif on its front, a few melted candle stubs; (6) a large aged bronze bell with green patina hanging from a thick dark wooden yoke beam with iron straps.\nExactly six objects, nothing else on the sheet, no religious symbols, no crosses. Each object seen from a three-quarter front view, camera slightly above (about 25 degrees). Plain flat light grey background, no ground, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels, no numbers.",
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/decor_sheet.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "dial_tex",
+  "seconds": 26.7,
+  "arguments": {
+   "aspect_ratio": "1:1",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 512
+  },
+  "prompt": "Hand-painted stylized game texture in a soft painterly style like a modern anime-inspired 3D RPG. Strictly orthographic top-down view, flat even diffuse lighting with no directional shadows and no cast shadows at all (the carving reads by soft painted value only), no perspective, no horizon. Subject: a huge round stone clock dial carved into the floor of an abandoned cloister, seen from directly above, the circle filling the square frame edge to edge, centred. Concentric carved stone rings in cool blue-grey and lavender-grey stone with fine hairline cracks and a little pale moss in the joints; an outer ring of sixty small engraved minute ticks; a wide ring with twelve large engraved roman-numeral hour marks (XII exactly at the top, III at the right, VI at the bottom, IX at the left), the grooves inlaid with faint pale silver; between the rings a thin engraved band of simple geometric ornament; a smaller inner ring of radial flagstones; a plain round stone boss at the centre. No clock hands. Corners outside the circle: plain dark slate flagstones. No text other than the numerals, no border, no frame, no objects on it.",
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/dial_tex.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "broken_arch_tripo",
+  "seconds": 144.1,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 8000,
+   "model_seed": 522,
+   "texture_seed": 522,
+   "image_url": "https://v3b.fal.media/files/b/0ab1668b/NLi8IxTzOaQ0Knt5YzSUp_broken_arch.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/raw/broken_arch/broken_arch_tripo_0.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/broken_arch/broken_arch_tripo_1.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/broken_arch/broken_arch_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "clock_tower_tripo",
+  "seconds": 176.6,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 12000,
+   "model_seed": 521,
+   "texture_seed": 521,
+   "image_url": "https://v3b.fal.media/files/b/0ab1667a/Ft54ISskwEGauEHnc-oRe_clock_tower.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/raw/clock_tower/clock_tower_tripo_0.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/clock_tower/clock_tower_tripo_1.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/clock_tower/clock_tower_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "cloister_bell_tripo",
+  "seconds": 157.0,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 8000,
+   "model_seed": 526,
+   "texture_seed": 526,
+   "image_url": "https://v3b.fal.media/files/b/0ab166cd/Mc0K73txU2MeiAhjvwMSh_cloister_bell.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/raw/cloister_bell/cloister_bell_tripo_0.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/cloister_bell/cloister_bell_tripo_1.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/cloister_bell/cloister_bell_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "dial_altar_tripo",
+  "seconds": 188.3,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 8000,
+   "model_seed": 525,
+   "texture_seed": 525,
+   "image_url": "https://v3b.fal.media/files/b/0ab166ba/I_GYQxF_ksh3gl89px_PM_dial_altar.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/raw/dial_altar/dial_altar_tripo_0.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/dial_altar/dial_altar_tripo_1.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/dial_altar/dial_altar_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "fallen_column_tripo",
+  "seconds": 188.3,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 6000,
+   "model_seed": 523,
+   "texture_seed": 523,
+   "image_url": "https://v3b.fal.media/files/b/0ab1669a/MI_ftQusQBBRhyO-E9TWN_fallen_column.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/raw/fallen_column/fallen_column_tripo_0.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/fallen_column/fallen_column_tripo_1.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/fallen_column/fallen_column_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "watcher_statue_tripo",
+  "seconds": 127.3,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 10000,
+   "model_seed": 524,
+   "texture_seed": 524,
+   "image_url": "https://v3b.fal.media/files/b/0ab166ad/0WIAROxcwj4qH4yWq5D-2_watcher_statue.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/silent_dial_cloister/decor/raw/watcher_statue/watcher_statue_tripo_0.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/watcher_statue/watcher_statue_tripo_1.glb",
+   "art/source/env/silent_dial_cloister/decor/raw/watcher_statue/watcher_statue_tripo_2.png"
+  ]
+ }
+]
