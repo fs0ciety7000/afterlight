@@ -239,7 +239,29 @@ func _build() -> void:
 	add_child(_toast)
 	if hunt_encounter != "":
 		_build_hunt_card(margin)
+	_build_level_tag(margin)
 	_refresh_controls()
+
+
+## Top-left, only when the fight is above Fern's level (GDD decision 30):
+## the `danger` pictogram and « Niveau 3 (au-dessus du vôtre) ».
+func _build_level_tag(margin: float) -> void:
+	var info := GameState.content_api.encounter_level(view.encounter_id)
+	if not info.get("above", false):
+		return
+	var tag := LevelTag.make(info, "MutedLabel", UiTokens.NIGHT)
+	UiProbe.register("combat.level", tag.label)
+	var card := Kit.panel("CardPanel")
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.add_child(tag)
+	add_child(card)
+	card.set_anchors_and_offsets_preset(
+		Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE, margin
+	)
+	if hunt_encounter != "":
+		# Under the hunt card.
+		card.offset_top += 170.0
+		card.offset_bottom += 170.0
 
 
 ## Top-left during « Chasser ici »: the hunted encounter, the victories so far

@@ -183,10 +183,16 @@ func _card(id: String, hunt: String) -> Control:
 	UiProbe.register("hunts.name." + short, name_label)
 	text.add_child(name_label)
 	var kind := str(e.get("kind", "normal"))
-	var tags := PackedStringArray(
-		[tr("ui.hunts.kind." + kind), tr("ui.hunts.level").format({"level": e.get("level", 1)})]
-	)
+	var level := GameState.content_api.encounter_level(id)
+	var tags := PackedStringArray([tr("ui.hunts.kind." + kind)])
+	if not level.get("above", false):
+		tags.append(tr("ui.hunts.level").format({"level": e.get("level", 1)}))
 	text.add_child(Kit.label(tr("ui.common.separator").join(tags), "MutedLabel"))
+	if level.get("above", false):
+		# Above Fern's level: pictogram and `danger` colour (GDD decision 30).
+		var tag := LevelTag.make(level)
+		UiProbe.register("hunts.level." + short, tag.label)
+		text.add_child(tag)
 	if quote["ok"]:
 		var stats := (
 			Kit

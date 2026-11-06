@@ -21,6 +21,9 @@ var _selected := ""
 var _detail_title: Label
 var _detail_body: Label
 var _detail_status: Label
+## « Niveau 3 (au-dessus du vôtre) » in `danger` when the place is above
+## Fern's level (GDD decision 30), else empty.
+var _detail_level: HBoxContainer
 var _travel: Button
 var _dragging := false
 var _drag_last := Vector2.ZERO
@@ -116,6 +119,8 @@ func _side_panel(narrow: bool) -> Control:
 	_detail_title = Kit.label("", "SubheadingLabel", true)
 	UiProbe.register("map.detail_title", _detail_title)
 	col.add_child(_detail_title)
+	_detail_level = Kit.hbox()
+	col.add_child(_detail_level)
 	_detail_status = Kit.label("", "MutedLabel", true)
 	UiProbe.register("map.detail_status", _detail_status)
 	col.add_child(_detail_status)
@@ -156,10 +161,19 @@ func _select(id: String) -> void:
 	_detail_title.text = Content.display_name(id)
 	var status := GameState.location_status(id)
 	var lines := []
+	for child in _detail_level.get_children():
+		_detail_level.remove_child(child)
+		child.queue_free()
 	if e.get("kind", "") == "hub":
 		lines.append(tr("ui.map.hub"))
 	elif e.has("level"):
-		lines.append(tr("ui.map.level").format({"level": e["level"]}))
+		var info := GameState.content_api.encounter_level(id)
+		if not info.get("above", false):
+			lines.append(tr("ui.map.level").format({"level": e["level"]}))
+		else:
+			var tag := LevelTag.make(info)
+			UiProbe.register("map.detail_level", tag.label)
+			_detail_level.add_child(tag)
 	if id == GameState.data["world"]["location_id"]:
 		lines.append(tr("ui.map.here"))
 	elif status == WorldRules.LOCKED:
