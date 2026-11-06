@@ -878,3 +878,67 @@ error.discovery.room_not_cleared,Battez d'abord les occupants de la salle
 error.artifact_slot_quest,Terminez la quête « {quest} »
 character.himmel.name,Himmel
 error.hunt.dungeon_room,Pas de chasse dans le cloître : chaque salle se gagne une fois par expédition
+ui.explore.journal_button,Journal · J
+ui.explore.journal_button_touch,Journal
+ui.explore.journal_button_claim,Journal ◆
+ui.dialogue.next,Suivant
+ui.dialogue.close,Terminer
+ui.dialogue.skip,Passer
+ui.dialogue.continue,Continuer
+ui.dialogue.accept,Accepter
+ui.dialogue.offer,Nouvelle quête : {quest}
+ui.dialogue.rewards,Récompenses : {rewards}
+ui.journal.title,Journal
+ui.journal.tab_quests,Quêtes
+ui.journal.tab_contracts,Contrats
+ui.journal.tab_bestiary,Bestiaire
+ui.journal.tab_discoveries,Découvertes
+ui.journal.tracked,Suivie
+ui.journal.kind_main,Quête principale
+ui.journal.kind_side,Quête secondaire
+ui.journal.kind_daily,Contrat
+ui.journal.level,niveau {level}
+ui.journal.state_available,Disponible
+ui.journal.state_active,En cours
+ui.journal.state_completed,Terminée
+ui.journal.state_turned_in,Rendue
+ui.journal.return_to,Retournez voir {npc}.
+ui.journal.objective_done,{objective} : fait
+ui.journal.quests_empty,Aucune quête pour l'instant. Parlez aux habitants d'Aubelin.
+ui.journal.bestiary_empty,Aucun ennemi rencontré pour l'instant.
+ui.journal.bestiary_locked,Fiche verrouillée
+ui.journal.bestiary_tier,Palier {tier} : {label}
+ui.journal.bestiary_next,Prochain palier : {count} victoires
+ui.journal.bestiary_complete,Fiche complète
+ui.journal.abilities,Capacités : {list}
+ui.journal.stats,"PV {hp}, puissance {power}, défense {defense} %, barrière {barrier} %, aggro {aggro} m (niveau 1)"
+ui.journal.discoveries_empty,Aucune découverte possible pour l'instant.
+ui.journal.discovery_hidden,Pas encore trouvée.
+ui.element.arcane,Arcane
+ui.element.fire,Feu
+ui.element.frost,Givre
+ui.element.lightning,Foudre
+ui.affinity.weak,faible
+ui.affinity.resist,résiste
+ui.affinity.neutral,neutre
+ui.story.affinity,{element} : {affinity}
+ui.story.items,{count} objet(s)
+ui.story.progress,{quest} : {objective}
+ui.story.contract_done,Contrat rempli : {contract}. Récupérez-le dans le journal.
+ui.story.shortcut_opened,L'escalier du sonneur est ouvert.
+ui.story.talk,Parler à {name}
+ui.story.read_board,Lire le tableau
+ui.story.examine,Examiner
+ui.story.open_chest,Ouvrir le coffre
+ui.story.pick,Cueillir
+ui.story.enter,Entrer : {place}
+ui.story.holding,{action}…
+ui.story.prompt_key,E · {action}
+ui.story.vitals,PV {hp} % · Mana {mana} %
+ui.story.compass,"Boussole : {count} découverte(s) à trouver ici"
+ui.story.hint_mark,?
+ui.story.leave_title,Quitter le cloître
+ui.story.fountain_name,Fontaine
+ui.story.campfire_name,Feu de camp
+ui.story.fountain_healed,La fontaine vous rend {pct} % de vos PV.
+ui.story.rested,"PV et mana au maximum, partie sauvegardée."
