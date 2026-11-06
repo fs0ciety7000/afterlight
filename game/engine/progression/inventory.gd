@@ -125,24 +125,14 @@ static func receive(state: Dictionary, rewards: Dictionary, content: Dictionary)
 	if out["salvage_dust"] > 0:
 		add_material(state, BalanceItems.DUST_ID, out["salvage_dust"])
 		var count: int = out["auto_salvaged"].size()
-		(
-			out["lines"]
-			. append(
-				{
-					"key":
-					"log.loot.auto_salvaged_one" if count == 1 else "log.loot.auto_salvaged_other",
-					"params": {"count": count, "dust": out["salvage_dust"]},
-				}
-			)
-		)
+		var key := "log.loot.auto_salvaged_one" if count == 1 else "log.loot.auto_salvaged_other"
+		out["lines"].append(line(key, {"count": count, "dust": out["salvage_dust"]}))
 	for rune in rewards.get("runes", []):
 		add_rune(state, rune["id"], int(rune["tier"]))
 		out["runes"].append(rune.duplicate())
 	for id in rewards.get("artifacts", []):
 		if state["artifacts"].has(id):
-			out["lines"].append(
-				{"key": "log.loot.artifact_known", "params": {"artifact": id + ".name"}}
-			)
+			out["lines"].append(line("log.loot.artifact_known", {"artifact": id + ".name"}))
 			continue
 		state["artifacts"][id] = 1
 		out["artifacts"].append(id)
@@ -155,17 +145,14 @@ static func receive(state: Dictionary, rewards: Dictionary, content: Dictionary)
 		if taken > 0:
 			out["consumables"][id] = taken
 		if left > 0:
-			(
-				out["lines"]
-				. append(
-					{
-						"key": "log.loot.consumable_overflow",
-						"params":
-						{"max": carry_max(id, content), "item": id + ".name", "count": left},
-					}
-				)
-			)
+			var params := {"max": carry_max(id, content), "item": id + ".name", "count": left}
+			out["lines"].append(line("log.loot.consumable_overflow", params))
 	return out
+
+
+## A summary line for the UI: tr(key).format(params).
+static func line(key: String, params: Dictionary) -> Dictionary:
+	return {"key": key, "params": params}
 
 
 ## Dust and count a salvage of every bag item of these rarities would give

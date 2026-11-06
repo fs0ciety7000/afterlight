@@ -177,20 +177,10 @@ static func modifiers(item: Dictionary, content: Dictionary) -> Array:
 	var enhance := int(item["enhance"])
 	var out := []
 	for line in base["implicit"]:
-		(
-			out
-			. append(
-				{
-					"stat": line["stat"],
-					"layer": "flat",
-					"value":
-					BalanceItems.implicit_value(
-						line["stat"], float(line["base"]), ilvl, item["rarity"], enhance
-					),
-					"from": "implicit",
-				}
-			)
+		var value := BalanceItems.implicit_value(
+			line["stat"], float(line["base"]), ilvl, item["rarity"], enhance
 		)
+		out.append({"stat": line["stat"], "layer": "flat", "value": value, "from": "implicit"})
 	for a in item["affixes"]:
 		var affix: Dictionary = content.get(a["id"], {})
 		if affix.is_empty():
