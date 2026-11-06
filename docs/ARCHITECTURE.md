@@ -56,7 +56,7 @@
 - Une graine par usage (`combat`, `loot`, `offline`), dérivée de la graine de partie et d'un compteur, pour qu'un tirage de butin n'en décale pas un autre.
 - La simulation de combat avance par tics fixes (`TICK_SECONDS`), indépendants du nombre d'images par seconde. Vitesse ×2 / ×4 = plus de tics par image, pas des tics plus longs.
 
-## État de la partie (format v4)
+## État de la partie (format v5)
 
 Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour être sérialisé tel quel :
 
@@ -71,7 +71,7 @@ Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour
 | `consumables` | ID → quantité portée (5 au plus) |
 | `artifacts` | artefacts possédés : ID → niveau (1-5) |
 | `world` | `region_id`, `location_id`, `unlocked_regions`, `discovered_locations` |
-| `progress` | `cleared_encounters`, `quests`, `bestiary`, `discoveries` |
+| `progress` | `cleared_encounters` ; `quests` (ID → {`state` : `active`, `completed` ou `turned_in`, `step`, `counts` par objectif, `order` d'acceptation}) ; `bestiary` (ID d'ennemi → victoires jouées, 0 = rencontré) ; `discoveries` (ID trouvés) ; `contracts` ({`day_index` (-1 = jamais tiré), `offers` [{`id`, `count`, `state`, `reward` {`gold`, `dust`, `shards`}}]}) ; `dungeon_run` ({} hors donjon, sinon {`dungeon_id`, `checkpoint`, `room`, `cleared_rooms`, `fountain_used`, `vitals` {`hp_pct`, `mana_pct`, `ult_charge`}}) ; `unlocks` (jetons : `artifact_slot_1`) |
 | `farming` | rencontre farmée hors ligne (`encounter_id`) ou `""` |
 | `offline` | `pending` : `[]` ou `[résumé]`, le résumé hors ligne pas encore récupéré (forme : `OfflineCalc`, schéma : `StateSchema.offline_summary_spec`) |
 | `rng` | compteurs par flux (`combat` pour les combats de terrain et de « Chasser ici », `item` pour les `uid` d'objets) |
@@ -262,3 +262,20 @@ Code : `game/engine/idle/` (moteur pur), constantes `game/engine/balance/offline
 | `HuntLoop` | « Chasser ici » : vérification, démarrage (devient la chasse hors ligne si elle est éligible), réglage du combat suivant (graine du compteur `combat`, jamais de premier kill), arrêt à la défaite |
 
 Horloge : le moteur reçoit `now_unix`. `GameState.now_unix()` lit `Time` et y ajoute `debug_clock_offset_s` seulement quand le canal de test est actif (`?test=1`, `UiProbe` le règle depuis `&clock_offset_s=<n>`). Le résumé est calculé à l'adoption d'une sauvegarde chargée (`GameState.adopt`), pas à l'import, puis gardé dans `offline.pending` jusqu'à « Récupérer ». `CombatSim.ticks_total` compte les ticks de toutes les simulations : le test du critère 5.2 vérifie qu'il ne bouge pas.
+
+## Quêtes, contrats, bestiaire, découvertes, donjon (jalon 6)
+
+Code : `game/engine/quests/` et `game/engine/world/` (moteur pur), constantes `game/engine/balance/story.gd` (GAME_BALANCE §23), actions de l'interface dans `game/state/content_api.gd` (`GameState.content_api`). Spécification : `docs/content/`.
+
+| Module | Rôle |
+|---|---|
+| `QuestRules` | Machine à états des quêtes (`available` → `active` → `completed` → `turned_in`), étapes, objectifs à compteur (événements) ou d'état (découverte, lieu visité, objet détenu ou livré), récompenses créditées une fois, journal, quête suivie |
+| `NpcRules` | Choix du dialogue d'un PNJ (première entrée dont la condition tient), fin de dialogue : `talked_to`, offre ou rendu de quête, dialogue suivant à enchaîner, marqueurs (offre, en cours, à rendre) |
+| `Contracts` | Contrats du jour : tirage à graine par jour local, au plus un long, récupération automatique au changement de jour, comptage, récupération |
+| `Bestiary` | Victoires par ennemi (invocations comprises), paliers par `bestiary_thresholds` |
+| `Discoveries` | Découvertes, coffres (butin à graine `chest:<id>`), herbes de quête, trous du voile de la carte, compteur par lieu |
+| `DungeonRun` | Expédition : portes, PV conservés entre salles, fontaine, feu de camp, défaite au point de reprise, raccourci après le premier boss, repli au chargement |
+| `StoryEvents` | Routage : un combat joué (`encounter_completed` avec `tally`) va au bestiaire, au donjon, aux quêtes et aux contrats ; `talked_to`, `location_visited`, `discovery_found`, `item_collected` aux quêtes |
+
+`encounter_completed` porte en plus `location`, `tally` ({`defeated`: {ennemi: n}, `interrupts`: {personnage: n}, `statuses`: {statut: {source: n}}}) et `leader` ({`hp_pct`, `mana_pct`, `ult_charge`}). Seul `GameState.apply_combat_result` (combat de la scène ou « Chasser ici ») passe par `StoryEvents` : la récupération hors ligne n'y passe jamais, donc les victoires hors ligne ne comptent ni pour les quêtes, ni pour les contrats, ni pour le bestiaire. `GameState.story_events(events)` relaie les événements produits (`quest_activated`, `quest_progress`, `quest_completed`, `quest_turned_in`, `bestiary_tier_unlocked`, `discovery_found`, `contracts_rolled`, `contracts_auto_claimed`, `dungeon_room_cleared`, `dungeon_respawn`, `dungeon_shortcut_opened`...) pour les bandeaux.
+

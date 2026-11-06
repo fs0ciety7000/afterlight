@@ -36,13 +36,23 @@ static func create(
 			"revealed_locations": [start["location"]],
 			"spawn": "default",
 		},
-		"progress": {"cleared_encounters": {}, "quests": {}, "bestiary": {}, "discoveries": []},
+		"progress":
+		{
+			"cleared_encounters": {},
+			"quests": {},
+			"bestiary": {},
+			"discoveries": [],
+			"contracts": {"day_index": -1, "offers": []},
+			"dungeon_run": {},
+			"unlocks": [],
+		},
 		"farming": "",
 		"offline": {"pending": []},
 		"rng": {},
 	}
 	if not content.is_empty():
 		WorldRules.visit(start["location"], state, content)
+		QuestRules.start_quests(state, content, [])
 	return state
 
 

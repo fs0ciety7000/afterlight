@@ -104,7 +104,7 @@ func test_real_v3_save_migrates_to_v4_with_an_empty_offline_block() -> void:
 	v3["farming"] = "encounter.whispering_wood_02"
 	var r := SaveCodec.decode(SaveCodec.encode(v3, 1, 3), SaveMigrations.all())
 	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
-	assert_eq([r["migrated_from"], r["version"]], [3, 4], "v3 → v4")
+	assert_eq([r["migrated_from"], r["version"]], [3, SaveCodec.CURRENT_VERSION], "v3 → current")
 	assert_eq(r["state"]["offline"], {"pending": []}, "no pending summary")
 	assert_eq(r["state"]["farming"], "encounter.whispering_wood_02", "offline hunt kept")
 
@@ -113,3 +113,60 @@ func test_v3_state_without_offline_is_invalid_as_v4() -> void:
 	var v3 := Fixtures.new_state()
 	v3.erase("offline")
 	assert_true(not StateSchema.validate(v3)["errors"].is_empty(), "offline is required")
+
+
+## A state as saved by format v4 (Milestone 5): progress without quests
+## content, contracts, dungeon run or unlock tokens.
+func _v4_state(level: int, visited: Array) -> Dictionary:
+	var v4 := Fixtures.new_state()
+	for key in ["contracts", "dungeon_run", "unlocks"]:
+		v4["progress"].erase(key)
+	v4["progress"]["quests"] = {}
+	v4["progress"]["bestiary"] = {"enemy.mist_wolf": 12}
+	v4["characters"]["character.fern"]["level"] = level
+	v4["world"]["discovered_locations"].append_array(visited)
+	v4["world"]["revealed_locations"].append_array(visited)
+	return v4
+
+
+func test_real_v4_save_migrates_to_v5_with_quests_and_contracts() -> void:
+	var r := SaveCodec.decode(SaveCodec.encode(_v4_state(3, []), 1, 4), SaveMigrations.all())
+	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
+	assert_eq([r["migrated_from"], r["version"]], [4, 5], "v4 → v5")
+	var p: Dictionary = r["state"]["progress"]
+	assert_eq(p["quests"].keys(), ["quest.main_01"], "main_01 starts")
+	assert_eq(p["quests"]["quest.main_01"]["state"], "active", "active")
+	assert_eq(p["contracts"], {"day_index": -1, "offers": []}, "contracts roll at first load")
+	assert_eq(p["dungeon_run"], {}, "outside any dungeon")
+	assert_eq(p["unlocks"], [], "no artifact slot below level 6")
+	assert_eq(p["bestiary"], {"enemy.mist_wolf": 12}, "bestiary kept")
+
+
+func test_v4_player_who_reached_the_ruins_keeps_them_open() -> void:
+	var v4 := _v4_state(8, ["location.lantern_mire", "location.watch_ruins"])
+	var r := SaveCodec.decode(SaveCodec.encode(v4, 1, 4), SaveMigrations.all())
+	var p: Dictionary = r["state"]["progress"]
+	assert_eq(p["quests"]["quest.main_01"]["state"], "turned_in", "main_01 done")
+	assert_eq(p["quests"]["quest.main_02"]["state"], "turned_in", "main_02 done")
+	assert_true(not p["quests"].has("quest.main_03"), "main_03 waits for Bastien")
+	assert_eq(p["unlocks"], ["artifact_slot_1"], "slot 1 kept at level 8")
+	var c := CombatBench.content()
+	assert_eq(WorldRules.status("location.watch_ruins", r["state"], c), "available", "still open")
+
+
+func test_v4_state_is_invalid_as_v5() -> void:
+	var v4 := _v4_state(1, [])
+	assert_true(not StateSchema.validate(v4)["errors"].is_empty(), "contracts are required")
+
+
+## V20: the reference save (a v5 game that went through the milestone 6
+## content) still loads, and every id it holds exists in the data.
+func test_v20_reference_save_ids_still_exist() -> void:
+	var text := FileAccess.get_file_as_string("res://tests/fixtures/saves/reference_v5.json")
+	var r := SaveCodec.decode(text, SaveMigrations.all())
+	assert_true(r["ok"], "reference save loads (%s %s)" % [r["error"], r["detail"]])
+	var errors := ContentRules.check_save_ids(
+		r["state"], CombatBench.content(), SaveMigrations.RETIRED_IDS
+	)
+	assert_eq(errors.size(), 0, "\n".join(errors))
+	assert_true(r["state"]["progress"]["quests"].size() >= 3, "the save has quests")

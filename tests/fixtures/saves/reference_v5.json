@@ -1,0 +1,191 @@
+{
+	"checksum": "61785756e838c5dbc0e9371469767c72877255c24c31caf583c07339d0110d30",
+	"format": "afterlight-save",
+	"saved_at": 1800000000,
+	"state": {
+		"artifacts": {
+			"artifact.pressed_flower": 1
+		},
+		"characters": {
+			"character.fern": {
+				"artifacts": [
+					"",
+					""
+				],
+				"equipment": {
+					"amulet": "",
+					"chest": "",
+					"feet": "",
+					"hands": "",
+					"head": "",
+					"weapon": ""
+				},
+				"level": 6,
+				"loadout": [],
+				"runes": {},
+				"spells": {},
+				"xp": 1382
+			}
+		},
+		"consumables": {
+			"consumable.healing_draught": 2
+		},
+		"farming": "",
+		"inventory": [
+			{
+				"affixes": [
+					{
+						"id": "affix.max_mana",
+						"value": 14.824323
+					},
+					{
+						"id": "affix.mana_regen",
+						"value": 0.450864
+					}
+				],
+				"enhance": 0,
+				"enhance_attempts": 0,
+				"item_id": "item.traveler_hood",
+				"item_level": 3,
+				"legendary": "",
+				"pity": 0,
+				"rarity": "uncommon",
+				"uid": "i1"
+			}
+		],
+		"meta": {
+			"created_at": 1800000000,
+			"last_active_at": 1800000000,
+			"play_time": 0.0,
+			"seed": 4242
+		},
+		"offline": {
+			"pending": []
+		},
+		"party": [
+			"character.fern",
+			"",
+			"",
+			""
+		],
+		"progress": {
+			"bestiary": {
+				"enemy.mist_wolf": 10,
+				"enemy.wandering_lantern": 2
+			},
+			"cleared_encounters": {
+				"encounter.lantern_mire_01": 1,
+				"encounter.whispering_wood_01": 1,
+				"encounter.whispering_wood_02": 1,
+				"encounter.whispering_wood_05": 1
+			},
+			"contracts": {
+				"day_index": 20833,
+				"offers": [
+					{
+						"count": 0,
+						"id": "quest.daily_lanterns",
+						"reward": {
+							"dust": 6,
+							"gold": 200,
+							"shards": 2
+						},
+						"state": "active"
+					},
+					{
+						"count": 0,
+						"id": "quest.daily_wood_patrol",
+						"reward": {
+							"dust": 4,
+							"gold": 150,
+							"shards": 1
+						},
+						"state": "active"
+					},
+					{
+						"count": 0,
+						"id": "quest.daily_interrupts",
+						"reward": {
+							"dust": 10,
+							"gold": 300,
+							"shards": 3
+						},
+						"state": "active"
+					}
+				]
+			},
+			"discoveries": [
+				"discovery.dead_birch_vista",
+				"discovery.wood_chest",
+				"discovery.pressed_flower"
+			],
+			"dungeon_run": {},
+			"quests": {
+				"quest.main_01": {
+					"counts": {
+						"clear_wood": 3,
+						"meet_odile": 1
+					},
+					"order": 1,
+					"state": "turned_in",
+					"step": 1
+				},
+				"quest.main_02": {
+					"counts": {
+						"clear_mire": 1,
+						"reach_mire": 1
+					},
+					"order": 2,
+					"state": "active",
+					"step": 2
+				},
+				"quest.side_clockmaker": {
+					"counts": {},
+					"order": 3,
+					"state": "active",
+					"step": 1
+				}
+			},
+			"unlocks": []
+		},
+		"rng": {
+			"item": 1
+		},
+		"runes": {
+			"rune.ember": [
+				1,
+				0,
+				0,
+				0,
+				0
+			]
+		},
+		"wallet": {
+			"gold": 174,
+			"materials": {
+				"material.grimoire_page": 2,
+				"material.mana_dust": 9,
+				"material.rune_shard": 2
+			}
+		},
+		"world": {
+			"discovered_locations": [
+				"location.aubelin",
+				"location.lantern_mire"
+			],
+			"location_id": "location.lantern_mire",
+			"region_id": "region.aubelin_vale",
+			"revealed_locations": [
+				"location.aubelin",
+				"location.whispering_wood",
+				"location.lantern_mire",
+				"location.watch_ruins"
+			],
+			"spawn": "from_aubelin",
+			"unlocked_regions": [
+				"region.aubelin_vale"
+			]
+		}
+	},
+	"version": 5
+}

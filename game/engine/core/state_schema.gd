@@ -1,6 +1,6 @@
 class_name StateSchema
 extends RefCounted
-## Shape of a game state (save format v4). See docs/ARCHITECTURE.md.
+## Shape of a game state (save format v5). See docs/ARCHITECTURE.md.
 
 const PARTY_SLOTS := 4
 const EQUIPMENT_SLOTS := ["weapon", "head", "chest", "hands", "feet", "amulet"]
@@ -105,9 +105,12 @@ static func spec() -> Dictionary:
 				"fields":
 				{
 					"cleared_encounters": {"type": "dict", "values": COUNT},
-					"quests": {"type": "dict", "values": {"type": "dict"}},
-					"bestiary": {"type": "dict", "values": COUNT},
+					"quests": {"type": "dict", "keys": ID, "values": quest_spec()},
+					"bestiary": {"type": "dict", "keys": ID, "values": COUNT},
 					"discoveries": {"type": "array", "items": ID},
+					"contracts": contracts_spec(),
+					"dungeon_run": dungeon_run_spec(),
+					"unlocks": {"type": "array", "items": {"type": "string", "min": 1}},
 				},
 			},
 			"farming": {"type": "string"},
@@ -117,6 +120,83 @@ static func spec() -> Dictionary:
 				"fields": {"pending": {"type": "array", "max": 1, "items": offline_summary_spec()}},
 			},
 			"rng": {"type": "dict", "values": COUNT},
+		},
+	}
+
+
+## progress.quests[id] (QuestRules).
+static func quest_spec() -> Dictionary:
+	return {
+		"type": "dict",
+		"fields":
+		{
+			"state": {"type": "string", "enum": ["active", "completed", "turned_in"]},
+			"step": {"type": "int", "min": 1},
+			"counts": {"type": "dict", "values": COUNT},
+			"order": {"type": "int", "min": 0, "optional": true, "default": 0},
+		},
+	}
+
+
+## progress.contracts (Contracts): day_index -1 = never rolled.
+static func contracts_spec() -> Dictionary:
+	return {
+		"type": "dict",
+		"fields":
+		{
+			"day_index": {"type": "int", "min": -1},
+			"offers":
+			{
+				"type": "array",
+				"items":
+				{
+					"type": "dict",
+					"fields":
+					{
+						"id": ID,
+						"count": COUNT,
+						"state": {"type": "string", "enum": ["active", "completed", "turned_in"]},
+						"reward":
+						{"type": "dict", "fields": {"gold": COUNT, "dust": COUNT, "shards": COUNT}},
+					},
+				},
+			},
+		},
+	}
+
+
+## progress.dungeon_run (DungeonRun): {} outside a dungeon. Every field is
+## optional so an incomplete run still loads; DungeonRun.settle_on_load drops it.
+static func dungeon_run_spec() -> Dictionary:
+	var opt := func(spec: Dictionary) -> Dictionary:
+		var s := spec.duplicate(true)
+		s["optional"] = true
+		return s
+	var pct := {"type": "number", "min": 0, "max": 1}
+	return {
+		"type": "dict",
+		"fields":
+		{
+			"dungeon_id": opt.call(ID),
+			"checkpoint": opt.call({"type": "string", "min": 1}),
+			"room": opt.call({"type": "string", "min": 1}),
+			"cleared_rooms": opt.call({"type": "array", "items": {"type": "string"}}),
+			"fountain_used": opt.call({"type": "bool"}),
+			"vitals":
+			(
+				opt
+				. call(
+					{
+						"type": "dict",
+						"fields":
+						{
+							"hp_pct": pct,
+							"mana_pct": pct,
+							"ult_charge": {"type": "number", "min": 0},
+						},
+					}
+				)
+			),
 		},
 	}
 
