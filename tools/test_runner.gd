@@ -2,7 +2,9 @@ extends SceneTree
 ## Headless test runner.
 ## Usage: godot --headless --path . --script res://tools/test_runner.gd
 ## Discovers res://tests/unit/**/test_*.gd. Each file extends TestCase and
-## defines `test_*` methods. Exits 1 if any assertion fails.
+## defines `test_*` methods. Exits 1 if any assertion fails. Optional user
+## arguments keep only the files whose name contains one of them:
+## godot --headless --path . --script res://tools/test_runner.gd -- test_content
 
 const TESTS_DIR := "res://tests/unit"
 
@@ -21,6 +23,13 @@ func _process(_delta: float) -> bool:
 func _run() -> void:
 	var files := _collect(TESTS_DIR)
 	files.sort()
+	var only := Array(OS.get_cmdline_user_args())
+	if not only.is_empty():
+		files = PackedStringArray(
+			Array(files).filter(
+				func(p: String) -> bool: return only.any(func(o: String) -> bool: return o in p)
+			)
+		)
 	var passed := 0
 	var failed := 0
 	for path in files:
