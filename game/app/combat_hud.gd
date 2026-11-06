@@ -439,7 +439,8 @@ func _show_toast(text: String) -> void:
 
 func _on_finished(e: Dictionary) -> void:
 	var victory: bool = e.get("result", "") == "victory"
-	var summary := GameState.apply_combat_result(e) if victory else {}
+	# Applied on defeat too: consumables used in the fight are spent.
+	var summary := GameState.apply_combat_result(e)
 	_result = Kit.panel()
 	_result.custom_minimum_size = Vector2(minf(440.0, get_viewport_rect().size.x - 32.0), 0)
 	var col := Kit.vbox()

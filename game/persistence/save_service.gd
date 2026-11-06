@@ -25,6 +25,7 @@ func _ready() -> void:
 	_timer.autostart = true
 	_timer.timeout.connect(_on_autosave_tick)
 	add_child(_timer)
+	GameState.save_requested.connect(save_if_dirty)
 	if OS.has_feature("web"):
 		_install_web_hooks()
 

@@ -5,12 +5,17 @@ extends Node
 
 signal changed
 signal game_replaced
+## Emitted after a progression action changed the state (SaveService saves
+## right away, so a forge attempt or a purchase is never replayed).
+signal save_requested
 
 var data: Dictionary = {}
 var dirty := false
 ## Where Fern stands in the current location. Not saved: a reload puts her
 ## back at the spawn point.
 var runtime_position: Variant = null
+## Inventory, forge, grimoire, runes, artifacts and shop actions.
+var progression := ProgressionApi.new(self)
 
 
 func has_game() -> bool:
@@ -55,10 +60,31 @@ func travel(location_id: String, spawn: String) -> String:
 ## Applies a finished encounter (CombatSim's encounter_completed event).
 ## Returns the summary shown on the victory screen.
 func apply_combat_result(completed: Dictionary) -> Dictionary:
-	var r := CombatOutcome.apply(data, completed)
+	var r := CombatOutcome.apply(data, completed, Content.index())
 	data = r["state"]
 	mark_changed()
 	return r["summary"]
+
+
+## Translated text of a refusal or summary line: tr(key) with its params,
+## where "<id>.name" params are translated too ("Or insuffisant : 141 requis").
+func reason_text(r: Dictionary) -> String:
+	var key: String = r.get("error", r.get("key", ""))
+	if key == "":
+		return ""
+	var params: Dictionary = r.get("params", {}).duplicate()
+	for k in params:
+		if typeof(params[k]) == TYPE_STRING and str(params[k]).ends_with(".name"):
+			params[k] = tr(params[k])
+	return tr(key).format(params)
+
+
+## Adopts the state of a successful progression action (ProgressionApi),
+## marks it dirty and asks for a save.
+func commit_action(next_state: Dictionary) -> void:
+	data = next_state
+	mark_changed()
+	save_requested.emit()
 
 
 func location_status(location_id: String) -> String:

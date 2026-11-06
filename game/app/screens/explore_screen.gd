@@ -279,27 +279,15 @@ func _show_toast(message: String, is_error: bool = false) -> void:
 
 
 func _start_combat(encounter_id: String, anchor: Node3D) -> void:
-	var leader: String = GameState.data["party"][0]
-	var hero: Dictionary = GameState.data["characters"][leader]
 	var counter := int(GameState.data["rng"].get("combat", 0))
 	GameState.data["rng"]["combat"] = counter + 1
 	var seed_value: int = absi(
 		SeededRng.derive_seed(int(GameState.data["meta"]["seed"]), "combat", counter)
 	)
 	var cleared: Dictionary = GameState.data["progress"]["cleared_encounters"]
-	var setup := {
-		"seed": seed_value,
-		"party":
-		[
-			{
-				"character": leader,
-				"level": hero["level"],
-				"slot": 3,
-				"spell_ranks": hero.get("spells", {}),
-			}
-		],
-		"first_clear": int(cleared.get(encounter_id, 0)) == 0,
-	}
+	var setup: Dictionary = GameState.progression.combat_setup()
+	setup["seed"] = seed_value
+	setup["first_clear"] = int(cleared.get(encounter_id, 0)) == 0
 	_combat = CombatView.new()
 	_combat.name = "Combat"
 	view.add_child(_combat)
