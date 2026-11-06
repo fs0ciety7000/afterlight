@@ -1,0 +1,158 @@
+[
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "odile_rig",
+  "seconds": 38.8,
+  "arguments": {
+   "animation_action_ids": [
+    243,
+    313
+   ],
+   "height_meters": 1.58,
+   "model_url": "https://v3b.fal.media/files/b/0ab1619b/O9Hom7UjUvmdZ841ZgS0A_odile_rig_in.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/rig/odile/odile_rig_0.glb",
+   "art/source/npcs/rig/odile/odile_rig_1.fbx",
+   "art/source/npcs/rig/odile/odile_rig_2.glb",
+   "art/source/npcs/rig/odile/odile_rig_3.fbx",
+   "art/source/npcs/rig/odile/odile_rig_4.glb",
+   "art/source/npcs/rig/odile/odile_rig_5.glb",
+   "art/source/npcs/rig/odile/odile_rig_6.fbx",
+   "art/source/npcs/rig/odile/odile_rig_7.glb",
+   "art/source/npcs/rig/odile/odile_rig_8.glb",
+   "art/source/npcs/rig/odile/odile_rig_9.fbx",
+   "art/source/npcs/rig/odile/odile_rig_10.glb",
+   "art/source/npcs/rig/odile/odile_rig_11.fbx"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "maelle_rig",
+  "seconds": 45.0,
+  "arguments": {
+   "animation_action_ids": [
+    243,
+    313
+   ],
+   "height_meters": 1.68,
+   "model_url": "https://v3b.fal.media/files/b/0ab161c4/-kLt52-0bUnUxsbI6fXdt_maelle_rig_in.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/rig/maelle/maelle_rig_0.glb",
+   "art/source/npcs/rig/maelle/maelle_rig_1.fbx",
+   "art/source/npcs/rig/maelle/maelle_rig_2.glb",
+   "art/source/npcs/rig/maelle/maelle_rig_3.fbx",
+   "art/source/npcs/rig/maelle/maelle_rig_4.glb",
+   "art/source/npcs/rig/maelle/maelle_rig_5.glb",
+   "art/source/npcs/rig/maelle/maelle_rig_6.fbx",
+   "art/source/npcs/rig/maelle/maelle_rig_7.glb",
+   "art/source/npcs/rig/maelle/maelle_rig_8.glb",
+   "art/source/npcs/rig/maelle/maelle_rig_9.fbx",
+   "art/source/npcs/rig/maelle/maelle_rig_10.glb",
+   "art/source/npcs/rig/maelle/maelle_rig_11.fbx"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "bastien_rig",
+  "seconds": 36.6,
+  "arguments": {
+   "animation_action_ids": [
+    243
+   ],
+   "height_meters": 1.82,
+   "model_url": "https://v3b.fal.media/files/b/0ab161cb/G8uAW3EAEdGBRsAJg7bzN_bastien_rig_in.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/rig/bastien/bastien_rig_0.glb",
+   "art/source/npcs/rig/bastien/bastien_rig_1.fbx",
+   "art/source/npcs/rig/bastien/bastien_rig_2.glb",
+   "art/source/npcs/rig/bastien/bastien_rig_3.fbx",
+   "art/source/npcs/rig/bastien/bastien_rig_4.glb",
+   "art/source/npcs/rig/bastien/bastien_rig_5.glb",
+   "art/source/npcs/rig/bastien/bastien_rig_6.fbx",
+   "art/source/npcs/rig/bastien/bastien_rig_7.glb",
+   "art/source/npcs/rig/bastien/bastien_rig_8.glb",
+   "art/source/npcs/rig/bastien/bastien_rig_9.fbx"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "rosalie_rig",
+  "seconds": 38.0,
+  "arguments": {
+   "animation_action_ids": [
+    243
+   ],
+   "height_meters": 1.62,
+   "model_url": "https://v3b.fal.media/files/b/0ab161d0/k9FGb_DLcHcYeLTucaqq2_rosalie_rig_in.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/rig/rosalie/rosalie_rig_0.glb",
+   "art/source/npcs/rig/rosalie/rosalie_rig_1.fbx",
+   "art/source/npcs/rig/rosalie/rosalie_rig_2.glb",
+   "art/source/npcs/rig/rosalie/rosalie_rig_3.fbx",
+   "art/source/npcs/rig/rosalie/rosalie_rig_4.glb",
+   "art/source/npcs/rig/rosalie/rosalie_rig_5.glb",
+   "art/source/npcs/rig/rosalie/rosalie_rig_6.fbx",
+   "art/source/npcs/rig/rosalie/rosalie_rig_7.glb",
+   "art/source/npcs/rig/rosalie/rosalie_rig_8.glb",
+   "art/source/npcs/rig/rosalie/rosalie_rig_9.fbx"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "tobias_rig",
+  "seconds": 39.4,
+  "arguments": {
+   "animation_action_ids": [
+    243
+   ],
+   "height_meters": 1.76,
+   "model_url": "https://v3b.fal.media/files/b/0ab161d4/WWLwnWCqvODYcAfRufHt0_tobias_rig_in.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/rig/tobias/tobias_rig_0.glb",
+   "art/source/npcs/rig/tobias/tobias_rig_1.fbx",
+   "art/source/npcs/rig/tobias/tobias_rig_2.glb",
+   "art/source/npcs/rig/tobias/tobias_rig_3.fbx",
+   "art/source/npcs/rig/tobias/tobias_rig_4.glb",
+   "art/source/npcs/rig/tobias/tobias_rig_5.glb",
+   "art/source/npcs/rig/tobias/tobias_rig_6.fbx",
+   "art/source/npcs/rig/tobias/tobias_rig_7.glb",
+   "art/source/npcs/rig/tobias/tobias_rig_8.glb",
+   "art/source/npcs/rig/tobias/tobias_rig_9.fbx"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "ysaline_rig",
+  "seconds": 45.3,
+  "arguments": {
+   "animation_action_ids": [
+    243
+   ],
+   "height_meters": 1.65,
+   "model_url": "https://v3b.fal.media/files/b/0ab161d8/RMBJyWCFA4OG9dVbA4uBp_ysaline_rig_in.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/rig/ysaline/ysaline_rig_0.glb",
+   "art/source/npcs/rig/ysaline/ysaline_rig_1.fbx",
+   "art/source/npcs/rig/ysaline/ysaline_rig_2.glb",
+   "art/source/npcs/rig/ysaline/ysaline_rig_3.fbx",
+   "art/source/npcs/rig/ysaline/ysaline_rig_4.glb",
+   "art/source/npcs/rig/ysaline/ysaline_rig_5.glb",
+   "art/source/npcs/rig/ysaline/ysaline_rig_6.fbx",
+   "art/source/npcs/rig/ysaline/ysaline_rig_7.glb",
+   "art/source/npcs/rig/ysaline/ysaline_rig_8.glb",
+   "art/source/npcs/rig/ysaline/ysaline_rig_9.fbx"
+  ]
+ }
+]
