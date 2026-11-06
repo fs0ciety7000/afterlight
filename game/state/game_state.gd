@@ -8,6 +8,10 @@ signal game_replaced
 ## Emitted after a progression action changed the state (SaveService saves
 ## right away, so a forge attempt or a purchase is never replayed).
 signal save_requested
+## What a quest, contract, bestiary, discovery or dungeon change produced
+## (engine event dictionaries: quest_completed, bestiary_tier_unlocked...),
+## for banners and the HUD. See ContentApi.
+signal story_events(events: Array)
 
 var data: Dictionary = {}
 var dirty := false
@@ -16,6 +20,8 @@ var dirty := false
 var runtime_position: Variant = null
 ## Inventory, forge, grimoire, runes, artifacts and shop actions.
 var progression := ProgressionApi.new(self)
+## NPCs, quests, contracts, bestiary, discoveries and dungeon (Milestone 6).
+var content_api := ContentApi.new(self)
 ## Test channel only (`?test=1`, see UiProbe.test_handlers): the next won
 ## encounter drops at least one item, so E2E runs do not hang on the 25 %
 ## drop chance of a field pack.
@@ -44,9 +50,15 @@ func test_advance_clock(seconds: int) -> void:
 		debug_clock_offset_s += seconds
 
 
+## Local time zone offset in seconds (contracts renew at local midnight).
+func tz_offset_s() -> int:
+	return int(Time.get_time_zone_from_system().get("bias", 0)) * 60
+
+
 func start_new(start: Dictionary) -> void:
 	var seed_value := randi() % 2147483647
 	data = NewGame.create(start, seed_value, now_unix(), Content.index())
+	Contracts.refresh(data, now_unix(), tz_offset_s(), Content.index(), [])
 	runtime_position = null
 	dirty = true
 	game_replaced.emit()
@@ -62,6 +74,12 @@ func adopt(state: Dictionary, settle_offline: bool = true) -> void:
 	dirty = false
 	if settle_offline:
 		compute_offline()
+	if StoryEvents.on_load(data, Content.index()):
+		dirty = true
+	var rolled := []
+	Contracts.refresh(data, now_unix(), tz_offset_s(), Content.index(), rolled)
+	if not rolled.is_empty():
+		dirty = true
 	mark_active(now_unix())
 	game_replaced.emit()
 	changed.emit()
@@ -185,20 +203,32 @@ func travel(location_id: String, spawn: String) -> String:
 		return r["error"]
 	data = r["state"]
 	runtime_position = null
+	var events := []
+	StoryEvents.visited(data, location_id, Content.index(), events)
 	mark_changed()
+	emit_story_events(events)
 	return ""
 
 
-## Applies a finished encounter (CombatSim's encounter_completed event).
-## Returns the summary shown on the victory screen.
+## Applies a finished encounter played in the scene (CombatSim's
+## encounter_completed event): rewards, then quests, contracts, bestiary and
+## dungeon run (StoryEvents). Returns the summary shown on the victory screen,
+## with `events` (also emitted through story_events). Offline gains never come
+## here, so they count for no quest, contract or bestiary entry.
 func apply_combat_result(completed: Dictionary) -> Dictionary:
 	if test_force_item_drop and completed.get("result", "") == "victory":
 		test_force_item_drop = false
 		completed = _with_test_item(completed)
-	var r := CombatOutcome.apply(data, completed, Content.index())
+	var r := StoryEvents.apply_fight(data, completed, Content.index())
 	data = r["state"]
 	mark_changed()
+	emit_story_events(r["summary"]["events"])
 	return r["summary"]
+
+
+func emit_story_events(events: Array) -> void:
+	if not events.is_empty():
+		story_events.emit(events)
 
 
 ## Adds one seeded item to the rewards of a won encounter that dropped none.
@@ -246,8 +276,12 @@ func reason_text(r: Dictionary) -> String:
 ## marks it dirty and asks for a save.
 func commit_action(next_state: Dictionary) -> void:
 	data = next_state
+	# State objectives follow the wallet (shards spent at the rune carver...).
+	var events := []
+	QuestRules.refresh_all(data, Content.index(), events)
 	mark_changed()
 	save_requested.emit()
+	emit_story_events(events)
 
 
 func location_status(location_id: String) -> String:
@@ -298,4 +332,6 @@ func summary() -> Dictionary:
 		"created_at": data["meta"]["created_at"],
 		"farming": data.get("farming", ""),
 		"offline_pending": not OfflineCalc.pending(data).is_empty(),
+		"quest": QuestRules.tracked(data, Content.index()),
+		"dungeon": str(DungeonRun.run(data).get("dungeon_id", "")),
 	}

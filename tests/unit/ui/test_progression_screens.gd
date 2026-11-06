@@ -112,7 +112,9 @@ func test_runecarver_without_runes_explains_the_fusion_refusal() -> void:
 func test_character_shows_locked_artifact_slots_and_stats() -> void:
 	_new_game()
 	var screen := _open("character")
-	assert_eq(_text("character.artifact_slot.0"), "Emplacement disponible au niveau 6", "slot 1")
+	assert_eq(
+		_text("character.artifact_slot.0"), "Terminez la quête « Les rouages de Tobias »", "slot 1"
+	)
 	assert_eq(_text("character.artifact_slot.1"), "Emplacement disponible au niveau 15", "slot 2")
 	assert_eq(_text("character.level"), "Niv. 1", "level")
 	assert_true(_text("character.stat.power") != "", "power shown")

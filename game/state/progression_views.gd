@@ -118,7 +118,8 @@ func artifact_slots() -> Array:
 	var worn: Array = hero.get("artifacts", [])
 	for i in BalanceEconomy.ARTIFACT_SLOT_LEVELS.size():
 		var need := ArtifactRules.slot_level(i)
-		var unlocked := int(hero["level"]) >= need
+		var lock := ArtifactRules.slot_lock(_data(), leader(), i)
+		var unlocked := lock.is_empty()
 		(
 			out
 			. append(
@@ -127,12 +128,7 @@ func artifact_slots() -> Array:
 					"id": str(worn[i]) if i < worn.size() else "",
 					"level_required": need,
 					"unlocked": unlocked,
-					"lock":
-					(
-						{}
-						if unlocked
-						else ActionResult.refuse("error.artifact_slot_locked", {"level": need})
-					),
+					"lock": lock,
 				}
 			)
 		)
