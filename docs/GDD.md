@@ -414,3 +414,13 @@ Les règles techniques (périodicité, emplacement, copie de secours, récupéra
 | 3 | Canon | Graphies « Fern » et « Zoltraak », statue de Himmel en clin d'œil, boss démon original **Morvaine** plutôt qu'Aura : **validés** | §9.3 inchangé |
 | 4 | Contrats du jour | **Gardés** (optionnels, sans série à entretenir) | §12 |
 | 5 | Durée de la tranche | **Validée** : niveau max 20, boss vers le niveau 12 au jour 2-3, plafond en ~2 semaines de jeu léger | GAME_BALANCE §21.2 à recaler par le banc de simulation avec la nouvelle efficacité hors ligne |
+
+### Décisions du 2026-11-06 (jalon 3)
+
+| # | Sujet | Décision |
+|---|---|---|
+| 6 | Tactique par défaut de Zoltraak | **Auto** (vise en priorité un ennemi qui incante une action interruptible), au lieu de « Auto pour interrompre » |
+| 7 | Équilibrage boss et élite | `POWER_L1` loup alpha 22 → 21, Morvaine 24 → 18, Trait de cendre 0,9 → 0,6 (GAME_BALANCE §10.2, §10.3, §11) : validé |
+| 8 | Élément des attaques physiques | Comptées en arcane pour la tranche ; un élément physique viendra avec les résistances |
+| 9 | Élite et boss | Placés provisoirement aux Ruines du Guet jusqu'au donjon (jalon 6) |
+

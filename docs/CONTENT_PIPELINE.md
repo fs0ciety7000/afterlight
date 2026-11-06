@@ -150,10 +150,11 @@ Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités 
 | `effects` | array<effect> (au moins 1) | R | Voir ci-dessous |
 | `ult_charge_cost` | int | R si `ultimate` | |
 | `ranks` | array de 5 {`rank`, `modifier`?} | R pour un actif ou un ultime | `modifier` : ID d'un effet débloqué au rang 5 |
-| `trigger` | {`hp_below`: number} ou {`every_s`: number} ou {`on_time_s`: number} | O (ability) | Capacités de phase |
+| `trigger` | {`hp_below`: number ou liste de seuils} ou {`every_s`: number} ou {`on_time_s`: number} | O (ability) | Capacités de phase |
+| `tags` moteur | `projectile`, `barrier`, `unavoidable` | O | Lus par la simulation : projectile (vitesse §5 d'équilibrage), barrière ennemie (×2 arcane), impossible à esquiver |
 | `vfx`, `sfx`, `icon` | string | O | |
 
-`effect` : `{ "type": "damage" | "heal" | "shield" | "apply_status" | "summon" | "interrupt" | "cleanse" | "damage_reduction", "coeff"?: number, "hits"?: int, "radius_m"?: number, "status"?: ID, "chance"?: 0-1, "duration_s"?: number, "summon"?: ID enemy, "count"?: int, "level_offset"?: int }`
+`effect` : `{ "type": "damage" | "heal" | "shield" | "apply_status" | "summon" | "interrupt" | "cleanse" | "damage_reduction" | "restore_mana", "coeff"?: number, "hits"?: int, "radius_m"?: number, "status"?: ID, "chance"?: 0-1, "duration_s"?: number, "summon"?: ID enemy, "count"?: int, "level_offset"?: int }`
 
 **`status`** : `kind` (enum `buff`, `debuff`, `dot`, `cc`, `shield`), `duration_s` (> 0), `max_stacks` (int ≥ 1), `stack_rule` (enum `refresh`, `add_refresh`, `keep_highest`, `none`), `tick_s` (R si `dot`), `modifiers` (array<{`stat`, `kind`: `flat` ou `percent`, `value`}>), `boss_duration_mult` (O), `immunity_after_s` (O), `converts_to` (O, {`at_stacks`, `status`}), `icon` (R).
 
