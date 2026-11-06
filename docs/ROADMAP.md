@@ -9,8 +9,8 @@
 |---|---|---|---|
 | 1 | Fondations | **En cours** | - |
 | 2 | Monde | **Clos avec réserves** (2.8, 2.9) | 1 |
-| 3 | Combat | **Clos avec réserves** (3.7, 3.8, 3.9, 3.12 tablette) | 1 (simulation) ; 2 (combat dans la scène) |
-| 4 | Progression | **En cours** (moteur fait, écrans en cours) | 3 |
+| 3 | Combat | **Clos avec réserves** (3.7, 3.8, 3.9) | 1 (simulation) ; 2 (combat dans la scène) |
+| 4 | Progression | **Clos avec réserves** (4.7 E2E, effets de combat restants) | 3 |
 | 5 | Idle | À faire | 3, 4 |
 | 6 | Contenu | À faire | 2, 3, 4, 5 |
 | 7 | Finition | À faire | 6 |
@@ -141,7 +141,7 @@ Règle commune à tous les jalons : **aucune interaction factice**. Un bouton vi
 | 3.8 | Partiel | ×2 vérifié en E2E desktop et mobile ; le refus de ×4 par le boss est vérifié en unitaire (`test_combat_view_speed.gd`). Sur tablette le rapport ×2/×1 n'est pas mesurable : à ~0,5 i/s en rendu logiciel, le plafond de 40 pas par image s'applique aux deux vitesses |
 | 3.9 | Fait en unitaire | `test_combat_mechanics.gd` (Zoltraak interrompt la lanterne) ; pas d'E2E |
 | 3.10 | Fait | `test_combat_mechanics.gd` (phases, enrage à 300 s) |
-| 3.12 | Fait desktop et mobile | Tablette : journal masqué sous 1 100 px de large ; correctif (journal replié derrière un bouton) en cours avec les écrans du jalon 4 |
+| 3.12 | Fait | `combat.spec.ts`, 3 profils (sur tablette, journal replié derrière un bouton sous 1 100 px de large, `4f2567c`) |
 | 3.13 | Fait | `combat_touch.spec.ts` mobile et tablette (boutons ≥ 48 px CSS après le correctif `212227d`) |
 
 Défauts connus : une seule animation de lancer pour Fern ; lisibilité de la tête de la sentinelle ; clips d'attaque et de mort de Morvaine ; sorts affichés par leurs initiales tant qu'il n'y a pas d'icônes ; export web d'environ 45 Mo ; Firefox non testé.
@@ -166,6 +166,21 @@ Défauts connus : une seule animation de lancer pour Fern ; lisibilité de la t�
 | 4.8 | Parcours E2E : gagner un combat → objet au sol → « Équiper » → la statistique affichée change → « Améliorer » à la forge → sauvegarde → rechargement → l'état est identique | E2E |
 | 4.9 | La comparaison vert/rouge est juste sur 20 paires d'objets témoins | unitaire |
 | 4.10 | Tous les boutons des écrans de progression sont fonctionnels ; un bouton désactivé affiche sa raison (« Or insuffisant : 141 requis ») | E2E |
+
+**État au 2026-11-06** (191 tests unitaires, lint propre) :
+
+| # | État | Preuve ou reste à faire |
+|---|---|---|
+| 4.1 | Fait | `test_progression.gd` (la table de §12 fait foi ; la formule s'en écarte de ±20 XP aux niveaux 8, 9, 18, 19) |
+| 4.2, 4.3 | Fait | `test_loot.gd` (100 000 tirages par source, aucun doublon d'affixe ni de groupe) |
+| 4.4, 4.9 | Fait | `test_equipment.gd`, `test_comparison.gd` (20 paires témoins) |
+| 4.5 | Fait | `test_forge.gd` + `progression.spec.ts` (amélioration, sauvegarde, rechargement) |
+| 4.6 | Fait | `test_grimoire.gd` |
+| 4.7 | Fait en unitaire | `test_inventory.gd` ; pas encore d'E2E sac plein |
+| 4.8 | Fait desktop | `progression.spec.ts` ; mobile et tablette non lancés |
+| 4.10 | Fait desktop | `progression.spec.ts` + `test_progression_screens.gd` |
+
+Reste : la rune Écho, les effets légendaires, la Fleur pressée et la Cloche de cendre sont dans les données et le moteur de progression, mais la simulation de combat ne les joue pas encore. La « puissance estimée » (GDD §11) attend une formule du game-designer. Les artefacts s'ouvrent au niveau 6 sans quête, en attendant les quêtes.
 
 ---
 
