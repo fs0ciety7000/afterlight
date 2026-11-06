@@ -39,7 +39,7 @@ func save_now() -> bool:
 	if not GameState.has_game():
 		return false
 	var now := GameState.now_unix()
-	GameState.data["meta"]["last_active_at"] = now
+	GameState.mark_active(now)
 	var r := store.write(GameState.data, now)
 	if r["ok"]:
 		last_saved_at = now
@@ -127,7 +127,7 @@ func import_text(text: String) -> void:
 
 ## Applies a decoded import after the player confirmed it.
 func apply_import(decoded: Dictionary) -> bool:
-	GameState.adopt(decoded["state"])
+	GameState.adopt(decoded["state"], false)
 	GameState.dirty = true
 	return save_now()
 

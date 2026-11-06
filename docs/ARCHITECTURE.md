@@ -56,7 +56,7 @@
 - Une graine par usage (`combat`, `loot`, `offline`), dérivée de la graine de partie et d'un compteur, pour qu'un tirage de butin n'en décale pas un autre.
 - La simulation de combat avance par tics fixes (`TICK_SECONDS`), indépendants du nombre d'images par seconde. Vitesse ×2 / ×4 = plus de tics par image, pas des tics plus longs.
 
-## État de la partie (format v3)
+## État de la partie (format v4)
 
 Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour être sérialisé tel quel :
 
@@ -73,7 +73,8 @@ Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour
 | `world` | `region_id`, `location_id`, `unlocked_regions`, `discovered_locations` |
 | `progress` | `cleared_encounters`, `quests`, `bestiary`, `discoveries` |
 | `farming` | rencontre farmée hors ligne (`encounter_id`) ou `""` |
-| `rng` | compteurs par flux (`combat`, `item` pour les `uid` d'objets) |
+| `offline` | `pending` : `[]` ou `[résumé]`, le résumé hors ligne pas encore récupéré (forme : `OfflineCalc`, schéma : `StateSchema.offline_summary_spec`) |
+| `rng` | compteurs par flux (`combat` pour les combats de terrain et de « Chasser ici », `item` pour les `uid` d'objets) |
 
 Les réglages (taille du texte, animations réduites, volumes) sont à part, dans `user://settings.cfg` : ils ne voyagent pas avec une sauvegarde exportée.
 
@@ -249,3 +250,15 @@ Code : `game/engine/progression/` (moteur pur) et `game/state/progression_api.gd
 | `CombatOutcome` | Applique `encounter_completed` : XP, or, matériaux, butin, consommables utilisés, lignes de résumé |
 
 Chaque action rend `ActionResult` : `{ok, error, params, state, ...}`. Un refus porte une clé `error.*` de `strings.csv` et ses paramètres (`{"required": 141}`), que `GameState.reason_text(r)` traduit (« Or insuffisant : 141 requis »). Les devis (`*_quote`) ont la même forme et ne changent rien : un bouton désactivé affiche leur raison.
+
+## Idle (jalon 5)
+
+Code : `game/engine/idle/` (moteur pur), constantes `game/engine/balance/offline.gd` (GAME_BALANCE §20).
+
+| Module | Rôle |
+|---|---|
+| `OfflineModel` | Modèle analytique d'un combat : rotation de chasse (tactiques par défaut), DPS, salve d'ouverture, PV effectifs, `clear_time`, dégâts subis, survie. Ne crée jamais de `CombatSim` |
+| `OfflineCalc` | Éligibilité et devis de la chasse hors ligne, calcul d'une absence (résumé), récupération (une seule fois), lignes du résumé |
+| `HuntLoop` | « Chasser ici » : vérification, démarrage (devient la chasse hors ligne si elle est éligible), réglage du combat suivant (graine du compteur `combat`, jamais de premier kill), arrêt à la défaite |
+
+Horloge : le moteur reçoit `now_unix`. `GameState.now_unix()` lit `Time` et y ajoute `debug_clock_offset_s` seulement quand le canal de test est actif (`?test=1`, `UiProbe` le règle depuis `&clock_offset_s=<n>`). Le résumé est calculé à l'adoption d'une sauvegarde chargée (`GameState.adopt`), pas à l'import, puis gardé dans `offline.pending` jusqu'à « Récupérer ». `CombatSim.ticks_total` compte les ticks de toutes les simulations : le test du critère 5.2 vérifie qu'il ne bouge pas.

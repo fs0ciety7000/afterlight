@@ -21,6 +21,11 @@ func _ready() -> void:
 		"new URLSearchParams(window.location.search).get('test') || ''", true
 	)
 	if str(flag) == "1":
+		GameState.test_channel = true
+		var offset: Variant = JavaScriptBridge.eval(
+			"new URLSearchParams(window.location.search).get('clock_offset_s') || '0'", true
+		)
+		GameState.debug_clock_offset_s = int(str(offset))
 		JavaScriptBridge.eval(
 			"window.__afterlightSetTest = (cb) => { window.__afterlightTest = (n) => cb(n); };",
 			true
