@@ -46,6 +46,8 @@ func _ready() -> void:
 	var import := Kit.button(tr("ui.menu.import"), false, "title.import")
 	import.pressed.connect(func() -> void: SaveService.request_import(self))
 	col.add_child(import)
+	# Places and models arrive with the web content pack (ContentPack).
+	col.add_child(ContentGate.create([_continue, new_game, import] as Array[BaseButton]))
 	var settings := Kit.button(tr("ui.menu.settings"), false, "title.settings")
 	settings.pressed.connect(func() -> void: Router.go_to("settings"))
 	col.add_child(settings)

@@ -1092,3 +1092,13 @@ ui.settings.volume.ui,Interface
 ui.settings.volume.ambience,Ambiance
 ui.settings.sound_hint,"Le son démarre au premier clic ou à la première touche, comme l'exigent les navigateurs. Les sons importants (attaque ennemie, Sceau de cendre, cloche) sont aussi sous-titrés."
 ui.settings.volume_pct,{pct} %
+ui.content.loading,Chargement du monde : {percent} %
+ui.content.waiting,« Continuer » et « Nouvelle partie » s'activent dès que le monde est chargé.
+ui.content.failed,"Le monde n'a pas pu être chargé : {reason}. Vérifiez la connexion, puis réessayez."
+ui.content.retry,Réessayer
+ui.content.error.network,pas de réponse du serveur
+ui.content.error.http,erreur {code} du serveur
+ui.content.error.manifest,description du contenu illisible
+ui.content.error.incomplete,téléchargement incomplet
+ui.content.error.mount,fichier du monde illisible
+ui.content.error.missing,fichier du monde absent

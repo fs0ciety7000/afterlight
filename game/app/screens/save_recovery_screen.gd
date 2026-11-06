@@ -28,6 +28,7 @@ func _ready() -> void:
 		Kit.label(tr("ui.recovery.body").format({"reason": tr("error.save." + code)}), "", true)
 	)
 
+	var gated: Array[BaseButton] = []
 	var backup: Dictionary = _boot.get("backup", {})
 	if not backup.is_empty() and backup["ok"]:
 		var state: Dictionary = backup["state"]
@@ -35,6 +36,7 @@ func _ready() -> void:
 		var restore := Kit.button(tr("ui.recovery.restore"), true, "recovery.restore")
 		restore.pressed.connect(_on_restore)
 		col.add_child(restore)
+		gated.append(restore)
 		(
 			col
 			. add_child(
@@ -66,6 +68,8 @@ func _ready() -> void:
 	var new_game := Kit.button(tr("ui.recovery.new_game"), false, "recovery.new_game")
 	new_game.pressed.connect(_on_new_game)
 	col.add_child(new_game)
+	gated.append(new_game)
+	col.add_child(ContentGate.create(gated))
 	_status = Kit.label("", "MutedLabel", true)
 	col.add_child(_status)
 

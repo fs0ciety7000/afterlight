@@ -21,6 +21,8 @@ const SCREENS := {
 	"save_recovery": "res://game/app/screens/save_recovery_screen.gd",
 	"content_error": "res://game/app/screens/content_error_screen.gd",
 }
+## Screens that draw places or models: they wait for the web content pack.
+const NEEDS_CONTENT := ["explore"]
 const FADE_SECONDS := 0.16  # x2 (out + in) = 320 ms, DESIGN.md
 
 var current_id := ""
@@ -42,6 +44,11 @@ func attach(host: Control, veil: ColorRect, world: Node3D) -> void:
 
 func go_to(screen_id: String, params: Dictionary = {}, remember: bool = true) -> void:
 	assert(SCREENS.has(screen_id), "unknown screen %s" % screen_id)
+	if screen_id in NEEDS_CONTENT and not ContentPack.is_ready():
+		# Safety net: the title gates its buttons until the pack is mounted.
+		push_warning("%s needs the content pack, back to the title" % screen_id)
+		screen_id = "title"
+		params = {}
 	SaveService.save_if_dirty()
 	if remember and current_id != "":
 		_history.append(current_id)
