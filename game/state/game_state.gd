@@ -16,6 +16,10 @@ var dirty := false
 var runtime_position: Variant = null
 ## Inventory, forge, grimoire, runes, artifacts and shop actions.
 var progression := ProgressionApi.new(self)
+## Test channel only (`?test=1`, see UiProbe.test_handlers): the next won
+## encounter drops at least one item, so E2E runs do not hang on the 25 %
+## drop chance of a field pack.
+var test_force_item_drop := false
 
 
 func has_game() -> bool:
@@ -60,10 +64,41 @@ func travel(location_id: String, spawn: String) -> String:
 ## Applies a finished encounter (CombatSim's encounter_completed event).
 ## Returns the summary shown on the victory screen.
 func apply_combat_result(completed: Dictionary) -> Dictionary:
+	if test_force_item_drop and completed.get("result", "") == "victory":
+		test_force_item_drop = false
+		completed = _with_test_item(completed)
 	var r := CombatOutcome.apply(data, completed, Content.index())
 	data = r["state"]
 	mark_changed()
 	return r["summary"]
+
+
+## Adds one seeded item to the rewards of a won encounter that dropped none.
+func _with_test_item(completed: Dictionary) -> Dictionary:
+	var out := completed.duplicate(true)
+	var rewards: Dictionary = out.get("rewards", {})
+	if not rewards.get("items", []).is_empty():
+		return out
+	var counter := int(data["rng"].get("item", 0))
+	var rng := SeededRng.new(SeededRng.derive_seed(int(data["meta"]["seed"]), "test_item", counter))
+	var level := int(data["characters"][data["party"][0]]["level"])
+	var item := ItemFactory.roll_item(rng, Content.index(), "normal", level)
+	if not item.is_empty():
+		rewards["items"] = [item]
+	out["rewards"] = rewards
+	return out
+
+
+## Test channel only: adds gold and materials, then saves (E2E forge runs).
+func test_grant(gold: int, materials: Dictionary) -> void:
+	if not has_game():
+		return
+	var next := data.duplicate(true)
+	next["wallet"]["gold"] = int(next["wallet"]["gold"]) + gold
+	for id in materials:
+		var have := int(next["wallet"]["materials"].get(id, 0))
+		next["wallet"]["materials"][id] = have + int(materials[id])
+	commit_action(next)
 
 
 ## Translated text of a refusal or summary line: tr(key) with its params,

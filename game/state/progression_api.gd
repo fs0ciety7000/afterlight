@@ -7,11 +7,14 @@ extends RefCounted
 ## it dirty and saves it. A refusal's `error` is a translation key filled by
 ## `params`: GameState.reason_text(result) gives the French text.
 
+## Read-only views for the progression screens (wallet, slots, spells...).
+var views: ProgressionViews
 var _owner: Node
 
 
 func _init(owner: Node) -> void:
 	_owner = owner
+	views = ProgressionViews.new(owner)
 
 
 func _data() -> Dictionary:
@@ -157,6 +160,30 @@ func buy_quote(shop_id: String, consumable_id: String, qty: int = 1) -> Dictiona
 
 func buy(shop_id: String, consumable_id: String, qty: int = 1) -> Dictionary:
 	return _commit(Merchant.buy(_data(), shop_id, consumable_id, qty, Content.index()))
+
+
+func unequip_quote(slot: String) -> Dictionary:
+	return _peek(Equipment.unequip(_data(), leader(), slot))
+
+
+func salvage_items_quote(uids: Array) -> Dictionary:
+	return _peek(Inventory.salvage(_data(), uids))
+
+
+func socket_quote(spell_id: String, rune_id: String, tier: int) -> Dictionary:
+	return _peek(Grimoire.socket(_data(), leader(), spell_id, rune_id, tier, Content.index()))
+
+
+func salvage_rune_quote(rune_id: String, tier: int) -> Dictionary:
+	return _peek(RuneRules.salvage(_data(), rune_id, tier, 1))
+
+
+func artifact_equip_quote(index: int, artifact_id: String) -> Dictionary:
+	return _peek(ArtifactRules.equip(_data(), leader(), index, artifact_id))
+
+
+func artifact_unequip_quote(index: int) -> Dictionary:
+	return _peek(ArtifactRules.unequip(_data(), leader(), index))
 
 
 ## CombatSim setup fields for the saved party: {party: [entry], consumables}.
