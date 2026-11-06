@@ -6,11 +6,14 @@ extends Node3D
 ##   ... -- --location=whispering_wood --shots  (writes art/source/env/shot_*.jpg, perf_*.json)
 ##   --distance=11 : gameplay camera distance for the shots (default: CameraRig's first zoom step)
 ##   --tag=before  : file name suffix (shot_<name>_<tag>.jpg, perf_<location>_<tag>.json)
+##   --out=res://art/source/env/lantern_mire/ : folder for the shots (default art/source/env/)
+##   --top         : also writes an orthographic top-down view of the place (top_<location>.jpg)
 ## Keys: arrows move Fern, Q / E turn the camera, Z zoom, P print the render monitors.
 
 const LOCATIONS := {
 	"aubelin": "res://game/world/locations/aubelin.tscn",
 	"whispering_wood": "res://game/world/locations/whispering_wood.tscn",
+	"lantern_mire": "res://game/world/locations/lantern_mire.tscn",
 }
 const FERN := "res://assets/models/characters/fern/fern.glb"
 const SHOT_DIR := "res://art/source/env/"
@@ -30,6 +33,17 @@ const SHOTS := {
 		["wood_path", Vector2(4.0, 2.0), -20.0, 140.0, false],
 		["wood_vista", Vector2(8.0, 12.0), -30.0, 160.0, true],
 	],
+	"lantern_mire":
+	[
+		["mire_arrival", Vector2(-31.0, 6.0), 0.0, 90.0, false],
+		["mire_pontoon", Vector2(-9.0, 5.5), 0.0, 90.0, false],
+		["mire_beacon", Vector2(-5.0, 13.5), 0.0, 160.0, false],
+		["mire_ferry", Vector2(-28.0, -20.0), 0.0, 200.0, false],
+		["mire_east", Vector2(27.0, 4.0), 0.0, 180.0, false],
+		["mire_chest", Vector2(32.5, -24.0), 0.0, 170.0, false],
+		["mire_north", Vector2(4.0, -31.0), 0.0, 180.0, false],
+		["mire_vista", Vector2(-12.0, 14.0), -15.0, 160.0, true],
+	],
 }
 
 var location := "aubelin"
@@ -38,6 +52,7 @@ var rig: CameraRig
 var _vista := false
 var _distance := 0.0
 var _tag := ""
+var _out := SHOT_DIR
 
 
 func _ready() -> void:
@@ -48,6 +63,8 @@ func _ready() -> void:
 			_distance = a.get_slice("=", 1).to_float()
 		elif a.begins_with("--tag="):
 			_tag = "_" + a.get_slice("=", 1)
+		elif a.begins_with("--out="):
+			_out = a.get_slice("=", 1)
 	add_child((load(LOCATIONS[location]) as PackedScene).instantiate())
 	fern = (load(FERN) as PackedScene).instantiate()
 	add_child(fern)
@@ -150,14 +167,34 @@ func _take_shots() -> void:
 			_place_at_distance(_distance)
 		await _frames(8)
 		var img := get_viewport().get_texture().get_image()
-		var path := ProjectSettings.globalize_path(SHOT_DIR + "shot_%s%s.jpg" % [s[0], _tag])
+		var path := ProjectSettings.globalize_path(_out + "shot_%s%s.jpg" % [s[0], _tag])
 		img.save_jpg(path, 0.88)
 		report[s[0]] = _monitors()
 		print(s[0], " ", report[s[0]])
 	var f := FileAccess.open(
-		ProjectSettings.globalize_path(SHOT_DIR + "perf_%s%s.json" % [location, _tag]),
-		FileAccess.WRITE
+		ProjectSettings.globalize_path(_out + "perf_%s%s.json" % [location, _tag]), FileAccess.WRITE
 	)
 	f.store_string(JSON.stringify(report, "\t"))
 	f.close()
+	if "--top" in OS.get_cmdline_user_args():
+		await _top_down()
 	get_tree().quit()
+
+
+func _top_down() -> void:
+	# whole place seen from above (orthographic, north up) to review the layout
+	_vista = false
+	rig.set_process(false)
+	var cam := rig.camera
+	cam.projection = Camera3D.PROJECTION_ORTHOGONAL
+	cam.size = 84.0
+	cam.far = 200.0
+	cam.global_transform = Transform3D(
+		Basis.from_euler(Vector3(-PI * 0.5, 0, 0)), Vector3(0, 80, 0)
+	)
+	for node in find_children("*", "WorldEnvironment", true, false):
+		var env: Environment = (node as WorldEnvironment).environment
+		env.fog_enabled = false
+	await _frames(8)
+	var img := get_viewport().get_texture().get_image()
+	img.save_jpg(ProjectSettings.globalize_path(_out + "top_%s%s.jpg" % [location, _tag]), 0.88)
