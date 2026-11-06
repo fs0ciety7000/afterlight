@@ -512,10 +512,10 @@ Constat (`fullrun.spec.ts`, banc §22.4) : (1) aucune interface ne permet de ré
 | T5 (précision) | Niveau 11-12 | Après une défaite par le Sceau, applique-t-il le conseil ou règle-t-il la Barrière avant le 2e essai ? | ≥ 50 % ; victoire en ≤ 3 essais |
 | T10 Début | Nouveau, sans aide | Équipe-t-il le bâton ? Entre-t-il dans `_04` sous le niveau 3 malgré l'avertissement ; s'il perd, comprend-il pourquoi ? | Bâton équipé dans les 30 s ; aucune défaite au Bois au niveau de la rencontre |
 
-**Questions ouvertes pour le propriétaire** :
+**Réponses du propriétaire (2026-11-06)** : oui aux quatre.
 
-1. **Battre le boss en jouant passif** (décision 28) : accepter qu'un joueur qui n'ouvre jamais les tactiques gagne à ≥ 70 % au niveau 16 (jour 5-6 environ) ? Sinon, il reste bloqué jusqu'à ce qu'il lise un conseil.
-2. **Consommables automatiques** : ajouter une tactique « Infusion de soin : Manuel / Auto si PV < 35 % » ? Pas décidé ici (hors du problème constaté) ; ce serait le premier levier si `idle_tuned` reste sous sa cible.
-3. **Ligne diégétique** : doubler `tip.campfire_tactics` d'une ligne de Fern (`dialogue.fern_campfire.line_02`, proposition originale : « Ce cadran sent la cendre. Si elle frappe fort, je garderai ma barrière pour ce coup-là. ») ? À relire avec les autres dialogues (critère 6.2).
-4. **Tactiques dès le niveau 1** plutôt qu'au niveau 2 ? Proposé : niveau 2, pour garder les deux premières minutes simples.
+1. **Boss en jouant passif** : accepté, ≥ 70 % au niveau 16 sans ouvrir les tactiques.
+2. **Consommables automatiques** : ajoutés. Tactique « Infusion de soin : Manuel / Auto si PV < 35 % » (et l'Élixir de mana sur le même modèle, seuil de mana), défaut Manuel, réglable dans l'écran des tactiques et utilisable par le préréglage Morvaine.
+3. **Ligne de Fern au feu de camp** : ajoutée (`dialogue.fern_campfire.line_02`, texte proposé ci-dessus), à relire avec les autres dialogues (6.2).
+4. **Tactiques dès le niveau 1** : oui, l'écran est disponible dès le début de partie.
 
