@@ -12,7 +12,7 @@
 | 3 | Combat | **Clos avec réserves** (3.7, 3.8, 3.9) | 1 (simulation) ; 2 (combat dans la scène) |
 | 4 | Progression | **Clos avec réserves** (4.7 E2E, effets de combat restants) | 3 |
 | 5 | Idle | **Clos avec réserves** (E2E desktop seulement) | 3, 4 |
-| 6 | Contenu | **En cours** (spécification, moteur et données faits ; scènes et écrans en cours) | 2, 3, 4, 5 |
+| 6 | Contenu | **En cours** (jouable ; parcours complet 6.3 et tests de jeu 6.8 à faire) | 2, 3, 4, 5 |
 | 7 | Finition | À faire | 6 |
 | A | Piste art (parallèle) | **En cours** (Fern v1, ennemis, décor, VFX) | Rien pour démarrer ; alimente 2, 3, 6, 7 |
 
@@ -232,6 +232,21 @@ Reste : E2E mobile et tablette du jalon 5 non lancés.
 | 6.6 | Quêtes : chaque objectif avance avec le bon événement ; les états survivent à un rechargement en cours de quête | unitaire + E2E |
 | 6.7 | Seuils d'équilibrage (§22.1) toujours tenus avec les données finales | unitaire (sim) |
 | 6.8 | Les tests de jeu T1 à T8 du GDD sont menés ; les observations sont notées et les `[H]` concernés passent à `[V]` ou sont corrigés | test de jeu |
+
+**État au 2026-11-06** (315 tests unitaires, 28/28 E2E desktop) :
+
+| # | État | Preuve ou reste à faire |
+|---|---|---|
+| 6.1 | Fait | `test_content.gd` (V1-V20, un témoin par règle) |
+| 6.2 | Partiel | Origines canon / original séparées ; relecture des `canon_note` et des dialogues par le propriétaire à faire |
+| 6.3 | À faire | Parcours complet jusqu'au boss et à la cloche : raccordé, pas encore joué de bout en bout |
+| 6.4 | Fait desktop | `story.spec.ts` (premier combat < 60 s, introduction passée) |
+| 6.5 | Fait desktop | `story.spec.ts` + tests unitaires du bestiaire et des découvertes |
+| 6.6 | Fait desktop | `story.spec.ts` + `test_quests` (objectif, rechargement) |
+| 6.7 | Fait | banc : normales 100 %, alpha `script_optimal` 100 %, Morvaine `idle` 0 % / `script_optimal` 87 % ; `QUEST_XP_MAIN` 1,1 (provisoire) |
+| 6.8 | À faire | Tests de jeu T1-T8 |
+
+Reste : la salle du Cadran reste au stade de maquette (passe de décor et de lumière au jalon 7) ; coffres et herbes sans modèle ; E2E mobile et tablette des jalons 5 et 6 non relancés.
 
 ---
 
