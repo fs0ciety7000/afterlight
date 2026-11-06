@@ -1,5 +1,5 @@
 // Minimal static server for the Godot web export (no dependencies).
-// Gzips .wasm/.js/.html/.pck when the browser accepts it, like any static host would: the
+// Gzips .wasm/.js/.html/.pck (index.pck, then content.pck fetched by the title) when the browser accepts it, like any static host would: the
 // download a player waits for (docs/ARCHITECTURE.md "Taille de l'export") is the gzipped size.
 import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';

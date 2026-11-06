@@ -8,7 +8,7 @@
     "test": "pnpm godot:import && godot --headless --path . --script res://tools/test_runner.gd",
     "lint": "godot --headless --path . --script res://tools/check_scripts.gd && gdlint game tools tests/unit && gdformat --check game tools tests/unit",
     "format": "gdformat game tools tests/unit",
-    "build:web": "mkdir -p build/web && godot --headless --path . --export-release Web build/web/index.html",
+    "build:web": "mkdir -p build/web && godot --headless --path . --export-release Web build/web/index.html && godot --headless --path . --export-pack \"Web content\" build/web/content.pck && node tools/web_content.mjs build/web",
     "serve": "node tools/serve.mjs build/web 8060",
     "e2e": "playwright test --trace off"
   },
