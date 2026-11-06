@@ -2,8 +2,8 @@ class_name ContentRules
 extends RefCounted
 ## Cross-entity validation rules (docs/CONTENT_PIPELINE.md §8). Structural
 ## rules (V1-V4, V6-V8, V19) are applied by ContentLoader while reading.
-## Not yet enforced: V15 (quest graph) and V20 (save compatibility); they
-## land with the milestones that introduce quests (see docs/ROADMAP.md).
+## V20 (save compatibility) needs a save: check_save_ids(), run by the tests
+## on the reference save.
 
 const CONDITION_KEYS := {
 	"start": "",
@@ -12,7 +12,12 @@ const CONDITION_KEYS := {
 	"level_at_least": "",
 	"item_owned": "item",
 	"all": "",
+	"quest_state": "",
+	"objective": "",
+	"discovery_found": "discovery",
 }
+## Reward unlock tokens that are not entity ids (quest rewards.unlocks).
+const UNLOCK_TOKENS := ["artifact_slot_1"]
 const LOOT_KIND_TYPES := {
 	"material": ["material", "currency"],
 	"item": ["item"],
@@ -72,7 +77,18 @@ static func check(ctx: Dictionary, translations: Dictionary) -> void:
 			"dungeon":
 				_check_dungeon(e, f)
 				_check_condition(e["unlock"], by_id, f)
+			"discovery":
+				_check_discovery(e, by_id, f)
+			"npc":
+				for entry in e["dialogues"]:
+					if not entry["condition"].is_empty():
+						_check_condition(entry["condition"], by_id, f)
+			"dialogue":
+				for line in e["lines"]:
+					if line.has("condition"):
+						_check_condition(line["condition"], by_id, f)
 			"encounter":
+				_check_materials(e["first_clear_rewards"].get("materials", {}), by_id, f)
 				if e["kind"] in ["boss", "elite"] and e["offline_eligible"]:
 					f.call("V10", "%s encounters cannot be offline_eligible" % e["kind"])
 				if e["kind"] == "boss" and e["speed_cap"] == 4:
@@ -80,9 +96,9 @@ static func check(ctx: Dictionary, translations: Dictionary) -> void:
 			"loot_table":
 				_check_loot(e, by_id, f)
 			"quest":
-				for c in e["prerequisites"]:
-					_check_condition(c, by_id, f)
-	_check_world_reachability(ctx)
+				_check_quest(e, by_id, f)
+	_check_quest_cycles(ctx)
+	_check_progression(ctx)
 	var starts: Array = ctx["by_type"].get("start", [])
 	if starts.size() != 1:
 		ContentLoader.fail(
@@ -272,52 +288,320 @@ static func _check_condition(c: Variant, by_id: Dictionary, f: Callable) -> void
 			else:
 				for sub in value:
 					_check_condition(sub, by_id, f)
+		"quest_state":
+			if typeof(value) != TYPE_DICTIONARY or not value.has("id") or not value.has("state"):
+				f.call("V7", "quest_state needs {id, state}")
+			elif not ContentSchemas.QUEST_STATES.has(str(value["state"])):
+				f.call("V7", "quest_state: unknown state '%s'" % value["state"])
+			else:
+				_check_typed_ref("quest_state", str(value["id"]), "quest", by_id, f)
+		"objective":
+			if (
+				typeof(value) != TYPE_DICTIONARY
+				or not value.has("quest")
+				or not value.has("id")
+				or typeof(value.get("done")) != TYPE_BOOL
+			):
+				f.call("V7", "objective needs {quest, id, done}")
+			elif _check_typed_ref("objective", str(value["quest"]), "quest", by_id, f):
+				var ids: Array = by_id[str(value["quest"])]["objectives"].map(
+					func(o: Dictionary) -> String: return o["id"]
+				)
+				if not ids.has(str(value["id"])):
+					f.call(
+						"V6",
+						"objective: '%s' has no objective '%s'" % [value["quest"], value["id"]]
+					)
 		_:
-			var want: String = CONDITION_KEYS[key]
-			if not by_id.has(str(value)):
-				f.call("V6", "%s: unknown %s '%s'" % [key, want, value])
-			elif by_id[str(value)]["_type"] != want:
-				f.call("V6", "%s: '%s' is not a %s" % [key, value, want])
+			_check_typed_ref(key, str(value), CONDITION_KEYS[key], by_id, f)
 
 
-## V16: every location must be reachable from the start, following fog
-## reveals (a location must be revealed by the start or by a reachable
-## location) and unlock conditions that can be satisfied.
-static func _check_world_reachability(ctx: Dictionary) -> void:
+static func _check_typed_ref(
+	key: String, id: String, want: String, by_id: Dictionary, f: Callable
+) -> bool:
+	if not by_id.has(id):
+		f.call("V6", "%s: unknown %s '%s'" % [key, want, id])
+		return false
+	if by_id[id]["_type"] != want:
+		f.call("V6", "%s: '%s' is not a %s" % [key, id, want])
+		return false
+	return true
+
+
+## {material id: qty} maps hold ids as keys, which the schema cannot follow.
+static func _check_materials(materials: Dictionary, by_id: Dictionary, f: Callable) -> void:
+	for id in materials:
+		if not by_id.has(id) or not by_id[id]["_type"] in ["material", "currency"]:
+			f.call("V6", "'%s' is not a material" % id)
+
+
+static func _check_discovery(e: Dictionary, by_id: Dictionary, f: Callable) -> void:
+	_check_materials(e["reward"]["materials"], by_id, f)
+	if not e["available_if"].is_empty():
+		_check_condition(e["available_if"], by_id, f)
+	if float(e["fog_radius"]) > 0.0 and e["map_pos"].is_empty():
+		f.call("V7", "fog_radius needs map_pos")
+	if e["counts_for_location"] and e["map_pos"].is_empty():
+		f.call("V7", "a counted discovery needs map_pos (fog of the map)")
+
+
+## V15 (structure): objective events and targets, steps, rewards, daily fields.
+static func _check_quest(e: Dictionary, by_id: Dictionary, f: Callable) -> void:
+	for c in e["prerequisites"]:
+		_check_condition(c, by_id, f)
+	var daily: bool = e["kind"] == "daily"
+	if not daily and not e.has("level"):
+		f.call("V7", "level is required for a %s quest" % e["kind"])
+	if daily and (e["tier"] == "" or not e.has("weight")):
+		f.call("V7", "daily quests need tier and weight")
+	var ids := {}
+	var steps := {}
+	for o in e["objectives"]:
+		if ids.has(o["id"]):
+			f.call("V15", "objective id '%s' is used twice" % o["id"])
+		ids[o["id"]] = true
+		steps[int(o["step"])] = true
+		var allowed: Array = ContentSchemas.OBJECTIVE_TARGETS[o["event"]]
+		var target: String = o["target"]
+		if by_id.has(target) and not allowed.has(by_id[target]["_type"]):
+			f.call(
+				"V15",
+				(
+					"objective '%s': %s cannot target a %s"
+					% [o["id"], o["event"], by_id[target]["_type"]]
+				)
+			)
+		if o["source"] != "" and not o["event"] in ["CastInterrupted", "StatusApplied"]:
+			f.call("V15", "objective '%s': source only applies to casts and statuses" % o["id"])
+	for s in range(1, steps.size() + 1):
+		if not steps.has(s):
+			f.call("V15", "objective steps must run 1..n without gaps")
+			break
+	var rewards: Dictionary = e["rewards"]
+	_check_materials(rewards["materials"], by_id, f)
+	for token in rewards["unlocks"]:
+		var t := ContentSchemas.type_of_id(str(token))
+		if not UNLOCK_TOKENS.has(token) and not (by_id.has(token) and t in ["location", "dungeon"]):
+			f.call("V6", "unlocks '%s' is neither a location, a dungeon nor a known token" % token)
+
+
+## V15: quest prerequisites (quest_completed, through `all`) may not loop.
+static func _check_quest_cycles(ctx: Dictionary) -> void:
+	var edges := {}
+	for q in ctx["by_type"].get("quest", []):
+		var out := []
+		for c in q["prerequisites"]:
+			_quest_refs(c, out)
+		edges[q["id"]] = out
+	var ids := edges.keys()
+	ids.sort()
+	var done := {}
+	for id in ids:
+		var path: Array = []
+		if _has_cycle(id, edges, {}, done, path):
+			ContentLoader.fail(
+				ctx, "V15", ctx["files"][id], id, "prerequisites form a cycle: " + " > ".join(path)
+			)
+
+
+static func _quest_refs(c: Variant, out: Array) -> void:
+	if typeof(c) != TYPE_DICTIONARY or c.size() != 1:
+		return
+	var key: String = c.keys()[0]
+	if key == "quest_completed":
+		out.append(str(c[key]))
+	elif key == "all" and typeof(c[key]) == TYPE_ARRAY:
+		for sub in c[key]:
+			_quest_refs(sub, out)
+
+
+static func _has_cycle(
+	id: String, edges: Dictionary, stack: Dictionary, done: Dictionary, path: Array
+) -> bool:
+	if stack.has(id):
+		path.append(id)
+		return true
+	if done.has(id) or not edges.has(id):
+		return false
+	stack[id] = true
+	path.append(id)
+	for next in edges[id]:
+		if _has_cycle(next, edges, stack, done, path):
+			return true
+	stack.erase(id)
+	path.pop_back()
+	done[id] = true
+	return false
+
+
+## V15 and V16: walks the critical path from the start. A location is
+## reachable once revealed (start, fog_reveal of a reachable location, a
+## discovery found in one, or a completed quest's unlocks) and unlocked; a
+## dungeon once its location is reachable and it is unlocked; a quest is
+## completable once its prerequisites hold and every objective's target can
+## be reached or obtained. Every location must end reachable (V16) and every
+## main quest completable (V15).
+static func _check_progression(ctx: Dictionary) -> void:
 	var by_id: Dictionary = ctx["by_id"]
 	var starts: Array = ctx["by_type"].get("start", [])
 	if starts.size() != 1:
 		return
 	var start: Dictionary = starts[0]
-	var revealed := {start["location"]: true}
-	var reachable := {}
+	var reach := {
+		"revealed": {start["location"]: true},
+		"places": {},
+		"quests": {},
+		"materials": {},
+	}
+	for id in start.get("materials", {}):
+		reach["materials"][id] = true
 	var changed := true
 	while changed:
 		changed = false
 		for loc in ctx["by_type"].get("location", []):
 			var id: String = loc["id"]
-			if reachable.has(id) or not revealed.has(id):
+			if reach["places"].has(id) or not reach["revealed"].has(id):
 				continue
-			if _satisfiable(loc["unlock"], by_id, reachable, {}):
-				reachable[id] = true
-				for other in loc["fog_reveal"]:
-					revealed[other] = true
+			if _satisfiable(loc["unlock"], by_id, reach):
+				_reach_place(id, loc["fog_reveal"], ctx, reach)
 				changed = true
+		for d in ctx["by_type"].get("dungeon", []):
+			if reach["places"].has(d["id"]) or not reach["places"].has(d["location"]):
+				continue
+			if _satisfiable(d["unlock"], by_id, reach):
+				_reach_place(d["id"], [], ctx, reach)
+				changed = true
+		for q in ctx["by_type"].get("quest", []):
+			if reach["quests"].has(q["id"]) or not _quest_open(q, by_id, reach):
+				continue
+			reach["quests"][q["id"]] = true
+			for id in q["rewards"]["materials"]:
+				reach["materials"][id] = true
+			for id in q["rewards"]["artifacts"]:
+				reach["materials"][id] = true
+			for token in q["rewards"]["unlocks"]:
+				reach["revealed"][token] = true
+			changed = true
 	for loc in ctx["by_type"].get("location", []):
-		if not reachable.has(loc["id"]):
+		if not reach["places"].has(loc["id"]):
 			var why := (
-				"never revealed by fog_reveal"
-				if not revealed.has(loc["id"])
+				"never revealed (fog_reveal, discovery or quest unlocks)"
+				if not reach["revealed"].has(loc["id"])
 				else "unlock condition can never be met"
 			)
 			ContentLoader.fail(
 				ctx, "V16", ctx["files"][loc["id"]], loc["id"], "unreachable from the start: " + why
 			)
+	for q in ctx["by_type"].get("quest", []):
+		if q["kind"] == "main" and not reach["quests"].has(q["id"]):
+			ContentLoader.fail(
+				ctx,
+				"V15",
+				ctx["files"][q["id"]],
+				q["id"],
+				"main quest cannot be completed from the start: " + _blocker(q, by_id, reach)
+			)
 
 
-static func _satisfiable(
-	c: Dictionary, by_id: Dictionary, reachable: Dictionary, seen: Dictionary
-) -> bool:
+## Marks a place reachable: what it reveals, and what its encounters and
+## discoveries can give.
+static func _reach_place(id: String, fog: Array, ctx: Dictionary, reach: Dictionary) -> void:
+	reach["places"][id] = true
+	reach["revealed"][id] = true
+	for other in fog:
+		reach["revealed"][other] = true
+	var by_id: Dictionary = ctx["by_id"]
+	for enc in _place_encounters(id, ctx):
+		var table: Dictionary = by_id.get(enc.get("loot_table", ""), {})
+		for entry in table.get("entries", []):
+			if str(entry.get("ref", "")) != "":
+				reach["materials"][entry["ref"]] = true
+		for m in enc["first_clear_rewards"].get("materials", {}):
+			reach["materials"][m] = true
+	for disc in ctx["by_type"].get("discovery", []):
+		if disc["location"] != id:
+			continue
+		for other in disc["reveals"]:
+			reach["revealed"][other] = true
+		for m in disc["reward"]["materials"]:
+			reach["materials"][m] = true
+		for a in disc["reward"]["artifacts"]:
+			reach["materials"][a] = true
+
+
+## Encounters fought in a place: a location's own list, or a dungeon's rooms.
+static func _place_encounters(id: String, ctx: Dictionary) -> Array:
+	var by_id: Dictionary = ctx["by_id"]
+	var place: Dictionary = by_id.get(id, {})
+	var out := []
+	var ids: Array = place.get("encounters", []).duplicate()
+	for room in place.get("rooms", []):
+		if str(room.get("encounter", "")) != "":
+			ids.append(room["encounter"])
+	for enc_id in ids:
+		if by_id.has(enc_id):
+			out.append(by_id[enc_id])
+	return out
+
+
+static func _quest_open(q: Dictionary, by_id: Dictionary, reach: Dictionary) -> bool:
+	for c in q["prerequisites"]:
+		if not _satisfiable(c, by_id, reach):
+			return false
+	for o in q["objectives"]:
+		if not _target_reachable(o, by_id, reach):
+			return false
+	return true
+
+
+## Why a quest stays closed (first failing prerequisite or objective).
+static func _blocker(q: Dictionary, by_id: Dictionary, reach: Dictionary) -> String:
+	for c in q["prerequisites"]:
+		if not _satisfiable(c, by_id, reach):
+			return "prerequisite %s never holds" % JSON.stringify(c)
+	for o in q["objectives"]:
+		if not _target_reachable(o, by_id, reach):
+			return "objective '%s' (%s) cannot be reached" % [o["id"], o["target"]]
+	return "unknown"
+
+
+static func _target_reachable(o: Dictionary, by_id: Dictionary, reach: Dictionary) -> bool:
+	var target: String = o["target"]
+	var e: Dictionary = by_id.get(target, {})
+	match e.get("_type", ""):
+		"location", "dungeon":
+			return reach["places"].has(target)
+		"npc", "discovery":
+			return reach["places"].has(str(e["location"]))
+		"encounter":
+			if reach["places"].has(str(e["location"])) and _listed(target, e["location"], by_id):
+				return true
+			for place in reach["places"]:
+				for room in by_id.get(place, {}).get("rooms", []):
+					if room.get("encounter", "") == target:
+						return true
+			return false
+		"enemy":
+			for place in reach["places"]:
+				var pe: Dictionary = by_id.get(place, {})
+				var ids: Array = pe.get("encounters", []).duplicate()
+				for room in pe.get("rooms", []):
+					ids.append(str(room.get("encounter", "")))
+				for enc_id in ids:
+					for group in by_id.get(enc_id, {}).get("enemies", []):
+						if group["enemy"] == target:
+							return true
+			return false
+		"material", "currency", "artifact":
+			return reach["materials"].has(target)
+	return true
+
+
+static func _listed(encounter_id: String, location_id: String, by_id: Dictionary) -> bool:
+	return (by_id.get(location_id, {}).get("encounters", []) as Array).has(encounter_id)
+
+
+static func _satisfiable(c: Dictionary, by_id: Dictionary, reach: Dictionary) -> bool:
 	if c.is_empty():
 		return true
 	var key: String = c.keys()[0]
@@ -328,21 +612,70 @@ static func _satisfiable(
 		"level_at_least":
 			return int(value) <= BalanceProgression.LEVEL_CAP
 		"location_cleared":
-			return reachable.has(str(value))
+			return reach["places"].has(str(value))
 		"item_owned":
 			return by_id.has(str(value))
 		"quest_completed":
-			var quest_id := str(value)
-			if seen.has(quest_id) or not by_id.has(quest_id):
-				return false
-			seen[quest_id] = true
-			for pre in by_id[quest_id].get("prerequisites", []):
-				if not _satisfiable(pre, by_id, reachable, seen):
-					return false
+			return reach["quests"].has(str(value))
+		"quest_state":
+			if str(value.get("state", "")) in ["completed", "turned_in"]:
+				return reach["quests"].has(str(value.get("id", "")))
 			return true
+		"objective":
+			return true
+		"discovery_found":
+			return reach["places"].has(str(by_id.get(str(value), {}).get("location", "")))
 		"all":
 			for sub in value:
-				if not _satisfiable(sub, by_id, reachable, seen):
+				if not _satisfiable(sub, by_id, reach):
 					return false
 			return true
 	return false
+
+
+## V20: every id a reference save holds must still exist in the content, or
+## be listed in `retired` (ids removed with a save migration). Returns the
+## error lines ("V20 save <path> <id> ...").
+static func check_save_ids(
+	state: Dictionary, by_id: Dictionary, retired: Dictionary = {}
+) -> PackedStringArray:
+	var errors := PackedStringArray()
+	var seen := {}
+	_collect_ids(state, "$", seen)
+	var paths := seen.keys()
+	paths.sort()
+	for path in paths:
+		var id: String = seen[path]
+		if not by_id.has(id) and not retired.has(id):
+			errors.append(
+				(
+					"V20 save %s %s removed from the data without deprecated or a migration"
+					% [path, id]
+				)
+			)
+	return errors
+
+
+## Every string (or dictionary key) shaped like a content id, by path.
+static func _collect_ids(value: Variant, path: String, out: Dictionary) -> void:
+	match typeof(value):
+		TYPE_DICTIONARY:
+			for k in value:
+				if _is_content_id(str(k)):
+					out["%s{%s}" % [path, k]] = str(k)
+				_collect_ids(value[k], "%s.%s" % [path, k], out)
+		TYPE_ARRAY:
+			for i in value.size():
+				_collect_ids(value[i], "%s[%d]" % [path, i], out)
+		TYPE_STRING:
+			if _is_content_id(value):
+				out[path] = value
+
+
+static func _is_content_id(text: String) -> bool:
+	var prefix := text.get_slice(".", 0)
+	return (
+		text.contains(".")
+		and ContentSchemas.PREFIX_TO_TYPE.has(prefix)
+		and RegEx.create_from_string(ContentSchemas.ID_PATTERN).search(text) != null
+	)

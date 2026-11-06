@@ -199,20 +199,22 @@ Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités 
 |---|---|
 | `region` | `level_range` (R, [min, max]), `locations` (R, array<ID>), `hub` (R, ID de lieu), `map_texture` (R), `unlock` (R, `condition`) |
 | `location` | `region` (R), `kind` (R, `hub`, `field` ou `dungeon_entrance`), `level` (R sauf hub), `scene` (R, chemin `.tscn`), `map_pos` (R, [x, y] normalisé 0-1), `encounters` (O, array<ID>), `discoveries` (O), `exits` (O, array<{`to`: ID, `spawn`: string}>), `unlock` (R), `fog_reveal` (O, array<ID>), `npcs` (O) |
-| `dungeon` | `location` (R), `level` (R), `rooms` (R, array<{`id`, `kind`: `encounter`, `rest`, `elite`, `boss` ou `checkpoint`, `encounter`?: ID, `heal_pct`?: 0-1}>), `unlock` (R) |
-| `encounter` | `location` (R), `kind` (R, `normal`, `elite` ou `boss`), `level` (R), `enemies` (R, array<{`enemy`: ID, `count`: int ≥ 1, `level_offset`?: int}>), `loot_table` (R), `offline_eligible` (R, bool), `speed_cap` (R, 1, 2 ou 4), `first_clear_rewards` (O), `anchor` (R, nom du nœud dans la scène), `respawn_s` (O, défaut 60) |
+| `dungeon` | `location` (R), `level` (R), `scene` (R, chemin `.tscn`), `map_pos` (R, [x, y] 0-1), `rooms` (R, array<{`id`, `kind`: `encounter`, `rest`, `elite`, `boss` ou `checkpoint`, `encounter`?: ID, `heal_pct`?: 0-1}>), `unlock` (R) ; `desc_key` (O). Nom d'une salle : `<id>.room_<room_id>` |
+| `encounter` | `location` (R ; pour une salle de donjon, le lieu de l'entrée), `kind` (R, `normal`, `elite` ou `boss`), `level` (R), `enemies` (R, array<{`enemy`: ID, `count`: int ≥ 1, `level_offset`?: int}>), `loot_table` (R), `offline_eligible` (R, bool), `speed_cap` (R, 1, 2 ou 4), `first_clear_rewards` (O, {`materials`: {ID: qté}}, ajoutés au butin de la première victoire), `anchor` (R, nom du nœud dans la scène), `arena_center` (O, `contact` (défaut) ou `anchor` : l'arène est centrée sur l'ancre, salles de donjon), `respawn_s` (O, défaut 60) |
 | `loot_table` | `rarity_profile` (R, `normal`, `elite`, `boss`, `boss_first_kill` ou `chest`), `entries` (R, au moins 1, array<{`kind`: `gold`, `material`, `item`, `rune`, `artifact` ou `consumable`, `ref`?: ID (facultatif pour `item` et `rune` : base ou rune tirée au hasard), `chance`: 0-1, `qty`: [min, max], `per`: `enemy` ou `encounter`, `when`?: `always` (défaut), `first_clear` ou `repeat`}>), `guaranteed` (O). Premier kill d'un boss : profil `boss_first_kill` |
-| `discovery` | `location` (R), `kind` (R, `vista`, `lore`, `chest`, `memorial` ou `pickup`), `reward` (R), `reveals` (O), `anchor` (R) |
+| `discovery` | `location` (R, lieu ou donjon), `kind` (R, `vista`, `lore`, `chest`, `memorial` ou `pickup`), `trigger` (R, `zone`, `interact` ou `interact_hold`), `level` (R : XP et niveau du coffre), `reward` (R, {`xp`?: bool (`DISCOVERY_XP`), `materials`?: {ID: qté}, `artifacts`?: array<ID>, `loot_table`?: ID}), `reveals` (O, lieux ou donjons), `anchor` (R), `map_pos` (O, R si comptée), `fog_radius` (O, 0-1 : disque percé dans le voile de la carte), `counts_for_location` (O, défaut true : « Découvertes n/2 »), `available_if` (O, condition : herbes de quête), `room` (O : salle du donjon à gagner avant d'ouvrir) |
 
-`condition` est un objet de déblocage, au choix : `{"start": true}`, `{"quest_completed": ID}`, `{"location_cleared": ID}`, `{"level_at_least": int}`, `{"item_owned": ID}` ou `{"all": [condition, …]}`.
+`condition` est un objet de déblocage, au choix : `{"start": true}`, `{"quest_completed": ID}` (quête rendue), `{"location_cleared": ID}`, `{"level_at_least": int}`, `{"item_owned": ID}`, `{"quest_state": {"id": ID, "state": "available" | "active" | "completed" | "turned_in" | "not_started"}}`, `{"objective": {"quest": ID, "id": objectif, "done": bool}}`, `{"discovery_found": ID}` ou `{"all": [condition, …]}`.
 
 ### 5.4 Récit
 
 | Entité | Champs principaux |
 |---|---|
-| `quest` | `kind` (R, `main`, `side` ou `daily`), `giver` (O, ID `npc.`), `prerequisites` (O, array<condition>), `objectives` (R, au moins 1, array<{`id`, `event`: `EnemyDefeated`, `EncounterCompleted`, `TalkedTo`, `DiscoveryFound` ou `ItemCollected`, `target`: ID, `count`: int ≥ 1}>), `rewards` (R, {`xp_factor`?, `gold`?, `items`?, `materials`?, `unlocks`?}), `next` (O, ID) |
-| `npc` | `location` (R), `role` (O, `smith`, `runecarver`, `merchant` ou `quest`), `dialogues` (O), `model` (R) |
-| `dialogue` | `lines` (R, array<{`speaker`: ID `npc.` ou `character.`, `key_suffix`: string, `condition`?: condition}>), `choices` (O, 3 au plus : {`key_suffix`, `sets_flag`?, `next`?}) |
+| `quest` | `kind` (R, `main`, `side` ou `daily`), `level` (R sauf `daily` : niveau du contenu, base de l'XP), `giver` (O, ID `npc.`), `active_at_start` (O : active dès la nouvelle partie), `prerequisites` (O, array<condition> ; pour un contrat, son éligibilité), `objectives` (R, au moins 1, array<{`id`, `step` (O, défaut 1), `event`, `target`: ID, `source`? (ID `character.`), `count`: int ≥ 1}>), `rewards` (R, {`xp_factor`? (remplace `QUEST_XP_*`), `gold`?, `materials`? {ID: qté}, `runes`? [{`id`, `tier`}], `artifacts`? [ID], `unlocks`? (lieux ou donjons révélés, ou jeton `artifact_slot_1`), `memory`? bool}), `next` (O, ID) ; contrat (`daily`) : `tier` (R, `S`, `M` ou `L`), `weight` (R) |
+| `npc` | `location` (R), `role` (O, `smith`, `runecarver`, `merchant`, `quest` ou `board`), `anchor` (R), `dialogues` (O, liste ordonnée de {`dialogue`: ID, `condition`?, `offers`?: ID quête, `turns_in`?: ID quête} : la première dont la condition tient est jouée), `model` (R) |
+| `dialogue` | `lines` (R, array<{`speaker`: ID `npc.`, `character.` ou `enemy.`, `key_suffix`: string, `condition`?: condition}>), `choices` (O, 3 au plus : {`key_suffix`, `sets_flag`?, `next`?}) |
+
+Événements d'objectif et cibles admises (`ContentSchemas.OBJECTIVE_TARGETS`, règle V15) : `EnemyDefeated` → `enemy` ; `EncounterCompleted` → `encounter` ou `location` (rencontres de `location.encounters`, donc hors donjon) ; `TalkedTo` → `npc` ; `DiscoveryFound` → `discovery` ; `ItemCollected` → `material` ou `artifact` ; `ItemDelivered` → `material` (quantité détenue, retirée au rendu) ; `LocationVisited` → `location` ou `dungeon` ; `CastInterrupted` → `character` (qui interrompt) ; `StatusApplied` → `status` (`source` optionnelle).
 
 Le texte d'une ligne de dialogue a pour clé `<dialogue_id>.<key_suffix>`, ex. `dialogue.odile_intro.line_01`.
 
@@ -220,7 +222,7 @@ Le texte d'une ligne de dialogue a pour clé `<dialogue_id>.<key_suffix>`, ex. `
 
 - **Fichier** : `game/i18n/strings.csv`, colonnes `keys,fr`, importé par Godot comme `Translation`. Il est prêt pour d'autres langues : on ajoute une colonne, rien d'autre à changer.
 - Le code et les scènes affichent `tr(key)` et jamais de texte en dur. Même règle pour les libellés d'interface (`ui.button.travel` = « Voyager »).
-- **Préfixes des clés hors entités** : `ui.` (interface), `tip.` (conseils), `log.` (journal de combat, avec des paramètres nommés : `log.damage_dealt` = « {source} inflige {amount} à {target} »), `offline.` (résumé), `error.` (erreurs).
+- **Préfixes des clés hors entités** : `ui.` (interface), `story.` (cartes de récit et sous-titres), `tip.` (conseils), `log.` (journal de combat, avec des paramètres nommés : `log.damage_dealt` = « {source} inflige {amount} à {target} »), `offline.` (résumé), `error.` (erreurs).
 - **Style** : vouvoiement dans l'interface, verbes d'action sur les boutons (DESIGN.md), majuscule seulement au premier mot (« Carte du monde »). Les noms propres canon gardent la graphie de l'édition française quand elle est sûre (Fern, Zoltraak). Dans le doute, demander au propriétaire.
 - **Pluriels** : clés suffixées `_one` et `_other`, choisies par une fonction utilitaire.
 
@@ -254,7 +256,7 @@ Le texte d'une ligne de dialogue a pour clé `<dialogue_id>.<key_suffix>`, ex. `
 
 ## 8. Validation
 
-La validation tourne dans les tests GDScript sans interface (`test`) et au démarrage en debug. Pour chaque règle, un **fichier témoin invalide** dans `tests/fixtures/invalid/` doit échouer, et son pendant valide doit passer.
+La validation tourne dans les tests GDScript sans interface (`test`) et au démarrage en debug. Pour chaque règle, un **témoin invalide** doit échouer et son pendant valide passer : ils sont construits en mémoire par `tests/unit/data/test_content.gd` (un petit monde valide, puis un défaut par règle) ; V20 lit la sauvegarde de référence `tests/fixtures/saves/reference_v5.json` (`tests/unit/persistence/test_migrations.gd`).
 
 | # | Règle qui doit faire échouer | Exemple de témoin |
 |---|---|---|
@@ -272,12 +274,12 @@ La validation tourne dans les tests GDScript sans interface (`test`) et au déma
 | V12 | Donjon sans salle `boss`, ou dont la dernière salle n'est pas le boss | |
 | V13 | Télégraphe de moins de 0,6 s, ou capacité ennemie de `coeff` ≥ 1,5 sans télégraphe | |
 | V14 | Table de butin vide, ou dont la somme des chances est nulle ; `rarity_profile` inconnu | |
-| V15 | Quête : prérequis en cycle, objectif dont l'événement ne peut pas viser la cible (ex. `EnemyDefeated` vers une découverte), quête principale inatteignable depuis le départ | |
+| V15 | Quête : prérequis en cycle, objectif dont l'événement ne peut pas viser la cible (ex. `EnemyDefeated` vers une découverte), étapes non continues, quête principale inatteignable depuis le départ (chemin critique : prérequis, puis chaque cible atteignable ou obtenable) | `quest_completed` en cycle ; `ItemDelivered` vers un `enemy.*` |
 | V16 | Monde : lieu non atteignable depuis le départ en suivant les conditions de déblocage dans l'ordre (cf. vérification du chemin critique de `level-design`), ou condition qui dépend d'un objet obtenable seulement derrière elle | |
 | V17 | Rune : `values_by_tier` sans exactement 5 valeurs ou non croissantes ; plus d'une rune de conversion par sort dans une sauvegarde de test | |
 | V18 | Personnage jouable sans `auto_attack`, `spells` ou `ultimate` ; sort dont le `kind` ne convient pas à son emplacement | |
 | V19 | Champ de texte affiché dans une donnée (tout champ `name`, `text` ou `label` littéral est refusé) | `"name": "Loup"` |
-| V20 | ID présent dans une sauvegarde de référence mais retiré des données sans `deprecated` ni migration | |
+| V20 | ID présent dans une sauvegarde de référence mais retiré des données sans `deprecated` ni migration (`SaveMigrations.RETIRED_IDS`) | `tests/fixtures/saves/reference_v5.json` |
 
 Les messages d'erreur indiquent le fichier, l'ID, le champ et la règle (`V7 enemies.json enemy.mist_wolf affinities.water : élément inconnu`).
 

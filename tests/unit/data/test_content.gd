@@ -508,6 +508,8 @@ func _combat_world() -> Dictionary:
 				{
 					"location": "location.l",
 					"level": 5,
+					"scene": "res://d.tscn",
+					"map_pos": [0.5, 0.5],
 					"unlock": {"start": true},
 					"rooms":
 					[
@@ -572,3 +574,194 @@ func test_v16_every_location_is_reachable_from_the_start() -> void:
 	far["unlock"] = {"start": true}
 	locations[0]["fog_reveal"] = []
 	_expect(w, "V16", "never revealed")
+
+
+# --- Milestone 6: quests, NPCs, discoveries, V15, V20 -------------------------
+
+
+## Minimal world with an NPC, a dialogue, a field with one encounter and two
+## chained main quests.
+func _quest_world() -> Dictionary:
+	var w := _combat_world()
+	var field := _entry(
+		"location.f",
+		{
+			"region": "region.r",
+			"kind": "field",
+			"level": 1,
+			"scene": "res://f.tscn",
+			"map_pos": [0.2, 0.2],
+			"unlock": {"quest_completed": "quest.q1"},
+			"encounters": ["encounter.boss"],
+		}
+	)
+	w["original/locations.json"][1].append(field)
+	w["original/regions.json"][1][0]["locations"].append("location.f")
+	w["original/encounters.json"][1][0]["location"] = "location.f"
+	w["original/dialogues.json"] = [
+		"dialogue",
+		[_entry("dialogue.hi", {"lines": [{"speaker": "npc.n", "key_suffix": "line_01"}]})]
+	]
+	w["original/npcs.json"] = [
+		"npc",
+		[
+			_entry(
+				"npc.n",
+				{
+					"location": "location.l",
+					"role": "board",
+					"anchor": "npc_a",
+					"model": "res://n.glb",
+					"dialogues":
+					[
+						{
+							"dialogue": "dialogue.hi",
+							"condition": {"quest_state": {"id": "quest.q1", "state": "available"}},
+							"offers": "quest.q1",
+						}
+					],
+				}
+			)
+		]
+	]
+	var quest := func(id: String, objectives: Array, extra: Dictionary) -> Dictionary:
+		var f := {
+			"desc_key": id + ".desc",
+			"kind": "main",
+			"level": 1,
+			"objectives": objectives,
+			"rewards": {"gold": 10},
+		}
+		f.merge(extra, true)
+		return _entry(id, f)
+	w["original/quests.json"] = [
+		"quest",
+		[
+			quest.call(
+				"quest.q1",
+				[{"id": "talk", "event": "TalkedTo", "target": "npc.n", "count": 1}],
+				{"prerequisites": [{"start": true}], "rewards": {"unlocks": ["location.f"]}}
+			),
+			(
+				quest
+				. call(
+					"quest.q2",
+					[
+						{
+							"id": "win",
+							"event": "EncounterCompleted",
+							"target": "location.f",
+							"count": 2
+						},
+						{
+							"id": "boss",
+							"step": 2,
+							"event": "EnemyDefeated",
+							"target": "enemy.boss",
+							"count": 1
+						},
+					],
+					{"prerequisites": [{"quest_completed": "quest.q1"}]}
+				)
+			),
+		]
+	]
+	return w
+
+
+func test_quest_world_fixture_is_valid() -> void:
+	assert_eq(_errors(_quest_world()), "", "valid: q1 unlocks and reveals the field")
+
+
+func test_v15_quest_prerequisites_in_a_cycle() -> void:
+	var w := _quest_world()
+	w["original/quests.json"][1][0]["prerequisites"] = [{"quest_completed": "quest.q2"}]
+	_expect(w, "V15", "prerequisites form a cycle")
+
+
+func test_v15_objective_event_must_fit_its_target() -> void:
+	var w := _quest_world()
+	w["original/discoveries.json"] = [
+		"discovery",
+		[
+			_entry(
+				"discovery.d",
+				{
+					"location": "location.l",
+					"kind": "lore",
+					"trigger": "interact",
+					"level": 1,
+					"anchor": "d1",
+					"reward": {"xp": true},
+					"map_pos": [0.5, 0.5],
+				}
+			)
+		]
+	]
+	w["original/quests.json"][1][1]["objectives"][1]["target"] = "discovery.d"
+	_expect(w, "V15", "EnemyDefeated cannot target a discovery")
+	w = _quest_world()
+	w["original/quests.json"][1][1]["objectives"][1]["event"] = "ItemDelivered"
+	_expect(w, "V15", "ItemDelivered cannot target a enemy")
+	w = _quest_world()
+	w["original/quests.json"][1][1]["objectives"][1]["step"] = 3
+	_expect(w, "V15", "steps must run 1..n")
+
+
+func test_v15_main_quest_unreachable_from_the_start() -> void:
+	var w := _quest_world()
+	w["original/quests.json"][1][1]["objectives"][1]["target"] = "enemy.nowhere"
+	_expect(w, "V6", "unknown")
+	w = _quest_world()
+	# the field only opens with q1, so q1 cannot ask for a fight there
+	w.erase("original/dungeons.json")
+	w["original/quests.json"][1][0]["objectives"] = [
+		{"id": "win", "event": "EncounterCompleted", "target": "encounter.boss", "count": 1}
+	]
+	_expect(w, "V15", "main quest cannot be completed from the start")
+
+
+func test_v16_quest_unlocks_reveal_and_open_places() -> void:
+	var w := _quest_world()
+	w["original/quests.json"][1][0]["rewards"] = {}
+	_expect(w, "V16", "never revealed")
+
+
+func test_new_conditions_are_checked() -> void:
+	var w := _quest_world()
+	var entry: Dictionary = w["original/npcs.json"][1][0]["dialogues"][0]
+	entry["condition"] = {"quest_state": {"id": "quest.q1", "state": "done"}}
+	_expect(w, "V7", "unknown state 'done'")
+	entry["condition"] = {"objective": {"quest": "quest.q1", "id": "nope", "done": true}}
+	_expect(w, "V6", "has no objective 'nope'")
+	entry["condition"] = {"discovery_found": "quest.q1"}
+	_expect(w, "V6", "is not a discovery")
+
+
+func test_npc_roles_and_reward_unlock_tokens() -> void:
+	var w := _quest_world()
+	w["original/npcs.json"][1][0]["role"] = "bard"
+	_expect(w, "V7", "'bard' not in")
+	w = _quest_world()
+	w["original/quests.json"][1][0]["rewards"]["unlocks"] = ["artifact_slot_9"]
+	_expect(w, "V6", "neither a location")
+	w = _quest_world()
+	w["original/quests.json"][1][0]["rewards"]["materials"] = {"enemy.boss": 1}
+	_expect(w, "V6", "'enemy.boss' is not a material")
+
+
+func test_v20_save_ids_must_still_exist() -> void:
+	var r := ContentLoader.load_roots(ROOTS)
+	var state := NewGame.create(r["by_type"]["start"][0], 1, 1, r["by_id"])
+	assert_eq(ContentRules.check_save_ids(state, r["by_id"]).size(), 0, "a new game is fine")
+	state["progress"]["bestiary"]["enemy.removed_wolf"] = 3
+	var errors := ContentRules.check_save_ids(state, r["by_id"])
+	assert_eq(errors.size(), 1, "one removed id")
+	assert_true(
+		errors[0].begins_with("V20 ") and errors[0].contains("enemy.removed_wolf"), errors[0]
+	)
+	assert_eq(
+		ContentRules.check_save_ids(state, r["by_id"], {"enemy.removed_wolf": "migration"}).size(),
+		0,
+		"retired through a migration"
+	)

@@ -35,6 +35,20 @@ const RUNE_MODS := [
 ## caster's generic "cast" or "attack" clip). Models without the clip fall back to the generic one.
 const ANIM_CLIPS := ["attack", "cast", "cast_beam", "cast_volley", "cast_guard", "cast_ultimate"]
 const ARTIFACT_EFFECTS := ["offline_efficiency", "low_hp_heal", "gold_find", "active_bonus_damage"]
+## Quest objective events (CONTENT_PIPELINE §5.4) and the entity types each
+## one may target (rule V15).
+const OBJECTIVE_TARGETS := {
+	"EnemyDefeated": ["enemy"],
+	"EncounterCompleted": ["encounter", "location"],
+	"TalkedTo": ["npc"],
+	"DiscoveryFound": ["discovery"],
+	"ItemCollected": ["material", "artifact"],
+	"ItemDelivered": ["material"],
+	"LocationVisited": ["location", "dungeon"],
+	"CastInterrupted": ["character"],
+	"StatusApplied": ["status"],
+}
+const QUEST_STATES := ["available", "active", "completed", "turned_in", "not_started"]
 
 ## File name (without .json) -> declared type, and the entity types its
 ## entries may hold (decided by each id's prefix).
@@ -473,13 +487,15 @@ static func fields_for(type_name: String) -> Dictionary:
 					[]
 				),
 				"unlock": condition(),
-				"fog_reveal": refs("location"),
+				"fog_reveal": refs(["location", "dungeon"]),
 				"npcs": refs("npc"),
 			}
 		"dungeon":
 			return {
 				"location": ref("location"),
 				"level": pos_int(),
+				"scene": {"type": "string", "min": 1},
+				"map_pos": {"type": "array", "min": 2, "max": 2, "items": num(0, 1)},
 				"rooms":
 				{
 					"type": "array",
@@ -521,9 +537,17 @@ static func fields_for(type_name: String) -> Dictionary:
 				"loot_table": ref("loot_table"),
 				"offline_eligible": {"type": "bool"},
 				"speed_cap": {"type": "int", "enum": [1, 2, 4]},
-				"first_clear_rewards": opt({"type": "dict"}, {}),
+				"first_clear_rewards":
+				opt(
+					{
+						"type": "dict",
+						"fields": {"materials": opt({"type": "dict", "values": pos_int()}, {})}
+					},
+					{}
+				),
 				"anchor": {"type": "string", "min": 1},
 				"respawn_s": opt(num(), 60.0),
+				"arena_center": opt(enum_of(["contact", "anchor"]), "contact"),
 			}
 		"loot_table":
 			return {
@@ -558,17 +582,38 @@ static func fields_for(type_name: String) -> Dictionary:
 			}
 		"discovery":
 			return {
-				"location": ref("location"),
+				"location": ref(["location", "dungeon"]),
 				"kind": enum_of(["vista", "lore", "chest", "memorial", "pickup"]),
-				"reward": {"type": "dict"},
-				"reveals": refs("location"),
+				"trigger": enum_of(["zone", "interact", "interact_hold"]),
+				"level": pos_int(),
+				"reward":
+				{
+					"type": "dict",
+					"fields":
+					{
+						"xp": opt({"type": "bool"}, false),
+						"materials": opt({"type": "dict", "values": pos_int()}, {}),
+						"artifacts": refs("artifact"),
+						"loot_table": ref("loot_table", true),
+					},
+				},
+				"reveals": refs(["location", "dungeon"]),
 				"anchor": {"type": "string", "min": 1},
+				"map_pos": opt({"type": "array", "min": 2, "max": 2, "items": num(0, 1)}, []),
+				"fog_radius": opt(num(0, 1), 0.0),
+				"counts_for_location": opt({"type": "bool"}, true),
+				"available_if": opt(condition(), {}),
+				"room": opt({"type": "string"}, ""),
 			}
 		"quest":
 			return {
 				"kind": enum_of(["main", "side", "daily"]),
+				"level": opt(pos_int()),
 				"giver": ref("npc", true),
+				"active_at_start": opt({"type": "bool"}, false),
 				"prerequisites": opt({"type": "array", "items": condition()}, []),
+				"tier": opt(enum_of(["S", "M", "L"]), ""),
+				"weight": opt(num(0.000001)),
 				"objectives":
 				{
 					"type": "array",
@@ -578,35 +623,86 @@ static func fields_for(type_name: String) -> Dictionary:
 						"type": "dict",
 						"fields":
 						{
-							"id": {"type": "string", "min": 1},
-							"event":
-							enum_of(
-								[
-									"EnemyDefeated",
-									"EncounterCompleted",
-									"TalkedTo",
-									"DiscoveryFound",
-									"ItemCollected"
-								]
-							),
+							"id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+							"step": opt(pos_int(), 1),
+							"event": enum_of(OBJECTIVE_TARGETS.keys()),
 							"target":
 							{
 								"type": "string",
 								"ref":
-								["enemy", "encounter", "npc", "discovery", "item", "material"]
+								[
+									"enemy",
+									"encounter",
+									"location",
+									"dungeon",
+									"npc",
+									"discovery",
+									"material",
+									"artifact",
+									"character",
+									"status",
+								]
 							},
+							"source": ref("character", true),
 							"count": pos_int(),
 						},
 					},
 				},
-				"rewards": {"type": "dict"},
+				"rewards":
+				{
+					"type": "dict",
+					"fields":
+					{
+						"xp_factor": opt(num()),
+						"gold": opt(pos_int(0), 0),
+						"materials": opt({"type": "dict", "values": pos_int()}, {}),
+						"runes":
+						opt(
+							{
+								"type": "array",
+								"items":
+								{
+									"type": "dict",
+									"fields":
+									{
+										"id": ref("rune"),
+										"tier": {"type": "int", "min": 1, "max": 5},
+									}
+								}
+							},
+							[]
+						),
+						"artifacts": refs("artifact"),
+						"unlocks":
+						opt({"type": "array", "items": {"type": "string", "min": 1}}, []),
+						"memory": opt({"type": "bool"}, false),
+					},
+				},
 				"next": ref("quest", true),
 			}
 		"npc":
 			return {
 				"location": ref("location"),
-				"role": opt(enum_of(["smith", "runecarver", "merchant", "quest"]), ""),
-				"dialogues": refs("dialogue"),
+				"role": opt(enum_of(["smith", "runecarver", "merchant", "quest", "board"]), ""),
+				"anchor": {"type": "string", "min": 1},
+				"dialogues":
+				opt(
+					{
+						"type": "array",
+						"items":
+						{
+							"type": "dict",
+							"fields":
+							{
+								"dialogue": ref("dialogue"),
+								"condition": opt(condition(), {}),
+								"offers": ref("quest", true),
+								"turns_in": ref("quest", true),
+							},
+						},
+					},
+					[]
+				),
 				"model": {"type": "string", "min": 1},
 			}
 		"dialogue":
@@ -620,7 +716,7 @@ static func fields_for(type_name: String) -> Dictionary:
 						"type": "dict",
 						"fields":
 						{
-							"speaker": {"type": "string", "ref": ["npc", "character"]},
+							"speaker": {"type": "string", "ref": ["npc", "character", "enemy"]},
 							"key_suffix": {"type": "string", "min": 1},
 							"condition": opt(condition()),
 						},
