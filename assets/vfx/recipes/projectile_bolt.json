@@ -1,0 +1,14 @@
+{
+  "id": "vfx.projectile_bolt",
+  "doc": "Small fast bolt from the staff tip (auto attacks). Speed matches GAME_BALANCE §5 (25 m/s).",
+  "defaults": {"element": "arcane"},
+  "beats": {"anticipation": 0.12, "release": 0.0, "impact": 0.2, "afterglow": 0.0},
+  "blocks": [
+    {"block": "charge_orb", "beat": "anticipation", "at": "tip", "follow": true, "until": "release",
+     "params": {"size": 0.2, "gather": 0}},
+    {"block": "projectile", "beat": "release", "from": "tip", "to": "target",
+     "params": {"speed": 25.0, "size": 0.22, "trail": 0.8, "trail_motes": 8}},
+    {"block": "burst", "beat": "impact", "at": "target", "per_target": true,
+     "params": {"size": 0.55, "sparks": 8, "ring": false, "duration": 0.3}}
+  ]
+}

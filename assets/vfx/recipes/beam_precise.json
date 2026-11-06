@@ -1,0 +1,22 @@
+{
+  "id": "vfx.beam_precise",
+  "doc": "Fast, thin, precise beam with a short cast (Zoltraak). Circle and charge on the cast, beam in 60 ms, bloom flash + ground ring under the caster + scorch and a crescent cut on the target.",
+  "defaults": {"element": "arcane"},
+  "beats": {"anticipation": 0.3, "release": 0.06, "impact": 0.3, "afterglow": 0.3},
+  "blocks": [
+    {"block": "cast_circle", "beat": "anticipation", "at": "caster", "follow": true, "until": "release",
+     "params": {"radius": 1.0, "fade_s": 0.45, "motes": 10}},
+    {"block": "charge_orb", "beat": "anticipation", "at": "tip", "follow": true, "until": "release",
+     "params": {"size": 0.36, "gather": 14}},
+    {"block": "beam", "beat": "release", "from": "tip", "to": "target",
+     "params": {"width": 0.42, "core_width": 0.1, "grow_s": 0.06, "hold_s": 0.16, "fade_s": 0.24}},
+    {"block": "burst", "beat": "impact", "at": "target", "per_target": true,
+     "params": {"size": 1.25, "sparks": 16}},
+    {"block": "shockwave", "beat": "impact", "at": "caster",
+     "params": {"radius": 1.7, "duration": 0.4}},
+    {"block": "scorch", "beat": "impact", "at": "target_ground", "per_target": true,
+     "params": {"size": 1.2, "duration": 2.2}},
+    {"block": "slash_arc", "beat": "impact", "at": "target", "per_target": true, "delay": 0.05,
+     "params": {"size": 1.5, "sweep": 0.36, "tilt": 70.0, "yaw": 20.0, "duration": 0.28}}
+  ]
+}

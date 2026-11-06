@@ -1,0 +1,9 @@
+{
+  "id": "vfx.heal",
+  "doc": "Heal on the target: green column, ring and rising motes.",
+  "beats": {"anticipation": 0.0, "release": 0.0, "impact": 0.0, "afterglow": 0.0},
+  "blocks": [
+    {"block": "aura", "beat": "anticipation", "at": "target_ground", "follow": true,
+     "params": {"kind": "heal", "duration": 1.0}}
+  ]
+}

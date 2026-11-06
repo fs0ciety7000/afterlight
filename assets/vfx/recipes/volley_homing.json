@@ -1,0 +1,17 @@
+{
+  "id": "vfx.volley_homing",
+  "doc": "Several homing streaks fanned out and launched one after the other (Salve de mana). One projectile per target entry; pass 5 targets (repeats allowed).",
+  "defaults": {"element": "arcane"},
+  "beats": {"anticipation": 0.4, "release": 0.3, "impact": 0.25, "afterglow": 0.0},
+  "blocks": [
+    {"block": "cast_circle", "beat": "anticipation", "at": "caster", "follow": true, "until": "release",
+     "params": {"radius": 0.9, "fade_s": 0.35, "motes": 8}},
+    {"block": "charge_orb", "beat": "anticipation", "at": "tip", "follow": true, "until": "release",
+     "params": {"size": 0.3, "gather": 10}},
+    {"block": "projectile", "beat": "release", "from": "tip", "to": "target", "per_target": true,
+     "count": 5, "stagger": 0.07,
+     "params": {"speed": 25.0, "size": 0.2, "arc": 0.7, "curve_spread": 0.9, "trail": 0.9, "trail_motes": 6}},
+    {"block": "burst", "beat": "impact", "at": "target", "per_target": true,
+     "params": {"size": 0.7, "sparks": 7, "duration": 0.32}}
+  ]
+}

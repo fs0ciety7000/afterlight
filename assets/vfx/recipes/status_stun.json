@@ -1,0 +1,9 @@
+{
+  "id": "vfx.status_stun",
+  "doc": "Looping status visual (stun) on the target. Cancel the sequence on status_expired.",
+  "beats": {"anticipation": 0.0, "release": 0.0, "impact": 0.0, "afterglow": 0.0},
+  "blocks": [
+    {"block": "status", "beat": "anticipation", "at": "target_ground", "follow": true,
+     "params": {"kind": "stun"}}
+  ]
+}

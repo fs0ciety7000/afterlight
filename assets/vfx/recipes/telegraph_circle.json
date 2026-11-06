@@ -1,0 +1,9 @@
+{
+  "id": "vfx.telegraph_circle",
+  "doc": "Enemy ground telegraph (circle), danger palette, fills over ctx.cast_s (>= 0.6 s). Size via ctx.overrides.telegraph (radius / length / width / angle). Placed at the caster, aimed at the target.",
+  "beats": {"anticipation": 1.0, "release": 0.0, "impact": 0.0, "afterglow": 0.0},
+  "blocks": [
+    {"block": "telegraph", "beat": "anticipation", "at": "caster", "toward": "target_ground", "until": "release",
+     "params": {"shape": "circle"}}
+  ]
+}

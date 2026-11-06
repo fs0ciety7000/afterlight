@@ -1,0 +1,6 @@
+{
+  "id": "vfx.crit",
+  "extends": "vfx.hit",
+  "doc": "Critical hit: vfx.hit with crit on (bigger flash, gold glint, hit-stop 50 ms, shake 0.3).",
+  "defaults": {"crit": true}
+}

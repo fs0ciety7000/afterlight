@@ -1,0 +1,14 @@
+{
+  "id": "vfx.enemy_bolt",
+  "doc": "Generic enemy projectile (Lanterne errante). Slower, arcing; fire by default.",
+  "defaults": {"element": "fire"},
+  "beats": {"anticipation": 0.15, "release": 0.0, "impact": 0.2, "afterglow": 0.0},
+  "blocks": [
+    {"block": "charge_orb", "beat": "anticipation", "at": "tip", "follow": true, "until": "release",
+     "params": {"size": 0.26, "gather": 0}},
+    {"block": "projectile", "beat": "release", "from": "tip", "to": "target",
+     "params": {"speed": 14.0, "size": 0.28, "arc": 0.6, "trail": 0.7, "trail_motes": 10}},
+    {"block": "burst", "beat": "impact", "at": "target", "per_target": true,
+     "params": {"size": 0.7, "sparks": 9, "duration": 0.35}}
+  ]
+}

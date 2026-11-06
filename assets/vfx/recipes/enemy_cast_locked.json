@@ -1,0 +1,8 @@
+{
+  "id": "vfx.enemy_cast_locked",
+  "extends": "vfx.enemy_cast",
+  "doc": "Non-interruptible enemy cast (GDD §9.1): the same ring, dark and solid.",
+  "patch": [
+    {"block": "cast_circle", "params": {"dark": true}}
+  ]
+}

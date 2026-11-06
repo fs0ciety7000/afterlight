@@ -1,0 +1,218 @@
+{
+  "baseline_night": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 131.057
+  },
+  "baseline_statuses": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 158.38
+  },
+  "statuses": {
+    "draw_calls": 68.0,
+    "objects": 68.0,
+    "primitives": 124928.0,
+    "vfx_particles": 60,
+    "vfx_layers": 16,
+    "process_ms": 194.098
+  },
+  "baseline_mana_bolt": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 116.73
+  },
+  "mana_bolt": {
+    "draw_calls": 58.0,
+    "objects": 58.0,
+    "primitives": 136508.0,
+    "vfx_particles": 16,
+    "vfx_layers": 6,
+    "process_ms": 196.331
+  },
+  "baseline_zoltraak_night": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 156.841
+  },
+  "zoltraak_night": {
+    "draw_calls": 70.0,
+    "objects": 70.0,
+    "primitives": 127890.0,
+    "vfx_particles": 40,
+    "vfx_layers": 16,
+    "process_ms": 188.499
+  },
+  "baseline_zoltraak_day": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 169.061
+  },
+  "zoltraak_day": {
+    "draw_calls": 70.0,
+    "objects": 70.0,
+    "primitives": 127890.0,
+    "vfx_particles": 40,
+    "vfx_layers": 16,
+    "process_ms": 182.967
+  },
+  "baseline_zoltraak_crit": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 189.29
+  },
+  "zoltraak_crit": {
+    "draw_calls": 71.0,
+    "objects": 71.0,
+    "primitives": 127890.0,
+    "vfx_particles": 49,
+    "vfx_layers": 17,
+    "process_ms": 207.265
+  },
+  "baseline_mana_volley": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 132.129
+  },
+  "mana_volley": {
+    "draw_calls": 87.0,
+    "objects": 87.0,
+    "primitives": 136646.0,
+    "vfx_particles": 65,
+    "vfx_layers": 35,
+    "process_ms": 186.04
+  },
+  "baseline_barrier": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 148.83
+  },
+  "barrier": {
+    "draw_calls": 58.0,
+    "objects": 58.0,
+    "primitives": 125546.0,
+    "vfx_particles": 24,
+    "vfx_layers": 6,
+    "process_ms": 204.111
+  },
+  "baseline_afterlight_night": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 173.134
+  },
+  "afterlight_night": {
+    "draw_calls": 98.0,
+    "objects": 98.0,
+    "primitives": 136700.0,
+    "vfx_particles": 59,
+    "vfx_layers": 38,
+    "process_ms": 267.11
+  },
+  "baseline_afterlight_day": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 169.5
+  },
+  "afterlight_day": {
+    "draw_calls": 98.0,
+    "objects": 98.0,
+    "primitives": 136700.0,
+    "vfx_particles": 59,
+    "vfx_layers": 38,
+    "process_ms": 295.332
+  },
+  "baseline_hits_elements": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 164.173
+  },
+  "hits_elements": {
+    "draw_calls": 68.0,
+    "objects": 69.0,
+    "primitives": 136530.0,
+    "vfx_particles": 16,
+    "vfx_layers": 6,
+    "process_ms": 202.745
+  },
+  "baseline_telegraphs": {
+    "draw_calls": 57.0,
+    "objects": 57.0,
+    "primitives": 124690.0,
+    "vfx_particles": 18,
+    "vfx_layers": 5,
+    "process_ms": 176.649
+  },
+  "telegraphs": {
+    "draw_calls": 55.0,
+    "objects": 55.0,
+    "primitives": 124654.0,
+    "vfx_particles": 0,
+    "vfx_layers": 3,
+    "process_ms": 256.216
+  },
+  "baseline_deaths": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 244.166
+  },
+  "deaths": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 52,
+    "vfx_layers": 3,
+    "process_ms": 224.345
+  },
+  "baseline_heal_level_up": {
+    "draw_calls": 52.0,
+    "objects": 52.0,
+    "primitives": 124648.0,
+    "vfx_particles": 0,
+    "vfx_layers": 0,
+    "process_ms": 144.114
+  },
+  "heal_level_up": {
+    "draw_calls": 62.0,
+    "objects": 62.0,
+    "primitives": 124772.0,
+    "vfx_particles": 48,
+    "vfx_layers": 8,
+    "process_ms": 193.62
+  }
+}

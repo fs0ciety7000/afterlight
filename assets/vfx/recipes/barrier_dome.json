@@ -1,0 +1,14 @@
+{
+  "id": "vfx.barrier_dome",
+  "doc": "Instant runic dome on the caster (Barrière défensive) + cleanse shimmer. Pass ctx.duration (shield seconds). The dome stays until it expires or seq.find_block(\"shield\").break_shield(); hits: .hit(from_position).",
+  "defaults": {"element": "arcane"},
+  "beats": {"anticipation": 0.0, "release": 0.0, "impact": 0.0, "afterglow": 0.0},
+  "blocks": [
+    {"block": "shield", "beat": "release", "at": "caster", "follow": true,
+     "params": {"radius": 1.05, "duration": 4.0}},
+    {"block": "aura", "beat": "release", "at": "caster", "follow": true,
+     "params": {"kind": "cleanse", "radius": 0.7, "height": 1.6, "duration": 0.7, "motes": 14}},
+    {"block": "shockwave", "beat": "release", "at": "caster",
+     "params": {"radius": 1.6, "duration": 0.35}}
+  ]
+}

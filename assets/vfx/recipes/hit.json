@@ -1,0 +1,10 @@
+{
+  "id": "vfx.hit",
+  "doc": "Generic hit spark on a target, element palette. ctx.crit = true gives the crit version (bigger, gold glint, hit-stop + shake requests).",
+  "defaults": {"element": "arcane"},
+  "beats": {"anticipation": 0.0, "release": 0.0, "impact": 0.3, "afterglow": 0.0},
+  "blocks": [
+    {"block": "burst", "beat": "impact", "at": "target", "per_target": true,
+     "params": {"size": 0.8, "sparks": 10}}
+  ]
+}

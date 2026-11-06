@@ -1,0 +1,29 @@
+{
+  "id": "vfx.sky_rain",
+  "doc": "Channelled rain of beams from a circle in the sky (Lumière d'après). One beam per target entry spread over the channel (ctx.channel_s); pass 12 targets (repeats allowed). Finale: big ground ring, hit-stop and shake (ultimate).",
+  "defaults": {"element": "arcane"},
+  "beats": {"anticipation": 0.5, "release": 2.0, "impact": 0.25, "afterglow": 0.9},
+  "blocks": [
+    {"block": "cast_circle", "beat": "anticipation", "at": "caster", "follow": true, "until": "impact",
+     "params": {"radius": 1.4, "glyphs": 30, "appear_s": 0.25, "fade_s": 0.5, "motes": 16}},
+    {"block": "cast_circle", "beat": "anticipation", "at": "sky", "height": 3.6, "toward_view": 0.55, "until": "impact",
+     "params": {"radius": 2.0, "intensity": 0.6, "detail": 0.6, "glyphs": 36, "appear_s": 0.45, "fade_s": 0.6, "spin": 0.25, "sky": true, "motes": 0, "height": 0.0}},
+    {"block": "charge_orb", "beat": "anticipation", "at": "tip", "follow": true, "until": "impact",
+     "params": {"size": 0.42, "gather": 16}},
+    {"block": "beam", "beat": "release", "from": "sky_above", "to": "target_ground", "homing": false,
+     "per_target": true, "count": 12, "spread": true, "height": 5.0, "toward_view": 0.3, "jitter": 0.5,
+     "params": {"width": 0.5, "core_width": 0.12, "grow_s": 0.07, "hold_s": 0.12, "fade_s": 0.2, "flare": 0.0}},
+    {"block": "burst", "beat": "impact", "at": "target_ground", "per_target": true, "jitter": 0.5,
+     "params": {"size": 0.9, "sparks": 9, "duration": 0.32}},
+    {"block": "shockwave", "beat": "impact", "at": "target_ground", "per_target": true, "jitter": 0.5,
+     "params": {"radius": 1.1, "duration": 0.35}},
+    {"block": "scorch", "beat": "impact", "at": "target_ground", "per_target": true, "jitter": 0.5,
+     "params": {"size": 0.9, "duration": 2.0}},
+    {"block": "shockwave", "beat": "afterglow", "at": "center", "hitstop_ms": 60, "shake": 0.5,
+     "params": {"radius": 4.2, "duration": 0.6, "width": 0.012}},
+    {"block": "burst", "beat": "afterglow", "at": "center",
+     "params": {"size": 1.6, "sparks": 18, "duration": 0.45}},
+    {"block": "rune_orbit", "beat": "afterglow", "at": "caster", "follow": true,
+     "params": {"count": 3, "radius": 0.9, "duration": 0.9}}
+  ]
+}

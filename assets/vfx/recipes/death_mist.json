@@ -1,0 +1,9 @@
+{
+  "id": "vfx.death_mist",
+  "doc": "Death dissolve with mist on the target node (it is hidden at the end; the scene frees it).",
+  "beats": {"anticipation": 0.0, "release": 0.0, "impact": 0.0, "afterglow": 0.0},
+  "blocks": [
+    {"block": "death", "beat": "anticipation", "at": "target_ground", "attach": "target",
+     "params": {"style": "mist"}}
+  ]
+}

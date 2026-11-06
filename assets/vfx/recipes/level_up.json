@@ -1,0 +1,11 @@
+{
+  "id": "vfx.level_up",
+  "doc": "Level up on the caster: gold column, gold rune circle, motes.",
+  "beats": {"anticipation": 0.0, "release": 0.0, "impact": 0.0, "afterglow": 0.0},
+  "blocks": [
+    {"block": "aura", "beat": "anticipation", "at": "caster", "follow": true,
+     "params": {"kind": "level_up", "duration": 1.6, "height": 2.6, "radius": 0.9, "motes": 30}},
+    {"block": "shockwave", "beat": "anticipation", "at": "caster", "delay": 0.1,
+     "params": {"radius": 2.0, "duration": 0.6}}
+  ]
+}

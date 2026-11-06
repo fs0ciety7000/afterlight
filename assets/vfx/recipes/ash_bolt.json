@@ -1,0 +1,9 @@
+{
+  "id": "vfx.ash_bolt",
+  "extends": "vfx.enemy_bolt",
+  "doc": "Morvaine's Trait de cendre: the enemy bolt in the ash palette, a little bigger (example of a derived recipe).",
+  "defaults": {"element": "ash"},
+  "patch": [
+    {"block": "projectile", "params": {"size": 0.34, "speed": 16.0}}
+  ]
+}

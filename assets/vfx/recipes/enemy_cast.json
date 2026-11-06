@@ -1,0 +1,10 @@
+{
+  "id": "vfx.enemy_cast",
+  "doc": "Interruptible enemy cast or channel (GDD §9.1): pearl ring under the caster that fills over ctx.cast_s. Cancel the sequence on cast_interrupted.",
+  "defaults": {"element": "arcane"},
+  "beats": {"anticipation": 2.0, "release": 0.0, "impact": 0.0, "afterglow": 0.0},
+  "blocks": [
+    {"block": "cast_circle", "beat": "anticipation", "at": "caster", "follow": true, "until": "release",
+     "params": {"radius": 1.0, "detail": 0.0, "glyphs": 16, "motes": 0, "fade_s": 0.2}}
+  ]
+}
