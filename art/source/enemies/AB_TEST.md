@@ -101,3 +101,29 @@ Journal : `fal_log.json` (aussi `art/source/env/fal_log.json` pour le bouleau). 
   sentinelle et Morvaine le pipeline Fern v1 (concept → vues → Meshy multi-image → rig humanoïde Meshy), le loup
   restant riggé dans Blender (les os et clips de `build_enemies.py` se recalent sur un nouveau maillage).
 - Le clip `death` de Morvaine aplatit la robe en disque (« elle retombe en cendre ») : à valider en combat.
+
+## Lot généré du 2026-11-06 (crédit rechargé, plafond 5 USD)
+
+Budget et journal : `BUDGET.md` (3,22 USD, 6 appels) et `fal_log.json`. Chaîne complète : `tools/fal/enemies.sh`
+(`gen-*` pour fal, puis `cutout-gen`, `albedo`, `build-gen`, `qa`, `shots`, `compare`).
+
+| ID | Source | Triangles | GLB | Os | Taille (l × L × h) | Clips |
+|---|---|---|---|---|---|---|
+| `mist_wolf` | Tripo H3.1 multiview (4 vues existantes) | 14 410 | 740 Ko | 19 (squelette procédural recalé) | 0,54 × 1,89 × 1,32 m | idle, run, attack, cast, hit, death (clips procéduraux inchangés) |
+| `stone_sentinel` | concept nano-banana-pro + Tripo H3.1 image-to-3d | 14 000 | 765 Ko | 12 (idem) | 2,05 × 0,97 × 2,20 m | idem ; attack = Fracas, bras levés à 0,67 s, frappe à 1,2 s |
+| `morvaine` | planche 3 vues nano-banana-pro + Meshy v7.1 multi-image + rig Meshy 6 clips | 27 999 | 2,03 Mo | 63 (24 Meshy + 24 jupe + 15 cheveux) | 1,9 m | idle (Idle_3, 5 s), run (Walking_Woman), attack (Charged_Spell_Cast), cast (mage_soell_cast), hit (Hit_Reaction, recul ramené à 15 %), death (dying_backwards) |
+| `wandering_lantern` | procédural, inchangé | 1 612 | 98 Ko | 3 | | |
+
+- Loup et sentinelle : le maillage généré remplace les pièces procédurales dans `build_enemies.py` (méthodes `Kit`
+  remplacées par `tools/blender/build_enemies_gen.py`) ; les articulations sont recalées sur le maillage, poids par
+  chaleur (bone heat), puis les mêmes clips clés s'appliquent. L'alpha reste le loup ×1,3 teinté.
+- Morvaine : `build_character_v1.py` (pipeline Fern) avec `--class-mode robe` (robe = « robe blanche » de Fern :
+  chaînes de jupe, jamais pilotées par les jambes), `--in-place` (recul de hit, attack, cast, death réduit) et
+  `--no-staff`. `fern_import.gd` est déclaré comme script d'import (ressorts cheveux et robe). Le clip `phase` du
+  remplaçant n'existe plus (aucun code de jeu ne le joue) ; `enemy_preview` ne le propose plus.
+- Albédos : `flatten_albedo.py`, puis `tools/fal/tune_albedo.py` (loup éclairci ×1,12 ; runes et visière de la
+  sentinelle ramenées à `#a9e4ff` et élargies ; robe de Morvaine assombrie ×0,7 pour se détacher de l'herbe).
+
+Comparaison : `compare_placeholder_vs_generated.jpg` (Godot, même scène, même caméra ; `placeholder_shot_*` et
+`placeholder_qa_*` = anciens remplaçants). Nouvelles vues : `qa_<id>_*.jpg`, `shot_*_11m.jpg`, `shot_*_6m.jpg`,
+`shot_*_6m_right.jpg` (sentinelle et Morvaine à 6 m).

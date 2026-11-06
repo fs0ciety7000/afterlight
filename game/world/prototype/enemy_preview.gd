@@ -6,13 +6,13 @@ extends Node3D
 ##   godot --path . res://game/world/prototype/enemy_preview.tscn
 ##   xvfb-run -a godot --path . --rendering-driver opengl3 --resolution 1600x900 \
 ##     res://game/world/prototype/enemy_preview.tscn -- --shots   (art/source/enemies/shot_*.jpg)
-## Keys: Space / Right = next clip, Left = previous, 1-7 = idle run attack cast hit death phase,
+## Keys: Space / Right = next clip, Left = previous, 1-6 = idle run attack cast hit death,
 ##       Z = camera distance 11 m / 6 m, Q / E = turn the line-up.
 
 const MODELS := "res://assets/models/enemies/%s/%s.glb"
 const LOCATION := "res://game/world/locations/whispering_wood.tscn"
 const SHOT_DIR := "res://art/source/enemies/"
-const CLIPS := ["idle", "run", "attack", "cast", "hit", "death", "phase"]
+const CLIPS := ["idle", "run", "attack", "cast", "hit", "death"]
 const LOOPING := ["idle", "run"]
 const CENTRE := Vector3(-4.0, 0.0, -10.0)  # clearing of the wood (encounter anchor area)
 const PITCH_DEG := 50.0
@@ -30,6 +30,7 @@ var _players: Array[AnimationPlayer] = []
 var _clip := 0
 var _camera: Camera3D
 var _distance := 11.0
+var _focus_x := 0.6
 var _pivot: Node3D
 
 
@@ -89,7 +90,7 @@ func _ground(p: Vector3) -> Vector3:
 
 func _place_camera() -> void:
 	var pitch := deg_to_rad(PITCH_DEG)
-	var focus := _pivot.position + Vector3(0.6, 0.0, 0.0)
+	var focus := _pivot.position + Vector3(_focus_x, 0.0, 0.0)
 	_camera.position = focus + Vector3(0.0, sin(pitch) * _distance + 0.8, cos(pitch) * _distance)
 	_camera.rotation = Vector3(-pitch, 0.0, 0.0)
 
@@ -121,7 +122,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_E:
 			_pivot.rotation.y -= deg_to_rad(15)
 		_:
-			if key >= KEY_1 and key <= KEY_7:
+			if key >= KEY_1 and key <= KEY_6:
 				_play(key - KEY_1)
 
 
@@ -147,14 +148,14 @@ func _take_shots() -> void:
 		"cast": 0.45,
 		"hit": 0.25,
 		"death": 1.0,
-		"phase": 0.5
 	}
-	for d in [11.0, 6.0]:
+	# 11 m line-up, 6 m on the wolves and lantern, 6 m on the sentinel and Morvaine ("_6m_right")
+	for view: Array in [[11.0, 0.6, ""], [6.0, 0.6, ""], [6.0, 4.4, "_right"]]:
+		var d: float = view[0]
 		_distance = d
+		_focus_x = view[1]
 		_place_camera()
 		for clip: String in moments:
-			if clip == "phase" and d > 8.0:
-				continue
 			for ap in _players:
 				if ap == null:
 					continue
@@ -162,5 +163,5 @@ func _take_shots() -> void:
 				ap.play(clip_name)
 				ap.seek(ap.get_animation(clip_name).length * moments[clip], true)
 				ap.pause()
-			await _shot("shot_%s_%dm.jpg" % [clip, int(d)])
+			await _shot("shot_%s_%dm%s.jpg" % [clip, int(d), view[2]])
 	get_tree().quit()

@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckkgwypuob0oy"
-path="res://.godot/imported/mist_wolf_mist_wolf_palette.webp-2aad3cd569aadbcc4b05db78868e19b5.ctex"
+uid="uid://c248deyc8qb8m"
+path="res://.godot/imported/stone_sentinel_stone_sentinel_albedo.webp-55e74016ab28eca8fe8b976429dc139f.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "ede883cf499829dfb3fc6129d68e48e8"
+"md5": "9743edf05acdb87a9bf1622b7532565d"
 }
 
 [deps]
 
-source_file="res://assets/models/enemies/mist_wolf/mist_wolf_mist_wolf_palette.webp"
-dest_files=["res://.godot/imported/mist_wolf_mist_wolf_palette.webp-2aad3cd569aadbcc4b05db78868e19b5.ctex"]
+source_file="res://assets/models/enemies/stone_sentinel/stone_sentinel_stone_sentinel_albedo.webp"
+dest_files=["res://.godot/imported/stone_sentinel_stone_sentinel_albedo.webp-55e74016ab28eca8fe8b976429dc139f.ctex"]
 
 [params]
 

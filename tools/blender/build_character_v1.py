@@ -50,6 +50,11 @@ ap.add_argument("--skirt-chains", type=int, default=8)
 ap.add_argument("--no-staff", action="store_true")
 ap.add_argument("--staff-upright", default="idle=1,walk=0.85,run=0.8,hit=0.6,cast=0.35,death=0,victory=0",
                 help="per clip: how much the staff pivots back toward upright in the palm")
+ap.add_argument("--name", default="Fern", help="prefix of the rig, mesh, material and texture names")
+ap.add_argument("--class-mode", default="fern", choices=("fern", "robe"),
+                help="albedo -> vertex class rules: fern (violet hair, white dress, black coat) or robe "
+                "(near-black hair, dark grey robe with ember trim = 'white' dress class, lavender skin)")
+ap.add_argument("--in-place", default="", help="clip=k,...: horizontal Hips travel scaled by k (0 = in place)")
 ap.add_argument("--head-up", type=float, default=10.0, help="degrees added to every clip: chin up, "
                 "so the face reads from the 50 deg top-down camera")
 a = ap.parse_args(argv)
@@ -76,8 +81,8 @@ body = next(o for o in new if o.type == "MESH" and o.parent == rig)
 for o in new:
     if o not in (rig, body):
         bpy.data.objects.remove(o)
-rig.name = rig.data.name = "Fern_Rig"
-body.name = "Fern_Body"
+rig.name = rig.data.name = f"{a.name}_Rig"
+body.name = f"{a.name}_Body"
 rig.animation_data_create()
 if rig.animation_data.action:
     old = rig.animation_data.action
@@ -125,6 +130,32 @@ report["clips_in"] = {n: [round(x, 1) for x in act.frame_range] for n, act in cl
 
 def channelbag(act):
     return act.layers[0].strips[0].channelbags[0]
+
+
+# optional: keep clips (near) in place, e.g. a hit reaction that steps back a metre
+for kv in filter(None, a.in_place.split(",")):
+    cname, k = kv.split("=")
+    act = clips.get(cname)
+    if not act:
+        continue
+    fcs = {fc.array_index: fc for fc in channelbag(act).fcurves if fc.data_path == 'pose.bones["Hips"].location'}
+    if len(fcs) != 3 or len({len(fc.keyframe_points) for fc in fcs.values()}) != 1:
+        continue
+    M3 = rig.data.bones["Hips"].matrix_local.to_3x3()
+    up = (rig.matrix_world.inverted().to_3x3() @ Vector((0, 0, 1))).normalized()  # world up, armature space
+    n = len(fcs[0].keyframe_points)
+    vs = [M3 @ Vector([fcs[j].keyframe_points[i].co.y for j in range(3)]) for i in range(n)]
+    h0 = vs[0] - up * vs[0].dot(up)
+    for i, v in enumerate(vs):
+        h = v - up * v.dot(up)
+        nv = up * v.dot(up) + h0 + (h - h0) * float(k)
+        loc = M3.inverted() @ nv
+        for j in range(3):
+            fcs[j].keyframe_points[i].co.y = loc[j]
+            fcs[j].keyframe_points[i].interpolation = "LINEAR"
+    for fc in fcs.values():
+        fc.update()
+    report.setdefault("in_place", {})[cname] = float(k)
 
 
 # ---------------------------------------------------------------- 2. decimate, hands
@@ -189,12 +220,12 @@ bsdf.inputs["Roughness"].default_value = 1.0
 bsdf.inputs["Specular IOR Level"].default_value = 0.0
 old_img = tex.image
 img = bpy.data.images.load(os.path.abspath(a.albedo))
-img.name = "Fern_Albedo"
+img.name = f"{a.name}_Albedo"
 if max(img.size) != a.tex:
     img.scale(a.tex, a.tex)
 tex.image = img
 bpy.data.images.remove(old_img)
-mat.name = "Fern_Mat"
+mat.name = f"{a.name}_Mat"
 W, H = img.size
 pix = list(img.pixels[:])  # RGBA floats, row 0 = bottom
 
@@ -219,6 +250,13 @@ def classify(c):
     n = max(1, c[3])
     r, g, b = c[0] / n, c[1] / n, c[2] / n
     mx, mn = max(r, g, b), min(r, g, b)
+    if a.class_mode == "robe":
+        # robe (dark grey) and its ember trim play the "white dress" role: never driven by the legs
+        if mx < 0.18:
+            return "hair"  # near-black: hair, also shoes and horns (filtered by height later)
+        if mx > 0.55 and mn > 0.5 and b >= g:
+            return "skin"  # pale lavender skin
+        return "white"
     if b > g + 0.08 and r > g + 0.05 and mx > 0.18:
         return "hair"
     if r > b + 0.08 and mx > 0.6:

@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccrcsil27u0op"
-path="res://.godot/imported/stone_sentinel_stone_sentinel_palette.webp-faddcb82919a8b0200f2baf0a71011f2.ctex"
+uid="uid://4r5pwgji2ntl"
+path="res://.godot/imported/morvaine_morvaine_albedo.webp-8981215c01db6e93ab0d7f8a34ded836.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "48177cbd3b60901f7e789333eee5b850"
+"md5": "dbaa000047ab1cafeaaccaa5bde11460"
 }
 
 [deps]
 
-source_file="res://assets/models/enemies/stone_sentinel/stone_sentinel_stone_sentinel_palette.webp"
-dest_files=["res://.godot/imported/stone_sentinel_stone_sentinel_palette.webp-faddcb82919a8b0200f2baf0a71011f2.ctex"]
+source_file="res://assets/models/enemies/morvaine/morvaine_morvaine_albedo.webp"
+dest_files=["res://.godot/imported/morvaine_morvaine_albedo.webp-8981215c01db6e93ab0d7f8a34ded836.ctex"]
 
 [params]
 

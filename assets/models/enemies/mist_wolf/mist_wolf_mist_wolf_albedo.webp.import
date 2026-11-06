@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w6c2fjwvwcku"
-path="res://.godot/imported/morvaine_morvaine_palette.webp-1a7dd7402be0bd5583138253a03ae3fd.ctex"
+uid="uid://0kjiqulhb8x5"
+path="res://.godot/imported/mist_wolf_mist_wolf_albedo.webp-b0ac912ec2140083321dd4bca7dacf42.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "d41e8bfbd8f043c64467ac66d0d4aed7"
+"md5": "cea0e01b78a93f2575867b16152ac22a"
 }
 
 [deps]
 
-source_file="res://assets/models/enemies/morvaine/morvaine_morvaine_palette.webp"
-dest_files=["res://.godot/imported/morvaine_morvaine_palette.webp-1a7dd7402be0bd5583138253a03ae3fd.ctex"]
+source_file="res://assets/models/enemies/mist_wolf/mist_wolf_mist_wolf_albedo.webp"
+dest_files=["res://.godot/imported/mist_wolf_mist_wolf_albedo.webp-b0ac912ec2140083321dd4bca7dacf42.ctex"]
 
 [params]
 
