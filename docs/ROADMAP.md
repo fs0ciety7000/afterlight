@@ -8,13 +8,13 @@
 | # | Jalon | Statut | Dépend de |
 |---|---|---|---|
 | 1 | Fondations | **En cours** | - |
-| 2 | Monde | À faire | 1 |
-| 3 | Combat | À faire | 1 (simulation) ; 2 (combat dans la scène) |
-| 4 | Progression | À faire | 3 |
+| 2 | Monde | **Clos avec réserves** (2.8, 2.9) | 1 |
+| 3 | Combat | **Clos avec réserves** (3.7, 3.8, 3.9, 3.12 tablette) | 1 (simulation) ; 2 (combat dans la scène) |
+| 4 | Progression | **En cours** (moteur fait, écrans en cours) | 3 |
 | 5 | Idle | À faire | 3, 4 |
 | 6 | Contenu | À faire | 2, 3, 4, 5 |
 | 7 | Finition | À faire | 6 |
-| A | Piste art (parallèle) | À faire (essai Fern d'abord) | Rien pour démarrer ; alimente 2, 3, 6, 7 |
+| A | Piste art (parallèle) | **En cours** (Fern v1, ennemis, décor, VFX) | Rien pour démarrer ; alimente 2, 3, 6, 7 |
 
 Règle commune à tous les jalons : **aucune interaction factice**. Un bouton visible fait quelque chose de réel, ou il est absent. Un bouton désactivé affiche sa raison.
 
@@ -87,6 +87,18 @@ Règle commune à tous les jalons : **aucune interaction factice**. Un bouton vi
 | 2.8 | Performance : ≥ 50 i/s sur desktop de référence, ≥ 30 i/s sur la tablette de référence, dans Aubelin | E2E (mesure) |
 | 2.9 | Mobile paysage < 768 px : joystick à gauche, bouton menu, mini-carte réduite ; aucun élément ne sort des zones sûres | E2E (capture) |
 
+**État au 2026-11-06** (passe E2E complète sur desktop, mobile paysage Pixel 7 et tablette iPad, Chromium, rendu logiciel SwiftShader) :
+
+| # | État | Preuve ou reste à faire |
+|---|---|---|
+| 2.1 | Fait | `world.spec.ts` (clavier ZQSD / WASD, clic), `touch.spec.ts` (joystick) ; 3 profils |
+| 2.2, 2.4 | Fait | `world.spec.ts` (carte, zoom, déplacement, lieu verrouillé expliqué) |
+| 2.3, 2.5 | Fait | `world.spec.ts` (voyage ≤ 1,5 s mesuré dans le jeu, brouillard après rechargement) |
+| 2.6 | Fait | `test_world_rules.gd`, `test_content.gd` (V16, témoin bloquant) |
+| 2.7 | Fait | `test_location_scenes.gd` + `world.spec.ts` (sortie de zone) |
+| 2.8 | Non mesurable ici | Le conteneur n'a pas de GPU (1 à 9 i/s en rendu logiciel). Réglage de qualité graphique ajouté ; mesure à faire sur une vraie machine |
+| 2.9 | Partiel | Joystick et menu vérifiés en E2E mobile ; pas de capture comparée des zones sûres |
+
 ---
 
 ## Jalon 3 : Combat
@@ -116,6 +128,23 @@ Règle commune à tous les jalons : **aucune interaction factice**. Un bouton vi
 | 3.11 | Défaite : retour à l'entrée du lieu, PV pleins, inventaire inchangé | E2E |
 | 3.12 | Le journal de combat affiche une ligne par `DamageDealt`, `SpellCast` et `StatusApplied`, et filtre par source | E2E |
 | 3.13 | Au toucher : sorts en arc à droite, appui sur un ennemi pour le focaliser ; cibles tactiles ≥ 48 px | E2E |
+
+**État au 2026-11-06** :
+
+| # | État | Preuve ou reste à faire |
+|---|---|---|
+| 3.1, 3.4 | Fait | `test_combat_determinism.gd`, `test_architecture.gd` |
+| 3.2 | Fait | `test_balance_formulas.gd` |
+| 3.3 | Fait | `test_combat_bench.gd` (seuils §22.1, après les ajustements du GDD du 2026-11-06) |
+| 3.5, 3.6, 3.11 | Fait | `combat.spec.ts`, 3 profils |
+| 3.7 | Partiel | Pause vérifiée en E2E (aucun tick en 2 s) ; le départ d'un sort mis en file à la reprise n'a pas de test dédié |
+| 3.8 | Partiel | ×2 vérifié en E2E desktop et mobile ; le refus de ×4 par le boss est vérifié en unitaire (`test_combat_view_speed.gd`). Sur tablette le rapport ×2/×1 n'est pas mesurable : à ~0,5 i/s en rendu logiciel, le plafond de 40 pas par image s'applique aux deux vitesses |
+| 3.9 | Fait en unitaire | `test_combat_mechanics.gd` (Zoltraak interrompt la lanterne) ; pas d'E2E |
+| 3.10 | Fait | `test_combat_mechanics.gd` (phases, enrage à 300 s) |
+| 3.12 | Fait desktop et mobile | Tablette : journal masqué sous 1 100 px de large ; correctif (journal replié derrière un bouton) en cours avec les écrans du jalon 4 |
+| 3.13 | Fait | `combat_touch.spec.ts` mobile et tablette (boutons ≥ 48 px CSS après le correctif `212227d`) |
+
+Défauts connus : une seule animation de lancer pour Fern ; lisibilité de la tête de la sentinelle ; clips d'attaque et de mort de Morvaine ; sorts affichés par leurs initiales tant qu'il n'y a pas d'icônes ; export web d'environ 45 Mo ; Firefox non testé.
 
 ---
 
