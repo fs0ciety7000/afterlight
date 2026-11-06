@@ -230,6 +230,9 @@ func _add_visual(root: Node3D, e: Dictionary) -> void:
 		if scene:
 			var inst := scene.instantiate()
 			root.add_child(inst)
+			if str(e["kind"]) == "npc" and inst is Node3D:
+				# NPC GLBs face +Z; anchors use the characters' -Z forward (as Fern).
+				(inst as Node3D).rotation.y = PI
 			Toon.apply(inst)
 			_start_idle(str(e["id"]), inst)
 			return
