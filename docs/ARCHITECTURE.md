@@ -210,8 +210,8 @@ Chaque événement est un dictionnaire `{"type", "tick", ...}`, dans l'ordre où
 | `consumable_used` | `unit`, `consumable`, `remaining` |
 | `tactic_changed` | `unit`, `key`, `value` |
 | `command_rejected` | `unit`, `command`, `ref`, `reason` |
-| `loot_dropped` | `gold`, `materials` {ID: quantité}, `items` (vide jusqu'au jalon 4), `position` (dernier ennemi vaincu) |
-| `encounter_completed` | `encounter`, `result` (`victory`, `defeat`), `duration_s`, `ticks`, `rewards` {`xp`, `gold`, `materials`}, `first_clear`, `last_hit` {`source`, `spell`, `target`} |
+| `loot_dropped` | `gold`, `materials` {ID: quantité}, `items` (objets tirés, sans `uid` : voir `ItemFactory`), `runes` [{`id`, `tier`}], `artifacts` [ID], `position` (dernier ennemi vaincu) |
+| `encounter_completed` | `encounter`, `result` (`victory`, `defeat`), `duration_s`, `ticks`, `rewards` {`xp`, `gold`, `materials`, `items`, `runes`, `artifacts`, `consumables`}, `consumables_used` {ID: quantité}, `first_clear`, `last_hit` {`source`, `spell`, `target`} |
 
 Les déplacements ne produisent pas d'événement par tic : le rendu lit les positions dans l'instantané.
 

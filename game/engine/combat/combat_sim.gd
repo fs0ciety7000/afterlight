@@ -40,6 +40,8 @@ var kills: Array = []
 var last_hit: Dictionary = {}
 var roster_changed := false
 var first_clear := false
+## Consumables the leader carried at the start (to report what was used).
+var consumables_start: Dictionary = {}
 var keep_log := true
 var event_log: Array = []
 
@@ -89,6 +91,7 @@ func _setup(setup: Dictionary) -> void:
 				0,
 				mini(int(c["carry_max"]), BalanceCombat.CONSUMABLE_CARRY_MAX)
 			)
+	consumables_start = leader["consumables"].duplicate()
 	for u in units:
 		for id in u["spells"] + ([u["ultimate"]] if u["ultimate"] != "" else []):
 			_tactic_spells[id] = def(id)
@@ -562,7 +565,9 @@ func _finish(outcome: String) -> void:
 			{
 				"gold": rewards["gold"],
 				"materials": rewards["materials"],
-				"items": [],
+				"items": rewards["items"].duplicate(true),
+				"runes": rewards["runes"].duplicate(true),
+				"artifacts": rewards["artifacts"].duplicate(),
 				"position": at,
 			}
 		)
@@ -577,10 +582,22 @@ func _finish(outcome: String) -> void:
 			"duration_s": snappedf(time_s(), 0.01),
 			"ticks": tick,
 			"rewards": rewards.duplicate(true),
+			"consumables_used": consumables_used(),
 			"first_clear": first_clear,
 			"last_hit": last_hit.duplicate(),
 		}
 	)
+
+
+## {consumable id: count} the leader used during this fight.
+func consumables_used() -> Dictionary:
+	var out := {}
+	var left: Dictionary = units[0]["consumables"] if not units.is_empty() else {}
+	for id in consumables_start:
+		var used := int(consumables_start[id]) - int(left.get(id, 0))
+		if used > 0:
+			out[id] = used
+	return out
 
 
 # --- Commands -----------------------------------------------------------------
