@@ -560,11 +560,15 @@ func _on_finished(e: Dictionary) -> void:
 		body.custom_minimum_size = Vector2(_result.custom_minimum_size.x - 48.0, 0)
 		col.add_child(body)
 		if hunting:
-			col.add_child(Kit.label(tr("ui.hunt.stopped_defeat"), "SubheadingLabel", true))
+			# Wrapped labels need a width, or the panel grows off the top of the screen.
+			var stopped := Kit.label(tr("ui.hunt.stopped_defeat"), "SubheadingLabel", true)
+			stopped.custom_minimum_size = body.custom_minimum_size
+			col.add_child(stopped)
 	var focus: Control
 	if hunting and victory and not _stop_after:
 		# The loop goes on by itself; « Arrêter la chasse » stays available.
 		var next := Kit.label(tr("ui.hunt.next"), "MutedLabel", true)
+		next.custom_minimum_size = Vector2(_result.custom_minimum_size.x - 48.0, 0)
 		UiProbe.register("combat.hunt_next", next)
 		col.add_child(next)
 		_between_fights = true

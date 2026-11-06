@@ -65,7 +65,14 @@ async function winOnce(page: Page): Promise<void> {
 async function enabledHunts(page: Page): Promise<string[]> {
   const controls = (await probe(page))!.controls;
   return Object.keys(controls)
-    .filter((id) => /^hunts\.choose\.[a-z0-9_]+$/.test(id) && controls[id].visible && !controls[id].disabled)
+    // Buttons only: the `<id>_reason` labels share the prefix and have no `disabled`.
+    .filter(
+      (id) =>
+        /^hunts\.choose\.[a-z0-9_]+$/.test(id) &&
+        !id.endsWith('_reason') &&
+        controls[id].visible &&
+        controls[id].disabled === false,
+    )
     .map((id) => id.slice('hunts.choose.'.length));
 }
 
