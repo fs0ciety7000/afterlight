@@ -125,20 +125,32 @@ Un test (`tests/unit/world/test_location_scenes.gd`) charge chaque scène citée
 
 ## Taille de l'export et chargement (web)
 
-Critère 7.2 : premier écran interactif en moins de 10 s à 20 Mb/s (2,5 Mo/s). Le chargeur web de Godot télécharge `index.wasm` puis tout `index.pck` avant d'afficher le titre : chaque mégaoctet du pack retarde le premier écran.
+Critère 7.2 : premier écran interactif en moins de 10 s à 20 Mb/s (2,5 Mo/s). Le chargeur web de Godot télécharge `index.wasm` puis tout `index.pck` avant d'afficher le titre : chaque mégaoctet de ce pack retarde le premier écran. L'export web produit donc **deux packs** :
+
+- `index.pck` (preset `Web`), le pack de démarrage : code, thème, polices, données, traductions, textures d'interface, carte et portraits, sons, musique du titre ;
+- `content.pck` (preset `Web content`, `--export-pack`) : `assets/environment/`, `assets/models/`, `game/world/locations/`, `game/world/dungeons/` et les musiques de `assets/audio/music/` sauf `music_title.ogg`. `tools/web_content.mjs` écrit à côté `content.json` (taille, md5).
 
 | Mesure | Cible | Vérification |
 |---|---|---|
-| `build/web/index.pck` | **≤ 30 Mo** (25,7 Mo le 2026-11-06) | `tests/unit/test_export_size.gd` sur le dernier build ; détail : `python3 tools/pck_report.py` |
-| Téléchargement avant le titre (wasm + pck, gzip) | ≤ 22 Mo, soit < 10 s avec le démarrage | `gzip -c build/web/index.{wasm,pck} \| wc -c` ; `pnpm serve` sert en gzip comme un hébergeur |
+| `build/web/index.pck` | **≤ 6 Mo** | `tests/unit/test_export_size.gd` sur le dernier build ; détail : `python3 tools/pck_report.py` |
+| `build/web/content.pck` | **≤ 28 Mo** | idem, `python3 tools/pck_report.py build/web/content.pck` |
+| Téléchargement avant le titre (wasm + `index.pck`, gzip) | **≤ 17,5 Mo**, soit 7 s plus le démarrage | le même test compresse les deux fichiers ; `pnpm serve` sert en gzip comme un hébergeur |
+
+Chargement du second pack (autoload `ContentPack`, `game/app/content_pack.gd`) :
+
+1. Au démarrage, si `res://game/world/locations/aubelin.tscn` existe, le contenu est déjà là (éditeur, tests, export d'un seul pack) : état `READY`, rien n'est téléchargé.
+2. Sinon, sur le web : `HTTPRequest` lit `content.json` puis télécharge `content.pck?v=<md5>` dans `/tmp` (MEMFS, pas recopié dans IndexedDB ; repli sur `user://` si `/tmp` refuse), vérifie la taille, puis `ProjectSettings.load_resource_pack()`. Hors web, `-- --content-base=<url>` permet d'essayer un build découpé sur le bureau.
+3. Le titre et l'écran de récupération affichent `ContentGate` (`game/app/content_gate.gd`) : barre de progression, « Chargement du monde : N % », et « Continuer », « Nouvelle partie », « Importer une sauvegarde » (ou Restaurer) désactivés avec la raison. En cas d'échec : raison en clair et bouton « Réessayer ». Filet de sécurité : `Router.go_to("explore")` renvoie au titre tant que le pack n'est pas monté.
+4. Sonde E2E : `window.__afterlight.world.content` = `{state: "ready" | "loading" | "failed", progress, error}`.
+
+Règle de code : aucun script ne fait `preload()` d'un fichier du second pack (le test le vérifie) ; lieux, modèles et musiques se chargent par chemin au moment de servir (`load()` après `ResourceLoader.exists`).
 
 Règles d'import et d'export :
 
 - **Textures** : WebP avec perte (`compress/mode=1`, qualité 0,8 ; 0,85 pour carte, titre et portraits). Défaut du projet (`[importer_defaults]` dans `project.godot`), donc aussi pour les textures extraites des GLB. Sans perte toléré pour les pictogrammes (`assets/textures/icons/`). Pas de compression VRAM : en WebGL 2 il faudrait livrer S3TC et ETC2, deux copies plus lourdes que le WebP ; la texture est décompressée en RGBA8 au chargement, la mémoire reste dans le budget 7.1 (un lieu chargé à la fois).
 - **Tailles** : 1024 px maximum pour décor, accessoires et personnages (`process/size_limit`) ; toile de fond des lieux 2048 px ; carte et image du titre jusqu'à 2560 px. Mipmaps pour la 3D seulement.
-- **Exclus du pack** (`export_presets.cfg`) : `art/`, `tools/`, `tests/`, `build/`, `docs/`, les GLB de `assets/environment/` (sources de `meshes/*.res`, cuits par `location_builder.gd`) et les copies de l'atlas d'accessoires extraites par GLB (les matériaux utilisent `assets/environment/textures/village_props_atlas.webp`). Le test vérifie qu'aucun matériau ni scène de `game/world` n'utilise un fichier exclu.
-- **Chargement** : au démarrage, seuls le code, le thème, les polices, les données et l'image du titre servent ; lieux, personnages et ennemis sont chargés au voyage (`load()` dans `explore_view.gd`, `player.gd`).
-- **Étape suivante si le téléchargement reste au-dessus de 22 Mo** : un second pack `content.pck` (preset d'export à part avec `assets/environment/`, `assets/models/`, `game/world/locations/`, `game/world/dungeons/`), téléchargé pendant l'écran titre puis monté par `ProjectSettings.load_resource_pack()` avant le premier voyage. Voir `art/source/perf/export_size.md`.
+- **Exclus des deux packs** (`export_presets.cfg`) : `art/`, `tools/`, `tests/`, `build/`, `docs/`, `test-results/`, les GLB de `assets/environment/` (sources de `meshes/*.res`, cuits par `location_builder.gd`) et les copies de l'atlas d'accessoires extraites par GLB (les matériaux utilisent `assets/environment/textures/village_props_atlas.webp`). Le test vérifie qu'aucun matériau ni scène de `game/world` n'utilise un fichier absent des deux packs, et que chaque fichier de contenu est dans un seul pack.
+- **Chargement** : au démarrage, seuls le code, le thème, les polices, les données et l'image du titre servent ; lieux, personnages et ennemis sont chargés au voyage (`load()` dans `explore_view.gd`, `player.gd`). Un nouveau dossier de contenu lourd va dans le preset `Web content` (et dans `CONTENT_ROOTS` du test). Mesures : `art/source/perf/export_size.md`.
 
 ## Arborescence
 

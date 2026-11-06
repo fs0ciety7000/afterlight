@@ -5,11 +5,20 @@ Cible et règles : `docs/ARCHITECTURE.md`, « Taille de l'export et chargement (
 ## Mesurer
 
 ```bash
-pnpm build:web                      # export dans build/web/
-python3 tools/pck_report.py         # détail du pack : par type, par dossier, plus gros fichiers
-python3 tools/pck_report.py --top 60
-gzip -6 -c build/web/index.pck | wc -c ; gzip -6 -c build/web/index.wasm | wc -c
-pnpm test                           # tests/unit/test_export_size.gd : budget du pack, exclusions, imports
+pnpm build:web                      # index.html, index.wasm, index.pck, content.pck, content.json
+python3 tools/pck_report.py         # détail du pack de démarrage : par type, par dossier, plus gros fichiers
+python3 tools/pck_report.py build/web/content.pck --top 60
+for f in index.wasm index.pck content.pck; do echo $f $(gzip -6 -c build/web/$f | wc -c); done
+pnpm test                           # tests/unit/test_export_size.gd : budgets des deux packs, avant le titre, répartition
+
+# Temps à 20 Mb/s sans navigateur : pnpm serve (gzip), puis curl bridé à 2,5 Mo/s
+for f in index.html index.js index.wasm index.pck; do
+  curl -s --limit-rate 2500000 -H "Accept-Encoding: gzip" -o /dev/null \
+    -w "$f %{size_download} B %{time_total}s\n" http://localhost:8060/$f; done
+curl -s --limit-rate 2500000 -H "Accept-Encoding: gzip" -o /dev/null -w "%{time_total}s\n" http://localhost:8060/content.pck
+
+# Build découpé sur le bureau (sans navigateur), lancé depuis un dossier hors du dépôt
+godot --headless --main-pack <dépôt>/build/web/index.pck --quit-after 600 -- --content-base=http://localhost:8060/
 ```
 
 `tools/pck_report.py` lit le répertoire du `.pck` (format 4.x) et rattache chaque fichier de `.godot/imported/` à son dossier source.
@@ -42,13 +51,31 @@ Comparaisons de rendu avant | après | écart ×4 : `compare_aubelin_vista.jpg`,
 - **Compression VRAM (S3TC + ETC2)** : deux copies par texture dans le pack, plus lourdes que le WebP.
 - **Retirer les LOD ou les maillages d'ombre** : gain faible, risque sur 7.1 (images par seconde).
 
-## Premier écran à 20 Mb/s
+## Second pack (2026-11-06, après le réencodage audio)
+
+Avant le découpage, le pack unique pesait **31,8 Mo** (28,3 Mo gzip) : la musique (5,8 Mio) l'avait fait passer au-dessus du budget de 30 Mo.
+
+| | Pack unique | Découpé |
+|---|---|---|
+| `index.pck` (avant le titre) | 31,8 Mo / 28,3 Mo gzip | **4,06 Mo / 3,59 Mo gzip** (573 fichiers) |
+| `content.pck` (pendant le titre) | n/a | 25,8 Mo / 22,9 Mo gzip (451 fichiers) |
+| `index.wasm` gzip | 10,1 Mo | 10,1 Mo |
+| Avant le titre (html + js + wasm + pck, gzip) | 38,5 Mo, ≈ 15,4 s à 2,5 Mo/s | **13,85 Mo, ≈ 5,5 s** (curl bridé : 4,9 s) |
+| Boutons « Continuer » / « Nouvelle partie » actifs | avec le titre | + 9,2 s de `content.pck` (curl bridé : 8,8 s), pendant le titre |
+
+Premier écran interactif estimé à 20 Mb/s : ≈ 5,5 s de téléchargement + le démarrage du moteur (compilation du wasm, autoloads, ≈ 1 à 2 s) ≈ **7 s : 7.2 est tenu**. Le titre, les réglages et l'import sont utilisables tout de suite ; l'entrée dans le monde attend la fin du second pack (≈ 15 s après l'ouverture de la page à 20 Mb/s, ≈ 1 s en local).
+
+Contenu du pack de démarrage : textures d'interface, carte et portraits 1,2 Mio, sons et musique du titre 1,1 Mio, code 0,8 Mio, polices 0,4 Mio, données et traductions 0,2 Mio.
+
+Vérifié sans navigateur : `godot --headless --main-pack <index.pck> -- --content-base=<url>` sur un serveur local bridé : téléchargement, montage, chargement d'Aubelin, du cloître, de Fern et d'une musique, nouvelle partie jusqu'à l'écran d'exploration, sans erreur. Serveur absent (pas de réponse) et 404 : message d'erreur et « Réessayer ». Captures de l'écran titre en chargement et en échec relues sous xvfb.
+
+## Premier écran à 20 Mb/s (avant le second pack)
 
 Le chargeur web télécharge le wasm puis le pack entier avant d'afficher le titre. À 2,5 Mo/s : 10,2 Mo (wasm gzip) + 22,6 Mo (pck gzip) ≈ 32,8 Mo, soit **≈ 13 s plus le démarrage : 7.2 n'est pas encore tenu** (avant : 39,5 + 69,4 Mo sans compression, soit ≈ 44 s). Le WebP ne se recompresse pas : le pack gzip reste proche de sa taille brute.
 
 Ce qui sert vraiment au premier écran (code, thème, polices, données, image du titre) pèse environ 3 Mo. Les lieux et les modèles sont déjà chargés au voyage (`explore_view.gd`, `player.gd`), et les chargements sont protégés par `ResourceLoader.exists`.
 
-**Proposition, non faite ici** (elle touche `game/app` et le démarrage) : un second pack.
+**Proposition** (faite, voir « Second pack » ci-dessus) : un second pack.
 
 1. Un preset d'export `Web content` (`--export-pack`) avec `assets/environment/*`, `assets/models/*`, `game/world/locations/*`, `game/world/dungeons/*` ; le preset `Web` les exclut.
 2. Au titre, `HTTPRequest` télécharge `content.pck` dans `user://`, puis `ProjectSettings.load_resource_pack("user://content.pck")`. « Continuer » et « Nouvelle partie » attendent la fin du téléchargement, avec une barre de progression.
