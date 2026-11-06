@@ -3263,28 +3263,28 @@ fog_sky_affect = 0.0
 adjustment_enabled = true
 adjustment_contrast = 1.08
 
-[node name="SilentDialCloister" type="Node3D" unique_id=157619093]
+[node name="SilentDialCloister" type="Node3D" unique_id=779778539]
 
-[node name="Spawns" type="Node3D" parent="." unique_id=1329334729]
+[node name="Spawns" type="Node3D" parent="." unique_id=2057679234]
 
-[node name="default" type="Marker3D" parent="Spawns" unique_id=1236984682]
+[node name="default" type="Marker3D" parent="Spawns" unique_id=1221745]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
 
-[node name="from_watch_ruins" type="Marker3D" parent="Spawns" unique_id=1755176301]
+[node name="from_watch_ruins" type="Marker3D" parent="Spawns" unique_id=1420758646]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
 
-[node name="checkpoint_campfire" type="Marker3D" parent="Spawns" unique_id=587272025]
+[node name="checkpoint_campfire" type="Marker3D" parent="Spawns" unique_id=1729024923]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -132.5)
 
-[node name="shortcut_vestibule" type="Marker3D" parent="Spawns" unique_id=370607861]
+[node name="shortcut_vestibule" type="Marker3D" parent="Spawns" unique_id=1238025056]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -14, 0, 0)
 
-[node name="shortcut_campfire" type="Marker3D" parent="Spawns" unique_id=191881948]
+[node name="shortcut_campfire" type="Marker3D" parent="Spawns" unique_id=119578606]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -21, 0, -137)
 
-[node name="Exits" type="Node3D" parent="." unique_id=144765863]
+[node name="Exits" type="Node3D" parent="." unique_id=518114999]
 
-[node name="to_watch_ruins" type="Area3D" parent="Exits" unique_id=755348018]
+[node name="to_watch_ruins" type="Area3D" parent="Exits" unique_id=1553069475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 35.5)
 collision_layer = 8
 collision_mask = 2
@@ -3292,10 +3292,10 @@ monitorable = false
 metadata/to = "location.watch_ruins"
 metadata/spawn = "from_cloister"
 
-[node name="Shape" type="CollisionShape3D" parent="Exits/to_watch_ruins" unique_id=349218733]
+[node name="Shape" type="CollisionShape3D" parent="Exits/to_watch_ruins" unique_id=2022338470]
 shape = SubResource("BoxShape3D_trbcj")
 
-[node name="to_watch_ruins_back" type="Area3D" parent="Exits" unique_id=1406472292]
+[node name="to_watch_ruins_back" type="Area3D" parent="Exits" unique_id=1336446291]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 4.75, -205.5)
 collision_layer = 8
 collision_mask = 2
@@ -3304,10 +3304,10 @@ metadata/to = "location.watch_ruins"
 metadata/spawn = "from_cloister"
 metadata/requires_cleared = "encounter.cloister_boss"
 
-[node name="Shape" type="CollisionShape3D" parent="Exits/to_watch_ruins_back" unique_id=1493757536]
+[node name="Shape" type="CollisionShape3D" parent="Exits/to_watch_ruins_back" unique_id=1210593396]
 shape = SubResource("BoxShape3D_a7h4g")
 
-[node name="shortcut_to_campfire" type="Area3D" parent="Exits" unique_id=1704820412]
+[node name="shortcut_to_campfire" type="Area3D" parent="Exits" unique_id=90822136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3, 1.5, 0)
 collision_layer = 8
 collision_mask = 2
@@ -3317,10 +3317,10 @@ metadata/spawn = "shortcut_campfire"
 metadata/shortcut = true
 metadata/requires_cleared = "encounter.cloister_boss"
 
-[node name="Shape" type="CollisionShape3D" parent="Exits/shortcut_to_campfire" unique_id=806549167]
+[node name="Shape" type="CollisionShape3D" parent="Exits/shortcut_to_campfire" unique_id=52247646]
 shape = SubResource("BoxShape3D_h4v5m")
 
-[node name="shortcut_to_vestibule" type="Area3D" parent="Exits" unique_id=1445171171]
+[node name="shortcut_to_vestibule" type="Area3D" parent="Exits" unique_id=283798536]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.3, 1.5, -137)
 collision_layer = 8
 collision_mask = 2
@@ -3330,47 +3330,47 @@ metadata/spawn = "shortcut_vestibule"
 metadata/shortcut = true
 metadata/requires_cleared = "encounter.cloister_boss"
 
-[node name="Shape" type="CollisionShape3D" parent="Exits/shortcut_to_vestibule" unique_id=289331786]
+[node name="Shape" type="CollisionShape3D" parent="Exits/shortcut_to_vestibule" unique_id=1532299440]
 shape = SubResource("BoxShape3D_gujfp")
 
-[node name="Anchors" type="Node3D" parent="." unique_id=1471185538]
+[node name="Anchors" type="Node3D" parent="." unique_id=716520377]
 
-[node name="room1_encounter" type="Marker3D" parent="Anchors" unique_id=1059558943]
+[node name="room1_encounter" type="Marker3D" parent="Anchors" unique_id=1230211038]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 metadata/room = "vestibule"
 metadata/arena_center = "anchor"
 metadata/arena_radius = 16.0
 
-[node name="room2_encounter" type="Marker3D" parent="Anchors" unique_id=138103533]
+[node name="room2_encounter" type="Marker3D" parent="Anchors" unique_id=1114020658]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -50)
 metadata/room = "gallery"
 metadata/arena_center = "anchor"
 metadata/arena_radius = 16.0
 
-[node name="room3_fountain" type="Marker3D" parent="Anchors" unique_id=2091013993]
+[node name="room3_fountain" type="Marker3D" parent="Anchors" unique_id=599144364]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 30, 0, -66)
 metadata/room = "fountain"
 metadata/interact = "fountain"
 metadata/heal_pct = 0.3
 metadata/once_per_run = true
 
-[node name="room4_encounter" type="Marker3D" parent="Anchors" unique_id=487031513]
+[node name="room4_encounter" type="Marker3D" parent="Anchors" unique_id=847050432]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 30, 0, -104)
 metadata/room = "courtyard"
 metadata/arena_center = "anchor"
 metadata/arena_radius = 16.0
 
-[node name="room4_chest" type="Marker3D" parent="Anchors" unique_id=1488521734]
+[node name="room4_chest" type="Marker3D" parent="Anchors" unique_id=1662782841]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 48.6, 0, -86.6)
 metadata/room = "courtyard"
 
-[node name="room5_encounter" type="Marker3D" parent="Anchors" unique_id=972999778]
+[node name="room5_encounter" type="Marker3D" parent="Anchors" unique_id=768478314]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -18, 0, -104)
 metadata/room = "kennel"
 metadata/arena_center = "anchor"
 metadata/arena_radius = 16.0
 
-[node name="room6_campfire" type="Marker3D" parent="Anchors" unique_id=468460237]
+[node name="room6_campfire" type="Marker3D" parent="Anchors" unique_id=1812929046]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -18, 0, -137)
 metadata/room = "campfire"
 metadata/interact = "campfire"
@@ -3378,7 +3378,7 @@ metadata/heal_pct = 1.0
 metadata/checkpoint = "campfire"
 metadata/spawn = "checkpoint_campfire"
 
-[node name="room7_encounter" type="Marker3D" parent="Anchors" unique_id=780955581]
+[node name="room7_encounter" type="Marker3D" parent="Anchors" unique_id=118282189]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -18, 6, -176)
 metadata/room = "dial"
 metadata/arena_center = "anchor"
@@ -3386,2117 +3386,2117 @@ metadata/arena_radius = 16.0
 metadata/trigger_radius = 12.0
 metadata/intro_dialogue = "dialogue.morvaine_intro"
 
-[node name="room7_lantern_a" type="Marker3D" parent="Anchors" unique_id=933201582]
+[node name="room7_lantern_a" type="Marker3D" parent="Anchors" unique_id=1748834269]
 transform = Transform3D(-0.6343933, 0, 0.7730105, 0, 1, 0, -0.7730105, 0, -0.6343933, -1.3802757, 6, -189.63945)
 metadata/room = "dial"
 
-[node name="room7_lantern_b" type="Marker3D" parent="Anchors" unique_id=1281764673]
+[node name="room7_lantern_b" type="Marker3D" parent="Anchors" unique_id=715081456]
 transform = Transform3D(-0.7730105, 0, -0.6343933, 0, 1, 0, 0.6343933, 0, -0.7730105, -31.639456, 6, -192.61972)
 metadata/room = "dial"
 
-[node name="room7_lantern_c" type="Marker3D" parent="Anchors" unique_id=950205175]
+[node name="room7_lantern_c" type="Marker3D" parent="Anchors" unique_id=1086171576]
 transform = Transform3D(0.6343933, 0, -0.77301043, 0, 1, 0, 0.77301043, 0, 0.6343933, -34.619724, 6, -162.36055)
 metadata/room = "dial"
 
-[node name="room7_lantern_d" type="Marker3D" parent="Anchors" unique_id=996593337]
+[node name="room7_lantern_d" type="Marker3D" parent="Anchors" unique_id=1257916738]
 transform = Transform3D(0.7730105, 0, 0.6343933, 0, 1, 0, -0.6343933, 0, 0.7730105, -4.360544, 6, -159.38028)
 metadata/room = "dial"
 
-[node name="Visuals" type="Node3D" parent="." unique_id=1122627224]
+[node name="Visuals" type="Node3D" parent="." unique_id=168285060]
 
-[node name="Ground" type="Node3D" parent="Visuals" unique_id=1329745283]
+[node name="Ground" type="Node3D" parent="Visuals" unique_id=1163006425]
 
-[node name="Ground_0_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=771405304]
+[node name="Ground_0_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1024087662]
 cast_shadow = 0
 mesh = ExtResource("1_ev3fk")
 
-[node name="Ground_1_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=433431959]
+[node name="Ground_1_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=201555291]
 cast_shadow = 0
 mesh = ExtResource("2_b1wk8")
 
-[node name="Ground_2_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=835451189]
+[node name="Ground_2_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=37482983]
 cast_shadow = 0
 mesh = ExtResource("3_esjnp")
 
-[node name="Ground_3_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1190266942]
+[node name="Ground_3_0" type="MeshInstance3D" parent="Visuals/Ground" unique_id=2053653610]
 cast_shadow = 0
 mesh = ExtResource("4_ccnl7")
 
-[node name="Ground_0_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=584684435]
+[node name="Ground_0_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1974606426]
 cast_shadow = 0
 mesh = ExtResource("5_4cayc")
 
-[node name="Ground_1_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1787817218]
+[node name="Ground_1_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=848209744]
 cast_shadow = 0
 mesh = ExtResource("6_8p0vf")
 
-[node name="Ground_2_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1929612270]
+[node name="Ground_2_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1068803219]
 cast_shadow = 0
 mesh = ExtResource("7_6mqj5")
 
-[node name="Ground_3_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=489420290]
+[node name="Ground_3_1" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1415154278]
 cast_shadow = 0
 mesh = ExtResource("8_5b5xe")
 
-[node name="Ground_0_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=908533677]
+[node name="Ground_0_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1120017646]
 cast_shadow = 0
 mesh = ExtResource("9_u8yyr")
 
-[node name="Ground_1_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=600366066]
+[node name="Ground_1_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=24484751]
 cast_shadow = 0
 mesh = ExtResource("10_8jpuc")
 
-[node name="Ground_2_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1159425228]
+[node name="Ground_2_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=369421202]
 cast_shadow = 0
 mesh = ExtResource("11_oumu3")
 
-[node name="Ground_3_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1012353802]
+[node name="Ground_3_2" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1476886245]
 cast_shadow = 0
 mesh = ExtResource("12_kl5e6")
 
-[node name="Ground_0_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1644108597]
+[node name="Ground_0_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=472132440]
 cast_shadow = 0
 mesh = ExtResource("13_ta763")
 
-[node name="Ground_1_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1813457500]
+[node name="Ground_1_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=71486126]
 cast_shadow = 0
 mesh = ExtResource("14_mqvw8")
 
-[node name="Ground_2_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=199024312]
+[node name="Ground_2_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1660845912]
 cast_shadow = 0
 mesh = ExtResource("15_6rj4v")
 
-[node name="Ground_3_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1632342874]
+[node name="Ground_3_3" type="MeshInstance3D" parent="Visuals/Ground" unique_id=691051395]
 cast_shadow = 0
 mesh = ExtResource("16_7oduy")
 
-[node name="Ground_0_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=61508386]
+[node name="Ground_0_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1645623870]
 cast_shadow = 0
 mesh = ExtResource("17_qlmc1")
 
-[node name="Ground_1_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=455877633]
+[node name="Ground_1_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1155562470]
 cast_shadow = 0
 mesh = ExtResource("18_iim78")
 
-[node name="Ground_2_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=388314343]
+[node name="Ground_2_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1275836303]
 cast_shadow = 0
 mesh = ExtResource("19_7q70b")
 
-[node name="Ground_3_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=562906543]
+[node name="Ground_3_4" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1516264422]
 cast_shadow = 0
 mesh = ExtResource("20_qvq6d")
 
-[node name="Ground_0_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=384534360]
+[node name="Ground_0_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=2131247698]
 cast_shadow = 0
 mesh = ExtResource("21_eyhl6")
 
-[node name="Ground_1_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1280903775]
+[node name="Ground_1_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=44922357]
 cast_shadow = 0
 mesh = ExtResource("22_kkpj0")
 
-[node name="Ground_2_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=2120220927]
+[node name="Ground_2_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=136299536]
 cast_shadow = 0
 mesh = ExtResource("23_funcn")
 
-[node name="Ground_3_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=177421258]
+[node name="Ground_3_5" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1966170606]
 cast_shadow = 0
 mesh = ExtResource("24_r08yd")
 
-[node name="Ground_0_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=592140758]
+[node name="Ground_0_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1048228290]
 cast_shadow = 0
 mesh = ExtResource("25_en00y")
 
-[node name="Ground_1_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1682881042]
+[node name="Ground_1_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=390506697]
 cast_shadow = 0
 mesh = ExtResource("26_b24y4")
 
-[node name="Ground_2_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=2053751819]
+[node name="Ground_2_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1632596053]
 cast_shadow = 0
 mesh = ExtResource("27_4ou8m")
 
-[node name="Ground_3_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1770545500]
+[node name="Ground_3_6" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1061854150]
 cast_shadow = 0
 mesh = ExtResource("28_6bmcp")
 
-[node name="Ground_0_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1087941223]
+[node name="Ground_0_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1430341860]
 cast_shadow = 0
 mesh = ExtResource("29_capml")
 
-[node name="Ground_1_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1107697700]
+[node name="Ground_1_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1512916728]
 cast_shadow = 0
 mesh = ExtResource("30_hx36e")
 
-[node name="Ground_2_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=439075173]
+[node name="Ground_2_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1827562087]
 cast_shadow = 0
 mesh = ExtResource("31_3pvgg")
 
-[node name="Ground_3_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=542004402]
+[node name="Ground_3_7" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1220398952]
 cast_shadow = 0
 mesh = ExtResource("32_6d1r2")
 
-[node name="Ground_0_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1599287516]
+[node name="Ground_0_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1746298699]
 cast_shadow = 0
 mesh = ExtResource("33_d5vv2")
 
-[node name="Ground_1_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1554127581]
+[node name="Ground_1_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=2001672373]
 cast_shadow = 0
 mesh = ExtResource("34_q18vh")
 
-[node name="Ground_2_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=519391364]
+[node name="Ground_2_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=984600127]
 cast_shadow = 0
 mesh = ExtResource("35_670pp")
 
-[node name="Ground_3_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=690931794]
+[node name="Ground_3_8" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1564998600]
 cast_shadow = 0
 mesh = ExtResource("36_ol2wm")
 
-[node name="Ground_0_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1913668433]
+[node name="Ground_0_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=2086489999]
 cast_shadow = 0
 mesh = ExtResource("37_f328b")
 
-[node name="Ground_1_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1862129709]
+[node name="Ground_1_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1284761604]
 cast_shadow = 0
 mesh = ExtResource("38_0ku8e")
 
-[node name="Ground_2_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=321989954]
+[node name="Ground_2_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=878067124]
 cast_shadow = 0
 mesh = ExtResource("39_x8h46")
 
-[node name="Ground_3_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=1738287645]
+[node name="Ground_3_9" type="MeshInstance3D" parent="Visuals/Ground" unique_id=2056941749]
 cast_shadow = 0
 mesh = ExtResource("40_6y7jw")
 
-[node name="Roofs" type="Node3D" parent="Visuals" unique_id=2104809835]
+[node name="Roofs" type="Node3D" parent="Visuals" unique_id=469217760]
 
-[node name="Roof_0" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1696745877]
+[node name="Roof_0" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=806269088]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -15.205764)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_g28pv")
 
-[node name="Roof_1" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1445972512]
+[node name="Roof_1" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=444599445]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 9.794236)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_k34aj")
 
-[node name="Roof_2" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=146839004]
+[node name="Roof_2" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=970077288]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.937826, 10, -5.4115276)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_atdd7")
 
-[node name="Roof_3" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1047604151]
+[node name="Roof_3" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1118409268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.062174, 10, -5.4115276)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_eob34")
 
-[node name="Roof_4" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=68417111]
+[node name="Roof_4" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=551149433]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -71.23518)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_l7mvk")
 
-[node name="Roof_5" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=109416462]
+[node name="Roof_5" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=2054081064]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -60.870377)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_4gcex")
 
-[node name="Roof_6" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1416701990]
+[node name="Roof_6" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1981390005]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -48.870377)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_kgojh")
 
-[node name="Roof_7" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=933351968]
+[node name="Roof_7" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1878206930]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -33.635185)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_pk5su")
 
-[node name="Roof_8" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=321858502]
+[node name="Roof_8" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1493190700]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.594044, 9, -42.870377)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_bh3y1")
 
-[node name="Roof_9" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1419814646]
+[node name="Roof_9" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=984925729]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.405956, 9, -42.870377)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_qhw7n")
 
-[node name="Roof_10" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1091051466]
+[node name="Roof_10" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=507862743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.594044, 9, -54.870377)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_hix3h")
 
-[node name="Roof_11" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1504725880]
+[node name="Roof_11" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=261632470]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.405956, 9, -54.870377)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_otuos")
 
-[node name="Roof_12" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=745292562]
+[node name="Roof_12" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1178682894]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.594044, 9, -66.87038)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_yiv1t")
 
-[node name="Roof_13" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1014215164]
+[node name="Roof_13" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=544509698]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.405956, 9, -66.87038)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_36emh")
 
-[node name="Roof_14" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=968623694]
+[node name="Roof_14" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=149483191]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 7, -66)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_7k8p1")
 
-[node name="Roof_15" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1122828815]
+[node name="Roof_15" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=2018908496]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 9, -104)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_pja4r")
 
-[node name="Roof_16" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1945978499]
+[node name="Roof_16" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1273470944]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 6.5, -137)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_1v0e7")
 
-[node name="Roof_17" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1937262513]
+[node name="Roof_17" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1554341160]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 18, -196.87038)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_ig30i")
 
-[node name="Roof_18" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=969163081]
+[node name="Roof_18" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1575954572]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 18, -164.87038)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_u3gm5")
 
-[node name="Roof_19" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=2084682201]
+[node name="Roof_19" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=1679470468]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.188087, 18, -185.74075)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_6a5j0")
 
-[node name="Roof_20" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=82818268]
+[node name="Roof_20" type="MeshInstance3D" parent="Visuals/Roofs" unique_id=2109481272]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.81191254, 18, -185.74075)
 cast_shadow = 3
 mesh = SubResource("BoxMesh_n7fay")
 
-[node name="LightShafts" type="Node3D" parent="Visuals" unique_id=510616067]
+[node name="LightShafts" type="Node3D" parent="Visuals" unique_id=1733763458]
 
-[node name="Shaft_0" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=60881360]
+[node name="Shaft_0" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=332027941]
 transform = Transform3D(0.9682309, 0.20297222, 0.14605191, -0.23440114, 0.9401316, 0.24740396, -0.08709188, -0.27377892, 0.9578414, -1, 5.5, 0)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_61okj")
 
-[node name="Shaft_1" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=37809156]
+[node name="Shaft_1" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=955299766]
 transform = Transform3D(0.96802765, 0.20234075, 0.1482589, -0.23440114, 0.9401316, 0.24740396, -0.089322954, -0.27424592, 0.95750225, 9, 6, -62)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_nvngg")
 
-[node name="Shaft_2" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=2029373131]
+[node name="Shaft_2" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=428563407]
 transform = Transform3D(0.97210354, 0.22887804, 0.051279318, -0.23440114, 0.9401316, 0.24740396, 0.008416027, -0.2525222, 0.9675545, 9, 6, -50)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_ewxfa")
 
-[node name="Shaft_3" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=1460836586]
+[node name="Shaft_3" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=82862039]
 transform = Transform3D(0.9707842, 0.23980305, 0.008514409, -0.23440114, 0.9401316, 0.24740396, 0.051323563, -0.24217165, 0.968875, 9, 6, -38)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_pe8rj")
 
-[node name="Shaft_4" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=2054539183]
+[node name="Shaft_4" type="MeshInstance3D" parent="Visuals/LightShafts" unique_id=1068986583]
 transform = Transform3D(0.9690549, 0.20570499, 0.13644817, -0.23440114, 0.9401316, 0.24740396, -0.077387005, -0.27173162, 0.9592566, -18, 15, -176)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_c7moq")
 
-[node name="Water" type="Node3D" parent="Visuals" unique_id=1641683376]
+[node name="Water" type="Node3D" parent="Visuals" unique_id=1797125803]
 
-[node name="FountainWater" type="MeshInstance3D" parent="Visuals/Water" unique_id=1811587117]
+[node name="FountainWater" type="MeshInstance3D" parent="Visuals/Water" unique_id=857912193]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.5, -66)
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_ke1uk")
 
-[node name="Glow" type="Node3D" parent="Visuals" unique_id=1296577228]
+[node name="Glow" type="Node3D" parent="Visuals" unique_id=749929595]
 
-[node name="Embers" type="MultiMeshInstance3D" parent="Visuals/Glow" unique_id=1755058214]
+[node name="Embers" type="MultiMeshInstance3D" parent="Visuals/Glow" unique_id=1062595600]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_sa24f")
 
-[node name="WarmHalos" type="MultiMeshInstance3D" parent="Visuals/Glow" unique_id=810657193]
+[node name="WarmHalos" type="MultiMeshInstance3D" parent="Visuals/Glow" unique_id=766377027]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_vipta")
 
-[node name="Ruins" type="Node3D" parent="Visuals" unique_id=356454028]
+[node name="Ruins" type="Node3D" parent="Visuals" unique_id=704251274]
 
-[node name="arch_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2023300520]
+[node name="arch_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=353531665]
 multimesh = SubResource("MultiMesh_3mg2x")
 
-[node name="arch_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1521003258]
+[node name="arch_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=972850795]
 multimesh = SubResource("MultiMesh_vd6ua")
 
-[node name="arch_50_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=278339309]
+[node name="arch_50_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2141235175]
 multimesh = SubResource("MultiMesh_po7ts")
 
-[node name="arch_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=625585703]
+[node name="arch_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=528309981]
 multimesh = SubResource("MultiMesh_8jupf")
 
-[node name="arch_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=471974805]
+[node name="arch_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1328539038]
 multimesh = SubResource("MultiMesh_3b2qf")
 
-[node name="arch_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=179414195]
+[node name="arch_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=496777753]
 multimesh = SubResource("MultiMesh_xsb64")
 
-[node name="arch_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=812143855]
+[node name="arch_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1006113102]
 multimesh = SubResource("MultiMesh_jkfkl")
 
-[node name="arch_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=472510891]
+[node name="arch_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1312349260]
 multimesh = SubResource("MultiMesh_2tcb0")
 
-[node name="arch_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=443334169]
+[node name="arch_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1284278602]
 multimesh = SubResource("MultiMesh_k7f6b")
 
-[node name="arch_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=571376126]
+[node name="arch_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1577199971]
 multimesh = SubResource("MultiMesh_afycp")
 
-[node name="arch_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=794252136]
+[node name="arch_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1857814202]
 multimesh = SubResource("MultiMesh_sja2o")
 
-[node name="arch_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=306783426]
+[node name="arch_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2094147552]
 multimesh = SubResource("MultiMesh_kmqly")
 
-[node name="arch_48_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1209757448]
+[node name="arch_48_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2045366976]
 multimesh = SubResource("MultiMesh_3u1wm")
 
-[node name="arch_51_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2022492900]
+[node name="arch_51_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=91857766]
 multimesh = SubResource("MultiMesh_yytu2")
 
-[node name="arch_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1672017304]
+[node name="arch_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=962783287]
 multimesh = SubResource("MultiMesh_vw1sl")
 
-[node name="arch_50_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2115260648]
+[node name="arch_50_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2078611669]
 multimesh = SubResource("MultiMesh_lj4lw")
 
-[node name="wall_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=667717975]
+[node name="wall_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2014028866]
 multimesh = SubResource("MultiMesh_8bkj2")
 
-[node name="wall_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=624397029]
+[node name="wall_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=238367899]
 multimesh = SubResource("MultiMesh_fmpft")
 
-[node name="wall_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=466147463]
+[node name="wall_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=836255099]
 multimesh = SubResource("MultiMesh_52q02")
 
-[node name="wall_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2050697625]
+[node name="wall_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2104355829]
 multimesh = SubResource("MultiMesh_uoktk")
 
-[node name="wall_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1341096645]
+[node name="wall_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=914646088]
 multimesh = SubResource("MultiMesh_6yeoy")
 
-[node name="wall_50_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=651323179]
+[node name="wall_50_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1186087158]
 multimesh = SubResource("MultiMesh_42lfl")
 
-[node name="wall_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2116287221]
+[node name="wall_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=771655132]
 multimesh = SubResource("MultiMesh_c51yb")
 
-[node name="wall_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1911299881]
+[node name="wall_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=153660744]
 multimesh = SubResource("MultiMesh_3ygg0")
 
-[node name="wall_49_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1432037284]
+[node name="wall_49_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=457402607]
 multimesh = SubResource("MultiMesh_mdtg5")
 
-[node name="wall_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1120289253]
+[node name="wall_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1725574362]
 multimesh = SubResource("MultiMesh_7bjlj")
 
-[node name="wall_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=247325923]
+[node name="wall_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=764791357]
 multimesh = SubResource("MultiMesh_pc2l3")
 
-[node name="wall_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2025404881]
+[node name="wall_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1442257595]
 multimesh = SubResource("MultiMesh_gve21")
 
-[node name="wall_50_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=621557647]
+[node name="wall_50_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2017723195]
 multimesh = SubResource("MultiMesh_kqtau")
 
-[node name="wall_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=835627773]
+[node name="wall_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1778805472]
 multimesh = SubResource("MultiMesh_vfa8v")
 
-[node name="wall_52_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1636485048]
+[node name="wall_52_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=392054121]
 multimesh = SubResource("MultiMesh_cfo8x")
 
-[node name="wall_52_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1422044563]
+[node name="wall_52_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2036467455]
 multimesh = SubResource("MultiMesh_2kij5")
 
-[node name="wall_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=795814099]
+[node name="wall_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1807858857]
 multimesh = SubResource("MultiMesh_l64hi")
 
-[node name="wall_52_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=570562475]
+[node name="wall_52_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1969787761]
 multimesh = SubResource("MultiMesh_qsxej")
 
-[node name="wall_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=350072918]
+[node name="wall_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1956668964]
 multimesh = SubResource("MultiMesh_0l6p6")
 
-[node name="wall_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2002763187]
+[node name="wall_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2096377427]
 multimesh = SubResource("MultiMesh_hskr3")
 
-[node name="wall_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=523962111]
+[node name="wall_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1014244013]
 multimesh = SubResource("MultiMesh_v11cn")
 
-[node name="wall_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1502958663]
+[node name="wall_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2014929649]
 multimesh = SubResource("MultiMesh_p2yx4")
 
-[node name="wall_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1413916039]
+[node name="wall_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1371767360]
 multimesh = SubResource("MultiMesh_hil00")
 
-[node name="wall_50_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2081224605]
+[node name="wall_50_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=225133312]
 multimesh = SubResource("MultiMesh_mxcnr")
 
-[node name="wall_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1024172829]
+[node name="wall_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=296495851]
 multimesh = SubResource("MultiMesh_teioe")
 
-[node name="wall_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1761049489]
+[node name="wall_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1215156565]
 multimesh = SubResource("MultiMesh_wraxr")
 
-[node name="wall_48_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1133337662]
+[node name="wall_48_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=79903365]
 multimesh = SubResource("MultiMesh_w5ln8")
 
-[node name="wall_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=15272476]
+[node name="wall_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=312567234]
 multimesh = SubResource("MultiMesh_ig1d4")
 
-[node name="wall_48_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1327498318]
+[node name="wall_48_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1839573524]
 multimesh = SubResource("MultiMesh_cejct")
 
-[node name="wall_49_51" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1555067758]
+[node name="wall_49_51" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1921834963]
 multimesh = SubResource("MultiMesh_8w2it")
 
-[node name="wall_50_51" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1899635222]
+[node name="wall_50_51" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=327467163]
 multimesh = SubResource("MultiMesh_c28pc")
 
-[node name="wall_broken_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=988487891]
+[node name="wall_broken_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=447294199]
 multimesh = SubResource("MultiMesh_h6nrj")
 
-[node name="wall_broken_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=168317084]
+[node name="wall_broken_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1743474741]
 multimesh = SubResource("MultiMesh_h3btf")
 
-[node name="wall_broken_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2079777506]
+[node name="wall_broken_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=246937297]
 multimesh = SubResource("MultiMesh_fxyt4")
 
-[node name="wall_broken_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1715098936]
+[node name="wall_broken_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=249875203]
 multimesh = SubResource("MultiMesh_qh55s")
 
-[node name="wall_broken_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2048980983]
+[node name="wall_broken_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1232580066]
 multimesh = SubResource("MultiMesh_1gjfp")
 
-[node name="wall_broken_50_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1458884041]
+[node name="wall_broken_50_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1861377834]
 multimesh = SubResource("MultiMesh_1x13j")
 
-[node name="wall_broken_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=259599115]
+[node name="wall_broken_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1822937527]
 multimesh = SubResource("MultiMesh_p3cc3")
 
-[node name="wall_broken_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=616771486]
+[node name="wall_broken_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=294908371]
 multimesh = SubResource("MultiMesh_i0fh1")
 
-[node name="wall_broken_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=962257459]
+[node name="wall_broken_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=506859844]
 multimesh = SubResource("MultiMesh_ytm0q")
 
-[node name="wall_broken_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=612670435]
+[node name="wall_broken_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1094224301]
 multimesh = SubResource("MultiMesh_mcmv1")
 
-[node name="wall_broken_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1576527806]
+[node name="wall_broken_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1031160811]
 multimesh = SubResource("MultiMesh_vcqt4")
 
-[node name="wall_broken_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1638609036]
+[node name="wall_broken_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=592513621]
 multimesh = SubResource("MultiMesh_wm4v3")
 
-[node name="wall_broken_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=704681944]
+[node name="wall_broken_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1684978450]
 multimesh = SubResource("MultiMesh_p1hc1")
 
-[node name="wall_broken_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1087380212]
+[node name="wall_broken_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1462192519]
 multimesh = SubResource("MultiMesh_vrh7s")
 
-[node name="brazier_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1895535687]
+[node name="brazier_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=948799035]
 multimesh = SubResource("MultiMesh_6im6r")
 
-[node name="brazier_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1848048342]
+[node name="brazier_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=935363640]
 multimesh = SubResource("MultiMesh_ntr3r")
 
-[node name="brazier_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1249101527]
+[node name="brazier_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1479997497]
 multimesh = SubResource("MultiMesh_3ngnv")
 
-[node name="brazier_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1485556668]
+[node name="brazier_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=265200629]
 multimesh = SubResource("MultiMesh_ybdkh")
 
-[node name="brazier_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1606707517]
+[node name="brazier_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1620496217]
 multimesh = SubResource("MultiMesh_ruxs7")
 
-[node name="pillar_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1244146315]
+[node name="pillar_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1255131319]
 multimesh = SubResource("MultiMesh_55d6d")
 
-[node name="pillar_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=985661763]
+[node name="pillar_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2023461226]
 multimesh = SubResource("MultiMesh_byt87")
 
-[node name="pillar_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1206841257]
+[node name="pillar_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1857357657]
 multimesh = SubResource("MultiMesh_ymq8j")
 
-[node name="pillar_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1821259807]
+[node name="pillar_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1890929768]
 multimesh = SubResource("MultiMesh_agdut")
 
-[node name="pillar_49_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1506160545]
+[node name="pillar_49_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1643340990]
 multimesh = SubResource("MultiMesh_e00jg")
 
-[node name="pillar_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=445326194]
+[node name="pillar_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2016595131]
 multimesh = SubResource("MultiMesh_08411")
 
-[node name="pillar_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=54055112]
+[node name="pillar_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1581750176]
 multimesh = SubResource("MultiMesh_llrqg")
 
-[node name="pillar_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1918821051]
+[node name="pillar_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1065644231]
 multimesh = SubResource("MultiMesh_agppi")
 
-[node name="pillar_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=536709992]
+[node name="pillar_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1020174676]
 multimesh = SubResource("MultiMesh_jksgp")
 
-[node name="pillar_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=209247475]
+[node name="pillar_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1879807275]
 multimesh = SubResource("MultiMesh_4yj8v")
 
-[node name="pillar_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1013300885]
+[node name="pillar_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1210260146]
 multimesh = SubResource("MultiMesh_ndjdq")
 
-[node name="pillar_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=32554848]
+[node name="pillar_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1236213548]
 multimesh = SubResource("MultiMesh_xdmhy")
 
-[node name="pillar_48_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=347891702]
+[node name="pillar_48_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=106893106]
 multimesh = SubResource("MultiMesh_y7dp8")
 
-[node name="pillar_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1995444623]
+[node name="pillar_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=852174031]
 multimesh = SubResource("MultiMesh_mrodo")
 
-[node name="pillar_50_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1576665866]
+[node name="pillar_50_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1892514160]
 multimesh = SubResource("MultiMesh_udlvm")
 
-[node name="pillar_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=302767309]
+[node name="pillar_51_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1896027924]
 multimesh = SubResource("MultiMesh_5g7y7")
 
-[node name="pillar_51_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2102344064]
+[node name="pillar_51_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=901867254]
 multimesh = SubResource("MultiMesh_ilo8o")
 
-[node name="pillar_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1048742019]
+[node name="pillar_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1550806950]
 multimesh = SubResource("MultiMesh_qebbc")
 
-[node name="pillar_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=629712627]
+[node name="pillar_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=474776349]
 multimesh = SubResource("MultiMesh_qdhxx")
 
-[node name="rubble_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2135053294]
+[node name="rubble_49_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=132063929]
 multimesh = SubResource("MultiMesh_3po4j")
 
-[node name="rubble_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1062260551]
+[node name="rubble_50_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1484947882]
 multimesh = SubResource("MultiMesh_ivw6m")
 
-[node name="rubble_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1711604770]
+[node name="rubble_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1969427174]
 multimesh = SubResource("MultiMesh_7gn1e")
 
-[node name="rubble_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=784954613]
+[node name="rubble_50_49" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1035062007]
 multimesh = SubResource("MultiMesh_1nwrf")
 
-[node name="rubble_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2095597120]
+[node name="rubble_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1766783074]
 multimesh = SubResource("MultiMesh_i4j8n")
 
-[node name="rubble_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=863744017]
+[node name="rubble_48_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=911917542]
 multimesh = SubResource("MultiMesh_17qcu")
 
-[node name="rubble_49_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=780413147]
+[node name="rubble_49_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1050817520]
 multimesh = SubResource("MultiMesh_nfp34")
 
-[node name="rubble_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1213890785]
+[node name="rubble_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=438368647]
 multimesh = SubResource("MultiMesh_lljsf")
 
-[node name="rubble_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=515229933]
+[node name="rubble_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1317168015]
 multimesh = SubResource("MultiMesh_na4aj")
 
-[node name="rubble_49_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1179000525]
+[node name="rubble_49_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1499513716]
 multimesh = SubResource("MultiMesh_r0p6m")
 
-[node name="rubble_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1021437199]
+[node name="rubble_49_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1744799409]
 multimesh = SubResource("MultiMesh_g1fn8")
 
-[node name="rubble_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2010178023]
+[node name="rubble_50_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=556966751]
 multimesh = SubResource("MultiMesh_tre5k")
 
-[node name="rubble_51_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=192541577]
+[node name="rubble_51_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1370002615]
 multimesh = SubResource("MultiMesh_tigcu")
 
-[node name="rubble_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1214499888]
+[node name="rubble_49_46" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=375138765]
 multimesh = SubResource("MultiMesh_464cu")
 
-[node name="rubble_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1257152781]
+[node name="rubble_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=107002124]
 multimesh = SubResource("MultiMesh_6ia3a")
 
-[node name="rubble_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=717390947]
+[node name="rubble_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2130587697]
 multimesh = SubResource("MultiMesh_fisbv")
 
-[node name="rubble_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2123809772]
+[node name="rubble_48_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=242624242]
 multimesh = SubResource("MultiMesh_bpdp5")
 
-[node name="stairs_50_51" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=566854297]
+[node name="stairs_50_51" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=199023143]
 multimesh = SubResource("MultiMesh_avym1")
 
-[node name="stairs_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1756999199]
+[node name="stairs_49_50" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=923084089]
 multimesh = SubResource("MultiMesh_wd4tj")
 
-[node name="stairs_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1083749528]
+[node name="stairs_49_43" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2008410403]
 multimesh = SubResource("MultiMesh_4fp50")
 
-[node name="stairs_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=439744072]
+[node name="stairs_48_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1584311445]
 multimesh = SubResource("MultiMesh_0a31n")
 
-[node name="stairs_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=125074843]
+[node name="stairs_49_41" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1813943364]
 multimesh = SubResource("MultiMesh_a4shv")
 
-[node name="bell_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2016534809]
+[node name="bell_50_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1446563936]
 multimesh = SubResource("MultiMesh_2lgb7")
 
-[node name="bell_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1122320471]
+[node name="bell_50_48" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=189454644]
 multimesh = SubResource("MultiMesh_oen2b")
 
-[node name="bell_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1197853401]
+[node name="bell_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=123052485]
 multimesh = SubResource("MultiMesh_16aqp")
 
-[node name="fountain_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1156537013]
+[node name="fountain_51_47" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=308145245]
 multimesh = SubResource("MultiMesh_gfu11")
 
-[node name="dial_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=2005354608]
+[node name="dial_51_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=788203816]
 multimesh = SubResource("MultiMesh_pqe3p")
 
-[node name="dial_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=909324459]
+[node name="dial_49_42" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1815670423]
 multimesh = SubResource("MultiMesh_60qh6")
 
-[node name="grille_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=414046469]
+[node name="grille_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=585425165]
 multimesh = SubResource("MultiMesh_y651o")
 
-[node name="grille_49_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=574507071]
+[node name="grille_49_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1178707248]
 multimesh = SubResource("MultiMesh_sqx4q")
 
-[node name="torch_post_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=534708638]
+[node name="torch_post_48_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=248468957]
 multimesh = SubResource("MultiMesh_sysrn")
 
-[node name="torch_post_49_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1614031142]
+[node name="torch_post_49_45" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1618294758]
 multimesh = SubResource("MultiMesh_v2k15")
 
-[node name="campfire_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=1682742213]
+[node name="campfire_49_44" type="MultiMeshInstance3D" parent="Visuals/Ruins" unique_id=210302535]
 multimesh = SubResource("MultiMesh_u5f0x")
 
-[node name="Grass" type="Node3D" parent="Visuals" unique_id=1538920498]
+[node name="Grass" type="Node3D" parent="Visuals" unique_id=1317356762]
 
-[node name="Cards_51_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=767932580]
+[node name="Cards_51_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=338382747]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_7oitg")
 
-[node name="Cards_51_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1273561479]
+[node name="Cards_51_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=439798303]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_v3h2k")
 
-[node name="Cards_50_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=755793582]
+[node name="Cards_50_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=345234859]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_gih51")
 
-[node name="Cards_50_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2145900321]
+[node name="Cards_50_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=343977854]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_gw0ro")
 
-[node name="Cards_48_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1867772397]
+[node name="Cards_48_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=396503682]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_jfxwo")
 
-[node name="Cards_49_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=880274379]
+[node name="Cards_49_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=546343614]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_n72ip")
 
-[node name="Cards_48_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=494271929]
+[node name="Cards_48_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1329407873]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_6cs77")
 
-[node name="Cards_49_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=465782903]
+[node name="Cards_49_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1462517653]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_d2wxb")
 
-[node name="Cards_49_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=266538370]
+[node name="Cards_49_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=61655309]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_r55f8")
 
-[node name="Cards_48_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=308276210]
+[node name="Cards_48_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1098974865]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_5waxl")
 
-[node name="Cards_52_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=241774033]
+[node name="Cards_52_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1261735204]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_rpd7j")
 
-[node name="Cards_48_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=298037389]
+[node name="Cards_48_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2055231145]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_ieoqm")
 
-[node name="Cards_51_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1228340492]
+[node name="Cards_51_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=13370124]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_8afdr")
 
-[node name="Cards_51_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=846013137]
+[node name="Cards_51_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1727417841]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_v6xwc")
 
-[node name="Cards_48_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2099762084]
+[node name="Cards_48_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=273321968]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_kovsd")
 
-[node name="Cards_48_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=919422627]
+[node name="Cards_48_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1118395014]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_svy2t")
 
-[node name="Cards_48_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=271508158]
+[node name="Cards_48_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=796509865]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_e323h")
 
-[node name="Cards_48_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1813756116]
+[node name="Cards_48_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1159177511]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_bfl16")
 
-[node name="Cards_50_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=9222648]
+[node name="Cards_50_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1262318753]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_qsexr")
 
-[node name="Cards_48_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1244379801]
+[node name="Cards_48_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1558015494]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_1l4yc")
 
-[node name="Cards_47_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1077468819]
+[node name="Cards_47_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1960296242]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_byqp8")
 
-[node name="Cards_52_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=890894060]
+[node name="Cards_52_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=687195287]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_y3thu")
 
-[node name="Cards_52_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=603438611]
+[node name="Cards_52_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1695900667]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_gt5b2")
 
-[node name="Cards_47_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=689953554]
+[node name="Cards_47_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1857415580]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_b0pkp")
 
-[node name="Cards_51_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=674712886]
+[node name="Cards_51_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=142447112]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_ye1ol")
 
-[node name="Cards_52_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1241222659]
+[node name="Cards_52_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2058595899]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_ddfok")
 
-[node name="Cards_50_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2022581554]
+[node name="Cards_50_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2058639166]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_568mw")
 
-[node name="Cards_47_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2077105553]
+[node name="Cards_47_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1635481631]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_h4wdh")
 
-[node name="Cards_47_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=631143340]
+[node name="Cards_47_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1326571324]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_xc1ru")
 
-[node name="Cards_52_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2090204712]
+[node name="Cards_52_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=667485691]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_kdcpl")
 
-[node name="Cards_51_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1664789817]
+[node name="Cards_51_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=464514221]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_dnsah")
 
-[node name="Cards_47_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1415993978]
+[node name="Cards_47_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1200553069]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_v8uhp")
 
-[node name="Cards_52_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=376031965]
+[node name="Cards_52_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1986351141]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_w2bbg")
 
-[node name="Cards_50_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1580837633]
+[node name="Cards_50_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2057241159]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_8mpb5")
 
-[node name="Cards_50_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=189735056]
+[node name="Cards_50_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1083416463]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_tkwjx")
 
-[node name="Cards_48_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=981369344]
+[node name="Cards_48_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=749782751]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_munej")
 
-[node name="Cards_48_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=805646634]
+[node name="Cards_48_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=855567921]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_lcrmu")
 
-[node name="Cards_50_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1918714886]
+[node name="Cards_50_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1997780533]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_c45kg")
 
-[node name="Cards_49_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=547189185]
+[node name="Cards_49_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=392666369]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_afu81")
 
-[node name="Cards_51_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=48187863]
+[node name="Cards_51_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=410395098]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_umf6e")
 
-[node name="Cards_48_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=331015696]
+[node name="Cards_48_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1869812305]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_r3kgs")
 
-[node name="Cards_52_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=433748590]
+[node name="Cards_52_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=647266662]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_uoabs")
 
-[node name="Cards_51_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=936115480]
+[node name="Cards_51_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1444574644]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_i8nd7")
 
-[node name="Cards_52_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1869667215]
+[node name="Cards_52_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1606113797]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_68bir")
 
-[node name="Cards_49_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1604403190]
+[node name="Cards_49_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=28454049]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_x2i0n")
 
-[node name="Cards_50_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2031751549]
+[node name="Cards_50_41" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=786205787]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_hsvkc")
 
-[node name="Cards_50_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1677865844]
+[node name="Cards_50_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1483309707]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_acb3x")
 
-[node name="Cards_47_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=805540644]
+[node name="Cards_47_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1899277752]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_c4ia3")
 
-[node name="Cards_49_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1625790820]
+[node name="Cards_49_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=892639184]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_u0q1h")
 
-[node name="Cards_51_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=863067174]
+[node name="Cards_51_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1473243426]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_xqjsx")
 
-[node name="Cards_49_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=703412989]
+[node name="Cards_49_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=39605517]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_ctkx1")
 
-[node name="Cards_47_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=611464939]
+[node name="Cards_47_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1803678461]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_yqh4k")
 
-[node name="Cards_49_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1896004461]
+[node name="Cards_49_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=293739562]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_4iseq")
 
-[node name="Cards_52_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1484884038]
+[node name="Cards_52_45" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=941812218]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_lfdvb")
 
-[node name="Cards_49_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=957424249]
+[node name="Cards_49_49" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=371950244]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_1lfir")
 
-[node name="Cards_47_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1472474079]
+[node name="Cards_47_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1061478910]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_8nweh")
 
-[node name="Cards_47_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=767002873]
+[node name="Cards_47_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=350480266]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_ax524")
 
-[node name="Cards_52_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1057104523]
+[node name="Cards_52_46" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=797789053]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_v72a3")
 
-[node name="Cards_51_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=601567496]
+[node name="Cards_51_43" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1300371914]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_6eqjb")
 
-[node name="Cards_49_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1045300019]
+[node name="Cards_49_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1770263233]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_yt6d4")
 
-[node name="Cards_52_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2012582533]
+[node name="Cards_52_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=2044018096]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_52qms")
 
-[node name="Cards_50_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=88231633]
+[node name="Cards_50_48" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=831834915]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_nga1u")
 
-[node name="Cards_47_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1658153577]
+[node name="Cards_47_51" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=35698612]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_ex1jf")
 
-[node name="Cards_52_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=849996975]
+[node name="Cards_52_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1410655747]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_x3qnj")
 
-[node name="Cards_51_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1108219802]
+[node name="Cards_51_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1896915619]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_grtjm")
 
-[node name="Cards_47_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1072954787]
+[node name="Cards_47_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1515732506]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_t8u6i")
 
-[node name="Cards_50_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1290590743]
+[node name="Cards_50_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1035540872]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_laal2")
 
-[node name="Cards_49_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1171055500]
+[node name="Cards_49_50" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=683455095]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_c6dhc")
 
-[node name="Cards_50_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=757112473]
+[node name="Cards_50_47" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1083092326]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_gfh3d")
 
-[node name="Cards_51_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=839784393]
+[node name="Cards_51_40" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=893390356]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_h671y")
 
-[node name="Cards_47_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1758368593]
+[node name="Cards_47_44" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1388505785]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_wteq8")
 
-[node name="Cards_49_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=1984926311]
+[node name="Cards_49_42" type="MultiMeshInstance3D" parent="Visuals/Grass" unique_id=997953470]
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_hploq")
 
-[node name="Props" type="Node3D" parent="Visuals" unique_id=164241179]
+[node name="Props" type="Node3D" parent="Visuals" unique_id=2073887270]
 
-[node name="barrels_49_44" type="MultiMeshInstance3D" parent="Visuals/Props" unique_id=1583931259]
+[node name="barrels_49_44" type="MultiMeshInstance3D" parent="Visuals/Props" unique_id=1565292606]
 multimesh = SubResource("MultiMesh_uro84")
 
-[node name="Vegetation" type="Node3D" parent="Visuals" unique_id=636925484]
+[node name="Vegetation" type="Node3D" parent="Visuals" unique_id=2066836805]
 
-[node name="birch_a_lo_52_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=410954555]
+[node name="birch_a_lo_52_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=854654746]
 multimesh = SubResource("MultiMesh_huphm")
 
-[node name="birch_a_lo_52_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1602017898]
+[node name="birch_a_lo_52_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1539802405]
 multimesh = SubResource("MultiMesh_0o6nu")
 
-[node name="birch_a_lo_51_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1094214204]
+[node name="birch_a_lo_51_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1559228617]
 multimesh = SubResource("MultiMesh_qpwik")
 
-[node name="birch_a_lo_52_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1932549963]
+[node name="birch_a_lo_52_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1553948126]
 multimesh = SubResource("MultiMesh_jvt5v")
 
-[node name="birch_a_lo_51_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1378255918]
+[node name="birch_a_lo_51_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1178443775]
 multimesh = SubResource("MultiMesh_5w2bm")
 
-[node name="birch_a_lo_50_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=506357989]
+[node name="birch_a_lo_50_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=836064878]
 multimesh = SubResource("MultiMesh_xttt1")
 
-[node name="birch_a_lo_48_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=275649180]
+[node name="birch_a_lo_48_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1496681779]
 multimesh = SubResource("MultiMesh_g4vl4")
 
-[node name="birch_a_lo_48_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=664802214]
+[node name="birch_a_lo_48_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1866384629]
 multimesh = SubResource("MultiMesh_rqfou")
 
-[node name="birch_a_lo_48_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=703044816]
+[node name="birch_a_lo_48_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=721647800]
 multimesh = SubResource("MultiMesh_47wdx")
 
-[node name="birch_a_lo_50_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1263449531]
+[node name="birch_a_lo_50_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1549065860]
 multimesh = SubResource("MultiMesh_v0ono")
 
-[node name="birch_a_lo_52_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1375082732]
+[node name="birch_a_lo_52_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=480326474]
 multimesh = SubResource("MultiMesh_sxdv4")
 
-[node name="birch_a_lo_50_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1547117870]
+[node name="birch_a_lo_50_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1234794266]
 multimesh = SubResource("MultiMesh_ch8r6")
 
-[node name="birch_a_lo_48_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=528968454]
+[node name="birch_a_lo_48_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=137317371]
 multimesh = SubResource("MultiMesh_83ddg")
 
-[node name="birch_a_lo_51_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=126520716]
+[node name="birch_a_lo_51_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=480058321]
 multimesh = SubResource("MultiMesh_pkwpo")
 
-[node name="birch_a_lo_49_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2108859815]
+[node name="birch_a_lo_49_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1632209832]
 multimesh = SubResource("MultiMesh_yg50h")
 
-[node name="birch_a_lo_52_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=922699494]
+[node name="birch_a_lo_52_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1685220813]
 multimesh = SubResource("MultiMesh_iuycy")
 
-[node name="birch_a_lo_51_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1298219979]
+[node name="birch_a_lo_51_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1429651340]
 multimesh = SubResource("MultiMesh_t3sp7")
 
-[node name="birch_a_lo_47_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=979474638]
+[node name="birch_a_lo_47_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=550663096]
 multimesh = SubResource("MultiMesh_d67xu")
 
-[node name="birch_a_lo_48_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=210802830]
+[node name="birch_a_lo_48_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=527383213]
 multimesh = SubResource("MultiMesh_kip2g")
 
-[node name="birch_a_lo_51_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=521357767]
+[node name="birch_a_lo_51_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1174878163]
 multimesh = SubResource("MultiMesh_s84cs")
 
-[node name="birch_a_lo_50_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1150853596]
+[node name="birch_a_lo_50_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=518811998]
 multimesh = SubResource("MultiMesh_b3a3n")
 
-[node name="birch_a_lo_48_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=448985350]
+[node name="birch_a_lo_48_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=792566655]
 multimesh = SubResource("MultiMesh_b3kt4")
 
-[node name="birch_a_lo_49_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=317025434]
+[node name="birch_a_lo_49_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=965510960]
 multimesh = SubResource("MultiMesh_iccxw")
 
-[node name="birch_a_lo_48_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2043291044]
+[node name="birch_a_lo_48_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=100332046]
 multimesh = SubResource("MultiMesh_anlwh")
 
-[node name="birch_a_lo_52_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=190588336]
+[node name="birch_a_lo_52_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1287491759]
 multimesh = SubResource("MultiMesh_d4v5v")
 
-[node name="birch_a_lo_52_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2118421536]
+[node name="birch_a_lo_52_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=726297702]
 multimesh = SubResource("MultiMesh_djvru")
 
-[node name="birch_a_lo_52_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=903718000]
+[node name="birch_a_lo_52_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1624195761]
 multimesh = SubResource("MultiMesh_1h3fu")
 
-[node name="birch_a_lo_49_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1356548826]
+[node name="birch_a_lo_49_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=463357287]
 multimesh = SubResource("MultiMesh_wlvfo")
 
-[node name="birch_a_lo_51_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1161523609]
+[node name="birch_a_lo_51_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=973515226]
 multimesh = SubResource("MultiMesh_k76r4")
 
-[node name="birch_a_lo_50_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=354281212]
+[node name="birch_a_lo_50_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=265247318]
 multimesh = SubResource("MultiMesh_sbfxi")
 
-[node name="birch_a_lo_51_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2092880653]
+[node name="birch_a_lo_51_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1005956386]
 multimesh = SubResource("MultiMesh_3d10d")
 
-[node name="birch_a_lo_48_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=694066174]
+[node name="birch_a_lo_48_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=188689673]
 multimesh = SubResource("MultiMesh_vwlli")
 
-[node name="birch_a_lo_47_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=184032372]
+[node name="birch_a_lo_47_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=110216737]
 multimesh = SubResource("MultiMesh_tjnex")
 
-[node name="birch_a_lo_51_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1684491452]
+[node name="birch_a_lo_51_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=327922283]
 multimesh = SubResource("MultiMesh_mfq8e")
 
-[node name="birch_a_lo_51_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=370114142]
+[node name="birch_a_lo_51_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=665167968]
 multimesh = SubResource("MultiMesh_gh6le")
 
-[node name="birch_a_lo_47_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1976855802]
+[node name="birch_a_lo_47_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1382882121]
 multimesh = SubResource("MultiMesh_xmxpq")
 
-[node name="birch_a_lo_52_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=502810175]
+[node name="birch_a_lo_52_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=889936]
 multimesh = SubResource("MultiMesh_em87k")
 
-[node name="birch_a_lo_47_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1357636226]
+[node name="birch_a_lo_47_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1708733637]
 multimesh = SubResource("MultiMesh_arxfr")
 
-[node name="birch_a_lo_47_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2017469787]
+[node name="birch_a_lo_47_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=383580952]
 multimesh = SubResource("MultiMesh_f1gai")
 
-[node name="birch_a_lo_51_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=167013068]
+[node name="birch_a_lo_51_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1783484156]
 multimesh = SubResource("MultiMesh_i2itl")
 
-[node name="birch_a_lo_52_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=521674608]
+[node name="birch_a_lo_52_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1838391128]
 multimesh = SubResource("MultiMesh_w31wy")
 
-[node name="birch_a_lo_49_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=770786301]
+[node name="birch_a_lo_49_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1115234606]
 multimesh = SubResource("MultiMesh_w3m3g")
 
-[node name="birch_a_lo_52_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=611751159]
+[node name="birch_a_lo_52_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=879729927]
 multimesh = SubResource("MultiMesh_af1pv")
 
-[node name="birch_a_lo_47_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1830727752]
+[node name="birch_a_lo_47_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=289913056]
 multimesh = SubResource("MultiMesh_lrhlv")
 
-[node name="birch_a_lo_47_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2139675795]
+[node name="birch_a_lo_47_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1638369286]
 multimesh = SubResource("MultiMesh_pd8bm")
 
-[node name="birch_a_lo_49_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=144237433]
+[node name="birch_a_lo_49_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=917381604]
 multimesh = SubResource("MultiMesh_7wor7")
 
-[node name="birch_a_lo_51_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=476168498]
+[node name="birch_a_lo_51_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1183565137]
 multimesh = SubResource("MultiMesh_hdo3o")
 
-[node name="birch_a_lo_52_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=446945399]
+[node name="birch_a_lo_52_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1425858527]
 multimesh = SubResource("MultiMesh_lq2pe")
 
-[node name="birch_a_lo_47_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1053349933]
+[node name="birch_a_lo_47_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=441529631]
 multimesh = SubResource("MultiMesh_we3ty")
 
-[node name="birch_a_lo_49_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=638113166]
+[node name="birch_a_lo_49_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1324636698]
 multimesh = SubResource("MultiMesh_s4hx7")
 
-[node name="birch_b_lo_48_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1028677710]
+[node name="birch_b_lo_48_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1147101505]
 multimesh = SubResource("MultiMesh_j6t17")
 
-[node name="birch_b_lo_48_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1682330714]
+[node name="birch_b_lo_48_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1998912878]
 multimesh = SubResource("MultiMesh_t6n1m")
 
-[node name="birch_b_lo_52_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=739262304]
+[node name="birch_b_lo_52_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=98672003]
 multimesh = SubResource("MultiMesh_s0ycw")
 
-[node name="birch_b_lo_47_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1850923473]
+[node name="birch_b_lo_47_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=722159242]
 multimesh = SubResource("MultiMesh_v4et3")
 
-[node name="birch_b_lo_50_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1622647403]
+[node name="birch_b_lo_50_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=405359589]
 multimesh = SubResource("MultiMesh_lxoda")
 
-[node name="birch_b_lo_51_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1146117850]
+[node name="birch_b_lo_51_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1003838171]
 multimesh = SubResource("MultiMesh_ahbn0")
 
-[node name="birch_b_lo_52_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=442130462]
+[node name="birch_b_lo_52_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=875165928]
 multimesh = SubResource("MultiMesh_4w8ct")
 
-[node name="birch_b_lo_50_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1327225079]
+[node name="birch_b_lo_50_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1332483776]
 multimesh = SubResource("MultiMesh_e5ufo")
 
-[node name="birch_b_lo_51_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1769110748]
+[node name="birch_b_lo_51_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1794418133]
 multimesh = SubResource("MultiMesh_2xajj")
 
-[node name="birch_b_lo_51_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=990194788]
+[node name="birch_b_lo_51_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=829534512]
 multimesh = SubResource("MultiMesh_so3rd")
 
-[node name="birch_b_lo_52_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=210952849]
+[node name="birch_b_lo_52_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1887116846]
 multimesh = SubResource("MultiMesh_j8b2n")
 
-[node name="birch_b_lo_52_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1123429352]
+[node name="birch_b_lo_52_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1843961571]
 multimesh = SubResource("MultiMesh_vf480")
 
-[node name="birch_b_lo_47_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=515316591]
+[node name="birch_b_lo_47_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1305240154]
 multimesh = SubResource("MultiMesh_10dr8")
 
-[node name="birch_b_lo_48_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1690624678]
+[node name="birch_b_lo_48_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=46690537]
 multimesh = SubResource("MultiMesh_dir8w")
 
-[node name="birch_b_lo_51_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1360685169]
+[node name="birch_b_lo_51_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1167657835]
 multimesh = SubResource("MultiMesh_2dt1x")
 
-[node name="birch_b_lo_49_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=152424470]
+[node name="birch_b_lo_49_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1684302733]
 multimesh = SubResource("MultiMesh_fpjdo")
 
-[node name="birch_b_lo_48_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2086995951]
+[node name="birch_b_lo_48_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1875040296]
 multimesh = SubResource("MultiMesh_3xec3")
 
-[node name="birch_b_lo_48_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1452439347]
+[node name="birch_b_lo_48_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=490896127]
 multimesh = SubResource("MultiMesh_caynk")
 
-[node name="birch_b_lo_48_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=474781706]
+[node name="birch_b_lo_48_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1139361157]
 multimesh = SubResource("MultiMesh_kpp2h")
 
-[node name="birch_b_lo_51_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1606724219]
+[node name="birch_b_lo_51_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1636128926]
 multimesh = SubResource("MultiMesh_7ilf1")
 
-[node name="birch_b_lo_48_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1993569112]
+[node name="birch_b_lo_48_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=122931152]
 multimesh = SubResource("MultiMesh_7n8d2")
 
-[node name="birch_b_lo_50_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1324000366]
+[node name="birch_b_lo_50_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1259254041]
 multimesh = SubResource("MultiMesh_c2mp2")
 
-[node name="birch_b_lo_52_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=518254706]
+[node name="birch_b_lo_52_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=213396952]
 multimesh = SubResource("MultiMesh_6kjse")
 
-[node name="birch_b_lo_49_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1519112087]
+[node name="birch_b_lo_49_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1220824075]
 multimesh = SubResource("MultiMesh_t5afb")
 
-[node name="birch_b_lo_48_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2130087626]
+[node name="birch_b_lo_48_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=279827719]
 multimesh = SubResource("MultiMesh_75s7h")
 
-[node name="birch_b_lo_52_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=483556403]
+[node name="birch_b_lo_52_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1020538000]
 multimesh = SubResource("MultiMesh_a0na4")
 
-[node name="birch_b_lo_47_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=890196377]
+[node name="birch_b_lo_47_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=992689405]
 multimesh = SubResource("MultiMesh_arrcd")
 
-[node name="birch_b_lo_49_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1897937579]
+[node name="birch_b_lo_49_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=401982955]
 multimesh = SubResource("MultiMesh_kp4rn")
 
-[node name="birch_b_lo_48_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=737470749]
+[node name="birch_b_lo_48_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=921526652]
 multimesh = SubResource("MultiMesh_vbxop")
 
-[node name="birch_b_lo_51_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=291209169]
+[node name="birch_b_lo_51_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=49454646]
 multimesh = SubResource("MultiMesh_bjdat")
 
-[node name="birch_b_lo_48_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1158974675]
+[node name="birch_b_lo_48_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1205438204]
 multimesh = SubResource("MultiMesh_t15r0")
 
-[node name="birch_b_lo_48_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2126341588]
+[node name="birch_b_lo_48_45" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=145931241]
 multimesh = SubResource("MultiMesh_d6vxh")
 
-[node name="birch_b_lo_52_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=224353989]
+[node name="birch_b_lo_52_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1822402254]
 multimesh = SubResource("MultiMesh_nfh72")
 
-[node name="birch_b_lo_51_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1517632945]
+[node name="birch_b_lo_51_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=195790273]
 multimesh = SubResource("MultiMesh_n5esv")
 
-[node name="birch_b_lo_47_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2062496878]
+[node name="birch_b_lo_47_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2092097346]
 multimesh = SubResource("MultiMesh_e21mp")
 
-[node name="birch_b_lo_47_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=548815793]
+[node name="birch_b_lo_47_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=747973016]
 multimesh = SubResource("MultiMesh_wl0pa")
 
-[node name="birch_b_lo_50_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1654281462]
+[node name="birch_b_lo_50_43" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1329571229]
 multimesh = SubResource("MultiMesh_iimrs")
 
-[node name="birch_b_lo_50_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=497578447]
+[node name="birch_b_lo_50_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1638809793]
 multimesh = SubResource("MultiMesh_4s5cc")
 
-[node name="birch_b_lo_49_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1191410487]
+[node name="birch_b_lo_49_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1751615742]
 multimesh = SubResource("MultiMesh_5b4bb")
 
-[node name="birch_b_lo_47_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=664117994]
+[node name="birch_b_lo_47_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1902815826]
 multimesh = SubResource("MultiMesh_ndss8")
 
-[node name="birch_b_lo_49_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1435185582]
+[node name="birch_b_lo_49_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2064057201]
 multimesh = SubResource("MultiMesh_gt56p")
 
-[node name="birch_b_lo_50_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1674417060]
+[node name="birch_b_lo_50_41" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1878635420]
 multimesh = SubResource("MultiMesh_018fp")
 
-[node name="birch_b_lo_47_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=44372027]
+[node name="birch_b_lo_47_42" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2064007269]
 multimesh = SubResource("MultiMesh_uwptc")
 
-[node name="birch_b_lo_51_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1101525312]
+[node name="birch_b_lo_51_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=614841076]
 multimesh = SubResource("MultiMesh_hve8a")
 
-[node name="birch_b_lo_52_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=58016550]
+[node name="birch_b_lo_52_51" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1727441002]
 multimesh = SubResource("MultiMesh_g3ph0")
 
-[node name="birch_b_lo_48_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2138585801]
+[node name="birch_b_lo_48_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=580872026]
 multimesh = SubResource("MultiMesh_t64eb")
 
-[node name="birch_b_lo_49_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=191840046]
+[node name="birch_b_lo_49_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=793635557]
 multimesh = SubResource("MultiMesh_x22e8")
 
-[node name="birch_b_lo_47_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=480422434]
+[node name="birch_b_lo_47_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=444047906]
 multimesh = SubResource("MultiMesh_sdjg4")
 
-[node name="birch_b_lo_52_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=956228316]
+[node name="birch_b_lo_52_49" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=408378111]
 multimesh = SubResource("MultiMesh_fwhxu")
 
-[node name="birch_b_lo_50_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=431686542]
+[node name="birch_b_lo_50_50" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=769781893]
 multimesh = SubResource("MultiMesh_yojqu")
 
-[node name="birch_b_lo_47_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1243424429]
+[node name="birch_b_lo_47_48" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=2101664066]
 multimesh = SubResource("MultiMesh_igf8g")
 
-[node name="birch_b_lo_47_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1529978199]
+[node name="birch_b_lo_47_46" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=589401620]
 multimesh = SubResource("MultiMesh_jvrgf")
 
-[node name="birch_b_lo_50_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=148135874]
+[node name="birch_b_lo_50_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=834468420]
 multimesh = SubResource("MultiMesh_nvv6t")
 
-[node name="birch_b_lo_51_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=628377077]
+[node name="birch_b_lo_51_40" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1506425776]
 multimesh = SubResource("MultiMesh_23426")
 
-[node name="birch_b_lo_51_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1900669920]
+[node name="birch_b_lo_51_47" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1383630498]
 multimesh = SubResource("MultiMesh_myvjm")
 
-[node name="birch_b_lo_52_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1584915882]
+[node name="birch_b_lo_52_44" type="MultiMeshInstance3D" parent="Visuals/Vegetation" unique_id=1217401230]
 multimesh = SubResource("MultiMesh_lmt8i")
 
-[node name="Rocks" type="Node3D" parent="Visuals" unique_id=2122077423]
+[node name="Rocks" type="Node3D" parent="Visuals" unique_id=938650414]
 
-[node name="rock_a_51_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1397856718]
+[node name="rock_a_51_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=2095149868]
 multimesh = SubResource("MultiMesh_r0dru")
 
-[node name="rock_a_51_43" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1419918876]
+[node name="rock_a_51_43" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=121692423]
 multimesh = SubResource("MultiMesh_ypann")
 
-[node name="rock_a_50_44" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=454132867]
+[node name="rock_a_50_44" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1193083379]
 multimesh = SubResource("MultiMesh_nwhjc")
 
-[node name="rock_a_49_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=2121323474]
+[node name="rock_a_49_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=307578440]
 multimesh = SubResource("MultiMesh_70i20")
 
-[node name="rock_a_47_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1996411763]
+[node name="rock_a_47_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1481984881]
 multimesh = SubResource("MultiMesh_2fisa")
 
-[node name="rock_a_51_47" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1512317250]
+[node name="rock_a_51_47" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=316508208]
 multimesh = SubResource("MultiMesh_a6ltk")
 
-[node name="rock_a_52_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1570894329]
+[node name="rock_a_52_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1775867408]
 multimesh = SubResource("MultiMesh_g52je")
 
-[node name="rock_a_51_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=982062943]
+[node name="rock_a_51_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=661279170]
 multimesh = SubResource("MultiMesh_jteqd")
 
-[node name="rock_a_50_43" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1145908888]
+[node name="rock_a_50_43" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=143111632]
 multimesh = SubResource("MultiMesh_4d4v5")
 
-[node name="rock_a_47_46" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=257681436]
+[node name="rock_a_47_46" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1215387430]
 multimesh = SubResource("MultiMesh_lnlj0")
 
-[node name="rock_a_50_42" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=669211953]
+[node name="rock_a_50_42" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=257695914]
 multimesh = SubResource("MultiMesh_ic3vg")
 
-[node name="rock_a_48_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=2146059529]
+[node name="rock_a_48_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1428282242]
 multimesh = SubResource("MultiMesh_8x62n")
 
-[node name="rock_a_48_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1091406507]
+[node name="rock_a_48_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1754284816]
 multimesh = SubResource("MultiMesh_654tr")
 
-[node name="rock_a_51_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=282829408]
+[node name="rock_a_51_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=59387293]
 multimesh = SubResource("MultiMesh_m0hcs")
 
-[node name="rock_a_48_49" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1421003245]
+[node name="rock_a_48_49" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=985923883]
 multimesh = SubResource("MultiMesh_1222t")
 
-[node name="rock_a_51_48" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1406581752]
+[node name="rock_a_51_48" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1751973534]
 multimesh = SubResource("MultiMesh_t1g6b")
 
-[node name="rock_a_47_48" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1865002166]
+[node name="rock_a_47_48" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=314840790]
 multimesh = SubResource("MultiMesh_21o1x")
 
-[node name="rock_a_50_40" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=190798361]
+[node name="rock_a_50_40" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=445234615]
 multimesh = SubResource("MultiMesh_h8nbk")
 
-[node name="rock_a_48_44" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1344779608]
+[node name="rock_a_48_44" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1586272726]
 multimesh = SubResource("MultiMesh_51vku")
 
-[node name="rock_a_52_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1270989665]
+[node name="rock_a_52_51" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=190082842]
 multimesh = SubResource("MultiMesh_be5ow")
 
-[node name="rock_a_48_46" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=299622306]
+[node name="rock_a_48_46" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=354824500]
 multimesh = SubResource("MultiMesh_yeh4m")
 
-[node name="rock_a_48_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=353760732]
+[node name="rock_a_48_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=186233157]
 multimesh = SubResource("MultiMesh_oilih")
 
-[node name="rock_a_51_44" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1790894169]
+[node name="rock_a_51_44" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=89705305]
 multimesh = SubResource("MultiMesh_gg374")
 
-[node name="rock_a_48_47" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1308255466]
+[node name="rock_a_48_47" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=949317680]
 multimesh = SubResource("MultiMesh_clscl")
 
-[node name="rock_a_51_49" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1461074117]
+[node name="rock_a_51_49" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=807508814]
 multimesh = SubResource("MultiMesh_6u8u5")
 
-[node name="rock_a_47_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=933389072]
+[node name="rock_a_47_50" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=2105584456]
 multimesh = SubResource("MultiMesh_7c60c")
 
-[node name="rock_a_48_43" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1644594839]
+[node name="rock_a_48_43" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=711850789]
 multimesh = SubResource("MultiMesh_mw8gr")
 
-[node name="rock_a_48_45" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=323219855]
+[node name="rock_a_48_45" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=825288062]
 multimesh = SubResource("MultiMesh_kkp6g")
 
-[node name="rock_a_48_48" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=568204158]
+[node name="rock_a_48_48" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1713234450]
 multimesh = SubResource("MultiMesh_ksgki")
 
-[node name="rock_a_50_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1269657522]
+[node name="rock_a_50_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1229581106]
 multimesh = SubResource("MultiMesh_np43h")
 
-[node name="rock_a_49_40" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=563308086]
+[node name="rock_a_49_40" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=103894858]
 multimesh = SubResource("MultiMesh_0qk3m")
 
-[node name="rock_a_52_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=556188972]
+[node name="rock_a_52_41" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1953444108]
 multimesh = SubResource("MultiMesh_isvv5")
 
-[node name="rock_a_51_42" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1133768697]
+[node name="rock_a_51_42" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1481547791]
 multimesh = SubResource("MultiMesh_vqn5i")
 
-[node name="rock_a_47_49" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=393322997]
+[node name="rock_a_47_49" type="MultiMeshInstance3D" parent="Visuals/Rocks" unique_id=1788130129]
 multimesh = SubResource("MultiMesh_xoeng")
 
-[node name="Walkable" type="StaticBody3D" parent="." unique_id=1295262166]
+[node name="Walkable" type="StaticBody3D" parent="." unique_id=1749589281]
 collision_mask = 0
 
-[node name="Obstacles" type="StaticBody3D" parent="Walkable" unique_id=1107877978]
+[node name="Obstacles" type="StaticBody3D" parent="Walkable" unique_id=150127882]
 collision_mask = 0
 
-[node name="wall_0" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=930628996]
+[node name="wall_0" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1898266313]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4, 2.2419667, -18.4)
 shape = SubResource("BoxShape3D_jlqqo")
 
-[node name="wall_1" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1589882370]
+[node name="wall_1" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=394651773]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 2.2995315, -18.4)
 shape = SubResource("BoxShape3D_dh6nr")
 
-[node name="wall_2" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=814845841]
+[node name="wall_2" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1243619447]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4, 2.1710563, 18.4)
 shape = SubResource("BoxShape3D_lm8fl")
 
-[node name="wall_3" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1925688089]
+[node name="wall_3" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1310227128]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 2.209097, 18.4)
 shape = SubResource("BoxShape3D_uui8f")
 
-[node name="wall_4" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=669790780]
+[node name="wall_4" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=490287729]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -18.4, 2.15, -10)
 shape = SubResource("BoxShape3D_0pyac")
 
-[node name="wall_5" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=314306037]
+[node name="wall_5" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1872152130]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -18.4, 2.15, 10)
 shape = SubResource("BoxShape3D_ray33")
 
-[node name="wall_6" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1109211643]
+[node name="wall_6" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=426962168]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 18.4, 2.15, 0)
 shape = SubResource("BoxShape3D_fpcjd")
 
-[node name="wall_7" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1120747328]
+[node name="wall_7" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2081851720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4, 2.2804852, -72.4)
 shape = SubResource("BoxShape3D_tl2bm")
 
-[node name="wall_8" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=852765698]
+[node name="wall_8" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1433212103]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 2.2193325, -72.4)
 shape = SubResource("BoxShape3D_345sh")
 
-[node name="wall_9" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1941005691]
+[node name="wall_9" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=256373783]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4, 2.2384202, -27.6)
 shape = SubResource("BoxShape3D_3pewg")
 
-[node name="wall_10" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1879597029]
+[node name="wall_10" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1885412464]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4, 2.2914135, -27.6)
 shape = SubResource("BoxShape3D_uwrw1")
 
-[node name="wall_11" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=326502564]
+[node name="wall_11" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1921438348]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -18.4, 2.15, -50)
 shape = SubResource("BoxShape3D_ygj2n")
 
-[node name="wall_12" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=238311729]
+[node name="wall_12" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1463626516]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 18.4, 2.15, -70)
 shape = SubResource("BoxShape3D_0482k")
 
-[node name="wall_13" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=191643325]
+[node name="wall_13" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1186323075]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 18.4, 2.15, -46)
 shape = SubResource("BoxShape3D_qnhw2")
 
-[node name="wall_14" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1027219195]
+[node name="wall_14" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2102054294]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1, 2.195194, -73.4)
 shape = SubResource("BoxShape3D_0fqpi")
 
-[node name="wall_15" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1370754977]
+[node name="wall_15" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1892993261]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.9, 2.188466, -73.4)
 shape = SubResource("BoxShape3D_a716a")
 
-[node name="wall_16" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1996366560]
+[node name="wall_16" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1088557463]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.1752381, -58.6)
 shape = SubResource("BoxShape3D_c5tf3")
 
-[node name="wall_17" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1462916560]
+[node name="wall_17" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1658038782]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 22.6, 2.15, -70.5)
 shape = SubResource("BoxShape3D_ylppr")
 
-[node name="wall_18" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=261025041]
+[node name="wall_18" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=208055925]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 22.6, 2.15, -61.5)
 shape = SubResource("BoxShape3D_8ipcq")
 
-[node name="wall_19" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=819163074]
+[node name="wall_19" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1742431846]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 37.4, 2.15, -66)
 shape = SubResource("BoxShape3D_1g8xr")
 
-[node name="wall_20" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1576014697]
+[node name="wall_20" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=774178031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.2913735, -124.4)
 shape = SubResource("BoxShape3D_6hffj")
 
-[node name="wall_21" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2068599909]
+[node name="wall_21" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1254520632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, 2.2224717, -83.6)
 shape = SubResource("BoxShape3D_yfxn3")
 
-[node name="wall_22" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=183072078]
+[node name="wall_22" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1548787475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.399998, 2.2580278, -83.6)
 shape = SubResource("BoxShape3D_cnh4w")
 
-[node name="wall_23" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=969376588]
+[node name="wall_23" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1579851398]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.6, 2.15, -115)
 shape = SubResource("BoxShape3D_nyymr")
 
-[node name="wall_24" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1277110127]
+[node name="wall_24" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=562725920]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.6, 2.15, -93)
 shape = SubResource("BoxShape3D_t4ecf")
 
-[node name="wall_25" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=492183880]
+[node name="wall_25" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1629141558]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 50.4, 2.15, -104)
 shape = SubResource("BoxShape3D_wydgc")
 
-[node name="wall_26" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=888137716]
+[node name="wall_26" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2061789389]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.4, 2.2235456, -122.4)
 shape = SubResource("BoxShape3D_bj61o")
 
-[node name="wall_27" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=672525765]
+[node name="wall_27" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1472215537]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6000004, 2.2211647, -122.4)
 shape = SubResource("BoxShape3D_ussmx")
 
-[node name="wall_28" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1601985695]
+[node name="wall_28" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1629821147]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 2.2346456, -85.6)
 shape = SubResource("BoxShape3D_i28oj")
 
-[node name="wall_29" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1411932984]
+[node name="wall_29" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1141922344]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -36.4, 2.15, -104)
 shape = SubResource("BoxShape3D_ex1mm")
 
-[node name="wall_30" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1217711093]
+[node name="wall_30" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1624286982]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.39999962, 2.15, -114)
 shape = SubResource("BoxShape3D_pdv5w")
 
-[node name="wall_31" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1686975245]
+[node name="wall_31" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1718520243]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.39999962, 2.15, -94)
 shape = SubResource("BoxShape3D_ksvxx")
 
-[node name="wall_32" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=4261737]
+[node name="wall_32" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1076085855]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4, 2.4151397, -144.4)
 shape = SubResource("BoxShape3D_45aoy")
 
-[node name="wall_33" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=299996042]
+[node name="wall_33" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1949564979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6, 2.376435, -144.4)
 shape = SubResource("BoxShape3D_jt8uw")
 
-[node name="wall_34" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1719235761]
+[node name="wall_34" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2120934413]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4, 2.2421381, -129.6)
 shape = SubResource("BoxShape3D_i4ehx")
 
-[node name="wall_35" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1749265085]
+[node name="wall_35" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1381305751]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6, 2.244845, -129.6)
 shape = SubResource("BoxShape3D_3car8")
 
-[node name="wall_36" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1848983544]
+[node name="wall_36" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1510429635]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -24.4, 2.15, -141.5)
 shape = SubResource("BoxShape3D_46p44")
 
-[node name="wall_37" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2066456968]
+[node name="wall_37" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=967710180]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -24.4, 2.15, -132.5)
 shape = SubResource("BoxShape3D_nsabt")
 
-[node name="wall_38" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1239888836]
+[node name="wall_38" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=798274844]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -11.6, 2.15, -137)
 shape = SubResource("BoxShape3D_wspsq")
 
-[node name="wall_39" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1725282921]
+[node name="wall_39" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=260079932]
 transform = Transform3D(-0.098017104, 0, 0.9951847, 0, 1, 0, -0.9951847, 0, -0.098017104, 2.3017673, 8, -177.99954)
 shape = SubResource("BoxShape3D_oq7tj")
 
-[node name="wall_40" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1330021454]
+[node name="wall_40" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=87110737]
 transform = Transform3D(-0.29028472, 0, 0.9569403, 0, 1, 0, -0.9569403, 0, -0.29028472, 1.5215836, 8, -181.92181)
 shape = SubResource("BoxShape3D_n8qny")
 
-[node name="wall_41" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1811522933]
+[node name="wall_41" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1221856176]
 transform = Transform3D(-0.47139663, 0, 0.8819213, 0, 1, 0, -0.8819213, 0, -0.47139663, -0.008806229, 8, -185.61649)
 shape = SubResource("BoxShape3D_ixe6n")
 
-[node name="wall_42" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1872126090]
+[node name="wall_42" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1581335151]
 transform = Transform3D(-0.6343933, 0, 0.7730105, 0, 1, 0, -0.7730105, 0, -0.6343933, 0.088443756, 8, -190.8448)
 shape = SubResource("BoxShape3D_khe0o")
 
-[node name="wall_43" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1437732096]
+[node name="wall_43" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1777412944]
 transform = Transform3D(0.7730105, 0, 0.6343933, 0, 1, 0, -0.6343933, 0, 0.7730105, -2.7204938, 8, -191.90303)
 shape = SubResource("BoxShape3D_mheyt")
 
-[node name="wall_44" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1976554700]
+[node name="wall_44" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=7688939]
 transform = Transform3D(0.7730105, 0, 0.6343933, 0, 1, 0, -0.6343933, 0, 0.7730105, 0.578351, 8, -187.88338)
 shape = SubResource("BoxShape3D_yfntp")
 
-[node name="wall_45" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=706362337]
+[node name="wall_45" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=776340681]
 transform = Transform3D(-0.7730105, 0, 0.6343933, 0, 1, 0, -0.6343933, 0, -0.7730105, -5.0583773, 8, -191.76941)
 shape = SubResource("BoxShape3D_s7tau")
 
-[node name="wall_46" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=668689034]
+[node name="wall_46" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=811093639]
 transform = Transform3D(-0.88192123, 0, 0.47139683, 0, 1, 0, -0.47139683, 0, -0.88192123, -8.383507, 8, -193.9912)
 shape = SubResource("BoxShape3D_d5oyg")
 
-[node name="wall_47" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1971443596]
+[node name="wall_47" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=109444143]
 transform = Transform3D(-0.95694035, 0, 0.29028472, 0, 1, 0, -0.29028472, 0, -0.95694035, -12.078194, 8, -195.52158)
 shape = SubResource("BoxShape3D_83sii")
 
-[node name="wall_48" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1219707163]
+[node name="wall_48" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2083264863]
 transform = Transform3D(-0.95694035, 0, -0.29028466, 0, 1, 0, 0.29028466, 0, -0.95694035, -23.921806, 8, -195.52158)
 shape = SubResource("BoxShape3D_lnxl7")
 
-[node name="wall_49" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=347359027]
+[node name="wall_49" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=143297881]
 transform = Transform3D(-0.88192123, 0, -0.47139677, 0, 1, 0, 0.47139677, 0, -0.88192123, -27.616493, 8, -193.9912)
 shape = SubResource("BoxShape3D_5b8w7")
 
-[node name="wall_50" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=628464115]
+[node name="wall_50" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1553636598]
 transform = Transform3D(-0.77301055, 0, -0.6343932, 0, 1, 0, 0.6343932, 0, -0.77301055, -32.844803, 8, -194.08844)
 shape = SubResource("BoxShape3D_gf1o6")
 
-[node name="wall_51" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=640814105]
+[node name="wall_51" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1838926594]
 transform = Transform3D(-0.6343933, 0, 0.7730105, 0, 1, 0, -0.7730105, 0, -0.6343933, -33.90304, 8, -191.2795)
 shape = SubResource("BoxShape3D_0gaap")
 
-[node name="wall_52" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1972404529]
+[node name="wall_52" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=719195942]
 transform = Transform3D(-0.6343933, 0, 0.7730105, 0, 1, 0, -0.7730105, 0, -0.6343933, -29.883387, 8, -194.57835)
 shape = SubResource("BoxShape3D_po01f")
 
-[node name="wall_53" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1822232803]
+[node name="wall_53" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=852816313]
 transform = Transform3D(-0.63439333, 0, -0.77301043, 0, 1, 0, 0.77301043, 0, -0.63439333, -33.769413, 8, -188.94162)
 shape = SubResource("BoxShape3D_ivtbs")
 
-[node name="wall_54" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1314943625]
+[node name="wall_54" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=642159796]
 transform = Transform3D(-0.47139668, 0, -0.8819213, 0, 1, 0, 0.8819213, 0, -0.47139668, -35.991196, 8, -185.61649)
 shape = SubResource("BoxShape3D_6tvjj")
 
-[node name="wall_55" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1743506690]
+[node name="wall_55" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2093381706]
 transform = Transform3D(-0.29028454, 0, -0.95694035, 0, 1, 0, 0.95694035, 0, -0.29028454, -37.521584, 8, -181.92181)
 shape = SubResource("BoxShape3D_bhep5")
 
-[node name="wall_56" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=38019856]
+[node name="wall_56" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1579418295]
 transform = Transform3D(-0.09801693, 0, -0.9951847, 0, 1, 0, 0.9951847, 0, -0.09801693, -38.301765, 8, -177.99954)
 shape = SubResource("BoxShape3D_b2qcd")
 
-[node name="wall_57" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=137541869]
+[node name="wall_57" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2037303823]
 transform = Transform3D(0.098016955, 0, -0.9951847, 0, 1, 0, 0.9951847, 0, 0.098016955, -38.301765, 8, -174.00046)
 shape = SubResource("BoxShape3D_17fu3")
 
-[node name="wall_58" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1272919774]
+[node name="wall_58" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=860263247]
 transform = Transform3D(0.29028457, 0, -0.95694035, 0, 1, 0, 0.95694035, 0, 0.29028457, -37.521584, 8, -170.07819)
 shape = SubResource("BoxShape3D_2xmo4")
 
-[node name="wall_59" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2105970087]
+[node name="wall_59" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=502014910]
 transform = Transform3D(0.4713967, 0, -0.8819213, 0, 1, 0, 0.8819213, 0, 0.4713967, -35.991196, 8, -166.38351)
 shape = SubResource("BoxShape3D_xom5l")
 
-[node name="wall_60" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1018180611]
+[node name="wall_60" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1518616095]
 transform = Transform3D(0.63439333, 0, -0.77301043, 0, 1, 0, 0.77301043, 0, 0.63439333, -36.088444, 8, -161.1552)
 shape = SubResource("BoxShape3D_cr6m7")
 
-[node name="wall_61" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=478981925]
+[node name="wall_61" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1161932056]
 transform = Transform3D(-0.77301055, 0, -0.6343932, 0, 1, 0, 0.6343932, 0, -0.77301055, -33.279507, 8, -160.09697)
 shape = SubResource("BoxShape3D_xt4n7")
 
-[node name="wall_62" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=712478238]
+[node name="wall_62" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=789523155]
 transform = Transform3D(-0.77301055, 0, -0.6343932, 0, 1, 0, 0.6343932, 0, -0.77301055, -36.57835, 8, -164.11662)
 shape = SubResource("BoxShape3D_3o7jf")
 
-[node name="wall_63" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1884671545]
+[node name="wall_63" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=578171990]
 transform = Transform3D(0.77301055, 0, -0.63439316, 0, 1, 0, 0.63439316, 0, 0.77301055, -30.941624, 8, -160.23059)
 shape = SubResource("BoxShape3D_jr47u")
 
-[node name="wall_64" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=4173636]
+[node name="wall_64" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1986065604]
 transform = Transform3D(0.88192135, 0, -0.47139654, 0, 1, 0, 0.47139654, 0, 0.88192135, -27.616493, 8, -158.0088)
 shape = SubResource("BoxShape3D_gh4ua")
 
-[node name="wall_65" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1625760295]
+[node name="wall_65" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1934528782]
 transform = Transform3D(0.9569403, 0, -0.29028484, 0, 1, 0, 0.29028484, 0, 0.9569403, -23.921806, 8, -156.47842)
 shape = SubResource("BoxShape3D_wxgj3")
 
-[node name="wall_66" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=788690779]
+[node name="wall_66" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2050217877]
 transform = Transform3D(0.9569403, 0, 0.29028472, 0, 1, 0, -0.29028472, 0, 0.9569403, -12.078194, 8, -156.47842)
 shape = SubResource("BoxShape3D_snneb")
 
-[node name="wall_67" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1832927497]
+[node name="wall_67" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=893976758]
 transform = Transform3D(0.8819212, 0, 0.47139686, 0, 1, 0, -0.47139686, 0, 0.8819212, -8.383507, 8, -158.0088)
 shape = SubResource("BoxShape3D_a7kpd")
 
-[node name="wall_68" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1575712948]
+[node name="wall_68" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1645946910]
 transform = Transform3D(0.7730103, 0, 0.63439345, 0, 1, 0, -0.63439345, 0, 0.7730103, -3.1551971, 8, -157.91156)
 shape = SubResource("BoxShape3D_8yfuq")
 
-[node name="wall_69" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1300192391]
+[node name="wall_69" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1595494105]
 transform = Transform3D(0.63439333, 0, -0.77301043, 0, 1, 0, 0.77301043, 0, 0.63439333, -2.09696, 8, -160.7205)
 shape = SubResource("BoxShape3D_evse7")
 
-[node name="wall_70" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=352742303]
+[node name="wall_70" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1689785664]
 transform = Transform3D(0.63439333, 0, -0.77301043, 0, 1, 0, 0.77301043, 0, 0.63439333, -6.1166143, 8, -157.42165)
 shape = SubResource("BoxShape3D_2jf8n")
 
-[node name="wall_71" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=203577236]
+[node name="wall_71" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1368147490]
 transform = Transform3D(0.63439345, 0, 0.7730103, 0, 1, 0, -0.7730103, 0, 0.63439345, -2.230587, 8, -163.05838)
 shape = SubResource("BoxShape3D_ctjq7")
 
-[node name="wall_72" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=982294406]
+[node name="wall_72" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=424187505]
 transform = Transform3D(0.47139683, 0, 0.88192123, 0, 1, 0, -0.88192123, 0, 0.47139683, -0.008806229, 8, -166.38351)
 shape = SubResource("BoxShape3D_weab1")
 
-[node name="wall_73" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1796794107]
+[node name="wall_73" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=171352604]
 transform = Transform3D(0.2902847, 0, 0.95694035, 0, 1, 0, -0.95694035, 0, 0.2902847, 1.5215836, 8, -170.07819)
 shape = SubResource("BoxShape3D_06jpv")
 
-[node name="wall_74" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=350815280]
+[node name="wall_74" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2087431063]
 transform = Transform3D(0.09801708, 0, 0.9951847, 0, 1, 0, -0.9951847, 0, 0.09801708, 2.3017673, 8, -174.00046)
 shape = SubResource("BoxShape3D_0tpdk")
 
-[node name="wall_75" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=957175430]
+[node name="wall_75" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1697683385]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -15, 8, -196.4)
 shape = SubResource("BoxShape3D_u4gj3")
 
-[node name="wall_76" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1696993485]
+[node name="wall_76" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=322078286]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -21, 8, -196.4)
 shape = SubResource("BoxShape3D_yfmnu")
 
-[node name="wall_77" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1638612728]
+[node name="wall_77" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1162736426]
 transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -21, 8, -155.6)
 shape = SubResource("BoxShape3D_7dmc8")
 
-[node name="wall_78" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=266363379]
+[node name="wall_78" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1166825406]
 transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -15, 8, -155.6)
 shape = SubResource("BoxShape3D_owgbo")
 
-[node name="wall_79" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1531304893]
+[node name="wall_79" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=165889665]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.4, 3.65, 28.199999)
 shape = SubResource("BoxShape3D_jwc5j")
 
-[node name="wall_80" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=494199410]
+[node name="wall_80" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1421440389]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.4, 3.65, 28.199999)
 shape = SubResource("BoxShape3D_6ck58")
 
-[node name="wall_81" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1058596902]
+[node name="wall_81" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1886739534]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.4, 2.15, -23)
 shape = SubResource("BoxShape3D_56rnx")
 
-[node name="wall_82" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=698673701]
+[node name="wall_82" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1790265098]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.4, 2.15, -23)
 shape = SubResource("BoxShape3D_ype0w")
 
-[node name="wall_83" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=834746085]
+[node name="wall_83" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=591002605]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 2.15, -63.6)
 shape = SubResource("BoxShape3D_nx2oa")
 
-[node name="wall_84" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1908046519]
+[node name="wall_84" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1936434753]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 2.15, -68.4)
 shape = SubResource("BoxShape3D_gff45")
 
-[node name="wall_85" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=686324680]
+[node name="wall_85" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1177547918]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 32.4, 2.15, -78.5)
 shape = SubResource("BoxShape3D_k6swn")
 
-[node name="wall_86" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2143499365]
+[node name="wall_86" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1226757472]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 27.6, 2.15, -78.5)
 shape = SubResource("BoxShape3D_qwjeb")
 
-[node name="wall_87" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1128697919]
+[node name="wall_87" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1058507116]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0000005, 2.15, -106.4)
 shape = SubResource("BoxShape3D_pmr7u")
 
-[node name="wall_88" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=147916810]
+[node name="wall_88" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2057071529]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0000005, 2.15, -101.6)
 shape = SubResource("BoxShape3D_uggnm")
 
-[node name="wall_89" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1738364106]
+[node name="wall_89" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=784094914]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.6, 2.15, -126.00001)
 shape = SubResource("BoxShape3D_8plvy")
 
-[node name="wall_90" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=141777556]
+[node name="wall_90" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1126411790]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20.4, 2.15, -126.00001)
 shape = SubResource("BoxShape3D_q0f81")
 
-[node name="wall_91" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2067549832]
+[node name="wall_91" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=208554402]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.6, 5.174998, -150.04999)
 shape = SubResource("BoxShape3D_fm14s")
 
-[node name="wall_92" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1623553955]
+[node name="wall_92" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=694576382]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20.4, 5.174998, -150.04999)
 shape = SubResource("BoxShape3D_e635i")
 
-[node name="wall_93" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2089037430]
+[node name="wall_93" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1670591724]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.6, 6.65, -202.15)
 shape = SubResource("BoxShape3D_pn2mb")
 
-[node name="wall_94" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=501366757]
+[node name="wall_94" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=498265404]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20.4, 6.65, -202.15)
 shape = SubResource("BoxShape3D_o33c5")
 
-[node name="wall_95" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=622683260]
+[node name="wall_95" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1134106334]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -20.95, 2.15, -2.4)
 shape = SubResource("BoxShape3D_8jirk")
 
-[node name="wall_96" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=237858944]
+[node name="wall_96" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1089513559]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -20.95, 2.15, 2.4)
 shape = SubResource("BoxShape3D_123bh")
 
-[node name="wall_97" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=208638123]
+[node name="wall_97" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1496705909]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -26.95, 2.15, -139.4)
 shape = SubResource("BoxShape3D_saieh")
 
-[node name="wall_98" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=352714001]
+[node name="wall_98" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1730922020]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -26.95, 2.15, -134.6)
 shape = SubResource("BoxShape3D_43lb1")
 
-[node name="brazier_99" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=113355108]
+[node name="brazier_99" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=676699640]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6, 1.45, -12.6)
 shape = SubResource("CylinderShape3D_gf75g")
 
-[node name="brazier_100" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1596017595]
+[node name="brazier_100" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1152180294]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6, 1.45, -12.6)
 shape = SubResource("CylinderShape3D_mt6g4")
 
-[node name="brazier_101" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1800436107]
+[node name="brazier_101" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=50746378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6, 1.45, 12.6)
 shape = SubResource("CylinderShape3D_t1dkr")
 
-[node name="brazier_102" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1839788781]
+[node name="brazier_102" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1802203373]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6, 1.45, 12.6)
 shape = SubResource("CylinderShape3D_3nw0c")
 
-[node name="wall_103" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1339530414]
+[node name="wall_103" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1565852062]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 5.4220066, 38.4)
 shape = SubResource("BoxShape3D_34lea")
 
-[node name="wall_104" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=904495803]
+[node name="wall_104" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1239139334]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -23.9, 2.3497143, 0)
 shape = SubResource("BoxShape3D_a3srm")
 
-[node name="pillar_105" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1693614542]
+[node name="pillar_105" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1518295508]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -69)
 shape = SubResource("CylinderShape3D_k8pqg")
 
-[node name="pillar_106" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1142033082]
+[node name="pillar_106" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1482412015]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -63.6)
 shape = SubResource("CylinderShape3D_xu2ks")
 
-[node name="pillar_107" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=438559893]
+[node name="pillar_107" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=163077602]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -58.2)
 shape = SubResource("CylinderShape3D_rglgu")
 
-[node name="pillar_108" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1533371352]
+[node name="pillar_108" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1275512230]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 1.45, -58.2)
 shape = SubResource("CylinderShape3D_qe866")
 
-[node name="pillar_109" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=353089460]
+[node name="pillar_109" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=699420286]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -52.8)
 shape = SubResource("CylinderShape3D_su4d6")
 
-[node name="pillar_110" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1697442684]
+[node name="pillar_110" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1474631338]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 1.45, -52.8)
 shape = SubResource("CylinderShape3D_71esw")
 
-[node name="pillar_111" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=406960831]
+[node name="pillar_111" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1716300663]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -47.4)
 shape = SubResource("CylinderShape3D_ls2ps")
 
-[node name="pillar_112" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=115220550]
+[node name="pillar_112" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=750298442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 1.45, -47.4)
 shape = SubResource("CylinderShape3D_gxwa2")
 
-[node name="pillar_113" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=634033152]
+[node name="pillar_113" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=780992125]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -42)
 shape = SubResource("CylinderShape3D_xlpek")
 
-[node name="pillar_114" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1980491708]
+[node name="pillar_114" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=323638416]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 1.45, -42)
 shape = SubResource("CylinderShape3D_u5i6n")
 
-[node name="pillar_115" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1654532881]
+[node name="pillar_115" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=303457988]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -36.6)
 shape = SubResource("CylinderShape3D_pfub6")
 
-[node name="pillar_116" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1943853006]
+[node name="pillar_116" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=49135736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 1.45, -36.6)
 shape = SubResource("CylinderShape3D_0j53u")
 
-[node name="pillar_117" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1558954645]
+[node name="pillar_117" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1599397658]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6, 1.45, -31.2)
 shape = SubResource("CylinderShape3D_owvg2")
 
-[node name="pillar_118" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2022716682]
+[node name="pillar_118" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1445539556]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6, 1.45, -31.2)
 shape = SubResource("CylinderShape3D_lwfdg")
 
-[node name="wall_119" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=733888007]
+[node name="wall_119" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1199328161]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -72.4)
 shape = SubResource("BoxShape3D_l6rm3")
 
-[node name="fountain_120" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1285484778]
+[node name="fountain_120" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=812220107]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.45, -66)
 shape = SubResource("CylinderShape3D_liw6r")
 
-[node name="brazier_121" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=413363700]
+[node name="brazier_121" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1874405909]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.6, 1.45, -71.6)
 shape = SubResource("CylinderShape3D_qhsmw")
 
-[node name="arcade_122" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1053239891]
+[node name="arcade_122" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=828541818]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.200001, 2, -86.35)
 shape = SubResource("CylinderShape3D_wywc4")
 
-[node name="arcade_123" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1316408446]
+[node name="arcade_123" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=582255119]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2, -86.35)
 shape = SubResource("CylinderShape3D_thmcr")
 
-[node name="arcade_124" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2069229631]
+[node name="arcade_124" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=369625300]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.4, 2, -86.35)
 shape = SubResource("CylinderShape3D_1enw2")
 
-[node name="arcade_125" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=966607762]
+[node name="arcade_125" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1196048439]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.199999, 2, -86.35)
 shape = SubResource("CylinderShape3D_uem4p")
 
-[node name="arcade_126" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=766258391]
+[node name="arcade_126" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=836637799]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.6, 2, -86.35)
 shape = SubResource("CylinderShape3D_661aw")
 
-[node name="arcade_127" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=83079169]
+[node name="arcade_127" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=979084700]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.4, 2, -86.35)
 shape = SubResource("CylinderShape3D_c5n05")
 
-[node name="arcade_128" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1484688647]
+[node name="arcade_128" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=314206454]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.8, 2, -86.35)
 shape = SubResource("CylinderShape3D_5sue6")
 
-[node name="arcade_129" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1136682796]
+[node name="arcade_129" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=545960508]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.600002, 2, -86.35)
 shape = SubResource("CylinderShape3D_c3pmh")
 
-[node name="arcade_130" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=509703013]
+[node name="arcade_130" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=783051443]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 2, -86.35)
 shape = SubResource("CylinderShape3D_mxxcs")
 
-[node name="arcade_131" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=225700280]
+[node name="arcade_131" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=399103048]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.800003, 2, -86.35)
 shape = SubResource("CylinderShape3D_tvsr1")
 
-[node name="arcade_132" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1787315681]
+[node name="arcade_132" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1147484409]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -87.2)
 shape = SubResource("CylinderShape3D_mr5j6")
 
-[node name="arcade_133" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=497689027]
+[node name="arcade_133" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=557765158]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -92)
 shape = SubResource("CylinderShape3D_jfxy5")
 
-[node name="arcade_134" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=364399827]
+[node name="arcade_134" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=45401469]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -94.4)
 shape = SubResource("CylinderShape3D_4hc13")
 
-[node name="arcade_135" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=3555310]
+[node name="arcade_135" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1968810619]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -99.200005)
 shape = SubResource("CylinderShape3D_sqxps")
 
-[node name="arcade_136" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1112840315]
+[node name="arcade_136" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1465069575]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -101.6)
 shape = SubResource("CylinderShape3D_kqw22")
 
-[node name="arcade_137" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1433733654]
+[node name="arcade_137" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1385027463]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -106.4)
 shape = SubResource("CylinderShape3D_5vvys")
 
-[node name="arcade_138" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1428478968]
+[node name="arcade_138" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1648055327]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -108.799995)
 shape = SubResource("CylinderShape3D_ausik")
 
-[node name="arcade_139" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1464914481]
+[node name="arcade_139" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1152448726]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -113.6)
 shape = SubResource("CylinderShape3D_iho3l")
 
-[node name="arcade_140" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1440594463]
+[node name="arcade_140" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=86733348]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -116)
 shape = SubResource("CylinderShape3D_dmkg3")
 
-[node name="arcade_141" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1080923849]
+[node name="arcade_141" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1477261082]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.65, 2, -120.8)
 shape = SubResource("CylinderShape3D_qcwk1")
 
-[node name="arcade_142" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=707477124]
+[node name="arcade_142" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1459131498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.800003, 2, -121.65)
 shape = SubResource("CylinderShape3D_5cv8i")
 
-[node name="arcade_143" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=581432005]
+[node name="arcade_143" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2035670005]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 2, -121.65)
 shape = SubResource("CylinderShape3D_wgnif")
 
-[node name="arcade_144" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=934962154]
+[node name="arcade_144" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1645001217]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.600002, 2, -121.65)
 shape = SubResource("CylinderShape3D_mm0bv")
 
-[node name="arcade_145" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1814798103]
+[node name="arcade_145" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1531440145]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.8, 2, -121.65)
 shape = SubResource("CylinderShape3D_pfqfo")
 
-[node name="arcade_146" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=515728831]
+[node name="arcade_146" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=764688226]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.4, 2, -121.65)
 shape = SubResource("CylinderShape3D_233rf")
 
-[node name="arcade_147" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2091716494]
+[node name="arcade_147" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1311292797]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.6, 2, -121.65)
 shape = SubResource("CylinderShape3D_f1rvv")
 
-[node name="arcade_148" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1407238021]
+[node name="arcade_148" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1805597347]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.199999, 2, -121.65)
 shape = SubResource("CylinderShape3D_64olr")
 
-[node name="arcade_149" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1024852489]
+[node name="arcade_149" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1987221902]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.4, 2, -121.65)
 shape = SubResource("CylinderShape3D_ppu0g")
 
-[node name="arcade_150" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1746931745]
+[node name="arcade_150" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=787069560]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2, -121.65)
 shape = SubResource("CylinderShape3D_2ysrh")
 
-[node name="arcade_151" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1658388902]
+[node name="arcade_151" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=69783953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.200001, 2, -121.65)
 shape = SubResource("CylinderShape3D_xmq0q")
 
-[node name="arcade_152" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1599015011]
+[node name="arcade_152" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=41825994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -120.8)
 shape = SubResource("CylinderShape3D_bv83e")
 
-[node name="arcade_153" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=312510641]
+[node name="arcade_153" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=162643870]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -116)
 shape = SubResource("CylinderShape3D_0doih")
 
-[node name="arcade_154" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2102051746]
+[node name="arcade_154" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1891347301]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -113.6)
 shape = SubResource("CylinderShape3D_ii82d")
 
-[node name="arcade_155" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1766327774]
+[node name="arcade_155" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1479667463]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -108.799995)
 shape = SubResource("CylinderShape3D_5y2ls")
 
-[node name="arcade_156" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1650978420]
+[node name="arcade_156" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1288711344]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -106.4)
 shape = SubResource("CylinderShape3D_7xwcp")
 
-[node name="arcade_157" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1958632903]
+[node name="arcade_157" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=213055523]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -101.6)
 shape = SubResource("CylinderShape3D_kdvgk")
 
-[node name="arcade_158" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=513854822]
+[node name="arcade_158" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=898119338]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -99.200005)
 shape = SubResource("CylinderShape3D_5x01w")
 
-[node name="arcade_159" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=382736070]
+[node name="arcade_159" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=13332240]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -94.4)
 shape = SubResource("CylinderShape3D_jtvbt")
 
-[node name="arcade_160" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=503164888]
+[node name="arcade_160" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=460294554]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -92)
 shape = SubResource("CylinderShape3D_bc52l")
 
-[node name="arcade_161" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2048890555]
+[node name="arcade_161" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1868827958]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.35, 2, -87.2)
 shape = SubResource("CylinderShape3D_ngt55")
 
-[node name="barrels_162" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1525070113]
+[node name="barrels_162" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=2092344020]
 transform = Transform3D(0.87758255, 0, 0.47942555, 0, 1, 0, -0.47942555, 0, 0.87758255, -13.598878, 0.40918383, -142.20122)
 shape = SubResource("BoxShape3D_nxtry")
 
-[node name="wall_163" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=797996029]
+[node name="wall_163" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=118152655]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -29.9, 2.2548683, -137)
 shape = SubResource("BoxShape3D_wcosp")
 
-[node name="pillar_164" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=328842112]
+[node name="pillar_164" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=694644345]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.451518, 7.45, -186.38916)
 shape = SubResource("CylinderShape3D_kf41t")
 
-[node name="pillar_165" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=124149176]
+[node name="pillar_165" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=984890612]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.35181, 7.45, -194.34068)
 shape = SubResource("CylinderShape3D_tk1h3")
 
-[node name="pillar_166" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=657717144]
+[node name="pillar_166" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=43527329]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.389164, 7.45, -191.54848)
 shape = SubResource("CylinderShape3D_hc7xl")
 
-[node name="pillar_167" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=218629503]
+[node name="pillar_167" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1020071366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.340683, 7.45, -179.6482)
 shape = SubResource("CylinderShape3D_b0ica")
 
-[node name="pillar_168" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1152104734]
+[node name="pillar_168" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1055324425]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.54848, 7.45, -165.61084)
 shape = SubResource("CylinderShape3D_auc25")
 
-[node name="pillar_169" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1570016405]
+[node name="pillar_169" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=1179822844]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.64819, 7.45, -157.65932)
 shape = SubResource("CylinderShape3D_3pm7k")
 
-[node name="pillar_170" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=372824808]
+[node name="pillar_170" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=227238233]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.610836, 7.45, -160.45152)
 shape = SubResource("CylinderShape3D_k5reo")
 
-[node name="pillar_171" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=529954709]
+[node name="pillar_171" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=226849557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3406849, 7.45, -172.3518)
 shape = SubResource("CylinderShape3D_rxfje")
 
-[node name="wall_172" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=776241557]
+[node name="wall_172" type="CollisionShape3D" parent="Walkable/Obstacles" unique_id=405524405]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -18, 5.157101, -208.4)
 shape = SubResource("BoxShape3D_8bpfb")
 
-[node name="Ground" type="CollisionShape3D" parent="Walkable" unique_id=638056602]
+[node name="Ground" type="CollisionShape3D" parent="Walkable" unique_id=1737982324]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -88)
 shape = SubResource("HeightMapShape3D_hnsms")
 
-[node name="Rooms" type="Node3D" parent="." unique_id=648528441]
+[node name="Rooms" type="Node3D" parent="." unique_id=955068452]
 
-[node name="vestibule" type="Area3D" parent="Rooms" unique_id=540322010]
+[node name="vestibule" type="Area3D" parent="Rooms" unique_id=1445236533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 collision_layer = 0
 collision_mask = 2
@@ -5506,10 +5506,10 @@ metadata/index = 1
 metadata/kind = "encounter"
 metadata/intensity = 0.4
 
-[node name="Shape" type="CollisionShape3D" parent="Rooms/vestibule" unique_id=2078252250]
+[node name="Shape" type="CollisionShape3D" parent="Rooms/vestibule" unique_id=506901153]
 shape = SubResource("BoxShape3D_fv2f7")
 
-[node name="gallery" type="Area3D" parent="Rooms" unique_id=610570889]
+[node name="gallery" type="Area3D" parent="Rooms" unique_id=1225784755]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -50)
 collision_layer = 0
 collision_mask = 2
@@ -5519,10 +5519,10 @@ metadata/index = 2
 metadata/kind = "encounter"
 metadata/intensity = 0.6
 
-[node name="Shape" type="CollisionShape3D" parent="Rooms/gallery" unique_id=401865111]
+[node name="Shape" type="CollisionShape3D" parent="Rooms/gallery" unique_id=72738616]
 shape = SubResource("BoxShape3D_0fu25")
 
-[node name="fountain" type="Area3D" parent="Rooms" unique_id=1765617215]
+[node name="fountain" type="Area3D" parent="Rooms" unique_id=1534852028]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3, -66)
 collision_layer = 0
 collision_mask = 2
@@ -5532,10 +5532,10 @@ metadata/index = 3
 metadata/kind = "rest"
 metadata/intensity = 0.1
 
-[node name="Shape" type="CollisionShape3D" parent="Rooms/fountain" unique_id=1784357938]
+[node name="Shape" type="CollisionShape3D" parent="Rooms/fountain" unique_id=530536901]
 shape = SubResource("BoxShape3D_b78yc")
 
-[node name="courtyard" type="Area3D" parent="Rooms" unique_id=193401431]
+[node name="courtyard" type="Area3D" parent="Rooms" unique_id=2119819579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3, -104)
 collision_layer = 0
 collision_mask = 2
@@ -5545,10 +5545,10 @@ metadata/index = 4
 metadata/kind = "encounter"
 metadata/intensity = 0.7
 
-[node name="Shape" type="CollisionShape3D" parent="Rooms/courtyard" unique_id=1581360713]
+[node name="Shape" type="CollisionShape3D" parent="Rooms/courtyard" unique_id=1580706440]
 shape = SubResource("BoxShape3D_7r374")
 
-[node name="kennel" type="Area3D" parent="Rooms" unique_id=2097010507]
+[node name="kennel" type="Area3D" parent="Rooms" unique_id=1731301081]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 3, -104)
 collision_layer = 0
 collision_mask = 2
@@ -5558,10 +5558,10 @@ metadata/index = 5
 metadata/kind = "elite"
 metadata/intensity = 0.8
 
-[node name="Shape" type="CollisionShape3D" parent="Rooms/kennel" unique_id=891300338]
+[node name="Shape" type="CollisionShape3D" parent="Rooms/kennel" unique_id=1280646223]
 shape = SubResource("BoxShape3D_5an86")
 
-[node name="campfire" type="Area3D" parent="Rooms" unique_id=1150910326]
+[node name="campfire" type="Area3D" parent="Rooms" unique_id=244739978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 3, -137)
 collision_layer = 0
 collision_mask = 2
@@ -5571,10 +5571,10 @@ metadata/index = 6
 metadata/kind = "checkpoint"
 metadata/intensity = 0.1
 
-[node name="Shape" type="CollisionShape3D" parent="Rooms/campfire" unique_id=141348589]
+[node name="Shape" type="CollisionShape3D" parent="Rooms/campfire" unique_id=1893534867]
 shape = SubResource("BoxShape3D_8o7xu")
 
-[node name="dial" type="Area3D" parent="Rooms" unique_id=864283825]
+[node name="dial" type="Area3D" parent="Rooms" unique_id=139281742]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 9, -176)
 collision_layer = 0
 collision_mask = 2
@@ -5584,115 +5584,115 @@ metadata/index = 7
 metadata/kind = "boss"
 metadata/intensity = 1.0
 
-[node name="Shape" type="CollisionShape3D" parent="Rooms/dial" unique_id=962027131]
+[node name="Shape" type="CollisionShape3D" parent="Rooms/dial" unique_id=254301618]
 shape = SubResource("BoxShape3D_r045o")
 
-[node name="Gates" type="Node3D" parent="." unique_id=162026127]
+[node name="Gates" type="Node3D" parent="." unique_id=1003404595]
 
-[node name="vestibule" type="StaticBody3D" parent="Gates" unique_id=353093154]
+[node name="vestibule" type="StaticBody3D" parent="Gates" unique_id=512979270]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.4)
 collision_layer = 16
 collision_mask = 0
 metadata/room = "vestibule"
 metadata/opens_on = "encounter.cloister_vestibule"
 
-[node name="Shape" type="CollisionShape3D" parent="Gates/vestibule" unique_id=1726340830]
+[node name="Shape" type="CollisionShape3D" parent="Gates/vestibule" unique_id=2000442114]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_wjm7c")
 
-[node name="Grille" type="MultiMeshInstance3D" parent="Gates/vestibule" unique_id=1899338494]
+[node name="Grille" type="MultiMeshInstance3D" parent="Gates/vestibule" unique_id=848966243]
 multimesh = SubResource("MultiMesh_mjfvm")
 
-[node name="shortcut_vestibule" type="StaticBody3D" parent="Gates" unique_id=1538410573]
+[node name="shortcut_vestibule" type="StaticBody3D" parent="Gates" unique_id=1471470140]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -18.4, 0, 0)
 collision_layer = 16
 collision_mask = 0
 metadata/room = "vestibule"
 metadata/opens_on = "encounter.cloister_boss"
 
-[node name="Shape" type="CollisionShape3D" parent="Gates/shortcut_vestibule" unique_id=866263393]
+[node name="Shape" type="CollisionShape3D" parent="Gates/shortcut_vestibule" unique_id=1933405798]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_h06mm")
 
-[node name="Grille" type="MultiMeshInstance3D" parent="Gates/shortcut_vestibule" unique_id=687605643]
+[node name="Grille" type="MultiMeshInstance3D" parent="Gates/shortcut_vestibule" unique_id=1957143791]
 multimesh = SubResource("MultiMesh_sgjwo")
 
-[node name="gallery" type="StaticBody3D" parent="Gates" unique_id=1062382396]
+[node name="gallery" type="StaticBody3D" parent="Gates" unique_id=1758211211]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 18.4, 0, -66)
 collision_layer = 16
 collision_mask = 0
 metadata/room = "gallery"
 metadata/opens_on = "encounter.cloister_gallery"
 
-[node name="Shape" type="CollisionShape3D" parent="Gates/gallery" unique_id=878590743]
+[node name="Shape" type="CollisionShape3D" parent="Gates/gallery" unique_id=1988904621]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_ktdxq")
 
-[node name="Grille" type="MultiMeshInstance3D" parent="Gates/gallery" unique_id=464861484]
+[node name="Grille" type="MultiMeshInstance3D" parent="Gates/gallery" unique_id=1188882873]
 multimesh = SubResource("MultiMesh_pbl2l")
 
-[node name="courtyard" type="StaticBody3D" parent="Gates" unique_id=344802666]
+[node name="courtyard" type="StaticBody3D" parent="Gates" unique_id=888039770]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.6, 0, -104)
 collision_layer = 16
 collision_mask = 0
 metadata/room = "courtyard"
 metadata/opens_on = "encounter.cloister_courtyard"
 
-[node name="Shape" type="CollisionShape3D" parent="Gates/courtyard" unique_id=480038176]
+[node name="Shape" type="CollisionShape3D" parent="Gates/courtyard" unique_id=1137601076]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_yauf7")
 
-[node name="Grille" type="MultiMeshInstance3D" parent="Gates/courtyard" unique_id=1898304341]
+[node name="Grille" type="MultiMeshInstance3D" parent="Gates/courtyard" unique_id=473084998]
 multimesh = SubResource("MultiMesh_e3tv3")
 
-[node name="kennel" type="StaticBody3D" parent="Gates" unique_id=1066922860]
+[node name="kennel" type="StaticBody3D" parent="Gates" unique_id=1914453038]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -122.4)
 collision_layer = 16
 collision_mask = 0
 metadata/room = "kennel"
 metadata/opens_on = "encounter.cloister_alpha"
 
-[node name="Shape" type="CollisionShape3D" parent="Gates/kennel" unique_id=1763720115]
+[node name="Shape" type="CollisionShape3D" parent="Gates/kennel" unique_id=1464199868]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_q7fpo")
 
-[node name="Grille" type="MultiMeshInstance3D" parent="Gates/kennel" unique_id=1171511753]
+[node name="Grille" type="MultiMeshInstance3D" parent="Gates/kennel" unique_id=1712168181]
 multimesh = SubResource("MultiMesh_n42ui")
 
-[node name="shortcut_campfire" type="StaticBody3D" parent="Gates" unique_id=1265976287]
+[node name="shortcut_campfire" type="StaticBody3D" parent="Gates" unique_id=1437026678]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24.4, 0, -137)
 collision_layer = 16
 collision_mask = 0
 metadata/room = "campfire"
 metadata/opens_on = "encounter.cloister_boss"
 
-[node name="Shape" type="CollisionShape3D" parent="Gates/shortcut_campfire" unique_id=1300160346]
+[node name="Shape" type="CollisionShape3D" parent="Gates/shortcut_campfire" unique_id=247767759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_wt32c")
 
-[node name="Grille" type="MultiMeshInstance3D" parent="Gates/shortcut_campfire" unique_id=586770208]
+[node name="Grille" type="MultiMeshInstance3D" parent="Gates/shortcut_campfire" unique_id=592649964]
 multimesh = SubResource("MultiMesh_hy700")
 
-[node name="dial" type="StaticBody3D" parent="Gates" unique_id=374773386]
+[node name="dial" type="StaticBody3D" parent="Gates" unique_id=2074688384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 6, -196.3)
 collision_layer = 16
 collision_mask = 0
 metadata/room = "dial"
 metadata/opens_on = "encounter.cloister_boss"
 
-[node name="Shape" type="CollisionShape3D" parent="Gates/dial" unique_id=692531872]
+[node name="Shape" type="CollisionShape3D" parent="Gates/dial" unique_id=147555746]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_4awjg")
 
-[node name="Grille" type="MultiMeshInstance3D" parent="Gates/dial" unique_id=574978099]
+[node name="Grille" type="MultiMeshInstance3D" parent="Gates/dial" unique_id=95665161]
 multimesh = SubResource("MultiMesh_0xr2a")
 
-[node name="Environment" type="Node3D" parent="." unique_id=316535020]
+[node name="Environment" type="Node3D" parent="." unique_id=1244810949]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=842824819]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1507962401]
 environment = SubResource("Environment_kvt0r")
 
-[node name="Sun" type="DirectionalLight3D" parent="Environment" unique_id=661323790]
+[node name="Sun" type="DirectionalLight3D" parent="Environment" unique_id=400611804]
 transform = Transform3D(-0.8660254, -0.4240241, 0.26495966, 0, 0.52991927, 0.8480481, -0.50000006, 0.73443115, -0.45892355, 0, 0, 0)
 light_color = Color(0.7372549, 0.8156863, 1, 1)
 light_energy = 0.4
@@ -5705,11 +5705,11 @@ directional_shadow_mode = 0
 directional_shadow_max_distance = 36.0
 metadata/night = true
 
-[node name="Rooms" type="Node3D" parent="Environment" unique_id=2005758397]
+[node name="Rooms" type="Node3D" parent="Environment" unique_id=152254934]
 
-[node name="vestibule" type="Node3D" parent="Environment/Rooms" unique_id=369891416]
+[node name="vestibule" type="Node3D" parent="Environment/Rooms" unique_id=711553052]
 
-[node name="MoonShaft" type="SpotLight3D" parent="Environment/Rooms/vestibule" unique_id=1485992694]
+[node name="MoonShaft" type="SpotLight3D" parent="Environment/Rooms/vestibule" unique_id=87346396]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 12, 0)
 light_color = Color(0.7372549, 0.8156863, 1, 1)
 light_energy = 1.4
@@ -5717,7 +5717,7 @@ spot_range = 16.0
 spot_attenuation = 0.6
 spot_angle = 22.0
 
-[node name="PosternLamp" type="OmniLight3D" parent="Environment/Rooms/vestibule" unique_id=1866630849]
+[node name="PosternLamp" type="OmniLight3D" parent="Environment/Rooms/vestibule" unique_id=2016068224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, 35.5)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_energy = 0.9
@@ -5725,9 +5725,9 @@ light_bake_mode = 0
 omni_range = 6.0
 omni_attenuation = 1.2
 
-[node name="fountain" type="Node3D" parent="Environment/Rooms" unique_id=2083658665]
+[node name="fountain" type="Node3D" parent="Environment/Rooms" unique_id=397865510]
 
-[node name="Water" type="OmniLight3D" parent="Environment/Rooms/fountain" unique_id=1862878810]
+[node name="Water" type="OmniLight3D" parent="Environment/Rooms/fountain" unique_id=702510234]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.6, -66)
 light_color = Color(0.8745098, 0.9098039, 1, 1)
 light_energy = 0.6
@@ -5735,32 +5735,32 @@ light_bake_mode = 0
 omni_range = 5.5
 omni_attenuation = 1.2
 
-[node name="Candle" type="OmniLight3D" parent="Environment/Rooms/fountain" unique_id=608917970]
+[node name="Candle" type="OmniLight3D" parent="Environment/Rooms/fountain" unique_id=1976592366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.6, 1.1, -71.6)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_energy = 0.9
 light_bake_mode = 0
 omni_attenuation = 1.2
 
-[node name="kennel" type="Node3D" parent="Environment/Rooms" unique_id=356858116]
+[node name="kennel" type="Node3D" parent="Environment/Rooms" unique_id=1765275256]
 
-[node name="Torch_w" type="OmniLight3D" parent="Environment/Rooms/kennel" unique_id=2035987763]
+[node name="Torch_w" type="OmniLight3D" parent="Environment/Rooms/kennel" unique_id=2064793208]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.9, 2.3, -104)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_bake_mode = 0
 omni_range = 8.0
 omni_attenuation = 1.2
 
-[node name="Torch_e" type="OmniLight3D" parent="Environment/Rooms/kennel" unique_id=1259541420]
+[node name="Torch_e" type="OmniLight3D" parent="Environment/Rooms/kennel" unique_id=483721076]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1000004, 2.3, -104)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_bake_mode = 0
 omni_range = 8.0
 omni_attenuation = 1.2
 
-[node name="campfire" type="Node3D" parent="Environment/Rooms" unique_id=1767116395]
+[node name="campfire" type="Node3D" parent="Environment/Rooms" unique_id=468373223]
 
-[node name="Fire" type="OmniLight3D" parent="Environment/Rooms/campfire" unique_id=1854008157]
+[node name="Fire" type="OmniLight3D" parent="Environment/Rooms/campfire" unique_id=296696190]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 1, -137)
 light_color = Color(1, 0.6039216, 0.2901961, 1)
 light_energy = 1.5
@@ -5768,9 +5768,9 @@ light_bake_mode = 0
 omni_range = 6.5
 omni_attenuation = 1.2
 
-[node name="dial" type="Node3D" parent="Environment/Rooms" unique_id=674500041]
+[node name="dial" type="Node3D" parent="Environment/Rooms" unique_id=1757021449]
 
-[node name="MoonShaft" type="SpotLight3D" parent="Environment/Rooms/dial" unique_id=1023166185]
+[node name="MoonShaft" type="SpotLight3D" parent="Environment/Rooms/dial" unique_id=935394032]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -18, 22, -176)
 light_color = Color(0.7372549, 0.8156863, 1, 1)
 light_energy = 1.3
@@ -5778,7 +5778,7 @@ spot_range = 26.0
 spot_attenuation = 0.6
 spot_angle = 24.0
 
-[node name="AfterLight" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=1046316227]
+[node name="AfterLight" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=2022496012]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 14, -176)
 visible = false
 light_color = Color(1, 0.84705883, 0.627451, 1)
@@ -5787,7 +5787,7 @@ light_bake_mode = 0
 omni_range = 22.0
 omni_attenuation = 1.2
 
-[node name="Alcove_a" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=792946144]
+[node name="Alcove_a" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=1372742031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3802757, 7.8, -189.63945)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_energy = 0.6
@@ -5795,7 +5795,7 @@ light_bake_mode = 0
 omni_range = 4.0
 omni_attenuation = 1.2
 
-[node name="Alcove_b" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=1179285411]
+[node name="Alcove_b" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=409657110]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.639456, 7.8, -192.61972)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_energy = 0.6
@@ -5803,7 +5803,7 @@ light_bake_mode = 0
 omni_range = 4.0
 omni_attenuation = 1.2
 
-[node name="Alcove_c" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=85161126]
+[node name="Alcove_c" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=1477488884]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.619724, 7.8, -162.36055)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_energy = 0.6
@@ -5811,7 +5811,7 @@ light_bake_mode = 0
 omni_range = 4.0
 omni_attenuation = 1.2
 
-[node name="Alcove_d" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=2095800743]
+[node name="Alcove_d" type="OmniLight3D" parent="Environment/Rooms/dial" unique_id=690884236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.360544, 7.8, -159.38028)
 light_color = Color(1, 0.6901961, 0.4, 1)
 light_energy = 0.6

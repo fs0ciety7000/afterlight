@@ -69,7 +69,7 @@ func _cloister_splat(x: float, z: float) -> Color:
 			var walk := 1.0 - smoothstep(1.2, 2.2, minf(absf(x - c.x), absf(z - c.y)))
 			return Color(walk * 0.7, 0.0, 0.0, 1.0)
 		# paving broken by patches of bare earth and moss, so the big rooms are not one flat tile
-		var earth := smoothstep(0.12, 0.42, noise.get_noise_2d(x * 0.45 + 40.0, z * 0.45))
+		var earth := smoothstep(0.3, 0.55, noise.get_noise_2d(x * 0.7 + 40.0, z * 0.7))
 		var moss := smoothstep(0.15, 0.45, noise2.get_noise_2d(x * 1.3, z * 1.3 + 70.0))
 		var cob := clampf(1.0 - earth * 0.85 - moss * 0.6, 0.0, 1.0)
 		return Color(earth, cob, moss * 0.9, 1.0)
