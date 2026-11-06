@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "type": "rune",
+  "entries": [
+    {
+      "id": "rune.ember",
+      "origin": "original",
+      "name_key": "rune.ember.name",
+      "desc_key": "rune.ember.desc",
+      "group": "conversion",
+      "values_by_tier": [
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6
+      ],
+      "weight": 12,
+      "icon": "res://assets/textures/icons/rune.ember.png",
+      "element": "fire"
+    },
+    {
+      "id": "rune.frost",
+      "origin": "original",
+      "name_key": "rune.frost.name",
+      "desc_key": "rune.frost.desc",
+      "group": "conversion",
+      "values_by_tier": [
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6
+      ],
+      "weight": 12,
+      "icon": "res://assets/textures/icons/rune.frost.png",
+      "element": "frost"
+    },
+    {
+      "id": "rune.storm",
+      "origin": "original",
+      "name_key": "rune.storm.name",
+      "desc_key": "rune.storm.desc",
+      "group": "conversion",
+      "values_by_tier": [
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6
+      ],
+      "weight": 12,
+      "icon": "res://assets/textures/icons/rune.storm.png",
+      "element": "lightning"
+    },
+    {
+      "id": "rune.acuity",
+      "origin": "original",
+      "name_key": "rune.acuity.name",
+      "desc_key": "rune.acuity.desc",
+      "group": "modifier",
+      "values_by_tier": [
+        0.04,
+        0.06,
+        0.09,
+        0.13,
+        0.18
+      ],
+      "weight": 12.8,
+      "icon": "res://assets/textures/icons/rune.acuity.png",
+      "stat": "crit_bonus"
+    },
+    {
+      "id": "rune.thrift",
+      "origin": "original",
+      "name_key": "rune.thrift.name",
+      "desc_key": "rune.thrift.desc",
+      "group": "modifier",
+      "values_by_tier": [
+        0.08,
+        0.12,
+        0.16,
+        0.2,
+        0.25
+      ],
+      "weight": 12.8,
+      "icon": "res://assets/textures/icons/rune.thrift.png",
+      "stat": "cost_reduction"
+    },
+    {
+      "id": "rune.swiftness",
+      "origin": "original",
+      "name_key": "rune.swiftness.name",
+      "desc_key": "rune.swiftness.desc",
+      "group": "modifier",
+      "values_by_tier": [
+        0.06,
+        0.09,
+        0.12,
+        0.15,
+        0.2
+      ],
+      "weight": 12.8,
+      "icon": "res://assets/textures/icons/rune.swiftness.png",
+      "stat": "cooldown_reduction"
+    },
+    {
+      "id": "rune.echo",
+      "origin": "original",
+      "name_key": "rune.echo.name",
+      "desc_key": "rune.echo.desc",
+      "group": "modifier",
+      "values_by_tier": [
+        0.1,
+        0.15,
+        0.2,
+        0.27,
+        0.35
+      ],
+      "weight": 12.8,
+      "icon": "res://assets/textures/icons/rune.echo.png",
+      "stat": "echo_chance"
+    },
+    {
+      "id": "rune.potency",
+      "origin": "original",
+      "name_key": "rune.potency.name",
+      "desc_key": "rune.potency.desc",
+      "group": "modifier",
+      "values_by_tier": [
+        0.08,
+        0.12,
+        0.17,
+        0.23,
+        0.3
+      ],
+      "weight": 12.8,
+      "icon": "res://assets/textures/icons/rune.potency.png",
+      "stat": "damage_bonus"
+    }
+  ]
+}

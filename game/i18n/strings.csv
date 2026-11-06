@@ -232,3 +232,153 @@ ui.combat.reject.no_target,Aucune cible à portée
 ui.combat.reject.expired,Ordre expiré
 ui.combat.reject.cc,Fern ne peut pas agir
 ui.combat.reject.dead,Fern est à terre
+item.birch_staff.name,Bâton de bouleau
+item.birch_staff.desc,"Un bâton léger, taillé pour les apprenties."
+item.ashwood_staff.name,Bâton de frêne cendré
+item.ashwood_staff.desc,"Bois dur, veiné de suie, qui garde la chaleur des sorts."
+item.traveler_hood.name,Capuche de voyage
+item.traveler_hood.desc,Laine épaisse contre la pluie des sentiers.
+item.sage_circlet.name,Diadème de sage
+item.sage_circlet.desc,Un fin cercle d'argent qui aide à garder l'esprit clair.
+item.wool_robe.name,Robe de laine
+item.wool_robe.desc,"Simple, chaude et facile à recoudre."
+item.mage_robe.name,Robe de mage
+item.mage_robe.desc,Doublée de fils tissés de mana.
+item.cloth_gloves.name,Gants de toile
+item.cloth_gloves.desc,Protègent les doigts sans gêner les gestes.
+item.runed_gloves.name,Gants gravés
+item.runed_gloves.desc,De petites runes cousues guident le flux de mana.
+item.walking_boots.name,Bottes de marche
+item.walking_boots.desc,"Usées, mais elles connaissent la route."
+item.pathfinder_boots.name,Bottes d'éclaireur
+item.pathfinder_boots.desc,Semelles souples pour les sols traîtres.
+item.copper_amulet.name,Amulette de cuivre
+item.copper_amulet.desc,"Un porte-bonheur de marché, plus efficace qu'il n'y paraît."
+item.moonstone_amulet.name,Amulette de pierre de lune
+item.moonstone_amulet.desc,La pierre brille faiblement quand un sort se prépare.
+affix.power_flat.name,Puissance
+affix.power_flat.desc,+{value} de puissance
+affix.power_pct.name,Puissance accrue
+affix.power_pct.desc,+{value} % de puissance
+affix.max_hp_flat.name,Vitalité
+affix.max_hp_flat.desc,+{value} PV max
+affix.max_hp_pct.name,Vitalité accrue
+affix.max_hp_pct.desc,+{value} % de PV max
+affix.defense_flat.name,Défense
+affix.defense_flat.desc,+{value} de défense
+affix.crit_chance.name,Précision
+affix.crit_chance.desc,+{value} % de chance de critique
+affix.crit_damage.name,Férocité
+affix.crit_damage.desc,+{value} % de dégâts critiques
+affix.haste.name,Célérité
+affix.haste.desc,+{value} % de hâte
+affix.mana_regen.name,Clarté
+affix.mana_regen.desc,+{value} de régénération de mana par seconde
+affix.max_mana.name,Réserve
+affix.max_mana.desc,+{value} de mana max
+affix.element_bonus_arcane.name,Arcanes
+affix.element_bonus_arcane.desc,+{value} % de dégâts arcaniques
+affix.element_bonus_fire.name,Braise
+affix.element_bonus_fire.desc,+{value} % de dégâts de feu
+affix.element_bonus_frost.name,Givre
+affix.element_bonus_frost.desc,+{value} % de dégâts de givre
+affix.element_bonus_lightning.name,Orage
+affix.element_bonus_lightning.desc,+{value} % de dégâts de foudre
+affix.resist_all.name,Résistance
+affix.resist_all.desc,+{value} % de résistance
+affix.shield_bonus.name,Rempart
+affix.shield_bonus.desc,+{value} % de puissance des boucliers
+affix.gold_find.name,Fortune
+affix.gold_find.desc,+{value} % d'or trouvé
+affix.move_speed.name,Pas vif
+affix.move_speed.desc,+{value} % de vitesse de déplacement
+legendary.echo_of_the_master.name,Écho du maître
+legendary.echo_of_the_master.desc,Zoltraak frappe une seconde fois à 40 % de sa puissance.
+legendary.light_step.name,Pas léger
+legendary.light_step.desc,"Après une Barrière, +30 % de hâte pendant 4 secondes."
+legendary.everburning.name,Braise éternelle
+legendary.everburning.desc,La Brûlure se cumule jusqu'à cinq fois.
+rune.ember.name,Braise
+rune.ember.desc,Change l'élément du sort en feu et peut infliger la Brûlure.
+rune.frost.name,Givre
+rune.frost.desc,Change l'élément du sort en givre et peut refroidir la cible.
+rune.storm.name,Orage
+rune.storm.desc,Change l'élément du sort en foudre et peut infliger le Choc.
+rune.acuity.name,Acuité
+rune.acuity.desc,Augmente la chance de critique du sort.
+rune.thrift.name,Économie
+rune.thrift.desc,Réduit le coût en mana du sort.
+rune.swiftness.name,Célérité
+rune.swiftness.desc,Réduit la recharge du sort.
+rune.echo.name,Écho
+rune.echo.desc,"Chance de relancer le sort à 50 % de sa puissance, sans coût."
+rune.potency.name,Puissance
+rune.potency.desc,Augmente les dégâts du sort.
+artifact.cracked_hourglass.name,Sablier fêlé
+artifact.cracked_hourglass.desc,Le sable s'écoule encore quand vous êtes absent : améliore l'efficacité hors ligne.
+artifact.pressed_flower.name,Fleur pressée
+artifact.pressed_flower.desc,"Une fois par combat, sous 30 % des PV, soigne une partie des PV max."
+artifact.traveler_compass.name,Boussole du voyageur
+artifact.traveler_compass.desc,Augmente l'or trouvé et révèle les découvertes cachées par le brouillard.
+artifact.ashen_bell.name,Cloche de cendre
+artifact.ashen_bell.desc,Un sort actif sur quatre inflige un bonus de dégâts.
+shop.aubelin_merchant.name,Échoppe d'Aubelin
+ui.rarity.common,Commune
+ui.rarity.uncommon,Peu commune
+ui.rarity.rare,Rare
+ui.rarity.epic,Épique
+ui.rarity.legendary,Légendaire
+ui.slot.weapon,Bâton
+ui.slot.head,Coiffe
+ui.slot.chest,Robe
+ui.slot.hands,Gants
+ui.slot.feet,Bottes
+ui.slot.amulet,Amulette
+ui.stat.max_hp,PV max
+ui.stat.max_mana,Mana max
+ui.stat.mana_regen,Régénération de mana
+ui.stat.power,Puissance
+ui.stat.defense,Défense
+ui.stat.crit_chance,Chance de critique
+ui.stat.crit_damage,Dégâts critiques
+ui.stat.haste,Hâte
+ui.stat.damage_bonus,Dégâts augmentés
+ui.stat.element_bonus_arcane,Dégâts arcaniques
+ui.stat.element_bonus_fire,Dégâts de feu
+ui.stat.element_bonus_frost,Dégâts de givre
+ui.stat.element_bonus_lightning,Dégâts de foudre
+ui.stat.resist_all,Résistance
+ui.stat.shield_bonus,Puissance des boucliers
+ui.stat.gold_find,Or trouvé
+ui.stat.move_speed,Vitesse de déplacement
+error.not_enough_gold,Or insuffisant : {required} requis
+error.not_enough_material,{material} insuffisant : {required} requis
+error.inventory_full,Sac plein : {max} cases occupées
+error.item_not_found,Objet introuvable
+error.slot_empty,Aucun objet équipé à cet emplacement
+error.enhance_max,Amélioration maximale atteinte (+{max})
+error.spell_unknown,Ce sort ne fait pas partie du grimoire
+error.spell_locked,Sort pas encore appris
+error.rank_max,Rang maximal atteint
+error.level_required,Niveau {level} requis
+error.rune_not_owned,Vous ne possédez pas cette rune
+error.rune_slots_full,Tous les emplacements de rune sont occupés ({slots})
+error.rune_duplicate,Cette rune est déjà sertie sur ce sort
+error.rune_conversion_taken,Un sort ne peut porter qu'une seule rune de conversion
+error.rune_slot_empty,Aucune rune à cet emplacement
+error.rune_tier_max,Palier maximal atteint
+error.fusion_not_enough_runes,Il faut {required} runes identiques ({owned} en réserve)
+error.artifact_not_owned,Vous ne possédez pas cet artefact
+error.artifact_slot_locked,Emplacement disponible au niveau {level}
+error.artifact_slot_empty,Aucun artefact dans cet emplacement
+error.artifact_already_equipped,Cet artefact est déjà équipé
+error.artifact_max_level,Niveau maximal atteint
+error.carry_max,Vous en portez déjà le maximum ({max})
+error.not_in_stock,Article indisponible
+error.invalid_quantity,Quantité invalide
+error.nothing_to_salvage,Rien à recycler
+log.loot.auto_salvaged_one,Sac plein : {count} objet recyclé automatiquement (+{dust} poussière de mana)
+log.loot.auto_salvaged_other,Sac plein : {count} objets recyclés automatiquement (+{dust} poussière de mana)
+log.loot.consumable_overflow,Vous portez déjà {max} × {item} : {count} laissé(s) sur place
+log.loot.artifact_known,Vous possédez déjà {artifact}
+log.xp_wasted,Niveau maximal atteint : {xp} XP perdus

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "type": "artifact",
+  "entries": [
+    {
+      "id": "artifact.cracked_hourglass",
+      "origin": "original",
+      "name_key": "artifact.cracked_hourglass.name",
+      "desc_key": "artifact.cracked_hourglass.desc",
+      "max_level": 5,
+      "effect_type": "offline_efficiency",
+      "values_by_level": [
+        0.03,
+        0.05,
+        0.07,
+        0.09,
+        0.12
+      ],
+      "unlock": {
+        "level_at_least": 6
+      },
+      "icon": "res://assets/textures/icons/artifact.cracked_hourglass.png",
+      "notes": "Source: quest.side_clockmaker (quests land later). unlock is a placeholder until then."
+    },
+    {
+      "id": "artifact.pressed_flower",
+      "origin": "original",
+      "name_key": "artifact.pressed_flower.name",
+      "desc_key": "artifact.pressed_flower.desc",
+      "max_level": 5,
+      "effect_type": "low_hp_heal",
+      "values_by_level": [
+        0.15,
+        0.18,
+        0.21,
+        0.25,
+        0.3
+      ],
+      "unlock": {
+        "location_cleared": "location.lantern_mire"
+      },
+      "icon": "res://assets/textures/icons/artifact.pressed_flower.png",
+      "notes": "Source: a discovery in the Lantern Mire (discoveries land later). unlock is a placeholder until then."
+    },
+    {
+      "id": "artifact.traveler_compass",
+      "origin": "original",
+      "name_key": "artifact.traveler_compass.name",
+      "desc_key": "artifact.traveler_compass.desc",
+      "max_level": 5,
+      "effect_type": "gold_find",
+      "values_by_level": [
+        0.08,
+        0.11,
+        0.14,
+        0.17,
+        0.2
+      ],
+      "unlock": {
+        "level_at_least": 1
+      },
+      "icon": "res://assets/textures/icons/artifact.traveler_compass.png",
+      "notes": "Source: quest.side_herbalist (quests land later). unlock is a placeholder until then."
+    },
+    {
+      "id": "artifact.ashen_bell",
+      "origin": "original",
+      "name_key": "artifact.ashen_bell.name",
+      "desc_key": "artifact.ashen_bell.desc",
+      "max_level": 5,
+      "effect_type": "active_bonus_damage",
+      "values_by_level": [
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
+      "unlock": {
+        "location_cleared": "location.watch_ruins"
+      },
+      "icon": "res://assets/textures/icons/artifact.ashen_bell.png",
+      "notes": "Source: first kill of Morvaine (loot.boss_morvaine, when first_clear). unlock is a placeholder until the dungeon (jalon 6)."
+    }
+  ]
+}

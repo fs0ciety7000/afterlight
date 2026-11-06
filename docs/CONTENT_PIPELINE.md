@@ -40,7 +40,8 @@ game/data/
 │   ├── quests.json
 │   ├── npcs.json
 │   ├── dialogues.json
-│   └── discoveries.json
+│   ├── discoveries.json
+│   └── shops.json            # stock des marchands shop.*
 ├── schemas.gd                # schémas de validation (ARCHITECTURE)
 └── content_db.gd             # autoload Content : chargement, validation, index
 game/engine/balance/          # constantes UPPER_SNAKE de GAME_BALANCE.md (pas de JSON : règle 4 d'ARCHITECTURE)
@@ -89,6 +90,7 @@ Format : `<préfixe>.<snake_case>`, avec l'expression régulière `^[a-z]+\.[a-z
 | Dialogue | `dialogue.` | `dialogue.odile_intro` |
 | Découverte | `discovery.` | `discovery.moss_statue` |
 | Lore (canon) | `lore.` | `lore.demons` |
+| Boutique | `shop.` | `shop.aubelin_merchant` |
 
 Les éléments (`arcane`, `fire`, `frost`, `lightning`), les raretés (`common`, `uncommon`, `rare`, `epic`, `legendary`), les emplacements (`weapon`, `head`, `chest`, `hands`, `feet`, `amulet`) et les statistiques (`power`, `max_hp`...) sont des **énumérations fixes** sans préfixe. Ajouter une valeur à l'une d'elles est un changement de code.
 
@@ -183,10 +185,11 @@ Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités 
 | Entité | Champs principaux |
 |---|---|
 | `item` (base d'équipement) | `slot` (R, enum), `implicit` (R, array<{`stat`, `base`}>), `min_ilvl` (R, int ≥ 1), `affix_pools` (O, sinon le pool par défaut de l'emplacement), `icon`, `model` (O) |
-| `affix` | `stat` (R), `scaling` (R, `flat` ou `pct`), `min`, `max` (R, min ≤ max), `slots` (R, au moins 1), `weight` (R, > 0), `group` (R) |
-| `legendary` | `slot` (R), `effect` (R, effect ou ID de modificateur de sort), `weight` (R) |
-| `rune` | `group` (R, `conversion` ou `modifier`), `element` (R si conversion), `values_by_tier` (R, 5 nombres croissants), `stat` (R si modifier), `weight` (R), `icon` |
-| `artifact` | `max_level` (R, 5), `effect_type` (R), `values_by_level` (R, `max_level` nombres), `unlock` (R, `condition`), `icon` |
+| `affix` | `stat` (R), `scaling` (R, `flat` ou `pct` : mise à l'échelle par `ilvl_mult` ou par palier), `layer` (O, `flat` ou `percent`, défaut `flat` : couche de modificateur de §2.2 d'équilibrage, `percent` pour `power_pct`, `max_hp_pct`, `move_speed`), `min`, `max` (R, min ≤ max), `slots` (R, au moins 1), `weight` (R, > 0), `group` (R : au plus un affixe par groupe sur un objet ; les 4 bonus d'élément partagent `element_bonus`) |
+| `legendary` | `slot` (R), `effect` (R, objet `{kind, ...}` lu par le moteur : `spell_echo`, `haste_after_spell`, `status_max_stacks`), `weight` (R) |
+| `rune` | `group` (R, `conversion` ou `modifier`), `element` (R si conversion), `values_by_tier` (R, 5 nombres croissants), `stat` (R si modifier : clé de modificateur de sort `crit_bonus`, `cost_reduction`, `cooldown_reduction`, `echo_chance` ou `damage_bonus`), `weight` (R : poids du type au tirage), `icon` |
+| `artifact` | `max_level` (R, 5), `effect_type` (R : `offline_efficiency`, `low_hp_heal`, `gold_find` ou `active_bonus_damage`), `values_by_level` (R, `max_level` nombres croissants), `unlock` (R, `condition`), `icon` |
+| `shop` | `location` (R), `stock` (R, au moins 1 ID `consumable.`) ; prix : `price_base` du consommable et §19 d'équilibrage |
 | `consumable` | `effect` (R), `carry_max` (R), `shared_cooldown_group` (R), `price_base` (R) |
 | `material` / `currency` | `stack_max` (O, défaut illimité), `icon` (R) |
 
@@ -198,7 +201,7 @@ Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités 
 | `location` | `region` (R), `kind` (R, `hub`, `field` ou `dungeon_entrance`), `level` (R sauf hub), `scene` (R, chemin `.tscn`), `map_pos` (R, [x, y] normalisé 0-1), `encounters` (O, array<ID>), `discoveries` (O), `exits` (O, array<{`to`: ID, `spawn`: string}>), `unlock` (R), `fog_reveal` (O, array<ID>), `npcs` (O) |
 | `dungeon` | `location` (R), `level` (R), `rooms` (R, array<{`id`, `kind`: `encounter`, `rest`, `elite`, `boss` ou `checkpoint`, `encounter`?: ID, `heal_pct`?: 0-1}>), `unlock` (R) |
 | `encounter` | `location` (R), `kind` (R, `normal`, `elite` ou `boss`), `level` (R), `enemies` (R, array<{`enemy`: ID, `count`: int ≥ 1, `level_offset`?: int}>), `loot_table` (R), `offline_eligible` (R, bool), `speed_cap` (R, 1, 2 ou 4), `first_clear_rewards` (O), `anchor` (R, nom du nœud dans la scène), `respawn_s` (O, défaut 60) |
-| `loot_table` | `rarity_profile` (R, `normal`, `elite`, `boss`, `boss_first_kill` ou `chest`), `entries` (R, au moins 1, array<{`kind`: `gold`, `material`, `item`, `rune`, `artifact` ou `consumable`, `ref`?: ID, `chance`: 0-1, `qty`: [min, max], `per`: `enemy` ou `encounter`}>), `guaranteed` (O) |
+| `loot_table` | `rarity_profile` (R, `normal`, `elite`, `boss`, `boss_first_kill` ou `chest`), `entries` (R, au moins 1, array<{`kind`: `gold`, `material`, `item`, `rune`, `artifact` ou `consumable`, `ref`?: ID (facultatif pour `item` et `rune` : base ou rune tirée au hasard), `chance`: 0-1, `qty`: [min, max], `per`: `enemy` ou `encounter`, `when`?: `always` (défaut), `first_clear` ou `repeat`}>), `guaranteed` (O). Premier kill d'un boss : profil `boss_first_kill` |
 | `discovery` | `location` (R), `kind` (R, `vista`, `lore`, `chest`, `memorial` ou `pickup`), `reward` (R), `reveals` (O), `anchor` (R) |
 
 `condition` est un objet de déblocage, au choix : `{"start": true}`, `{"quest_completed": ID}`, `{"location_cleared": ID}`, `{"level_at_least": int}`, `{"item_owned": ID}` ou `{"all": [condition, …]}`.

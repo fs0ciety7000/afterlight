@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "type": "legendary",
+  "entries": [
+    {
+      "id": "legendary.echo_of_the_master",
+      "origin": "original",
+      "name_key": "legendary.echo_of_the_master.name",
+      "desc_key": "legendary.echo_of_the_master.desc",
+      "slot": "weapon",
+      "effect": {
+        "kind": "spell_echo",
+        "spell": "spell.zoltraak",
+        "coeff": 0.4
+      },
+      "weight": 1
+    },
+    {
+      "id": "legendary.light_step",
+      "origin": "original",
+      "name_key": "legendary.light_step.name",
+      "desc_key": "legendary.light_step.desc",
+      "slot": "feet",
+      "effect": {
+        "kind": "haste_after_spell",
+        "spell": "spell.defensive_barrier",
+        "haste": 0.3,
+        "duration_s": 4
+      },
+      "weight": 1
+    },
+    {
+      "id": "legendary.everburning",
+      "origin": "original",
+      "name_key": "legendary.everburning.name",
+      "desc_key": "legendary.everburning.desc",
+      "slot": "amulet",
+      "effect": {
+        "kind": "status_max_stacks",
+        "status": "status.burn",
+        "max_stacks": 5
+      },
+      "weight": 1
+    }
+  ]
+}

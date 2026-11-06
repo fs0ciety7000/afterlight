@@ -20,6 +20,9 @@ const LOOT_KIND_TYPES := {
 	"artifact": ["artifact"],
 	"consumable": ["consumable"],
 }
+## Loot kinds whose ref may be empty: the engine then picks a base (item) or a
+## rune at random (GAME_BALANCE §14, §17).
+const LOOT_RANDOM_KINDS := ["item", "rune"]
 const MIN_TELEGRAPH_S := 0.6
 const TELEGRAPH_COEFF := 1.5
 
@@ -50,7 +53,14 @@ static func check(ctx: Dictionary, translations: Dictionary) -> void:
 			"artifact":
 				if e["values_by_level"].size() != e["max_level"]:
 					f.call("V7", "values_by_level must have max_level values")
+				if not _increasing(e["values_by_level"]):
+					f.call("V8", "values_by_level must be strictly increasing")
 				_check_condition(e["unlock"], by_id, f)
+			"item":
+				if e["implicit"].is_empty():
+					f.call("V7", "an item base needs an implicit")
+				if _affix_pool(e, ctx).is_empty():
+					f.call("V7", "no affix can roll on slot %s" % e["slot"])
 			"region":
 				if not e["locations"].has(e["hub"]):
 					f.call("V7", "hub must be one of locations")
@@ -180,14 +190,31 @@ static func _check_rune(e: Dictionary, f: Callable) -> void:
 	var values: Array = e["values_by_tier"]
 	if values.size() != 5:
 		f.call("V17", "values_by_tier needs exactly 5 values")
-	for i in range(1, values.size()):
-		if float(values[i]) <= float(values[i - 1]):
-			f.call("V17", "values_by_tier must be strictly increasing")
-			break
+	if not _increasing(values):
+		f.call("V17", "values_by_tier must be strictly increasing")
 	if e["group"] == "conversion" and e["element"] == "":
 		f.call("V7", "conversion runes need an element")
 	if e["group"] == "modifier" and e["stat"] == "":
 		f.call("V7", "modifier runes need a stat")
+
+
+static func _increasing(values: Array) -> bool:
+	for i in range(1, values.size()):
+		if float(values[i]) <= float(values[i - 1]):
+			return false
+	return true
+
+
+## Affixes that can roll on an item base: its affix_pools, or every affix
+## whose slots include the base's slot.
+static func _affix_pool(item: Dictionary, ctx: Dictionary) -> Array:
+	if not item["affix_pools"].is_empty():
+		return item["affix_pools"]
+	var out := []
+	for a in ctx["by_type"].get("affix", []):
+		if (a["slots"] as Array).has(item["slot"]):
+			out.append(a["id"])
+	return out
 
 
 static func _check_dungeon(e: Dictionary, f: Callable) -> void:
@@ -210,6 +237,8 @@ static func _check_loot(e: Dictionary, by_id: Dictionary, f: Callable) -> void:
 		if entry["kind"] == "gold":
 			continue
 		var ref: String = entry["ref"]
+		if ref == "" and LOOT_RANDOM_KINDS.has(entry["kind"]):
+			continue
 		if ref == "":
 			f.call("V7", "%s entries need a ref" % entry["kind"])
 		elif (

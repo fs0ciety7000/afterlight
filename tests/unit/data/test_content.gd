@@ -280,7 +280,7 @@ func test_v10_v11_v12_v13_v14_v17_combat_and_world_rules() -> void:
 				{
 					"desc_key": "rune.x.desc",
 					"group": "modifier",
-					"stat": "power",
+					"stat": "damage_bonus",
 					"values_by_tier": [1, 2, 2, 3, 4],
 					"weight": 1,
 				}
@@ -288,6 +288,94 @@ func test_v10_v11_v12_v13_v14_v17_combat_and_world_rules() -> void:
 		]
 	]
 	_expect(w, "V17", "strictly increasing")
+
+
+func test_milestone_4_item_rune_artifact_and_shop_rules() -> void:
+	var w := _base()
+	w["original/loot_tables.json"] = [
+		"loot_table",
+		[
+			_entry(
+				"loot.t",
+				{
+					"rarity_profile": "normal",
+					"entries":
+					[
+						{"kind": "item", "chance": 0.25, "qty": [1, 1], "per": "encounter"},
+						{"kind": "rune", "chance": 0.1, "qty": [1, 1], "per": "encounter"},
+					],
+				}
+			)
+		]
+	]
+	assert_eq(_errors(w), "", "items and runes may omit ref (random pick)")
+	w["original/loot_tables.json"][1][0]["entries"].append(
+		{"kind": "material", "chance": 0.5, "qty": [1, 1], "per": "encounter", "when": "repeat"}
+	)
+	_expect(w, "V7", "material entries need a ref")
+
+	w = _base()
+	w["original/runes.json"] = [
+		"rune",
+		[
+			_entry(
+				"rune.x",
+				{
+					"desc_key": "rune.x.desc",
+					"group": "modifier",
+					"stat": "power",
+					"values_by_tier": [1, 2, 3, 4, 5],
+					"weight": 1,
+				}
+			)
+		]
+	]
+	_expect(w, "V7", "'power' not in")
+
+	w = _base()
+	var artifact := {
+		"desc_key": "artifact.x.desc",
+		"max_level": 2,
+		"effect_type": "gold_find",
+		"values_by_level": [0.2, 0.1],
+		"unlock": {"start": true},
+	}
+	w["original/artifacts.json"] = ["artifact", [_entry("artifact.x", artifact)]]
+	_expect(w, "V8", "values_by_level must be strictly increasing")
+	w["original/artifacts.json"][1][0]["effect_type"] = "teleport"
+	_expect(w, "V7", "'teleport' not in")
+
+	w = _base()
+	w["original/equipment.json"] = [
+		"item",
+		[
+			_entry(
+				"item.x",
+				{
+					"desc_key": "item.x.desc",
+					"slot": "feet",
+					"implicit": [{"stat": "max_hp", "base": 20}],
+					"min_ilvl": 1,
+				}
+			)
+		]
+	]
+	_expect(w, "V7", "no affix can roll on slot feet")
+
+	w = _base()
+	w["original/shops.json"] = [
+		"shop", [_entry("shop.s", {"location": "location.l", "stock": ["region.r"]})]
+	]
+	_expect(w, "V6", "is a region, expected consumable")
+
+
+func test_shipped_item_bases_match_slot_implicit() -> void:
+	var r := ContentLoader.load_roots(ROOTS)
+	for base in r["by_type"]["item"]:
+		var want: Dictionary = BalanceItems.SLOT_IMPLICIT[base["slot"]]
+		assert_eq(base["implicit"].size(), want.size(), "%s implicit count" % base["id"])
+		for line in base["implicit"]:
+			assert_near(float(line["base"]), float(want[line["stat"]]), 0.0001, base["id"])
 
 
 func test_v18_playable_character_needs_a_full_kit() -> void:

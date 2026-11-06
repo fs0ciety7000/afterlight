@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "type": "shop",
+  "entries": [
+    {
+      "id": "shop.aubelin_merchant",
+      "origin": "original",
+      "name_key": "shop.aubelin_merchant.name",
+      "location": "location.aubelin",
+      "stock": [
+        "consumable.healing_draught",
+        "consumable.mana_elixir"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "type": "item",
+  "entries": [
+    {
+      "id": "item.birch_staff",
+      "origin": "original",
+      "name_key": "item.birch_staff.name",
+      "desc_key": "item.birch_staff.desc",
+      "slot": "weapon",
+      "implicit": [
+        {
+          "stat": "power",
+          "base": 6
+        }
+      ],
+      "min_ilvl": 1,
+      "icon": "res://assets/textures/icons/item.birch_staff.png"
+    },
+    {
+      "id": "item.ashwood_staff",
+      "origin": "original",
+      "name_key": "item.ashwood_staff.name",
+      "desc_key": "item.ashwood_staff.desc",
+      "slot": "weapon",
+      "implicit": [
+        {
+          "stat": "power",
+          "base": 6
+        }
+      ],
+      "min_ilvl": 8,
+      "icon": "res://assets/textures/icons/item.ashwood_staff.png"
+    },
+    {
+      "id": "item.traveler_hood",
+      "origin": "original",
+      "name_key": "item.traveler_hood.name",
+      "desc_key": "item.traveler_hood.desc",
+      "slot": "head",
+      "implicit": [
+        {
+          "stat": "max_hp",
+          "base": 25
+        },
+        {
+          "stat": "defense",
+          "base": 2
+        }
+      ],
+      "min_ilvl": 1,
+      "icon": "res://assets/textures/icons/item.traveler_hood.png"
+    },
+    {
+      "id": "item.sage_circlet",
+      "origin": "original",
+      "name_key": "item.sage_circlet.name",
+      "desc_key": "item.sage_circlet.desc",
+      "slot": "head",
+      "implicit": [
+        {
+          "stat": "max_hp",
+          "base": 25
+        },
+        {
+          "stat": "defense",
+          "base": 2
+        }
+      ],
+      "min_ilvl": 8,
+      "icon": "res://assets/textures/icons/item.sage_circlet.png"
+    },
+    {
+      "id": "item.wool_robe",
+      "origin": "original",
+      "name_key": "item.wool_robe.name",
+      "desc_key": "item.wool_robe.desc",
+      "slot": "chest",
+      "implicit": [
+        {
+          "stat": "max_hp",
+          "base": 40
+        },
+        {
+          "stat": "defense",
+          "base": 4
+        }
+      ],
+      "min_ilvl": 1,
+      "icon": "res://assets/textures/icons/item.wool_robe.png"
+    },
+    {
+      "id": "item.mage_robe",
+      "origin": "original",
+      "name_key": "item.mage_robe.name",
+      "desc_key": "item.mage_robe.desc",
+      "slot": "chest",
+      "implicit": [
+        {
+          "stat": "max_hp",
+          "base": 40
+        },
+        {
+          "stat": "defense",
+          "base": 4
+        }
+      ],
+      "min_ilvl": 8,
+      "icon": "res://assets/textures/icons/item.mage_robe.png"
+    },
+    {
+      "id": "item.cloth_gloves",
+      "origin": "original",
+      "name_key": "item.cloth_gloves.name",
+      "desc_key": "item.cloth_gloves.desc",
+      "slot": "hands",
+      "implicit": [
+        {
+          "stat": "power",
+          "base": 2
+        },
+        {
+          "stat": "defense",
+          "base": 1
+        }
+      ],
+      "min_ilvl": 1,
+      "icon": "res://assets/textures/icons/item.cloth_gloves.png"
+    },
+    {
+      "id": "item.runed_gloves",
+      "origin": "original",
+      "name_key": "item.runed_gloves.name",
+      "desc_key": "item.runed_gloves.desc",
+      "slot": "hands",
+      "implicit": [
+        {
+          "stat": "power",
+          "base": 2
+        },
+        {
+          "stat": "defense",
+          "base": 1
+        }
+      ],
+      "min_ilvl": 8,
+      "icon": "res://assets/textures/icons/item.runed_gloves.png"
+    },
+    {
+      "id": "item.walking_boots",
+      "origin": "original",
+      "name_key": "item.walking_boots.name",
+      "desc_key": "item.walking_boots.desc",
+      "slot": "feet",
+      "implicit": [
+        {
+          "stat": "max_hp",
+          "base": 20
+        },
+        {
+          "stat": "defense",
+          "base": 2
+        }
+      ],
+      "min_ilvl": 1,
+      "icon": "res://assets/textures/icons/item.walking_boots.png"
+    },
+    {
+      "id": "item.pathfinder_boots",
+      "origin": "original",
+      "name_key": "item.pathfinder_boots.name",
+      "desc_key": "item.pathfinder_boots.desc",
+      "slot": "feet",
+      "implicit": [
+        {
+          "stat": "max_hp",
+          "base": 20
+        },
+        {
+          "stat": "defense",
+          "base": 2
+        }
+      ],
+      "min_ilvl": 8,
+      "icon": "res://assets/textures/icons/item.pathfinder_boots.png"
+    },
+    {
+      "id": "item.copper_amulet",
+      "origin": "original",
+      "name_key": "item.copper_amulet.name",
+      "desc_key": "item.copper_amulet.desc",
+      "slot": "amulet",
+      "implicit": [
+        {
+          "stat": "crit_chance",
+          "base": 0.02
+        }
+      ],
+      "min_ilvl": 1,
+      "icon": "res://assets/textures/icons/item.copper_amulet.png"
+    },
+    {
+      "id": "item.moonstone_amulet",
+      "origin": "original",
+      "name_key": "item.moonstone_amulet.name",
+      "desc_key": "item.moonstone_amulet.desc",
+      "slot": "amulet",
+      "implicit": [
+        {
+          "stat": "crit_chance",
+          "base": 0.02
+        }
+      ],
+      "min_ilvl": 8,
+      "icon": "res://assets/textures/icons/item.moonstone_amulet.png"
+    }
+  ]
+}

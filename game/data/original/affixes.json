@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "type": "affix",
+  "entries": [
+    {
+      "id": "affix.power_flat",
+      "origin": "original",
+      "name_key": "affix.power_flat.name",
+      "desc_key": "affix.power_flat.desc",
+      "stat": "power",
+      "scaling": "flat",
+      "min": 2,
+      "max": 4,
+      "slots": [
+        "weapon",
+        "hands",
+        "amulet"
+      ],
+      "weight": 100,
+      "group": "power_flat",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.power_pct",
+      "origin": "original",
+      "name_key": "affix.power_pct.name",
+      "desc_key": "affix.power_pct.desc",
+      "stat": "power",
+      "scaling": "pct",
+      "min": 0.04,
+      "max": 0.08,
+      "slots": [
+        "weapon",
+        "amulet"
+      ],
+      "weight": 80,
+      "group": "power_pct",
+      "layer": "percent"
+    },
+    {
+      "id": "affix.max_hp_flat",
+      "origin": "original",
+      "name_key": "affix.max_hp_flat.name",
+      "desc_key": "affix.max_hp_flat.desc",
+      "stat": "max_hp",
+      "scaling": "flat",
+      "min": 15,
+      "max": 30,
+      "slots": [
+        "head",
+        "chest",
+        "feet"
+      ],
+      "weight": 100,
+      "group": "max_hp_flat",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.max_hp_pct",
+      "origin": "original",
+      "name_key": "affix.max_hp_pct.name",
+      "desc_key": "affix.max_hp_pct.desc",
+      "stat": "max_hp",
+      "scaling": "pct",
+      "min": 0.03,
+      "max": 0.06,
+      "slots": [
+        "head",
+        "chest"
+      ],
+      "weight": 70,
+      "group": "max_hp_pct",
+      "layer": "percent"
+    },
+    {
+      "id": "affix.defense_flat",
+      "origin": "original",
+      "name_key": "affix.defense_flat.name",
+      "desc_key": "affix.defense_flat.desc",
+      "stat": "defense",
+      "scaling": "flat",
+      "min": 2,
+      "max": 4,
+      "slots": [
+        "head",
+        "chest",
+        "hands",
+        "feet"
+      ],
+      "weight": 100,
+      "group": "defense_flat",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.crit_chance",
+      "origin": "original",
+      "name_key": "affix.crit_chance.name",
+      "desc_key": "affix.crit_chance.desc",
+      "stat": "crit_chance",
+      "scaling": "pct",
+      "min": 0.02,
+      "max": 0.04,
+      "slots": [
+        "weapon",
+        "hands",
+        "amulet",
+        "head"
+      ],
+      "weight": 70,
+      "group": "crit_chance",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.crit_damage",
+      "origin": "original",
+      "name_key": "affix.crit_damage.name",
+      "desc_key": "affix.crit_damage.desc",
+      "stat": "crit_damage",
+      "scaling": "pct",
+      "min": 0.08,
+      "max": 0.15,
+      "slots": [
+        "weapon",
+        "hands",
+        "amulet"
+      ],
+      "weight": 60,
+      "group": "crit_damage",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.haste",
+      "origin": "original",
+      "name_key": "affix.haste.name",
+      "desc_key": "affix.haste.desc",
+      "stat": "haste",
+      "scaling": "pct",
+      "min": 0.02,
+      "max": 0.05,
+      "slots": [
+        "hands",
+        "feet",
+        "amulet"
+      ],
+      "weight": 50,
+      "group": "haste",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.mana_regen",
+      "origin": "original",
+      "name_key": "affix.mana_regen.name",
+      "desc_key": "affix.mana_regen.desc",
+      "stat": "mana_regen",
+      "scaling": "pct",
+      "min": 0.4,
+      "max": 0.8,
+      "slots": [
+        "head",
+        "amulet"
+      ],
+      "weight": 60,
+      "group": "mana_regen",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.max_mana",
+      "origin": "original",
+      "name_key": "affix.max_mana.name",
+      "desc_key": "affix.max_mana.desc",
+      "stat": "max_mana",
+      "scaling": "pct",
+      "min": 8,
+      "max": 15,
+      "slots": [
+        "head",
+        "chest"
+      ],
+      "weight": 60,
+      "group": "max_mana",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.element_bonus_arcane",
+      "origin": "original",
+      "name_key": "affix.element_bonus_arcane.name",
+      "desc_key": "affix.element_bonus_arcane.desc",
+      "stat": "element_bonus_arcane",
+      "scaling": "pct",
+      "min": 0.06,
+      "max": 0.12,
+      "slots": [
+        "weapon",
+        "amulet"
+      ],
+      "weight": 40,
+      "group": "element_bonus",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.element_bonus_fire",
+      "origin": "original",
+      "name_key": "affix.element_bonus_fire.name",
+      "desc_key": "affix.element_bonus_fire.desc",
+      "stat": "element_bonus_fire",
+      "scaling": "pct",
+      "min": 0.06,
+      "max": 0.12,
+      "slots": [
+        "weapon",
+        "amulet"
+      ],
+      "weight": 40,
+      "group": "element_bonus",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.element_bonus_frost",
+      "origin": "original",
+      "name_key": "affix.element_bonus_frost.name",
+      "desc_key": "affix.element_bonus_frost.desc",
+      "stat": "element_bonus_frost",
+      "scaling": "pct",
+      "min": 0.06,
+      "max": 0.12,
+      "slots": [
+        "weapon",
+        "amulet"
+      ],
+      "weight": 40,
+      "group": "element_bonus",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.element_bonus_lightning",
+      "origin": "original",
+      "name_key": "affix.element_bonus_lightning.name",
+      "desc_key": "affix.element_bonus_lightning.desc",
+      "stat": "element_bonus_lightning",
+      "scaling": "pct",
+      "min": 0.06,
+      "max": 0.12,
+      "slots": [
+        "weapon",
+        "amulet"
+      ],
+      "weight": 40,
+      "group": "element_bonus",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.resist_all",
+      "origin": "original",
+      "name_key": "affix.resist_all.name",
+      "desc_key": "affix.resist_all.desc",
+      "stat": "resist_all",
+      "scaling": "pct",
+      "min": 0.03,
+      "max": 0.06,
+      "slots": [
+        "chest",
+        "feet"
+      ],
+      "weight": 40,
+      "group": "resist_all",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.shield_bonus",
+      "origin": "original",
+      "name_key": "affix.shield_bonus.name",
+      "desc_key": "affix.shield_bonus.desc",
+      "stat": "shield_bonus",
+      "scaling": "pct",
+      "min": 0.08,
+      "max": 0.15,
+      "slots": [
+        "chest",
+        "amulet"
+      ],
+      "weight": 40,
+      "group": "shield_bonus",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.gold_find",
+      "origin": "original",
+      "name_key": "affix.gold_find.name",
+      "desc_key": "affix.gold_find.desc",
+      "stat": "gold_find",
+      "scaling": "pct",
+      "min": 0.05,
+      "max": 0.1,
+      "slots": [
+        "feet",
+        "amulet"
+      ],
+      "weight": 30,
+      "group": "gold_find",
+      "layer": "flat"
+    },
+    {
+      "id": "affix.move_speed",
+      "origin": "original",
+      "name_key": "affix.move_speed.name",
+      "desc_key": "affix.move_speed.desc",
+      "stat": "move_speed",
+      "scaling": "pct",
+      "min": 0.03,
+      "max": 0.06,
+      "slots": [
+        "feet"
+      ],
+      "weight": 30,
+      "group": "move_speed",
+      "layer": "percent"
+    }
+  ]
+}

@@ -7,12 +7,14 @@
       "origin": "original",
       "name_key": "loot.field_normal.name",
       "rarity_profile": "normal",
-      "notes": "Gold uses the §13 formula (qty ignored). Items and runes arrive with Milestone 4.",
+      "notes": "Gold uses the §13 formula (qty ignored). Items and runes: random base / rune (empty ref).",
       "entries": [
         { "kind": "gold", "chance": 1.0, "qty": [1, 1], "per": "enemy" },
         { "kind": "material", "ref": "material.mana_dust", "chance": 0.15, "qty": [1, 2], "per": "enemy" },
         { "kind": "material", "ref": "material.rune_shard", "chance": 0.04, "qty": [1, 1], "per": "enemy" },
-        { "kind": "material", "ref": "material.grimoire_page", "chance": 0.01, "qty": [1, 1], "per": "encounter" }
+        { "kind": "material", "ref": "material.grimoire_page", "chance": 0.01, "qty": [1, 1], "per": "encounter" },
+        { "kind": "item", "chance": 0.25, "qty": [1, 1], "per": "encounter" },
+        { "kind": "rune", "chance": 0.03, "qty": [1, 1], "per": "encounter" }
       ]
     },
     {
@@ -20,13 +22,16 @@
       "origin": "original",
       "name_key": "loot.elite_alpha.name",
       "rarity_profile": "elite",
-      "notes": "Gold uses the §13 formula (qty ignored). Items and runes arrive with Milestone 4.",
+      "notes": "Gold uses the §13 formula (qty ignored). One guaranteed item plus 50 % for a second.",
       "entries": [
         { "kind": "gold", "chance": 1.0, "qty": [1, 1], "per": "enemy" },
         { "kind": "material", "ref": "material.mana_dust", "chance": 1.0, "qty": [4, 6], "per": "encounter" },
         { "kind": "material", "ref": "material.rune_shard", "chance": 1.0, "qty": [2, 3], "per": "encounter" },
         { "kind": "material", "ref": "material.grimoire_page", "chance": 1.0, "qty": [1, 1], "per": "encounter" },
-        { "kind": "material", "ref": "material.ashen_essence", "chance": 0.5, "qty": [1, 1], "per": "encounter" }
+        { "kind": "material", "ref": "material.ashen_essence", "chance": 0.5, "qty": [1, 1], "per": "encounter" },
+        { "kind": "item", "chance": 1.0, "qty": [1, 1], "per": "encounter" },
+        { "kind": "item", "chance": 0.5, "qty": [1, 1], "per": "encounter" },
+        { "kind": "rune", "chance": 0.3, "qty": [1, 1], "per": "encounter" }
       ]
     },
     {
@@ -34,13 +39,17 @@
       "origin": "original",
       "name_key": "loot.boss_morvaine.name",
       "rarity_profile": "boss",
-      "notes": "Gold uses the §13 formula (qty ignored). First kill (5 essences, epic item, artifact) arrives with Milestone 4.",
+      "notes": "Gold uses the §13 formula (qty ignored). First kill: boss_first_kill rarity, 5 essences and the Ashen Bell.",
       "entries": [
         { "kind": "gold", "chance": 1.0, "qty": [1, 1], "per": "enemy" },
         { "kind": "material", "ref": "material.mana_dust", "chance": 1.0, "qty": [12, 16], "per": "encounter" },
         { "kind": "material", "ref": "material.rune_shard", "chance": 1.0, "qty": [6, 8], "per": "encounter" },
         { "kind": "material", "ref": "material.grimoire_page", "chance": 1.0, "qty": [3, 3], "per": "encounter" },
-        { "kind": "material", "ref": "material.ashen_essence", "chance": 1.0, "qty": [2, 3], "per": "encounter" }
+        { "kind": "material", "ref": "material.ashen_essence", "chance": 1.0, "qty": [2, 3], "per": "encounter", "when": "repeat" },
+        { "kind": "material", "ref": "material.ashen_essence", "chance": 1.0, "qty": [5, 5], "per": "encounter", "when": "first_clear" },
+        { "kind": "item", "chance": 1.0, "qty": [2, 2], "per": "encounter" },
+        { "kind": "rune", "chance": 1.0, "qty": [1, 1], "per": "encounter" },
+        { "kind": "artifact", "ref": "artifact.ashen_bell", "chance": 1.0, "qty": [1, 1], "per": "encounter", "when": "first_clear" }
       ]
     }
   ]

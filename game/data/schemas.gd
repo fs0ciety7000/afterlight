@@ -26,6 +26,12 @@ const STATS := [
 	"gold_find",
 	"move_speed",
 ]
+## Per-spell modifiers a modifier rune grants (combat spell_mods keys).
+const RUNE_MODS := [
+	"crit_bonus", "cost_reduction", "cooldown_reduction", "echo_chance", "damage_bonus"
+]
+## Artifact effects: a STATS id is a flat stat bonus; the others are rules.
+const ARTIFACT_EFFECTS := ["offline_efficiency", "low_hp_heal", "gold_find", "active_bonus_damage"]
 
 ## File name (without .json) -> declared type, and the entity types its
 ## entries may hold (decided by each id's prefix).
@@ -54,6 +60,7 @@ const FILES := {
 	"dialogues": ["dialogue", ["dialogue"]],
 	"discoveries": ["discovery", ["discovery"]],
 	"lore": ["lore", ["lore"]],
+	"shops": ["shop", ["shop"]],
 }
 
 const PREFIX_TO_TYPE := {
@@ -83,6 +90,7 @@ const PREFIX_TO_TYPE := {
 	"dialogue": "dialogue",
 	"discovery": "discovery",
 	"lore": "lore",
+	"shop": "shop",
 }
 
 ## Types whose entries must carry desc_key (§3).
@@ -397,6 +405,7 @@ static func fields_for(type_name: String) -> Dictionary:
 				"slots": {"type": "array", "min": 1, "items": enum_of(SLOTS)},
 				"weight": num(0.000001),
 				"group": {"type": "string", "min": 1},
+				"layer": opt(enum_of(["flat", "percent"]), "flat"),
 			}
 		"legendary":
 			return {"slot": enum_of(SLOTS), "effect": {"type": "any"}, "weight": num(0.000001)}
@@ -405,14 +414,14 @@ static func fields_for(type_name: String) -> Dictionary:
 				"group": enum_of(["conversion", "modifier"]),
 				"element": opt(enum_of(ELEMENTS), ""),
 				"values_by_tier": {"type": "array", "items": {"type": "number"}},
-				"stat": opt(enum_of(STATS), ""),
+				"stat": opt(enum_of(RUNE_MODS), ""),
 				"weight": num(0.000001),
 				"icon": opt({"type": "string"}, ""),
 			}
 		"artifact":
 			return {
 				"max_level": pos_int(),
-				"effect_type": {"type": "string", "min": 1},
+				"effect_type": enum_of(ARTIFACT_EFFECTS),
 				"values_by_level": {"type": "array", "items": {"type": "number"}},
 				"unlock": condition(),
 				"icon": opt({"type": "string"}, ""),
@@ -537,6 +546,7 @@ static func fields_for(type_name: String) -> Dictionary:
 							"chance": num(0, 1),
 							"qty": {"type": "array", "min": 2, "max": 2, "items": pos_int(0)},
 							"per": enum_of(["enemy", "encounter"]),
+							"when": opt(enum_of(["always", "first_clear", "repeat"]), "always"),
 						},
 					},
 				},
@@ -616,6 +626,8 @@ static func fields_for(type_name: String) -> Dictionary:
 			}
 		"lore":
 			return {}
+		"shop":
+			return {"location": ref("location"), "stock": refs("consumable", 1)}
 	return {}
 
 
