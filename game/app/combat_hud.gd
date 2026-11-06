@@ -196,11 +196,27 @@ func _layout_arc(buttons: Array[SpellButton], ult: SpellButton, margin: float) -
 	holder.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(holder)
 	var corner := get_viewport_rect().size - Vector2(margin, margin)
-	var centre := corner - Vector2(52, 52)
+	# Thumb targets stay >= 48 CSS px even where the UI is scaled down (phones).
+	var side := 0.0
+	for b in buttons:
+		b.custom_minimum_size = Vector2.ONE * UiTokens.at_least_css(b.custom_minimum_size.x)
+		side = maxf(side, b.custom_minimum_size.x)
+	var half_ult := 0.0
+	if ult:
+		ult.custom_minimum_size = (
+			Vector2.ONE * UiTokens.at_least_css(ult.custom_minimum_size.x, 56.0)
+		)
+		half_ult = ult.custom_minimum_size.x / 2.0
+	var centre := corner - Vector2.ONE * maxf(half_ult, 52.0)
 	if ult:
 		holder.add_child(ult)
 		ult.position = centre - ult.custom_minimum_size / 2.0
-	var radius := 120.0
+	# Radius so neighbours on the quarter circle do not overlap (chord >= side + gap).
+	var n := maxf(buttons.size(), 1)
+	var chord := side + UiTokens.SPACE["sm"]
+	var radius := maxf(
+		120.0, maxf(chord / (2.0 * sin(deg_to_rad(45.0 / n))), half_ult + chord / 2.0)
+	)
 	for i in buttons.size():
 		var b := buttons[i]
 		holder.add_child(b)

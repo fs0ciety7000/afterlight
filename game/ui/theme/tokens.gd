@@ -52,3 +52,12 @@ const RARITY := {
 }
 
 const TEXT_SCALES := [0.9, 1.0, 1.15, 1.3]
+
+## CSS pixels per logical UI pixel, set by the root when the window resizes.
+## Below 1 on phones, where the UI is shrunk to fit a minimum logical height.
+static var css_per_logical := 1.0
+
+
+## Logical size that shows as at least `css` CSS pixels on screen.
+static func at_least_css(logical: float, css: float = TOUCH_TARGET) -> float:
+	return maxf(logical, ceilf(css / maxf(css_per_logical, 0.01)))

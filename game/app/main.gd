@@ -75,6 +75,7 @@ func _fit_ui_scale() -> void:
 	else:
 		dpr = maxf(DisplayServer.screen_get_scale(), 1.0)
 	var logical_h := clampf(window.y / dpr, MIN_LOGICAL_HEIGHT, MAX_LOGICAL_HEIGHT)
+	UiTokens.css_per_logical = (window.y / dpr) / logical_h
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
 	root.content_scale_size = Vector2i(roundi(window.x * logical_h / window.y), roundi(logical_h))
