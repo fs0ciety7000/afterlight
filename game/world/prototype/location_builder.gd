@@ -20,6 +20,8 @@ const ENV_TOON: Shader = preload("res://assets/shaders/env_toon.gdshader")
 const ENV_TERRAIN: Shader = preload("res://assets/shaders/env_terrain.gdshader")
 const ENV_WATER: Shader = preload("res://assets/shaders/env_water.gdshader")
 const ENV_SHAFT: Shader = preload("res://assets/shaders/env_lightshaft.gdshader")
+const ENV_GLOW: Shader = preload("res://assets/shaders/env_glow.gdshader")
+const ENV_MIST: Shader = preload("res://assets/shaders/env_mist.gdshader")
 const ENV_BACKDROP: Shader = preload("res://assets/shaders/env_backdrop.gdshader")
 const OUTLINE: Shader = preload("res://assets/shaders/outline.gdshader")
 
@@ -50,6 +52,9 @@ const KIT := {
 	"flower_bed": {"dir": "props", "col": "box", "cards": true},
 	"rock_a": {"dir": "rocks", "col": "cyl", "r": 0.42, "outline": true},
 	"rock_b": {"dir": "rocks", "col": "", "outline": true},
+	# Lantern Mire pieces (tools/blender/build_mire_props.py); the boardwalk's colliders are its deck
+	"boardwalk": {"dir": "props", "col": ""},
+	"beacon": {"dir": "props", "col": "cyl", "r": 0.4, "fade": true},
 }
 ## Grass / flower atlas cells (assets/environment/textures/grass_cards.png, 4 x 2).
 const CARD_GREEN := 0
@@ -79,6 +84,8 @@ const DAY := {
 var meshes := {}
 var aabbs := {}
 var card_mesh: ArrayMesh
+## Same cards with the camera cut-out on: tall reeds that would hide Fern (Lantern Mire).
+var reed_mesh: ArrayMesh
 var scene_root: Node3D
 var obstacles: StaticBody3D
 var noise := FastNoiseLite.new()
@@ -89,6 +96,9 @@ var occupied: Array = []  # [Vector2 centre, radius] kept clear of scatter
 var paths: Array = []  # [PackedVector2Array, half width]
 var clearings: Array = []  # [Vector2, radius]
 var fields: Array = []  # Rect2 (x, z)
+## Per-location look: added to each placed prop's warm / cool tint (< 0 cooler), ground grass tint.
+var tint_bias := 0.0
+var grass_tint := Color(0.86, 0.95, 0.76)
 var _height_fn: Callable
 var _splat_fn: Callable
 ## Pending instances per kit name: [Transform3D, custom Color], flushed as chunked MultiMeshes.
@@ -181,6 +191,13 @@ func _prepare_cards() -> void:
 	card_mesh.surface_set_material(0, load(ENV + "materials/grass_cards.tres"))
 	ResourceSaver.save(card_mesh, ENV + "meshes/grass_card.res")
 	card_mesh = load(ENV + "meshes/grass_card.res")
+	var reed_mat: ShaderMaterial = mat.duplicate()
+	reed_mat.set_shader_parameter("cam_fade_near", 10.0)
+	ResourceSaver.save(reed_mat, ENV + "materials/reed_cards.tres")
+	var reeds: ArrayMesh = card_mesh.duplicate()
+	reeds.surface_set_material(0, load(ENV + "materials/reed_cards.tres"))
+	ResourceSaver.save(reeds, ENV + "meshes/reed_card.res")
+	reed_mesh = load(ENV + "meshes/reed_card.res")
 
 
 # --- scene skeleton ----------------------------------------------------------------------------
@@ -193,6 +210,8 @@ func _begin(scene_name: String) -> void:
 	paths.clear()
 	clearings.clear()
 	fields.clear()
+	tint_bias = 0.0
+	grass_tint = Color(0.86, 0.95, 0.76)
 	for n in ["Spawns", "Exits", "Anchors", "Visuals"]:
 		_add(scene_root, Node3D.new(), n)
 	var walkable := StaticBody3D.new()
@@ -281,7 +300,8 @@ func _environment(
 	sun_yaw: float,
 	sun_pitch: float,
 	energy_scale: float = 1.0,
-	ambient_scale: float = 1.0
+	ambient_scale: float = 1.0,
+	mist: Dictionary = {}
 ) -> void:
 	var holder := Node3D.new()
 	_add(scene_root, holder, "Environment")
@@ -314,6 +334,12 @@ func _environment(
 		env.fog_sky_affect = 0.0
 		env.fog_height = 0.6
 		env.fog_height_density = 0.03
+		# heavier, lower ground mist (Lantern Mire): colour, density, height
+		if not mist.is_empty():
+			env.fog_light_color = mist["color"]
+			env.fog_density = mist["density"]
+			env.fog_height = mist["height"]
+			env.fog_height_density = mist["height_density"]
 	else:
 		env.fog_enabled = true
 		env.fog_light_color = DAY["haze"]
@@ -363,7 +389,7 @@ func _terrain(label: String, half: int, collide_half: int, splat_px: int) -> voi
 	mat.set_shader_parameter("splat_rect", Vector4(-half, -half, half * 2, half * 2))
 	mat.set_shader_parameter("shadow_tint", DAY["shadow_tint"])
 	# pull the golden grass towards sage green so paths, flowers and props read against it
-	mat.set_shader_parameter("grass_tint", Color(0.86, 0.95, 0.76))
+	mat.set_shader_parameter("grass_tint", grass_tint)
 	ResourceSaver.save(mat, dir + "ground.tres")
 	mat = load(dir + "ground.tres")
 	# heights on a 1 m grid
@@ -448,7 +474,7 @@ func _place(
 		. scaled(Vector3.ONE * scale)
 	)
 	var xf := Transform3D(basis, Vector3(at.x, y, at.y))
-	var tint := rng.randf_range(-0.35, 0.35)
+	var tint := rng.randf_range(-0.35, 0.35) + tint_bias
 	var bright := rng.randf_range(0.93, 1.05)
 	_instances.get_or_add(kit_name, []).append([xf, Color(tint, bright, rng.randf(), 0.0)])
 	if collide:
@@ -458,14 +484,19 @@ func _place(
 
 
 func _card(
-	at: Vector2, cell: int, size: float, height_scale: float = 1.0, tint: float = 0.0
+	at: Vector2,
+	cell: int,
+	size: float,
+	height_scale: float = 1.0,
+	tint: float = 0.0,
+	bucket: String = "_cards"
 ) -> void:
 	var y := _height(at.x, at.y) - 0.03
 	# lean the top away from the camera so the card faces the 50° view instead of showing its edge
 	var facing := Basis(Vector3.UP, rng.randf_range(-0.3, 0.3)) * Basis(Vector3.RIGHT, -0.5)
 	var basis := facing.scaled(Vector3(size, size * height_scale, size))
 	var xf := Transform3D(basis, Vector3(at.x, y, at.y))
-	_instances.get_or_add("_cards", []).append(
+	_instances.get_or_add(bucket, []).append(
 		[
 			xf,
 			Color(
@@ -477,8 +508,11 @@ func _card(
 
 func _flush(chunk: float = 24.0) -> void:
 	for kit_name: String in _instances:
-		var is_card := kit_name == "_cards"
-		var mesh: Mesh = card_mesh if is_card else meshes[kit_name]
+		# "_cards" grass and flowers, "_reeds" tall reeds with the camera cut-out
+		var is_card := kit_name.begins_with("_")
+		var mesh: Mesh = (
+			(card_mesh if kit_name == "_cards" else reed_mesh) if is_card else meshes[kit_name]
+		)
 		var parent := _group("Grass" if is_card else KIT[kit_name]["dir"].capitalize())
 		var groups := {}
 		for it in _instances[kit_name]:
@@ -495,7 +529,7 @@ func _flush(chunk: float = 24.0) -> void:
 				mm.set_instance_transform(i, items[i][0])
 				mm.set_instance_custom_data(i, items[i][1])
 			var mmi := MultiMeshInstance3D.new()
-			var label := "Cards" if is_card else kit_name
+			var label := kit_name.trim_prefix("_").capitalize() if is_card else kit_name
 			_add(parent, mmi, "%s_%d_%d" % [label, key.x + 50, key.y + 50])
 			mmi.multimesh = mm
 			if is_card:

@@ -1,8 +1,8 @@
-extends "res://game/world/prototype/location_builder.gd"
-## Offline builder: lays out Aubelin and the Whispering Wood with the toolkit in
+extends "res://game/world/prototype/mire_layout.gd"
+## Offline builder: lays out Aubelin, the Whispering Wood and the Lantern Mire with the toolkit in
 ## location_builder.gd and saves res://game/world/locations/*.tscn.
 ##   xvfb-run -a godot --path . --rendering-driver opengl3 \
-##     -s res://game/world/prototype/build_locations.gd
+##     -s res://game/world/prototype/build_locations.gd [-- --only=lantern_mire,aubelin]
 
 ## Door position on each house model (local x, front z) in metres, measured on the GLB front views
 ## (assets/environment/buildings, front = +Z).
@@ -19,9 +19,17 @@ func _init() -> void:
 	noise.frequency = 0.045
 	noise2.seed = 23
 	noise2.frequency = 0.012
+	var only := []
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--only="):
+			only = a.get_slice("=", 1).split(",")
 	_prepare_kit()
-	_build_aubelin()
-	_build_wood()
+	if only.is_empty() or "aubelin" in only:
+		_build_aubelin()
+	if only.is_empty() or "whispering_wood" in only:
+		_build_wood()
+	if only.is_empty() or "lantern_mire" in only:
+		_build_mire()
 	quit()
 
 
@@ -255,11 +263,20 @@ func _build_aubelin() -> void:
 	_marker(
 		"Spawns", "from_whispering_wood", Vector3(-21.0, 0, -20.0), Vector3(1, 0, 1).normalized()
 	)
+	_marker("Spawns", "from_lantern_mire", Vector3(26.0, 0, 1.6), Vector3.LEFT)
 	_exit(
 		"to_whispering_wood",
 		Vector3(-26.5, 0, -25.5),
 		Vector3(5, 3, 5),
 		"location.whispering_wood",
+		"from_aubelin"
+	)
+	# east road, past the bridge and its lantern: the Lantern Mire
+	_exit(
+		"to_lantern_mire",
+		Vector3(29.0, 0, 1.8),
+		Vector3(3, 3, 6),
+		"location.lantern_mire",
 		"from_aubelin"
 	)
 	for a in [
