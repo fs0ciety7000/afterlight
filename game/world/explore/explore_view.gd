@@ -48,6 +48,9 @@ func load_location(id: String, spawn: String, content: Dictionary, move_speed: f
 	)
 	player.velocity = Vector3.ZERO
 	player.stop()
+	# Hair and coat springs must not swing from the old position.
+	for sim in player.find_children("*", "SpringBoneSimulator3D", true, false):
+		sim.call_deferred("reset")
 	rig.snap()
 	for area in _exits():
 		area.collision_mask = 2

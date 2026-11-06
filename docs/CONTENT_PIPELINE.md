@@ -306,4 +306,8 @@ Coût observé : 4 appels, ~2 USD, ~4 min de génération par personnage.
 
 ### 9.3 Statut
 
-Fern v0 (`assets/models/characters/fern/fern.glb`) est un **personnage de prototype** : utilisable pour les jalons 2 et 3, à refaire avec les points 9.2 avant la validation A1 du propriétaire.
+**Fern v1** (`assets/models/characters/fern/fern.glb`, 2026-11-06) applique les points 9.2 : texture à aplats (`tools/blender/flatten_albedo.py`), concept multi-vues et `meshy/v7.1/multi-image-to-3d` pour un dos propre, chaînes d'os pour cheveux, manteau et jupe animées par `SpringBoneSimulator3D` (ajouté à l'import par `fern_import.gd`), bâton tenu par l'os `Staff`, clips `idle`, `walk`, `run`, `cast`, `hit`, `death`, `victory`. 1,88 Mo, ~22 k triangles, texture WebP 1K. Procédure complète : `art/source/fern_v1/PIPELINE_NOTES.md` ; relance : `tools/fal/fern_v1.sh`. Coût : 5 appels fal, ~3,8 USD.
+
+Reste à améliorer : `cast` est un balayage du bâton plutôt que le rayon bras tendu des images cibles ; le manteau reste une masse sombre de dos ; `hit` déplace un peu la racine. Godot 4.7.2 n'importe ni meshopt ni la quantification glTF : les GLB restent non compressés, d'où l'importance des textures 1K en WebP.
+
+Fern v0 est conservée pour mémoire dans `art/source/fern/` (comparaison : `art/source/fern_v1/compare_v0_v1.jpg`). Validation A1 du propriétaire : en attente.

@@ -1,0 +1,159 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "fern_v1_concept_front",
+  "seconds": 27.4,
+  "arguments": {
+   "aspect_ratio": "2:3",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15081/5kkw4ci6cK8d74JorMGuL_A_world.jpg",
+    "https://v3b.fal.media/files/b/0ab15081/zdIDPN551EbRXwEAzXV5m_B_combat.jpg"
+   ]
+  },
+  "prompt": "Character model sheet for a stylized 3D anime game character, in the same soft cel-shaded anime game style as the young mage woman in the reference images (AFK-Journey-like stylized 3D anime). Draw ONLY her, alone, full body head to toe, centered, FRONT VIEW facing the camera straight on, symmetrical A-pose: legs straight and slightly apart, both arms straight down and held away from the body at about 40 degrees, small slender hands open and relaxed, not touching the body. IMPORTANT TEXTURE RULE: pure FLAT UNSHADED COLORS like a base-color texture map: no shadows, no shading, no highlights, no gradients, no ambient occlusion, no painted folds, each material is one single flat color, thin dark ink outlines only. Proportions: young woman, slender, stylized anime game proportions, exactly 6.5 heads tall, slightly large head, small hands and small feet. Face: simple clean anime face, large clearly visible violet eyes, small mouth, calm neutral expression. Hair: long straight violet-purple hair reaching the waist, SHORT blunt bangs cut straight ABOVE the eyebrows so the eyes and eyebrows are fully visible, two long side locks hanging in front of the shoulders, the back hair split into a few clear separate long tapered strands. Outfit: black long coat reaching the ankles, open at the front, with wide bell sleeves ending at the wrists, worn over a white high-collared long dress reaching the ankles with a small ruffled collar and a few small dark buttons; the white dress clearly visible down the whole front. Black boots. Nothing in her hands, no staff, no accessories. Plain flat light grey background, no floor shadow, no scenery, no text, no other characters. Clean readable silhouette with gaps between arms and body.",
+  "files": [
+   "./fern_v1_concept_front.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "fern_v1_concept_views",
+  "seconds": 24.8,
+  "arguments": {
+   "aspect_ratio": "4:3",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15085/GKUh72XNpbUsY6h1gJxU7_fern_v1_concept_front.png"
+   ]
+  },
+  "prompt": "Character turnaround sheet of EXACTLY the same character as in the reference image: same face, same hair, same outfit, same colors, same flat unshaded coloring with thin dark ink outlines, same proportions and same A-pose. Show her TWO times side by side on a plain flat light grey background, both full body head to toe, same scale, feet at the same height, generous empty space between the two figures: LEFT figure = exact SIDE VIEW (profile), facing to the right of the image, arms held down and slightly away from the body; RIGHT figure = exact BACK VIEW, seen from directly behind, symmetrical, arms held down and away from the body at about 40 degrees. In the back view the long straight violet hair covers the back down to the waist, split into a few clear separate long tapered strands, and the black long coat reaches the ankles. Pure flat colors only: no shading, no shadows, no gradients, no highlights. No text, no labels, no floor shadow, no scenery, nothing in her hands.",
+  "files": [
+   "./fern_v1_concept_views.png"
+  ]
+ },
+ {
+  "endpoint": "meshy/v7.1/multi-image-to-3d",
+  "name": "fern_v1_meshy",
+  "seconds": 153.5,
+  "arguments": {
+   "pose_mode": "a-pose",
+   "enable_pbr": false,
+   "should_texture": true,
+   "target_polycount": 30000,
+   "topology": "triangle",
+   "symmetry_mode": "auto",
+   "texture_prompt": "stylized anime game character, pure flat unshaded base colors, no baked shadows, no ambient occlusion, no highlights, no gradients; violet hair, black coat, white dress, black boots, pale peach skin",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab1508c/PPA88WCxXuPKtbNjl5uCB_fern_v1_front_cut.png",
+    "https://v3b.fal.media/files/b/0ab1508d/zD8yqwpDc0QunVEKZKj0M_fern_v1_side_cut.png",
+    "https://v3b.fal.media/files/b/0ab1508d/sx7QUgXwuT5hpNd65cXlj_fern_v1_back_cut.png"
+   ]
+  },
+  "prompt": null,
+  "files": [
+   "./fern_v1_meshy_0.glb",
+   "./fern_v1_meshy_1.png",
+   "./fern_v1_meshy_2.glb",
+   "./fern_v1_meshy_3.fbx",
+   "./fern_v1_meshy_4.obj",
+   "./fern_v1_meshy_5.usdz",
+   "./fern_v1_meshy_6.stl",
+   "./fern_v1_meshy_7.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "fern_v1_rig",
+  "seconds": 112.5,
+  "arguments": {
+   "animation_action_ids": [
+    0,
+    1,
+    14,
+    125,
+    129,
+    130,
+    131,
+    178,
+    189,
+    59
+   ],
+   "height_meters": 1.6,
+   "model_url": "https://v3b.fal.media/files/b/0ab150a2/6NL5tK5wiiTKYZk7V-S33_fern_v1_meshy_0.glb"
+  },
+  "prompt": null,
+  "files": [
+   "./fern_v1_rig_0.glb",
+   "./fern_v1_rig_1.fbx",
+   "./fern_v1_rig_2.glb",
+   "./fern_v1_rig_3.fbx",
+   "./fern_v1_rig_4.glb",
+   "./fern_v1_rig_5.glb",
+   "./fern_v1_rig_6.fbx",
+   "./fern_v1_rig_7.glb",
+   "./fern_v1_rig_8.glb",
+   "./fern_v1_rig_9.fbx",
+   "./fern_v1_rig_10.glb",
+   "./fern_v1_rig_11.fbx",
+   "./fern_v1_rig_12.glb",
+   "./fern_v1_rig_13.fbx",
+   "./fern_v1_rig_14.glb",
+   "./fern_v1_rig_15.fbx",
+   "./fern_v1_rig_16.glb",
+   "./fern_v1_rig_17.fbx",
+   "./fern_v1_rig_18.glb",
+   "./fern_v1_rig_19.fbx",
+   "./fern_v1_rig_20.glb",
+   "./fern_v1_rig_21.fbx",
+   "./fern_v1_rig_22.glb",
+   "./fern_v1_rig_23.fbx",
+   "./fern_v1_rig_24.glb",
+   "./fern_v1_rig_25.fbx",
+   "./fern_v1_rig_26.glb",
+   "./fern_v1_rig_27.fbx"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "fern_v1_rig_idle",
+  "seconds": 91.2,
+  "arguments": {
+   "animation_action_ids": [
+    11,
+    12,
+    243,
+    244,
+    245,
+    246
+   ],
+   "height_meters": 1.6,
+   "model_url": "https://v3b.fal.media/files/b/0ab1519f/Gxy4R4_srzrKQTXL3HVHr_fern_v1_meshy_0.glb"
+  },
+  "prompt": null,
+  "files": [
+   "./fern_v1_rig_idle_0.glb",
+   "./fern_v1_rig_idle_1.fbx",
+   "./fern_v1_rig_idle_2.glb",
+   "./fern_v1_rig_idle_3.fbx",
+   "./fern_v1_rig_idle_4.glb",
+   "./fern_v1_rig_idle_5.glb",
+   "./fern_v1_rig_idle_6.fbx",
+   "./fern_v1_rig_idle_7.glb",
+   "./fern_v1_rig_idle_8.glb",
+   "./fern_v1_rig_idle_9.fbx",
+   "./fern_v1_rig_idle_10.glb",
+   "./fern_v1_rig_idle_11.fbx",
+   "./fern_v1_rig_idle_12.glb",
+   "./fern_v1_rig_idle_13.fbx",
+   "./fern_v1_rig_idle_14.glb",
+   "./fern_v1_rig_idle_15.fbx",
+   "./fern_v1_rig_idle_16.glb",
+   "./fern_v1_rig_idle_17.fbx",
+   "./fern_v1_rig_idle_18.glb",
+   "./fern_v1_rig_idle_19.fbx"
+  ]
+ }
+]

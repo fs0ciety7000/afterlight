@@ -27,7 +27,7 @@ for o in list(bpy.data.objects):
     bpy.data.objects.remove(o)
 bpy.ops.import_scene.gltf(filepath=os.path.abspath(a.src))
 for o in list(bpy.data.objects):
-    if o.type == "MESH" and not o.parent:  # importer bone-shape helper ("Icosphere")
+    if o.type == "MESH" and o.name.startswith("Icosphere"):  # importer bone-shape helper
         bpy.data.objects.remove(o)
 sc = bpy.context.scene
 rig = next((o for o in bpy.data.objects if o.type == "ARMATURE"), None)

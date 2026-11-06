@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxytw4raccvwa"
-path="res://.godot/imported/fern_Image_0.jpg-eeb8393f70a878676e91d2dc2a62adb6.ctex"
+uid="uid://dhdi3m0xvkply"
+path="res://.godot/imported/fern_fern_albedo.webp-9efc5443910da67288eeb25b53fe6e1e.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "480f0c2bb74172e985a5f2aaeefe91ba"
+"md5": "20bc6b51b3e19d446459c4a527f20da9"
 }
 
 [deps]
 
-source_file="res://assets/models/characters/fern/fern_Image_0.jpg"
-dest_files=["res://.godot/imported/fern_Image_0.jpg-eeb8393f70a878676e91d2dc2a62adb6.ctex"]
+source_file="res://assets/models/characters/fern/fern_fern_albedo.webp"
+dest_files=["res://.godot/imported/fern_fern_albedo.webp-9efc5443910da67288eeb25b53fe6e1e.ctex"]
 
 [params]
 

@@ -3,15 +3,17 @@ extends Node3D
 ##
 ## Keys: Space / Right = next clip, Left = previous clip, 1-4 = idle/walk/run/cast,
 ##       N = toggle day/night, C = toggle close-up, Q/E = turn Fern.
+## Keys 5-7 = hit/death/victory (when the model has them), S = toggle the staff.
 ## Screenshot mode (used by tools to grab real frames under xvfb):
 ##   godot --path . --rendering-driver opengl3 \
-##     res://game/world/prototype/fern_preview.tscn -- --shots
-## writes art/source/fern/shot_*.jpg and quits.
+##     res://game/world/prototype/fern_preview.tscn -- --shots \
+##     [--shots-dir=res://art/source/fern_v1/] [--no-springs]
+## writes shot_*.jpg into the shots dir and quits.
 
 const TOON_SHADER: Shader = preload("res://assets/shaders/toon.gdshader")
 const OUTLINE_SHADER: Shader = preload("res://assets/shaders/outline.gdshader")
 const LOOPING := ["idle", "walk", "run"]
-const SHOT_DIR := "res://art/source/fern/"
+const DEFAULT_SHOT_DIR := "res://art/source/fern_v1/"
 
 const DAY := {
 	"sun_color": Color("#ffe2b0"),
@@ -57,6 +59,7 @@ var _night := false
 var _close := false
 var _toon_materials: Array[ShaderMaterial] = []
 var _outline_materials: Array[ShaderMaterial] = []
+var _shot_dir := DEFAULT_SHOT_DIR
 
 @onready var fern: Node3D = $Fern
 @onready var camera: Camera3D = $Camera3D
@@ -177,6 +180,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			play_clip("run")
 		KEY_4:
 			play_clip("cast")
+		KEY_5:
+			play_clip("hit")
+		KEY_6:
+			play_clip("death")
+		KEY_7:
+			play_clip("victory")
+		KEY_S:
+			var staff := fern.find_child("Staff", true, false) as Node3D
+			if staff:
+				staff.visible = not staff.visible
 		KEY_N:
 			set_night(not _night)
 		KEY_C:
@@ -184,8 +197,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_camera()
 		KEY_Q:
 			fern.rotate_y(deg_to_rad(-15))
+			_reset_springs()
 		KEY_E:
 			fern.rotate_y(deg_to_rad(15))
+			_reset_springs()
 
 
 func _wait(seconds: float) -> void:
@@ -196,7 +211,7 @@ func _wait(seconds: float) -> void:
 func _shot(file_name: String) -> void:
 	await RenderingServer.frame_post_draw
 	var img := get_viewport().get_texture().get_image()
-	var path := ProjectSettings.globalize_path(SHOT_DIR + file_name)
+	var path := ProjectSettings.globalize_path(_shot_dir + file_name)
 	var err := img.save_jpg(path.get_basename() + ".jpg", 0.88)
 	print("shot ", path, " ", img.get_size(), " err=", err)
 
@@ -207,36 +222,54 @@ func _seek(clip_name: String, t: float) -> void:
 	_anim.pause()
 
 
+func _reset_springs() -> void:
+	# after a teleport-like turn the spring bones would whip around for a while: start them afresh
+	for sim in fern.find_children("*", "SpringBoneSimulator3D", true, false):
+		(sim as SpringBoneSimulator3D).reset()
+
+
+func _play_live(clip_name: String, seconds: float) -> void:
+	# real playback so the spring bones (hair, coat tails) are in motion on the frame
+	_anim.play(clip_name)
+	await _wait(seconds)
+
+
 func _take_shots() -> void:
-	await _wait(1.0)
-	_seek("idle", 1.0)
-	await _wait(0.2)
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--shots-dir="):
+			_shot_dir = arg.trim_prefix("--shots-dir=")
+		if arg == "--no-springs":  # A/B check of the secondary motion
+			for sim in fern.find_children("*", "SpringBoneSimulator3D", true, false):
+				(sim as SkeletonModifier3D).active = false
+	await _play_live("idle", 2.0)
 	await _shot("shot_day_idle_34.png")
 	_close = true
 	_update_camera()
-	await _wait(0.2)
+	await _wait(0.3)
 	await _shot("shot_day_closeup.png")
 	_close = false
 	_update_camera()
-	_seek("walk", 0.33)
-	await _wait(0.2)
+	await _play_live("walk", 1.33)
 	await _shot("shot_day_walk.png")
-	_seek("cast", 1.7)
-	await _wait(0.2)
-	await _shot("shot_day_cast.png")
 	# what the player mostly sees: her back, walking away from the camera
 	fern.rotation_degrees.y = 25.0
-	_seek("walk", 0.6)
-	await _wait(0.2)
+	_reset_springs()
+	await _play_live("walk", 1.6)
 	await _shot("shot_day_walk_back.png")
+	await _play_live("run", 1.2)
+	await _shot("shot_day_run_back.png")
 	fern.rotation_degrees.y = fern_yaw_deg
+	_reset_springs()
+	_anim.play("cast")
+	await _wait(1.0)  # staff raised: the readable moment of the cast
+	await _shot("shot_day_cast.png")
 	set_night(true)
-	_seek("cast", 1.7)
-	await _wait(0.3)
+	_anim.play("cast")
+	await _wait(1.0)  # staff raised: the readable moment of the cast
 	await _shot("shot_night_cast.png")
-	_seek("idle", 1.0)
 	_close = true
 	_update_camera()
-	await _wait(0.2)
+	_reset_springs()
+	await _play_live("idle", 1.5)
 	await _shot("shot_night_closeup.png")
 	get_tree().quit()
