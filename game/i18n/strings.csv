@@ -1083,3 +1083,11 @@ ui.pad.right_stick_left,Stick D gauche
 ui.pad.right_stick_right,Stick D droite
 ui.caption.telegraph,[Grondement] Une attaque ennemie se prépare.
 ui.caption.ash_seal,[Sceau de cendre] Un coup dévastateur se prépare : protégez-vous.
+ui.settings.tab.sound,Son
+ui.settings.volume.master,Volume général
+ui.settings.volume.music,Musique
+ui.settings.volume.sfx,Effets
+ui.settings.volume.ui,Interface
+ui.settings.volume.ambience,Ambiance
+ui.settings.sound_hint,"Le son démarre au premier clic ou à la première touche, comme l'exigent les navigateurs. Les sons importants (attaque ennemie, Sceau de cendre, cloche) sont aussi sous-titrés."
+ui.settings.volume_pct,{pct} %

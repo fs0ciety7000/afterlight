@@ -1,9 +1,9 @@
 extends Screen
-## Settings, stored per device. Two tabs: display (text size, graphics
-## quality, reduced motion) and controls (keyboard and gamepad rebinding with
-## conflict swap and reset, ROADMAP 7.6).
+## Settings, stored per device. Three tabs: display (text size, graphics
+## quality, reduced motion), sound (one volume per audio bus) and controls
+## (keyboard and gamepad rebinding with conflict swap and reset, ROADMAP 7.6).
 
-const TABS := ["general", "controls"]
+const TABS := ["general", "sound", "controls"]
 
 var _tab := "general"
 var _status: Label
@@ -73,15 +73,17 @@ func _show_tab(tab: String) -> void:
 		_body.remove_child(c)
 		c.queue_free()
 	_bind_buttons.clear()
-	# The display tab is short: the card fits its content. The controls list
-	# scrolls inside a card as tall as the screen.
-	var long := tab == "controls"
+	# The display tab is short: the card fits its content. The controls and
+	# sound lists scroll inside a card as tall as the screen.
+	var long := tab in ["controls", "sound"]
 	_scroll.vertical_scroll_mode = (
 		ScrollContainer.SCROLL_MODE_AUTO if long else ScrollContainer.SCROLL_MODE_DISABLED
 	)
 	_card.size_flags_vertical = Control.SIZE_FILL if long else Control.SIZE_SHRINK_CENTER
-	if long:
+	if tab == "controls":
 		_build_controls()
+	elif tab == "sound":
+		_build_sound()
 	else:
 		_build_general()
 
@@ -121,6 +123,42 @@ func _build_general() -> void:
 	UiProbe.register("settings.reduce_motion", motion)
 	_body.add_child(motion)
 	_body.add_child(Kit.label(tr("ui.settings.reduce_motion_hint"), "MutedLabel", true))
+
+
+## One slider per bus (0-100 %), applied live and saved by Settings.
+func _build_sound() -> void:
+	for bus: String in Settings.VOLUME_BUSES:
+		var row := Kit.hbox()
+		var label := Kit.label(tr("ui.settings.volume." + bus.to_lower()), "", true)
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		label.custom_minimum_size = Vector2(120, 0)
+		row.add_child(label)
+		var slider := HSlider.new()
+		slider.min_value = 0
+		slider.max_value = 100
+		slider.step = 5
+		slider.value = roundi(Settings.volume(bus) * 100.0)
+		slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		slider.custom_minimum_size = Vector2(160, UiTokens.TOUCH_TARGET)
+		slider.focus_mode = Control.FOCUS_ALL
+		row.add_child(slider)
+		var pct := Kit.label(_pct(slider.value), "MutedLabel")
+		pct.custom_minimum_size = Vector2(56, 0)
+		pct.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(pct)
+		slider.value_changed.connect(
+			func(v: float) -> void:
+				pct.text = _pct(v)
+				Settings.set_volume(bus, v / 100.0)
+		)
+		UiProbe.register("settings.volume." + bus.to_lower(), slider)
+		_body.add_child(row)
+	_body.add_child(Kit.label(tr("ui.settings.sound_hint"), "MutedLabel", true))
+
+
+func _pct(value: float) -> String:
+	return tr("ui.settings.volume_pct").format({"pct": roundi(value)})
 
 
 ## A labelled row with a picker; returns the picker.

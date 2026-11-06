@@ -6,8 +6,8 @@ extends Node
 ## for the sounds that carry information (signal `captioned`, shown by the
 ## story banners). Buses: Master, Music, SFX, UI, Ambience
 ## (res://default_bus_layout.tres). Nothing plays before the first user input
-## (browser autoplay rules). No volume is saved here: the settings screen calls
-## set_bus_volume() with its own saved values.
+## (browser autoplay rules). Bus volumes come from Settings (saved there) at
+## boot and on Settings.volume_changed.
 
 signal captioned(text: String)
 
@@ -70,6 +70,9 @@ func _ready() -> void:
 		_sfx.append(_player("Sfx%d" % i, "SFX"))
 	for i in UI_VOICES:
 		_ui.append(_player("Ui%d" % i, "UI"))
+	for bus: String in Settings.VOLUME_BUSES:
+		set_bus_volume(bus, Settings.volume(bus))
+	Settings.volume_changed.connect(set_bus_volume)
 	if GameState.has_signal("story_events"):
 		GameState.story_events.connect(_on_story_events)
 		GameState.game_replaced.connect(func() -> void: _leader_level = -1)
