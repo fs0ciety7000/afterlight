@@ -47,6 +47,19 @@ func _register_test_handlers() -> void:
 	UiProbe.test_handlers["grant_forge_funds"] = func() -> void:
 		GameState.test_grant(1000, {"material.mana_dust": 40})
 	UiProbe.test_handlers["grant_level"] = _test_grant_level
+	UiProbe.test_handlers["reveal_watch_ruins"] = _test_reveal_watch_ruins
+
+
+## Test channel only (idle E2E 5.5): shows the Watch Ruins on the map, where
+## the elite and the boss live, without playing the quests that reveal them.
+func _test_reveal_watch_ruins() -> void:
+	if not GameState.has_game():
+		return
+	var next := GameState.data.duplicate(true)
+	var revealed: Array = next["world"]["revealed_locations"]
+	if not revealed.has("location.watch_ruins"):
+		revealed.append("location.watch_ruins")
+	GameState.commit_action(next)
 
 
 ## Test channel only (idle E2E): the leader gains one level, then the game

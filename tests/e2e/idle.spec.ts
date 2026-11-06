@@ -85,6 +85,9 @@ async function reloadAt(page: Page, offsetS: number): Promise<void> {
 test('5.5 elites, bosses and never-won encounters cannot be the offline hunt; the button says why', async ({ page }) => {
   await newGameInWood(page);
 
+  // The elite and the boss live at the Watch Ruins, revealed by the quests
+  // since Milestone 6: the test channel shows the place without playing them.
+  await testCommand(page, 'reveal_watch_ruins');
   // From the explore HUD: the current place comes first.
   expect(await text(page, 'hud.hunt')).toBe('Choisir une chasse');
   await click(page, 'hud.hunt');
