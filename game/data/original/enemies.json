@@ -102,7 +102,7 @@
       "family": "beast",
       "stats_l1": {
         "hp": 1800,
-        "power": 21,
+        "power": 23,
         "def_ratio": 0.3,
         "barrier_ratio": 0,
         "move_speed": 6.0,

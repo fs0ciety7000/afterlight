@@ -54,12 +54,12 @@ func test_starter_wins_the_wood_at_each_encounter_level() -> void:
 		assert_true(r["win_rate"] >= 0.95, "%s starter %s" % [n[0], r])
 
 
-## (provisional, milestone 6) The §22.1 floor of 30 % no longer holds: with
-## the Barrier fallback at 30 % HP (GDD decision 22) idle wins ~10 % (§22.6,
-## open item for the game designer). Only the ceiling is guarded.
+## (provisional, milestone 6) §22.1 target 30-60 % for idle, restored with
+## the infusion on Auto by default (GDD decision 32) and the alpha's
+## POWER_L1 21 -> 23 (GAME_BALANCE §22.6): 54 % on 200 seeds.
 func test_elite() -> void:
 	var idle := CombatBench.bench("encounter.cloister_alpha", 10, "typical", "idle", 30)
-	assert_true(idle["win_rate"] <= 0.6, "idle %s" % idle)
+	assert_true(idle["win_rate"] >= 0.3 and idle["win_rate"] <= 0.6, "idle %s" % idle)
 	var best := CombatBench.bench("encounter.cloister_alpha", 10, "typical", "script_optimal", 5)
 	assert_true(best["win_rate"] >= 0.9, "script %s" % best)
 
