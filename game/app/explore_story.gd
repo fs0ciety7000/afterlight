@@ -284,6 +284,7 @@ func talk(npc_id: String) -> void:
 		offer = ""
 	UiProbe.world["dialogue"] = t["dialogue"]
 	set_busy(true)
+	view.interactables.set_talking(npc_id, true)
 	var d := DialogueOverlay.open(host, t["lines"], offer)
 	d.finished.connect(func(_skipped: bool) -> void: _after_talk(npc_id, t))
 
@@ -291,6 +292,7 @@ func talk(npc_id: String) -> void:
 func _after_talk(npc_id: String, t: Dictionary) -> void:
 	var r := GameState.content_api.finish_talk(npc_id, str(t["dialogue"]))
 	UiProbe.world["dialogue"] = ""
+	view.interactables.set_talking(npc_id, false)
 	if not r["ok"]:
 		set_busy(false)
 		host.call("show_toast", GameState.reason_text(r), true)

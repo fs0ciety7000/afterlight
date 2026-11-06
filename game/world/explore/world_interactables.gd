@@ -10,6 +10,9 @@ extends Node3D
 ## anchor (Node3D), name (plate text), prompt (action text), radius (m),
 ## trigger (interact, interact_hold, zone), marker ("", offer, active,
 ## turn_in), model (res:// path or "")}.
+## A rigged NPC model loops its `idle` clip (each NPC starts at its own offset
+## so they don't breathe in sync) and plays `talk`, when it has one, during a
+## dialogue with it (set_talking).
 
 const PLATE_DISTANCE_M := 9.0
 const MARKER_HEIGHT_M := 2.55
@@ -24,6 +27,7 @@ var _entries := {}
 var _nodes := {}
 var _markers := {}
 var _plates := {}
+var _anims := {}
 var _time := 0.0
 
 
@@ -57,6 +61,22 @@ func build(entries: Array) -> void:
 		set_marker(e["id"], str(e.get("marker", "")))
 
 
+## Plays `talk` (if the NPC's model has it) while `on`, else back to `idle`.
+func set_talking(id: String, on: bool) -> void:
+	var anim := _anims.get(id) as AnimationPlayer
+	if anim == null or not is_instance_valid(anim):
+		return
+	var clip := "talk" if on and anim.has_animation("talk") else "idle"
+	if anim.current_animation != clip:
+		anim.play(clip, 0.3)
+
+
+## Current clip of an NPC's model ("" without a rigged model).
+func clip_of(id: String) -> String:
+	var anim := _anims.get(id) as AnimationPlayer
+	return anim.current_animation if anim and is_instance_valid(anim) else ""
+
+
 func clear() -> void:
 	for id in _nodes:
 		(_nodes[id] as Node).queue_free()
@@ -64,6 +84,7 @@ func clear() -> void:
 	_nodes.clear()
 	_markers.clear()
 	_plates.clear()
+	_anims.clear()
 
 
 func has(id: String) -> bool:
@@ -85,6 +106,7 @@ func remove(id: String) -> void:
 	_nodes.erase(id)
 	_markers.erase(id)
 	_plates.erase(id)
+	_anims.erase(id)
 
 
 func position_of(id: String) -> Vector3:
@@ -209,6 +231,7 @@ func _add_visual(root: Node3D, e: Dictionary) -> void:
 			var inst := scene.instantiate()
 			root.add_child(inst)
 			Toon.apply(inst)
+			_start_idle(str(e["id"]), inst)
 			return
 	match str(e["kind"]):
 		"npc":
@@ -221,6 +244,23 @@ func _add_visual(root: Node3D, e: Dictionary) -> void:
 			_chest(root)
 		"board":
 			_board(root)
+
+
+## Loops `idle` from an offset seeded by the id (stable, but not in sync).
+func _start_idle(id: String, inst: Node) -> void:
+	var players := inst.find_children("*", "AnimationPlayer", true, false)
+	if players.is_empty():
+		return
+	var anim := players[0] as AnimationPlayer
+	if not anim.has_animation("idle"):
+		return
+	for clip in ["idle", "talk"]:
+		if anim.has_animation(clip):
+			anim.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
+	anim.play("idle")
+	var length := anim.get_animation("idle").length
+	anim.seek(float(absi(hash(id)) % 1000) / 1000.0 * length, true)
+	_anims[id] = anim
 
 
 ## A villager stand-in: robe, head and a coloured shawl (seeded by the id, so
