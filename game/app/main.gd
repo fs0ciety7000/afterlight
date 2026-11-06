@@ -56,6 +56,8 @@ func _register_test_handlers() -> void:
 	UiProbe.test_handlers["grant_gold"] = func(n: String) -> void:
 		GameState.test_grant(maxi(int(n), 0), {})
 	UiProbe.test_handlers["reveal_watch_ruins"] = _test_reveal_watch_ruins
+	# Screens E2E (ROADMAP 7.7): the cloister without playing quests 1-3.
+	UiProbe.test_handlers["complete_quest"] = _test_complete_quest
 	# Accessibility E2E (ROADMAP 1.11, 7.3, 7.7): set the options without the pickers.
 	UiProbe.test_handlers["text_scale"] = func(i: String) -> void:
 		Settings.set_text_scale_index(int(i))
@@ -72,6 +74,22 @@ func _test_reveal_watch_ruins() -> void:
 	var revealed: Array = next["world"]["revealed_locations"]
 	if not revealed.has("location.watch_ruins"):
 		revealed.append("location.watch_ruins")
+	GameState.commit_action(next)
+
+
+## Test channel only (screens E2E 7.7): the quest counts as handed in, so
+## the places it unlocks (the Watch Ruins, the cloister) can be reached.
+## Rewards and follow-up quests are not given.
+func _test_complete_quest(quest_id: String) -> void:
+	if not GameState.has_game() or not Content.index().has(quest_id):
+		return
+	var next := GameState.data.duplicate(true)
+	var quests: Dictionary = next["progress"]["quests"]
+	var entry: Dictionary = quests.get(
+		quest_id, {"step": 1, "counts": {}, "order": quests.size() + 1}
+	)
+	entry["state"] = QuestRules.TURNED_IN
+	quests[quest_id] = entry
 	GameState.commit_action(next)
 
 
