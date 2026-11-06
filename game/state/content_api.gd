@@ -276,6 +276,18 @@ func dungeon_vitals() -> Dictionary:
 	return DungeonRun.vitals(_data()) if _owner.has_game() else DungeonRun.full_vitals()
 
 
+## Hover label of a pack circle (GDD decision 30): {level, leader_level,
+## above, key, params}. `above` asks for the `danger` colour and pictogram;
+## tr(key).format(params) gives « Niveau 3 (au-dessus du vôtre) » or « Niveau 2 ».
+func encounter_level(encounter_id: String) -> Dictionary:
+	if not _owner.has_game():
+		return {}
+	var out := WorldRules.encounter_level(_data(), encounter_id, _c())
+	out["key"] = "ui.encounter.level_above" if out["above"] else "ui.map.level"
+	out["params"] = {"level": out["level"]}
+	return out
+
+
 func _strip(r: Dictionary) -> Dictionary:
 	var out := r.duplicate()
 	out.erase("state")

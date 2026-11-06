@@ -138,3 +138,18 @@ func test_dungeon_through_the_api() -> void:
 	assert_true(api.leave_dungeon()["ok"], "left")
 	assert_eq(api.dungeon_view(), {}, "outside")
 	_end()
+
+
+## GDD decision 30: the Volley test pack is flagged above a level 2 Fern.
+func test_encounter_above_the_leader_level_is_flagged() -> void:
+	var s := F.state(2)
+	_begin(s)
+	var api := GameState.content_api
+	var high := api.encounter_level("encounter.whispering_wood_04")
+	assert_eq([high["level"], high["above"]], [3, true], "level 3 pack above level 2")
+	assert_eq(
+		GameState.tr(high["key"]).format(high["params"]), "Niveau 3 (au-dessus du vôtre)", "label"
+	)
+	var low := api.encounter_level("encounter.whispering_wood_03")
+	assert_eq([low["level"], low["above"], low["key"]], [2, false, "ui.map.level"], "same level")
+	_end()

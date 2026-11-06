@@ -91,6 +91,17 @@ static func leader_level(state: Dictionary) -> int:
 	return int(state["characters"].get(leader, {}).get("level", 1))
 
 
+## Level of an encounter against the leader's (GDD decision 30): {level,
+## leader_level, above}. `above` = the pack outlevels the leader, so its hover
+## label turns to the `danger` colour (« Niveau 3 (au-dessus du vôtre) »).
+static func encounter_level(
+	state: Dictionary, encounter_id: String, content: Dictionary
+) -> Dictionary:
+	var level := int(content.get(encounter_id, {}).get("level", 0))
+	var mine := leader_level(state)
+	return {"level": level, "leader_level": mine, "above": level > mine}
+
+
 static func status(location_id: String, state: Dictionary, content: Dictionary) -> String:
 	var world: Dictionary = state["world"]
 	if not world["revealed_locations"].has(location_id):
