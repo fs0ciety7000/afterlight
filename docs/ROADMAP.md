@@ -13,7 +13,7 @@
 | 4 | Progression | **Clos avec réserves** (4.7 E2E, effets de combat restants) | 3 |
 | 5 | Idle | **Clos avec réserves** (E2E desktop seulement) | 3, 4 |
 | 6 | Contenu | **En cours** (jouable ; parcours complet 6.3 et tests de jeu 6.8 à faire) | 2, 3, 4, 5 |
-| 7 | Finition | À faire | 6 |
+| 7 | Finition | **En cours** (7.3, 7.4, 7.6 faits ; 7.1 non mesurable ici ; 7.7 et 7.8 à faire) | 6 |
 | A | Piste art (parallèle) | **En cours** (Fern v1, ennemis, décor, VFX) | Rien pour démarrer ; alimente 2, 3, 6, 7 |
 
 Règle commune à tous les jalons : **aucune interaction factice**. Un bouton visible fait quelque chose de réel, ou il est absent. Un bouton désactivé affiche sa raison.
@@ -266,6 +266,21 @@ Reste : aucun écran de tactiques — Morvaine est à 0 % sans jeu actif (le ban
 | 7.6 | Remappage d'une touche de sort ; il survit au rechargement | E2E |
 | 7.7 | Captures de référence desktop, tablette et mobile pour chaque écran du GDD §17, sans débordement ni troncature à 130 % | E2E (capture) |
 | 7.8 | Aucun son, image ou texte de l'œuvre : audit des assets et de leurs sources | relecture |
+
+**État au 2026-11-06** :
+
+| # | État | Preuve ou reste à faire |
+|---|---|---|
+| 7.1 | Non mesurable ici | Pas de GPU dans l'environnement de test (rendu logiciel) : mesure à faire sur la machine et la tablette de référence |
+| 7.2 | Fait (estimé) | Deux packs : `index.pck` 4,1 Mo, `content.pck` 25,8 Mo téléchargé pendant le titre ; ≈ 7 s avant le titre à 20 Mb/s (mesure `curl --limit-rate`), `test_export_size.gd` ; à confirmer dans un navigateur bridé |
+| 7.3 | Fait | `test_reduce_motion.gd`, drapeaux `world.motion_flags` ; E2E `accessibility.spec.ts` |
+| 7.4 | Fait | `test_hit_stop.gd` (aucun tick consommé, même hachage d'événements, désactivé à ×4) |
+| 7.5 | Fait en unitaire | `test_spell_feedback.gd` (retour ≤ 120 ms à l'appui) ; E2E à écrire |
+| 7.6 | Fait (correctif du test en cours de vérification) | `accessibility.spec.ts` ; échec du premier passage dû à un contrôle hors de la liste défilée, corrigé dans l'aide de clic |
+| 7.7 | Partiel | `test_text_scale_layout.gd` (13 écrans à 130 % sur 3 tailles, sans débordement) ; captures E2E de tous les écrans en cours d'écriture |
+| 7.8 | À faire | Registres de génération dans `art/source/LOT_*.md` (aucune image de référence de l'œuvre en entrée, prompts originaux) ; relecture du propriétaire |
+
+Fait aussi : audio (8 musiques, 25 effets, 2 ambiances, curseurs de volume, sous-titres des sons porteurs d'information), tactiques jouables, fondu jour → nuit et lumière d'après dans le donjon, fils de braise adoucis.
 
 ---
 
