@@ -443,11 +443,11 @@ Spécification complète du contenu : `docs/content/` (`quests.md`, `dialogues.m
 | 20 | Contrats | 9 contrats en pool (`quest.daily_*`), 3 par jour tirés par graine (`day_index` local), au plus 1 long, récompenses or + poussière + éclats, récupération automatique au changement de jour | §13 |
 | 21 | Dépendances techniques | Nouvelles constantes `CONTRACT_*` et `CHEST_GOLD_MULT` ; nouvelles clés d'état `progress.contracts` et `progress.dungeon_run`, à intégrer à la refonte du format de sauvegarde en cours | ARCHITECTURE (état) |
 
-**Questions ouvertes pour le propriétaire**
+**Réponses du propriétaire (2026-11-06)** : tout est validé.
 
-1. **Himmel** : le nom apparaît sur la plaque de la statue et dans une réplique d'Rosalie ; il faut créer `character.himmel` (canon, non jouable). Valider ces deux textes (`dialogues.md` §6, `bestiary_discoveries.md` §2.2) ?
-2. **Frieren** : Fern ne la mentionne nulle part dans la tranche. Faut-il garder ce silence, ou autoriser une mention neutre et originale ?
-3. **Raccourci du donjon** après la première victoire contre Morvaine : il accélère le farm d'essence de cendre. Le garder ?
-4. **Hors ligne** exclu du bestiaire (en plus des contrats et des quêtes) : d'accord, ou faut-il compter les victoires hors ligne pour le bestiaire seulement ?
-5. **XP des quêtes** : ~22 % de l'XP jusqu'au niveau 12, au lieu des ~30 % supposés en GAME_BALANCE §21.2. Faut-il relever `QUEST_XP_MAIN` après le banc, ou accepter une montée un peu plus lente ?
+1. **Himmel** : les deux textes (plaque de la statue, réplique de Rosalie) sont validés ; `character.himmel` est créé en canon, non jouable.
+2. **Frieren** : Fern ne la mentionne pas dans la tranche (silence conservé).
+3. **Raccourci du donjon** : conservé.
+4. **Hors ligne** : les victoires hors ligne ne comptent ni pour les quêtes, ni pour les contrats, ni pour le bestiaire.
+5. **XP des quêtes** : `QUEST_XP_MAIN` sera relevé après le banc pour revenir aux ~30 % de GAME_BALANCE §21.2.
 
