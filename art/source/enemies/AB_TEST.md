@@ -134,3 +134,15 @@ Un appel Meshy (`morvaine_rig2`, 0,56 USD) : `attack` = mage_soell_cast_4 (fente
 `cast` = mage_soell_cast_8 (deux mains levées, incantation tenue), `death` = Strangled_and_Fall_Forward rogné
 aux images 80 à 185 (à genoux, puis chute vers l'avant, 4,4 s). Idle, run et hit inchangés. Planches :
 `qa_morvaine_poses_before_lot2.jpg` (avant) et `qa_morvaine_poses.jpg` (après).
+
+### Tête de la sentinelle (lot du 2026-11-06)
+
+Tête peu lisible à 11 m (enfoncée entre les épaules, couverte de mousse). Brouillon `fal-ai/nano-banana/edit`
+(`raw/sentinel_head/stone_sentinel_head_draft.png`), puis `nano-banana-pro/edit` sur notre `stone_sentinel_concept.png`
+(`stone_sentinel_concept_v2.png`, prompt `prompts/stone_sentinel_head_edit.txt`) : heaume plus clair, sans mousse,
+visière en T bleu pâle, crête, plus haut que les épaules. Puis Tripo H3.1 image-to-3d (`gen-sentinel-v2`) et
+le même assemblage (`albedo` + `build-gen`, sentinelle seule) : 14 032 triangles, 752 Ko, 1,89 × 0,93 × 2,20 m.
+QA : `qa_stone_sentinel_turnaround_before_lot2.jpg` (avant) / `qa_stone_sentinel_turnaround.jpg` (après) ;
+jeu : `compare_lot2_before_after.jpg`. `qa_check` : mêmes remarques que la version précédente, en moins
+(2 paires coplanaires au lieu de 6, 6 faces dos à dos au lieu de 11) ; « Icosphere » et z = -1 viennent de
+l'affichage des os par l'importeur glTF, pas du modèle.

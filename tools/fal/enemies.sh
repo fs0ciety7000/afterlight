@@ -59,6 +59,19 @@ gen-sentinel)  # Tripo image-to-3d on the cut-out concept (~0.4 USD)
 		--file image_url="$OUT/stone_sentinel_front34_cut.png" --arg pbr=false --arg texture=true \
 		--arg texture_quality=detailed --arg geometry_quality=standard --arg face_limit=15000 \
 		--arg model_seed=21 --arg texture_seed=21 ;;
+gen-sentinel-v2-concept)  # readable head (lot 2026-11-06): draft nano-banana/edit (~0.04) then pro (~0.15)
+	python3 "$FAL" fal-ai/nano-banana/edit -o "$OUT/raw/sentinel_head" --name stone_sentinel_head_draft \
+		--file image_urls="$OUT/stone_sentinel_concept.png" --arg aspect_ratio=3:4 --arg output_format=png --arg seed=41 \
+		--arg prompt="$(cat "$OUT/prompts/stone_sentinel_head_edit.txt")"
+	python3 "$FAL" fal-ai/nano-banana-pro/edit -o "$OUT" --name stone_sentinel_concept_v2 \
+		--file image_urls="$OUT/stone_sentinel_concept.png" --arg aspect_ratio=3:4 --arg resolution=2K \
+		--arg output_format=png --arg seed=42 --arg prompt="$(cat "$OUT/prompts/stone_sentinel_head_edit.txt")"
+	python3 tools/fal/cutout_sheet.py "$OUT/stone_sentinel_concept_v2.png" "$OUT" stone_sentinel_v2 front34 ;;
+gen-sentinel-v2)  # Tripo image-to-3d on the v2 cut-out (~0.4 USD)
+	python3 "$FAL" tripo3d/h3.1/image-to-3d -o "$OUT/raw/stone_sentinel_v2_tripo" --name stone_sentinel_v2_tripo \
+		--file image_url="$OUT/stone_sentinel_v2_front34_cut.png" --arg pbr=false --arg texture=true \
+		--arg texture_quality=detailed --arg geometry_quality=standard --arg face_limit=15000 \
+		--arg model_seed=42 --arg texture_seed=42 ;;
 gen-morvaine-concept)  # front / side / back sheet, A-pose (~0.15 USD)
 	python3 "$FAL" fal-ai/nano-banana-pro/edit -o "$OUT" --name morvaine_concept \
 		--file image_urls=art/concepts/directions/A_world.jpg --file image_urls=art/concepts/directions/B_combat.jpg \
@@ -135,5 +148,5 @@ compare)  # placeholder (placeholder_shot_*) vs generated (shot_*), same scene a
 		"$OUT/placeholder_shot_idle_11m.jpg" "$OUT/shot_idle_11m.jpg" "$OUT/placeholder_shot_attack_11m.jpg" \
 		"$OUT/shot_attack_11m.jpg" "$OUT/placeholder_shot_idle_6m.jpg" "$OUT/shot_idle_6m.jpg" \
 		"$OUT/placeholder_shot_cast_6m.jpg" "$OUT/shot_cast_6m.jpg" ;;
-*) echo "usage: $0 concept|views|cutout|ab-birch|ab-wolf-meshy|ab-wolf-tripo|gen-wolf|gen-sentinel-concept|gen-sentinel|gen-morvaine-concept|gen-morvaine|gen-morvaine-rig|gen-morvaine-rig2|cutout-gen|albedo|build-gen|build|build-placeholders|qa|shots|compare"; exit 1 ;;
+*) echo "usage: $0 concept|views|cutout|ab-birch|ab-wolf-meshy|ab-wolf-tripo|gen-wolf|gen-sentinel-concept|gen-sentinel|gen-sentinel-v2-concept|gen-sentinel-v2|gen-morvaine-concept|gen-morvaine|gen-morvaine-rig|gen-morvaine-rig2|cutout-gen|albedo|build-gen|build|build-placeholders|qa|shots|compare"; exit 1 ;;
 esac

@@ -248,5 +248,61 @@
    "art/source/enemies/raw/morvaine_rig/morvaine_rig2_10.glb",
    "art/source/enemies/raw/morvaine_rig/morvaine_rig2_12.glb"
   ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "stone_sentinel_concept_v2",
+  "seconds": 33.5,
+  "arguments": {
+   "aspect_ratio": "3:4",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 42,
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15e05/uvdGzWthUbf0vVzDVOYpN_stone_sentinel_concept.png"
+   ]
+  },
+  "prompt": "Edit this exact character concept, keeping everything else identical (same stone construct, same pose, same front three-quarter view, same body blocks, same fists, same legs, same moss on the shoulders, same glowing runes, same flat unshaded colors with thin dark ink outlines, same plain flat light grey background). ONLY CHANGE THE HEAD so it reads clearly from far above at a small size (the top of the head must stand at least half a head higher than the top of the shoulder moss): the head now rises clearly ABOVE the shoulder line on a short thick stone neck, it is a bigger, distinct carved stone helm-like head block, slightly lighter warm grey than the body so it separates from the moss, with NO moss on the head at all. Give it a bold readable face: one wide horizontal glowing pale icy blue visor slit across the front plus a small glowing blue rune mark on the forehead, and a short flat stone crest ridge on top of the head running front to back. Clear gap of background between the head and the mossy shoulders on each side. Pure flat colors only: no shading, no shadows, no gradients, no highlights. Full body still fully visible head to toe, no text, no other figures.",
+  "files": [
+   "art/source/enemies/stone_sentinel_concept_v2.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana/edit",
+  "name": "stone_sentinel_head_draft",
+  "seconds": 10.8,
+  "arguments": {
+   "aspect_ratio": "3:4",
+   "output_format": "png",
+   "seed": 41,
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15e03/bv9q_Hnl0zZJucFz2SiEq_stone_sentinel_concept.png"
+   ]
+  },
+  "prompt": "Edit this exact character concept, keeping everything else identical (same stone construct, same pose, same front three-quarter view, same body blocks, same fists, same legs, same moss on the shoulders, same glowing runes, same flat unshaded colors with thin dark ink outlines, same plain flat light grey background). ONLY CHANGE THE HEAD so it reads clearly from far above at a small size: the head now rises clearly ABOVE the shoulder line on a short thick stone neck, it is a bigger, distinct carved stone helm-like head block, slightly lighter warm grey than the body so it separates from the moss, with NO moss on the head at all. Give it a bold readable face: one wide horizontal glowing pale icy blue visor slit across the front plus a small glowing blue rune mark on the forehead, and a short flat stone crest ridge on top of the head running front to back. Clear gap of background between the head and the mossy shoulders on each side. Pure flat colors only: no shading, no shadows, no gradients, no highlights. Full body still fully visible head to toe, no text, no other figures.",
+  "files": [
+   "art/source/enemies/raw/sentinel_head/stone_sentinel_head_draft.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "stone_sentinel_v2_tripo",
+  "seconds": 159.9,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 15000,
+   "model_seed": 42,
+   "texture_seed": 42,
+   "image_url": "https://v3b.fal.media/files/b/0ab15e0b/uTjkABTzBLSAYjwxJIIyE_stone_sentinel_v2_front34_cut.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/enemies/raw/stone_sentinel_v2_tripo/stone_sentinel_v2_tripo_0.glb",
+   "art/source/enemies/raw/stone_sentinel_v2_tripo/stone_sentinel_v2_tripo_1.glb",
+   "art/source/enemies/raw/stone_sentinel_v2_tripo/stone_sentinel_v2_tripo_2.png"
+  ]
  }
 ]
