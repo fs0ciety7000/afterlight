@@ -14,7 +14,14 @@ const LEVELS := {
 	"encounter.whispering_wood_04": 2,
 	"encounter.whispering_wood_05": 3,
 	"encounter.lantern_mire_01": 4,
+	"encounter.lantern_mire_02": 4,
+	"encounter.lantern_mire_03": 5,
+	"encounter.lantern_mire_05": 6,
 	"encounter.watch_ruins_01": 7,
+	"encounter.watch_ruins_02": 7,
+	"encounter.watch_ruins_03": 8,
+	"encounter.watch_ruins_04": 8,
+	"encounter.watch_ruins_05": 9,
 }
 
 

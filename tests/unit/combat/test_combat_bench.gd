@@ -11,7 +11,18 @@ func test_normal_encounters_idle_typical() -> void:
 		["encounter.whispering_wood_04", 2],
 		["encounter.whispering_wood_05", 3],
 		["encounter.lantern_mire_01", 4],
+		["encounter.lantern_mire_02", 4],
+		["encounter.lantern_mire_03", 5],
+		["encounter.lantern_mire_04", 5],
+		["encounter.lantern_mire_05", 6],
 		["encounter.watch_ruins_01", 7],
+		["encounter.watch_ruins_02", 7],
+		["encounter.watch_ruins_03", 8],
+		["encounter.watch_ruins_04", 8],
+		["encounter.watch_ruins_05", 9],
+		["encounter.cloister_vestibule", 10],
+		["encounter.cloister_gallery", 10],
+		["encounter.cloister_courtyard", 11],
 	]:
 		var r := CombatBench.bench(n[0], n[1], "typical", "idle", 8)
 		assert_true(r["win_rate"] >= 0.95, "%s win %s" % [n[0], r])

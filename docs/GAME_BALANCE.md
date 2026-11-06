@@ -320,7 +320,7 @@ pénalité        = 1                                  si écart ≤ 2
 | `XP_PENALTY_PER_LEVEL` | 0,20 | 0,1-0,3 |
 | `XP_PENALTY_FLOOR` | 0,20 | 0,1-0,3 |
 | `FIRST_CLEAR_XP_MULT` | 3 | 2-5 | XP de la première victoire sur chaque rencontre |
-| `QUEST_XP_MAIN` / `QUEST_XP_SIDE` / `DISCOVERY_XP` | 0,6 / 0,3 / 0,1 × `xp_to_next(niveau_de_la_quête)` | |
+| `QUEST_XP_MAIN` / `QUEST_XP_SIDE` / `DISCOVERY_XP` | **1,1** *(provisoire, jalon 6 ; était 0,6)* / 0,3 / 0,1 × `xp_to_next(niveau_de_la_quête)` | |
 
 **La table ci-dessous fait foi** (`XP_TO_NEXT_TABLE`, critère 4.1) : la formule donne 8 910, 12 110, 73 410 et 84 490 aux niveaux 8, 9, 18 et 19, au lieu de 8 920, 12 100, 73 400 et 84 470 *(écart relevé au jalon 4 ; provisoire, jalon 4 : on garde la table)*.
 
@@ -541,7 +541,7 @@ Paliers à l'obtention : normale 90 / 10 / 0, élite 60 / 35 / 5, boss 0 / 70 / 
 
 Passer du niveau n à n+1 coûte `ARTIFACT_ESSENCE_COST[n]` essences (1 / 2 / 3 / 5) et `500 × n²` or. Deuxième emplacement au niveau 15 (`ARTIFACT_SLOT_2_LEVEL`).
 
-*(provisoire, jalon 4)* Premier emplacement au niveau 6 (`ARTIFACT_SLOT_1_LEVEL`), sans condition de quête tant que la quête de l'horloger n'existe pas. Les effets de la Fleur pressée, de la Cloche de cendre et des effets légendaires sont exposés par le moteur (`ArtifactRules.worn_effects`, `legendary` de l'objet) mais pas encore appliqués par la simulation de combat ; la Boussole (`gold_find`) l'est, par les statistiques.
+*(jalon 6)* Le premier emplacement s'ouvre au rendu de `quest.side_clockmaker` (disponible au niveau 6, `ARTIFACT_SLOT_1_LEVEL`) : la récompense débloque le jeton `artifact_slot_1` (`progress.unlocks`). Une sauvegarde v4 d'un personnage de niveau 6 ou plus garde son emplacement (migration v4 → v5). Les effets de la Fleur pressée, de la Cloche de cendre et des effets légendaires sont exposés par le moteur (`ArtifactRules.worn_effects`, `legendary` de l'objet) mais pas encore appliqués par la simulation de combat ; la Boussole (`gold_find`) l'est, par les statistiques.
 
 ## 19. Prix
 
@@ -786,6 +786,47 @@ Pour chacun, noter le résultat et la règle à changer si besoin :
 - Hors ligne pendant exactement 0 s, 59 s, 8 h, 8 h + 1 s et −1 h.
 - Inventaire plein avant le retour hors ligne.
 
-### 22.4 Télémétrie locale (debug uniquement, aucun serveur)
+### 22.4 Banc du jalon 6 (2026-11-06, données finales, 200 graines par ligne)
+
+`tools/combat_bench.gd -- 200`, Fern typique au niveau de la rencontre, profil `idle`. Toutes les normales : 100 % de victoires (typique et malchanceux), p90 ≤ 23 s. Déterminisme : 0 écart sur 300 combats.
+
+| Rencontre | Niveau | p50 typique | p50 malchanceux | Remarque |
+|---|---|---|---|---|
+| `lantern_mire_02` | 4 | 16,0 s | 18,2 s | *(provisoire, jalon 6)* loups `level_offset` +1, lanterne +2 : 13,6 s au niveau de la rencontre |
+| `lantern_mire_03` | 5 | 15,0 s | 15,8 s | |
+| `lantern_mire_04` | 5 | 18,4 s | 19,2 s | Hors ligne exclu (ci-dessous) |
+| `lantern_mire_05` | 6 | 18,2 s | 19,2 s | |
+| `watch_ruins_02` | 7 | 18,2 s | 19,4 s | |
+| `watch_ruins_03` | 8 | 15,8 s | 19,2 s | *(provisoire, jalon 6)* `level_offset` +2 : 13,6 s au niveau de la rencontre, 14,8 s à +1 |
+| `watch_ruins_04` | 8 | 19,2 s | 21,7 s | |
+| `watch_ruins_05` | 9 | 18,2 s | 19,4 s | |
+| `cloister_vestibule` | 10 | 19,2 s | 21,7 s | Salle 1 |
+| `cloister_gallery` | 10 | 15,0 s | 16,2 s | Salle 2 |
+| `cloister_courtyard` | 11 | 19,2 s | 19,6 s | Salle 4 |
+
+Élite et boss inchangés : alpha `idle` 45,5 % (p50 41 s), `script_optimal` 100 % ; Morvaine `idle` 0 %, `script_optimal` 87 % (p50 157 s), `confus` 0 %. Seuils §22.1 tenus. `whispering_wood_05` (13,0 s) et `lantern_mire_01` (12,2 s) restent sous la borne basse de 15 s, comme au jalon 3 (premiers combats d'un lieu).
+
+*(provisoire, jalon 6)* **Hors ligne** : `lantern_mire_04` (patrouille de 4 lanternes) n'est pas `offline_eligible`. Le modèle du §20.2 la finit en 12,8 s contre 19,3 s simulées (−34 %) : des lanceurs qui s'écartent et brûlent le sol coûtent du déplacement et des esquives que la rotation ne compte pas. « Chasser ici » reste possible. Les autres rencontres éligibles ajoutées tiennent l'écart de 15 % (`test_offline_bench.gd`).
+
+**XP des quêtes** (§21.2) : avec `QUEST_XP_MAIN` = 1,1, les quêtes rendues avant le boss (`main_01` à `main_03` et les trois secondaires) donnent 21 464 XP, soit **29,4 %** des 72 940 XP du niveau 1 au niveau 12 (18 % avec 0,6) ; avec les 6 découvertes (3 404 XP), 34,1 %. `main_04`, rendue au niveau 12, donne 28 138 XP (un peu plus d'un niveau). Test : `test_quests.gd` (part entre 27 et 33 %).
+
+### 22.5 Télémétrie locale (debug uniquement, aucun serveur)
 
 Journal local optionnel, exportable : durée par rencontre, défaites (cause : dernier coup subi), temps sans mana, utilisation des sorts, runes serties, gains hors ligne. Il sert pendant les tests de jeu à confirmer ou réfuter les `[H]`.
+
+## 23. Quêtes, contrats, coffres et bestiaire (jalon 6)
+
+Constantes dans `game/engine/balance/story.gd` (`BalanceStory`). Spécification : `docs/content/`. Toutes `[H]`.
+
+| Constante | Valeur | Rôle |
+|---|---|---|
+| `QUEST_XP_MAIN` / `QUEST_XP_SIDE` | 1,1 *(provisoire, jalon 6)* / 0,3 | XP de quête = facteur × `xp_to_next(level de la quête)` (§12, §22.4) |
+| `DISCOVERY_XP` | 0,1 | XP d'une découverte comptée = 0,1 × `xp_to_next(level de la découverte)` (Bois 3, Tourbière 6, Ruines 9) |
+| `CHEST_GOLD_MULT` | 5 | Or d'un coffre = 5 × `or_ennemi(niveau du coffre)` (§13, `gold_mult` 1, tirage 0,8-1,2) |
+| `CONTRACTS_PER_DAY` / `CONTRACT_MAX_LONG` | 3 / 1 | Tirage du jour sans remise, pondéré par `weight`, au plus un contrat L |
+| `CONTRACT_GOLD_BASE` | 100 | Or = `roundi(100 × (1 + GOLD_GROWTH × (L − 1)) × CONTRACT_TIER_MULT)`, L = niveau de Fern au tirage |
+| `CONTRACT_TIER_MULT` | S 0,75 / M 1,0 / L 1,5 | |
+| `CONTRACT_DUST` / `CONTRACT_SHARDS` | S 4 / M 6 / L 10 ; S 1 / M 2 / L 3 | Poussière de mana et éclats runiques |
+| `BESTIARY_THRESHOLDS` | 1 / 5 / 25 | Paliers par défaut ; alpha 1 / 3 / 10, Morvaine 1 / 2 / 5 (`bestiary_thresholds`) |
+
+Jour des contrats : `day_index = floori((now_unix + tz_offset_s) / 86400)` (minuit local), graine `derive(meta.seed, "contracts", day_index)`. Coffre : graine `derive(meta.seed, "chest:<id>")`, ouvert une seule fois (un rechargement redonne le même tirage). Les victoires hors ligne ne comptent ni pour les quêtes, ni pour les contrats, ni pour le bestiaire.
