@@ -40,3 +40,5 @@ art/source/**/*_rig_*.glb
 art/source/**/*_meshy_*.glb
 art/source/**/*_meshy_*.png
 __pycache__/
+art/source/audio/raw/
+art/source/audio/placeholder/
