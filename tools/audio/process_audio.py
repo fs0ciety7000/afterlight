@@ -25,7 +25,7 @@ OUT = os.path.join(ROOT, 'assets/audio')
 ## Target integrated loudness (LUFS) per kind, and the sample-peak ceiling (dBFS).
 TARGET = {'music': -18.0, 'sting': -16.0, 'sfx': -14.0, 'ui': -20.0, 'loop': -24.0}
 PEAK_DB = -1.0
-QUALITY = {'music': 2, 'sting': 3, 'sfx': 3, 'ui': 3, 'loop': 2}
+QUALITY = {'music': 0, 'sting': 3, 'sfx': 3, 'ui': 3, 'loop': 2}
 LOOP_XFADE_S = 2.0
 ## Loop taken from the fal take: start (past the intro) and length range, seconds (export size budget).
 LOOP_START_S = 6.0

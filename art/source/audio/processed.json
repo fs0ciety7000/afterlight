@@ -133,7 +133,7 @@
   "seconds": 62.61,
   "channels": 2,
   "gain_db": -4.2,
-  "bytes": 674519,
+  "bytes": 421208,
   "loop_start_s": 8.0,
   "loop_match": 0.961
  },
@@ -143,7 +143,7 @@
   "seconds": 62.59,
   "channels": 2,
   "gain_db": -5.3,
-  "bytes": 728108,
+  "bytes": 438709,
   "loop_start_s": 8.0,
   "loop_match": 0.971
  },
@@ -153,7 +153,7 @@
   "seconds": 63.52,
   "channels": 2,
   "gain_db": -4.4,
-  "bytes": 579475,
+  "bytes": 358399,
   "loop_start_s": 8.0,
   "loop_match": 0.715
  },
@@ -163,7 +163,7 @@
   "seconds": 58.17,
   "channels": 2,
   "gain_db": -2.4,
-  "bytes": 629763,
+  "bytes": 412470,
   "loop_start_s": 8.0,
   "loop_match": 0.814
  },
@@ -173,7 +173,7 @@
   "seconds": 54.86,
   "channels": 2,
   "gain_db": -4.8,
-  "bytes": 540658,
+  "bytes": 313554,
   "loop_start_s": 8.0,
   "loop_match": 0.984
  },
@@ -183,7 +183,7 @@
   "seconds": 53.33,
   "channels": 2,
   "gain_db": -2.5,
-  "bytes": 633681,
+  "bytes": 379338,
   "loop_start_s": 8.0,
   "loop_match": 0.895
  },
@@ -193,7 +193,7 @@
   "seconds": 56.44,
   "channels": 2,
   "gain_db": -2.5,
-  "bytes": 659859,
+  "bytes": 402365,
   "loop_start_s": 8.0,
   "loop_match": 0.863
  },
@@ -203,7 +203,7 @@
   "seconds": 57.15,
   "channels": 2,
   "gain_db": -5.2,
-  "bytes": 627174,
+  "bytes": 387053,
   "loop_start_s": 8.0,
   "loop_match": 0.893
  },
