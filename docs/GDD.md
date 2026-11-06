@@ -263,7 +263,7 @@ L'arbitrage voulu : progresser hors ligne (Sablier) ou être plus fort en combat
 ### 10.6 Ressources et inventaire
 
 - **Or** (`currency.gold`), **poussière de mana** (`material.mana_dust`, amélioration), **éclat runique** (`material.rune_shard`, fusion), **page de grimoire** (`material.grimoire_page`, rangs des sorts), **essence de cendre** (`material.ashen_essence`, artefacts).
-- **Consommables** (Odette, marchande d'Aubelin, personnage original) : Infusion de soin (`consumable.healing_draught`), Élixir de mana (`consumable.mana_elixir`). Recharge partagée, 5 au plus de chaque sur soi.
+- **Consommables** (Rosalie, marchande d'Aubelin, personnage original) : Infusion de soin (`consumable.healing_draught`), Élixir de mana (`consumable.mana_elixir`). Recharge partagée, 5 au plus de chaque sur soi.
 - **Inventaire** : 60 cases d'équipement. Les matériaux, les runes et les consommables vont dans des onglets empilables à part, sans limite pratique. Inventaire plein : le butin d'objets est recyclé automatiquement, avec une ligne dans le résumé. Il n'est jamais perdu en silence.
 
 ## 11. Butin
@@ -423,4 +423,31 @@ Les règles techniques (périodicité, emplacement, copie de secours, récupéra
 | 7 | Équilibrage boss et élite | `POWER_L1` loup alpha 22 → 21, Morvaine 24 → 18, Trait de cendre 0,9 → 0,6 (GAME_BALANCE §10.2, §10.3, §11) : validé |
 | 8 | Élément des attaques physiques | Comptées en arcane pour la tranche ; un élément physique viendra avec les résistances |
 | 9 | Élite et boss | Placés provisoirement aux Ruines du Guet jusqu'au donjon (jalon 6) |
+
+### Décisions du 2026-11-06 (jalon 6)
+
+Spécification complète du contenu : `docs/content/` (`quests.md`, `dialogues.md`, `contracts.md`, `bestiary_discoveries.md`, `dungeon.md`). Ne figurent ici que les décisions nouvelles ou qui modifient ce document. Toutes `[H]`.
+
+| # | Sujet | Décision | Remplace ou précise |
+|---|---|---|---|
+| 10 | Quêtes : déroulé | Pas de refus : la fin du dialogue d'offre active la quête. Objectifs regroupés par étape (`step`), parallèles dans une étape. `quest.main_01` est active dès la nouvelle partie ; « parler à Odile » et « 3 meutes du Bois » se font dans n'importe quel ordre | §13, §16.1 |
+| 11 | Quêtes : événements | Nouveaux objectifs `LocationVisited` et `ItemDelivered` (quantité détenue, retirée au rendu) ; `EncounterCompleted` accepte un `location.*` (rencontres du terrain, hors donjon) | CONTENT_PIPELINE §5.4 |
+| 12 | Hors ligne et objectifs | Les victoires hors ligne ne font avancer ni les quêtes, ni les contrats, ni le bestiaire. « Chasser ici » compte | §12, §13 |
+| 13 | PNJ et donneurs | Nouveaux PNJ originaux : Odile (sonneuse, `main_01`, `main_04`, épilogue), Tobias (horloger), Ysaline (herboriste), tableau des contrats. `main_02` donnée par Maëlle, `main_03` par Bastien, `side_statue` par Rosalie | §13 |
+| 14 | Récompenses de quête | 11 pages au total ; `rune.frost` au rendu de `main_02` ; l'emplacement d'artefact 1 s'ouvre au rendu de `side_clockmaker` (disponible au niveau 6) au lieu du seul niveau 6 | §10.5 ; GAME_BALANCE §18 (règle provisoire) |
+| 15 | Clé du cloître | `material.cloister_key`, récompense de première victoire de `encounter.watch_ruins_05` ; le donjon se débloque au rendu de `main_03` | §5.2 |
+| 16 | Découvertes | 6 comptées (2 par terrain : vista, lore, memorial, pickup). Coffres et herbes de quête sont des `discovery` non comptées. Chaque découverte perce le voile de la carte (disque autour de `map_pos`). Le Bois ne révèle plus les Ruines à la visite : le point de vue du bouleau, le journal du passeur ou `main_02` le font | §5.1, §13 |
+| 17 | Bestiaire | Paliers 1/5/25 ; élite 1/3/10 et boss 1/2/5 (`bestiary_thresholds`) | §13 |
+| 18 | Donjon | Entrée par la poterne des Ruines. Compositions recalées sur le budget de GAME_BALANCE §11 : vestibule sentinelle + loup ; galerie 3 lanternes + loup ; cour sentinelle + 2 lanternes (−3 niveaux). Salles de combat ≥ 34 m (arène de 16 m centrée sur l'ancre). Rencontres de donjon hors chasse et hors ligne. Entre deux salles, pas de regain de PV, la mana remonte à son rythme. Raccourci vestibule → feu de camp après la première victoire contre Morvaine | Tableau §5.3 |
+| 19 | Scène de l'ultime | Ligne de Fern au déblocage par le niveau 5, pas une étape de quête | §13 (`main_02`) |
+| 20 | Contrats | 9 contrats en pool (`quest.daily_*`), 3 par jour tirés par graine (`day_index` local), au plus 1 long, récompenses or + poussière + éclats, récupération automatique au changement de jour | §13 |
+| 21 | Dépendances techniques | Nouvelles constantes `CONTRACT_*` et `CHEST_GOLD_MULT` ; nouvelles clés d'état `progress.contracts` et `progress.dungeon_run`, à intégrer à la refonte du format de sauvegarde en cours | ARCHITECTURE (état) |
+
+**Questions ouvertes pour le propriétaire**
+
+1. **Himmel** : le nom apparaît sur la plaque de la statue et dans une réplique d'Rosalie ; il faut créer `character.himmel` (canon, non jouable). Valider ces deux textes (`dialogues.md` §6, `bestiary_discoveries.md` §2.2) ?
+2. **Frieren** : Fern ne la mentionne nulle part dans la tranche. Faut-il garder ce silence, ou autoriser une mention neutre et originale ?
+3. **Raccourci du donjon** après la première victoire contre Morvaine : il accélère le farm d'essence de cendre. Le garder ?
+4. **Hors ligne** exclu du bestiaire (en plus des contrats et des quêtes) : d'accord, ou faut-il compter les victoires hors ligne pour le bestiaire seulement ?
+5. **XP des quêtes** : ~22 % de l'XP jusqu'au niveau 12, au lieu des ~30 % supposés en GAME_BALANCE §21.2. Faut-il relever `QUEST_XP_MAIN` après le banc, ou accepter une montée un peu plus lente ?
 
