@@ -177,7 +177,7 @@ func tr_text(key: String) -> String:
 
 func test_shopkeeper_screens_show_portrait_and_name() -> void:
 	_new_game()
-	var names := {"forge": "Bastien", "runecarver": "Maëlle", "merchant": "Odette"}
+	var names := {"forge": "Bastien", "runecarver": "Maëlle", "merchant": "Rosalie"}
 	for id: String in names:
 		var screen := _open(id)
 		var portrait := _control(id + ".npc_portrait") as TextureRect
