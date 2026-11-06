@@ -62,6 +62,12 @@ static func modifiers(state: Dictionary, character: String, content: Dictionary)
 		for m in ItemFactory.modifiers(item, content):
 			m["source"] = "item:" + uid
 			out.append(m)
+	for e in ArtifactRules.worn_effects(state, character, content):
+		if not ContentSchemas.STATS.has(e["type"]):
+			continue
+		var m := {"stat": e["type"], "layer": "flat", "value": e["value"], "from": e["id"]}
+		m["source"] = "artifact:" + e["id"]
+		out.append(m)
 	return out
 
 
