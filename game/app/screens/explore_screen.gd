@@ -22,6 +22,18 @@ var _combat: CombatView
 var _combat_hud: CombatHud
 var _combat_move_cd := 0.0
 var _combat_moving := false
+## « Chasser ici » (ROADMAP 5.8): the encounter replayed in a loop ("" when
+## not hunting), its victories so far and the anchor the fights happen at.
+var _hunt_id := ""
+var _hunt_wins := 0
+var _combat_anchor: Node3D
+var _hunt_button: Button
+## Shown once the place is loaded (e.g. the offline gains just claimed).
+var _pending_toast := ""
+
+
+func setup(params: Dictionary) -> void:
+	_pending_toast = str(params.get("toast", ""))
 
 
 func _ready() -> void:
@@ -39,6 +51,8 @@ func _ready() -> void:
 			_explore_nodes.append(child)
 	GameState.changed.connect(_refresh_hud)
 	_load_current()
+	if _pending_toast != "":
+		_show_toast(_pending_toast)
 
 
 func _exit_tree() -> void:
@@ -208,6 +222,16 @@ func _build_hud() -> void:
 	UiProbe.register("hud.place", _place)
 	place_panel.add_child(_place)
 	right.add_child(place_panel)
+	# The offline hunt: opens its choice, current place first (ROADMAP 5.5).
+	_hunt_button = Kit.button("", false, "hud.hunt")
+	_hunt_button.focus_mode = Control.FOCUS_NONE
+	_hunt_button.size_flags_horizontal = Control.SIZE_SHRINK_END
+	_hunt_button.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
+	_hunt_button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_hunt_button.pressed.connect(
+		func() -> void: Router.go_to("hunts", {"location": GameState.data["world"]["location_id"]})
+	)
+	right.add_child(_hunt_button)
 	add_child(right)
 	right.set_anchors_and_offsets_preset(
 		Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, margin
@@ -277,6 +301,12 @@ func _refresh_hud() -> void:
 	_level.text = tr("ui.explore.level").format({"level": s["level"]})
 	_gold.text = tr("ui.explore.gold").format({"gold": s["gold"]})
 	_place.text = Content.display_name(s["location_id"])
+	var hunt := GameState.offline_hunt()
+	_hunt_button.text = (
+		tr("ui.explore.hunt").format({"encounter": Content.display_name(hunt)})
+		if hunt != ""
+		else tr("ui.explore.hunt_none")
+	)
 
 
 func _show_toast(message: String, is_error: bool = false) -> void:
@@ -308,6 +338,12 @@ func _start_combat(encounter_id: String, anchor: Node3D) -> void:
 	var setup: Dictionary = GameState.progression.combat_setup()
 	setup["seed"] = seed_value
 	setup["first_clear"] = int(cleared.get(encounter_id, 0)) == 0
+	if not _open_combat(encounter_id, anchor, setup):
+		view.engaged = ""
+
+
+## Builds the combat view and its HUD for one fight. False if the sim refused.
+func _open_combat(encounter_id: String, anchor: Node3D, setup: Dictionary) -> bool:
 	_combat = CombatView.new()
 	_combat.name = "Combat"
 	view.add_child(_combat)
@@ -316,17 +352,21 @@ func _start_combat(encounter_id: String, anchor: Node3D) -> void:
 		push_error("Combat %s: %s" % [encounter_id, error])
 		_combat.queue_free()
 		_combat = null
-		view.engaged = ""
-		return
+		return false
+	_combat_anchor = anchor
 	view.hide_pack(encounter_id)
 	view.rig.cut_radius = COMBAT_CUT_RADIUS
 	for n in _explore_nodes:
 		if n is CanvasItem:
 			(n as CanvasItem).visible = n == _joystick
 	_combat_hud = CombatHud.new()
+	_combat_hud.hunt_encounter = _hunt_id
+	_combat_hud.hunt_wins = _hunt_wins
 	add_child(_combat_hud)
 	_combat_hud.bind(_combat, view.rig.camera)
 	_combat_hud.leave_requested.connect(_end_combat)
+	_combat_hud.hunt_requested.connect(_start_hunt)
+	_combat_hud.hunt_next_requested.connect(_next_hunt_fight)
 	UiProbe.world["combat"] = encounter_id
 	UiProbe.world["combat_result"] = ""
 	UiProbe.test_handlers["defeat_party"] = func() -> void:
@@ -335,14 +375,76 @@ func _start_combat(encounter_id: String, anchor: Node3D) -> void:
 	_combat.finished.connect(
 		func(e: Dictionary) -> void: UiProbe.world["combat_result"] = e.get("result", "")
 	)
+	return true
+
+
+func _close_combat() -> void:
+	# Out of the tree now, so its glow settings are restored before the next
+	# fight of a hunt saves them again.
+	_combat.get_parent().remove_child(_combat)
+	_combat.queue_free()
+	_combat = null
+	remove_child(_combat_hud)
+	_combat_hud.queue_free()
+	_combat_hud = null
 
 
 func _end_combat(victory: bool) -> void:
 	var id := _combat.encounter_id
-	_combat.queue_free()
-	_combat = null
-	_combat_hud.queue_free()
-	_combat_hud = null
+	_close_combat()
+	_back_to_explore(id, victory)
+
+
+# --- « Chasser ici » -----------------------------------------------------------
+
+
+## From the victory panel: the won encounter is replayed in a loop here, and
+## becomes the offline hunt when it may be one.
+func _start_hunt() -> void:
+	var id := _combat.encounter_id
+	var r := GameState.start_hunt_here(id)
+	if not r["ok"]:
+		_show_toast(GameState.reason_text(r), true)
+		return
+	_hunt_id = id
+	_hunt_wins = 0
+	UiProbe.world["hunt_active"] = true
+	UiProbe.world["hunt_encounter"] = id
+	UiProbe.world["hunt_wins"] = 0
+	UiProbe.world["hunt_loot"] = []
+	if r["offline_hunt"]:
+		_show_toast(tr("ui.hunt.started_offline"))
+	else:
+		var reason := GameState.reason_text(
+			{"error": r["offline_error"], "params": r["offline_params"]}
+		)
+		_show_toast(tr("ui.hunt.started_not_offline").format({"reason": reason}))
+	_next_hunt_fight()
+
+
+## Next fight of the loop: the loot of the last one is saved, then the same
+## encounter starts again on the spot with a fresh seed.
+func _next_hunt_fight() -> void:
+	if _combat == null:
+		return
+	if _menu != null:
+		# Paused: the next fight waits for the menu to close.
+		if not _menu.closed.is_connected(_next_hunt_fight):
+			_menu.closed.connect(_next_hunt_fight, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+		return
+	var id := _hunt_id
+	_hunt_wins = _combat_hud.hunt_wins
+	SaveService.save_now()
+	var setup := GameState.next_hunt_setup(id)
+	_close_combat()
+	if setup.is_empty() or not _open_combat(id, _combat_anchor, setup):
+		_back_to_explore(id, true)
+
+
+func _back_to_explore(id: String, victory: bool) -> void:
+	_hunt_id = ""
+	_hunt_wins = 0
+	UiProbe.world["hunt_active"] = false
 	view.player.combat_driven = false
 	view.rig.cut_radius = EXPLORE_CUT_RADIUS
 	for n in _explore_nodes:

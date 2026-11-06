@@ -5,13 +5,23 @@ extends Control
 ## sim snapshot and sends commands through the CombatView; no rules here.
 
 signal leave_requested(victory: bool)
+## « Chasser ici » pressed on the victory panel.
+signal hunt_requested
+## The loop's pause between two fights is over: start the next fight.
+signal hunt_next_requested
 
 const LOG_LINES := 60
 const LOG_TYPES := ["damage_dealt", "spell_cast", "status_applied"]
 const NEWLINE := "\n"
+## Pause on the victory panel between two fights of « Chasser ici ».
+const HUNT_NEXT_DELAY_S := 1.6
 
 var view: CombatView
 var camera: Camera3D
+## « Chasser ici » loop: the hunted encounter ("" for a field fight) and the
+## victories so far. Set by the explore screen before bind().
+var hunt_encounter := ""
+var hunt_wins := 0
 var _hp: ProgressBar
 var _mana: ProgressBar
 var _ult: ProgressBar
@@ -30,6 +40,10 @@ var _toast: Label
 var _toast_until := 0
 var _consumables: HBoxContainer
 var _result: PanelContainer
+var _hunt_wins_label: Label
+var _hunt_stop: Button
+var _stop_after := false
+var _between_fights := false
 
 
 func bind(combat: CombatView, cam: Camera3D) -> void:
@@ -202,7 +216,56 @@ func _build() -> void:
 	_toast.visible = false
 	UiProbe.register("combat.toast", _toast)
 	add_child(_toast)
+	if hunt_encounter != "":
+		_build_hunt_card(margin)
 	_refresh_controls()
+
+
+## Top-left during « Chasser ici »: the hunted encounter, the victories so far
+## and « Arrêter la chasse ».
+func _build_hunt_card(margin: float) -> void:
+	var card := Kit.panel("CardPanel")
+	var col := Kit.vbox(UiTokens.SPACE["xs"])
+	card.add_child(col)
+	var title := Kit.label(
+		tr("ui.hunt.title").format({"encounter": Content.display_name(hunt_encounter)}),
+		"SubheadingLabel"
+	)
+	UiProbe.register("combat.hunt_title", title)
+	col.add_child(title)
+	_hunt_wins_label = Kit.label("", "NumberLabel")
+	UiProbe.register("combat.hunt_counter", _hunt_wins_label)
+	col.add_child(_hunt_wins_label)
+	_hunt_stop = Kit.button(tr("ui.hunt.stop"), false, "combat.hunt_stop")
+	_hunt_stop.focus_mode = Control.FOCUS_NONE
+	_hunt_stop.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
+	_hunt_stop.pressed.connect(stop_hunt)
+	col.add_child(_hunt_stop)
+	add_child(card)
+	card.set_anchors_and_offsets_preset(
+		Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE, margin
+	)
+	_refresh_hunt()
+
+
+func _refresh_hunt() -> void:
+	if _hunt_wins_label:
+		_hunt_wins_label.text = tr("ui.hunt.wins").format({"count": hunt_wins})
+	UiProbe.world["hunt_wins"] = hunt_wins
+
+
+## « Arrêter la chasse »: right away between two fights, else once the
+## current fight is over (it is never abandoned half-way).
+func stop_hunt() -> void:
+	if hunt_encounter == "":
+		return
+	if _between_fights:
+		_between_fights = false
+		leave_requested.emit(true)
+		return
+	_stop_after = true
+	_hunt_stop.disabled = true
+	_hunt_stop.text = tr("ui.hunt.stopping")
 
 
 ## Thumb arc (DESIGN.md mobile): the ultimate in the corner, spells around it.
@@ -466,6 +529,16 @@ func _on_finished(e: Dictionary) -> void:
 	)
 	UiProbe.register("combat.result_title", title)
 	col.add_child(title)
+	var hunting := hunt_encounter != ""
+	if hunting and victory:
+		hunt_wins += 1
+		_refresh_hunt()
+		# What each victory of the loop gave (tests check every one gave loot).
+		var loot: Array = UiProbe.world.get("hunt_loot", [])
+		loot.append(
+			{"xp": summary["xp"], "gold": summary["gold"], "wallet": GameState.summary()["gold"]}
+		)
+		UiProbe.world["hunt_loot"] = loot
 	if victory:
 		col.add_child(
 			Kit.label(
@@ -486,14 +559,57 @@ func _on_finished(e: Dictionary) -> void:
 		var body := Kit.label(tr("ui.combat.defeat_body"), "", true)
 		body.custom_minimum_size = Vector2(_result.custom_minimum_size.x - 48.0, 0)
 		col.add_child(body)
-	var ok := Kit.button(tr("ui.combat.continue"), true, "combat.continue")
-	ok.pressed.connect(func() -> void: leave_requested.emit(victory))
-	col.add_child(ok)
+		if hunting:
+			col.add_child(Kit.label(tr("ui.hunt.stopped_defeat"), "SubheadingLabel", true))
+	var focus: Control
+	if hunting and victory and not _stop_after:
+		# The loop goes on by itself; « Arrêter la chasse » stays available.
+		var next := Kit.label(tr("ui.hunt.next"), "MutedLabel", true)
+		UiProbe.register("combat.hunt_next", next)
+		col.add_child(next)
+		_between_fights = true
+		get_tree().create_timer(HUNT_NEXT_DELAY_S).timeout.connect(_on_hunt_delay)
+	else:
+		if _hunt_stop:
+			_hunt_stop.visible = false
+		var row := Kit.hbox()
+		row.alignment = BoxContainer.ALIGNMENT_END
+		if victory and not hunting:
+			row.add_child(_hunt_here_button())
+		var ok := Kit.button(tr("ui.combat.continue"), true, "combat.continue")
+		ok.pressed.connect(func() -> void: leave_requested.emit(victory))
+		row.add_child(ok)
+		col.add_child(row)
+		focus = ok
 	add_child(_result)
 	_result.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
 	_result.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_result.grow_vertical = Control.GROW_DIRECTION_BOTH
-	ok.call_deferred("grab_focus")
+	if focus:
+		focus.call_deferred("grab_focus")
+
+
+## « Chasser ici » on a won fight: disabled with its reason when refused.
+func _hunt_here_button() -> Control:
+	var box := Kit.vbox(UiTokens.SPACE["xs"])
+	var check := GameState.hunt_here_check(view.encounter_id)
+	var b := Kit.button(tr("ui.hunt.here"), false, "combat.hunt_here")
+	b.disabled = not check["ok"]
+	b.pressed.connect(func() -> void: hunt_requested.emit())
+	box.add_child(b)
+	var reason := Kit.label("" if check["ok"] else GameState.reason_text(check), "MutedLabel", true)
+	reason.visible = not check["ok"]
+	reason.custom_minimum_size = Vector2(200, 0)
+	b.tooltip_text = reason.text
+	UiProbe.register("combat.hunt_here_reason", reason)
+	box.add_child(reason)
+	return box
+
+
+func _on_hunt_delay() -> void:
+	if _between_fights and not _stop_after:
+		_between_fights = false
+		hunt_next_requested.emit()
 
 
 ## Loot of a victory: items with their rarity, runes, artifacts, materials
