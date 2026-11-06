@@ -1,0 +1,26 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "title_day",
+  "seconds": 18.9,
+  "arguments": {
+   "aspect_ratio": "16:9"
+  },
+  "prompt": "Painterly anime background art for the title screen of a premium fantasy RPG, no characters, no text, no logo, no UI. A vast serene valley at golden late afternoon: rolling meadows with wildflowers, a winding dirt road, a small village of half-timbered houses by a river, distant blue mountains, a ruined stone tower on a hill, soft volumetric sunbeams, drifting petals, gentle melancholic atmosphere, hand-painted texture, soft natural colors, calm sky with large clouds. Leave the left third of the image calm and slightly darker for a title and menu.",
+  "files": [
+   "art/concepts/keyart/title_day.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "title_day",
+  "seconds": 17.8,
+  "arguments": {
+   "aspect_ratio": "16:9"
+  },
+  "prompt": "Painterly anime background art for the title screen of a premium fantasy RPG, no characters, no text, no logo, no UI, no borders, no overlays. A vast serene valley at golden late afternoon: rolling meadows with wildflowers in the foreground, a winding dirt road, a small village of half-timbered houses by a river on the right, distant blue mountains, a ruined stone tower on a hill, soft volumetric sunbeams, a few drifting petals, gentle melancholic atmosphere, hand-painted texture, soft natural colors, calm sky with large clouds. Composition: the main subjects sit in the right half; the left half is open sky and soft meadow with low detail.",
+  "files": [
+   "art/concepts/keyart/title_day.jpg"
+  ]
+ }
+]

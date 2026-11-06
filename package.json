@@ -6,7 +6,7 @@
   "scripts": {
     "godot:import": "godot --headless --path . --import",
     "test": "pnpm godot:import && godot --headless --path . --script res://tools/test_runner.gd",
-    "lint": "gdlint game tools tests/unit && gdformat --check game tools tests/unit",
+    "lint": "godot --headless --path . --script res://tools/check_scripts.gd && gdlint game tools tests/unit && gdformat --check game tools tests/unit",
     "format": "gdformat game tools tests/unit",
     "build:web": "mkdir -p build/web && godot --headless --path . --export-release Web build/web/index.html",
     "serve": "node tools/serve.mjs build/web 8060",

@@ -34,3 +34,9 @@ target/
 # Tests
 playwright-report/
 test-results/
+
+# Assets : sorties brutes de fal (régénérables depuis fal_log.json, trop lourdes pour git)
+art/source/**/*_rig_*.glb
+art/source/**/*_meshy_*.glb
+art/source/**/*_meshy_*.png
+__pycache__/

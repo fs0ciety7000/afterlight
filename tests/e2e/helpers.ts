@@ -1,0 +1,52 @@
+import { expect, type Page } from '@playwright/test';
+
+export type Probe = {
+  ready: boolean;
+  screen: string;
+  controls: Record<string, { x: number; y: number; w: number; h: number; visible: boolean; disabled?: boolean; text?: string }>;
+  state: Record<string, unknown>;
+  save: { last_saved_at: number; error: string };
+  messages: string[];
+  settings: { text_scale: number; reduce_motion: boolean };
+};
+
+export async function probe(page: Page): Promise<Probe | undefined> {
+  return page.evaluate(() => (window as unknown as { __afterlight?: Probe }).__afterlight);
+}
+
+export async function boot(page: Page): Promise<void> {
+  await page.goto('/');
+  await expect.poll(async () => (await probe(page))?.ready ?? false, { timeout: 60_000 }).toBe(true);
+}
+
+export async function waitScreen(page: Page, screen: string): Promise<void> {
+  await expect.poll(async () => (await probe(page))?.screen, { timeout: 15_000 }).toBe(screen);
+}
+
+/** Clicks a registered control at its real on-screen position, like a player. */
+export async function click(page: Page, id: string): Promise<void> {
+  await expect
+    .poll(async () => {
+      const c = (await probe(page))?.controls[id];
+      return Boolean(c && c.visible && !c.disabled);
+    }, { timeout: 15_000, message: `control ${id} visible and enabled` })
+    .toBe(true);
+  // Let the fade finish so the control has settled.
+  await page.waitForTimeout(350);
+  const c = (await probe(page))!.controls[id];
+  const box = (await page.locator('canvas').boundingBox())!;
+  const scale = await page.evaluate(() => {
+    const canvas = document.querySelector('canvas')!;
+    return canvas.width / canvas.clientWidth;
+  });
+  await page.mouse.click(box.x + (c.x + c.w / 2) / scale, box.y + (c.y + c.h / 2) / scale);
+}
+
+export async function clearStorage(page: Page): Promise<void> {
+  await page.goto('/');
+  await page.evaluate(async () => {
+    const dbs = await indexedDB.databases();
+    await Promise.all(dbs.map((d) => new Promise((r) => { const q = indexedDB.deleteDatabase(d.name!); q.onsuccess = q.onerror = q.onblocked = () => r(null); })));
+    localStorage.clear();
+  });
+}
