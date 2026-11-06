@@ -24,9 +24,11 @@ func _ready() -> void:
 	UiProbe.register("recovery.title", title)
 	col.add_child(title)
 	var code: String = _boot.get("decoded", {}).get("error", "not_json")
-	col.add_child(
-		Kit.label(tr("ui.recovery.body").format({"reason": tr("error.save." + code)}), "", true)
+	var body := Kit.label(
+		tr("ui.recovery.body").format({"reason": tr("error.save." + code)}), "", true
 	)
+	UiProbe.register("recovery.body", body)
+	col.add_child(body)
 
 	var gated: Array[BaseButton] = []
 	var backup: Dictionary = _boot.get("backup", {})
