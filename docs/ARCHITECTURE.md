@@ -102,6 +102,23 @@ Fichier `user://saves/slot_0.json` :
 - Thème : `game/ui/theme/tokens.gd` (couleurs, tailles, espacements de `DESIGN.md`) → `theme_builder.gd` construit un `Theme` jour et un `Theme` nuit. Les écrans n'écrivent aucune couleur en dur.
 - Pont de test : autoload `UiProbe`. Les contrôles importants s'y enregistrent sous un nom (`title.new_game`) ; sur le web, `window.afterlight` expose leur position à Playwright, qui clique comme un joueur, et un résumé de l'état pour vérifier le résultat.
 
+## Scènes de lieu (contrat entre le code et les décors)
+
+Chaque lieu de `game/data/*/locations.json` pointe vers sa scène (`scene`), par exemple `res://game/world/locations/aubelin.tscn`. Les décors sont produits à part (piste art) ; le code d'exploration ne dépend que de ce contrat.
+
+| Nœud (chemin depuis la racine) | Type | Rôle |
+|---|---|---|
+| `.` (racine) | `Node3D` | Aucun script requis. Origine au centre du lieu, Y vers le haut, 1 unité = 1 m, -Z = « nord » de la carte |
+| `Spawns/<nom>` | `Marker3D` | Points d'apparition. `default` est obligatoire ; `from_<id_court>` pour chaque arrivée depuis un lieu voisin (ex. `from_whispering_wood`). Le -Z local du marqueur donne l'orientation de Fern |
+| `Exits/<nom>` | `Area3D` (calque de collision 4) + `CollisionShape3D` | Sorties de zone. Métadonnées obligatoires : `to` (ID de lieu) et `spawn` (nom du point d'apparition dans le lieu cible) |
+| `Walkable` | `NavigationRegion3D` ou corps statiques | Sol marchable : `StaticBody3D` au calque 1. Les obstacles (maisons, rochers, arbres) ont aussi une collision au calque 1. Les bords du lieu sont fermés par des collisions invisibles |
+| `Anchors/<nom>` | `Marker3D` | Emplacements des rencontres, PNJ et découvertes (`anchor` dans les données) ; utilisés à partir du jalon 3 |
+| `Environment` | `WorldEnvironment` + `DirectionalLight3D` | Lumière du lieu, selon DESIGN.md (jour ou nuit) |
+
+Règles : taille utile de 40 à 80 m de côté ; Fern mesure 1,6 m (pieds à y = 0, regard vers -Z) ; budget web : moins de 150 appels de dessin et 300 k triangles visibles, végétation en `MultiMeshInstance3D`. Le joueur et la caméra sont ajoutés par le code (`game/world/explore/`), jamais par la scène.
+
+Un test (`tests/unit/world/test_location_scenes.gd`) charge chaque scène citée par les données et vérifie ce contrat : nœuds présents, `default` défini, chaque sortie mène à un lieu et à un point d'apparition existants.
+
 ## Arborescence
 
 ```
