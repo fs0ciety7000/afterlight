@@ -56,7 +56,7 @@
 - Une graine par usage (`combat`, `loot`, `offline`), dérivée de la graine de partie et d'un compteur, pour qu'un tirage de butin n'en décale pas un autre.
 - La simulation de combat avance par tics fixes (`TICK_SECONDS`), indépendants du nombre d'images par seconde. Vitesse ×2 / ×4 = plus de tics par image, pas des tics plus longs.
 
-## État de la partie (format v1)
+## État de la partie (format v3)
 
 Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour être sérialisé tel quel :
 
@@ -64,13 +64,16 @@ Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour
 |---|---|
 | `meta` | `seed`, `created_at`, `last_active_at` (secondes Unix), `play_time` |
 | `party` | 4 emplacements : ID de personnage ou `""` |
-| `characters` | par ID : `level`, `xp`, `equipment` (par emplacement), `spells` (rangs), `runes` |
+| `characters` | par ID : `level`, `xp`, `equipment` (par emplacement : `uid` d'un objet de `inventory` ou `""`), `spells` (rang par ID de sort, 1 si absent), `loadout`, `runes` (par ID de sort : runes serties [{`id`, `tier`}]), `artifacts` (2 emplacements : ID ou `""`) |
 | `wallet` | `gold`, `materials` (par ID) |
-| `inventory` | liste d'instances d'objets (`uid`, `item_id`, `rarity`, `item_level`, `affixes`, `enhance`, `sockets`) |
+| `inventory` | toutes les instances d'objets, portées ou non (`uid`, `item_id`, `rarity`, `item_level`, `affixes` [{`id`, `value`}], `legendary`, `enhance`, `enhance_attempts`, `pity` = échecs d'amélioration consécutifs). Le sac compte les objets non portés (60 cases) |
+| `runes` | réserve de runes non serties : ID → 5 quantités (paliers 1 à 5) |
+| `consumables` | ID → quantité portée (5 au plus) |
+| `artifacts` | artefacts possédés : ID → niveau (1-5) |
 | `world` | `region_id`, `location_id`, `unlocked_regions`, `discovered_locations` |
 | `progress` | `cleared_encounters`, `quests`, `bestiary`, `discoveries` |
 | `farming` | rencontre farmée hors ligne (`encounter_id`) ou `""` |
-| `rng` | compteurs par flux |
+| `rng` | compteurs par flux (`combat`, `item` pour les `uid` d'objets) |
 
 Les réglages (taille du texte, animations réduites, volumes) sont à part, dans `user://settings.cfg` : ils ne voyagent pas avec une sauvegarde exportée.
 

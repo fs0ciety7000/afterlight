@@ -24,6 +24,9 @@ static func create(
 		"wallet":
 		{"gold": int(start.get("gold", 0)), "materials": start.get("materials", {}).duplicate()},
 		"inventory": [],
+		"runes": {},
+		"consumables": {},
+		"artifacts": {},
 		"world":
 		{
 			"region_id": start["region"],
@@ -46,4 +49,15 @@ static func _new_character() -> Dictionary:
 	var equipment := {}
 	for slot in StateSchema.EQUIPMENT_SLOTS:
 		equipment[slot] = ""
-	return {"level": 1, "xp": 0, "equipment": equipment, "spells": {}, "loadout": []}
+	var artifacts := []
+	for i in StateSchema.ARTIFACT_SLOTS:
+		artifacts.append("")
+	return {
+		"level": 1,
+		"xp": 0,
+		"equipment": equipment,
+		"spells": {},
+		"loadout": [],
+		"runes": {},
+		"artifacts": artifacts,
+	}

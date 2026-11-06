@@ -7,7 +7,7 @@ extends RefCounted
 
 
 static func all() -> Dictionary:
-	return {1: v1_to_v2}
+	return {1: v1_to_v2, 2: v2_to_v3}
 
 
 ## v2 (Milestone 2): fog of war and spawn point.
@@ -16,4 +16,23 @@ static func v1_to_v2(state: Dictionary) -> Dictionary:
 	var world: Dictionary = state["world"]
 	world["revealed_locations"] = (world["discovered_locations"] as Array).duplicate()
 	world["spawn"] = "default"
+	return state
+
+
+## v3 (Milestone 4): progression. Items gain legendary, enhance_attempts and
+## pity (sockets moved to spells); characters gain socketed runes and artifact
+## slots; rune, consumable and artifact stocks start empty.
+static func v2_to_v3(state: Dictionary) -> Dictionary:
+	for item in state.get("inventory", []):
+		item.erase("sockets")
+		item["legendary"] = ""
+		item["enhance_attempts"] = 0
+		item["pity"] = 0
+	for id in state.get("characters", {}):
+		var c: Dictionary = state["characters"][id]
+		c["runes"] = {}
+		c["artifacts"] = ["", ""]
+	state["runes"] = {}
+	state["consumables"] = {}
+	state["artifacts"] = {}
 	return state

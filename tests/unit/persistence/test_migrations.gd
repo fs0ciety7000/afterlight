@@ -42,12 +42,23 @@ func test_released_table_covers_every_version_below_current() -> void:
 		assert_true(table.has(v), "migration from v%d exists" % v)
 
 
-func test_real_v1_save_migrates_to_v2_with_fog_and_spawn() -> void:
-	var v1 := Fixtures.new_state()
+## A state as saved by format v2 (Milestone 2-3): no progression fields.
+func _v2_state() -> Dictionary:
+	var v2 := Fixtures.new_state()
+	for key in ["runes", "consumables", "artifacts"]:
+		v2.erase(key)
+	for id in v2["characters"]:
+		v2["characters"][id].erase("runes")
+		v2["characters"][id].erase("artifacts")
+	return v2
+
+
+func test_real_v1_save_migrates_to_current_with_fog_and_spawn() -> void:
+	var v1 := _v2_state()
 	v1["world"].erase("revealed_locations")
 	v1["world"].erase("spawn")
 	v1["world"]["discovered_locations"] = ["location.test_village", "location.other"]
-	var r := SaveCodec.decode(SaveCodec.encode(v1, 1, 1), SaveMigrations.all(), 2)
+	var r := SaveCodec.decode(SaveCodec.encode(v1, 1, 1), SaveMigrations.all())
 	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
 	assert_eq(r["migrated_from"], 1, "from v1")
 	assert_eq(
@@ -56,3 +67,31 @@ func test_real_v1_save_migrates_to_v2_with_fog_and_spawn() -> void:
 		"fog"
 	)
 	assert_eq(r["state"]["world"]["spawn"], "default", "spawn")
+
+
+func test_real_v2_save_migrates_to_v3_with_progression_fields() -> void:
+	var v2 := _v2_state()
+	v2["inventory"] = [
+		{
+			"uid": "i1",
+			"item_id": "item.birch_staff",
+			"rarity": "common",
+			"item_level": 2,
+			"affixes": [{"id": "affix.power_flat", "value": 3.0}],
+			"enhance": 1,
+			"sockets": [],
+		}
+	]
+	var r := SaveCodec.decode(SaveCodec.encode(v2, 1, 2), SaveMigrations.all())
+	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
+	assert_eq(r["migrated_from"], 2, "from v2")
+	assert_eq(r["version"], 3, "now v3")
+	var s: Dictionary = r["state"]
+	var item: Dictionary = s["inventory"][0]
+	assert_true(not item.has("sockets"), "sockets dropped")
+	assert_eq([item["legendary"], item["enhance_attempts"], item["pity"]], ["", 0, 0], "new fields")
+	assert_eq(item["enhance"], 1, "enhancement kept")
+	assert_eq(s["characters"]["character.fern"]["artifacts"], ["", ""], "artifact slots")
+	assert_eq(s["characters"]["character.fern"]["runes"], {}, "no socketed rune")
+	assert_eq([s["runes"], s["consumables"], s["artifacts"]], [{}, {}, {}], "empty stocks")
+	assert_eq(s["wallet"]["gold"], 100, "wallet untouched")

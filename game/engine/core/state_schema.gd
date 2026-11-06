@@ -1,9 +1,11 @@
 class_name StateSchema
 extends RefCounted
-## Shape of a game state (save format v1). See docs/ARCHITECTURE.md.
+## Shape of a game state (save format v3). See docs/ARCHITECTURE.md.
 
 const PARTY_SLOTS := 4
 const EQUIPMENT_SLOTS := ["weapon", "head", "chest", "hands", "feet", "amulet"]
+const ARTIFACT_SLOTS := 2
+const RUNE_TIERS := 5
 
 const ID := {"type": "string", "pattern": Schema.ID_PATTERN}
 const UNIX := {"type": "int", "min": 0}
@@ -23,6 +25,27 @@ static func spec() -> Dictionary:
 			"equipment": {"type": "dict", "fields": equipment_fields},
 			"spells": {"type": "dict", "values": {"type": "int", "min": 0}},
 			"loadout": {"type": "array", "items": ID, "max": 8},
+			"runes":
+			{
+				"type": "dict",
+				"keys": ID,
+				"values":
+				{
+					"type": "array",
+					"items":
+					{
+						"type": "dict",
+						"fields": {"id": ID, "tier": {"type": "int", "min": 1, "max": RUNE_TIERS}},
+					},
+				},
+			},
+			"artifacts":
+			{
+				"type": "array",
+				"min": ARTIFACT_SLOTS,
+				"max": ARTIFACT_SLOTS,
+				"items": {"type": "string"},
+			},
 		},
 	}
 	var item_instance := {
@@ -34,9 +57,15 @@ static func spec() -> Dictionary:
 			"rarity":
 			{"type": "string", "enum": ["common", "uncommon", "rare", "epic", "legendary"]},
 			"item_level": {"type": "int", "min": 1},
-			"affixes": {"type": "array", "items": {"type": "dict"}},
+			"affixes":
+			{
+				"type": "array",
+				"items": {"type": "dict", "fields": {"id": ID, "value": {"type": "number"}}},
+			},
+			"legendary": {"type": "string"},
 			"enhance": {"type": "int", "min": 0},
-			"sockets": {"type": "array", "items": {"type": "string"}},
+			"enhance_attempts": COUNT,
+			"pity": COUNT,
 		},
 	}
 	return {
@@ -68,6 +97,14 @@ static func spec() -> Dictionary:
 				"fields": {"gold": COUNT, "materials": {"type": "dict", "values": COUNT}},
 			},
 			"inventory": {"type": "array", "items": item_instance},
+			"runes":
+			{
+				"type": "dict",
+				"keys": ID,
+				"values": {"type": "array", "min": RUNE_TIERS, "max": RUNE_TIERS, "items": COUNT},
+			},
+			"consumables": {"type": "dict", "keys": ID, "values": COUNT},
+			"artifacts": {"type": "dict", "keys": ID, "values": {"type": "int", "min": 1}},
 			"world":
 			{
 				"type": "dict",
