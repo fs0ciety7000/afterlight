@@ -30,18 +30,19 @@ test('Fern walks with the keyboard (WASD / ZQSD positions)', async ({ page }) =>
   await newGame(page);
   const start = await player(page);
   await page.locator('canvas').focus();
-  await page.keyboard.down('KeyW');
-  await expect.poll(async () => dist(start, await player(page)), { timeout: 12_000 }).toBeGreaterThanOrEqual(8);
-  await page.keyboard.up('KeyW');
+  // South leads down the village road, away from the well.
+  await page.keyboard.down('KeyS');
+  await expect.poll(async () => dist(start, await player(page)), { timeout: 20_000 }).toBeGreaterThanOrEqual(8);
+  await page.keyboard.up('KeyS');
 });
 
 test('Fern walks where the player clicks', async ({ page }) => {
   await newGame(page);
   const start = await player(page);
   const ps = (await probe(page))!.world.player_screen as { x: number; y: number };
-  const target = await canvasPoint(page, ps.x + 260, ps.y - 120);
+  const target = await canvasPoint(page, ps.x, ps.y + 220);
   await page.mouse.click(target.x, target.y);
-  await expect.poll(async () => dist(start, await player(page)), { timeout: 12_000 }).toBeGreaterThanOrEqual(3);
+  await expect.poll(async () => dist(start, await player(page)), { timeout: 20_000 }).toBeGreaterThanOrEqual(3);
 });
 
 test('the world map opens, zooms, pans and explains locked places', async ({ page }) => {
@@ -99,7 +100,7 @@ test('travel from the map loads the place fast; fog stays lifted after a reload'
 
 test('walking into a zone exit leads to the neighbouring place', async ({ page }) => {
   await newGame(page);
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 60; i++) {
     const w = (await probe(page))!.world;
     if (w.location_id === 'location.whispering_wood') break;
     const exit = w.exits?.['location.whispering_wood'] as { x: number; y: number } | undefined;
@@ -113,6 +114,6 @@ test('walking into a zone exit leads to the neighbouring place', async ({ page }
     await page.mouse.click(p.x, p.y);
     await page.waitForTimeout(1200);
   }
-  await expect.poll(async () => (await probe(page))!.world.location_id, { timeout: 15_000 }).toBe('location.whispering_wood');
+  await expect.poll(async () => (await probe(page))!.world.location_id, { timeout: 20_000 }).toBe('location.whispering_wood');
   expect((await probe(page))!.state.location_id).toBe('location.whispering_wood');
 });

@@ -14,8 +14,11 @@ export async function probe(page: Page): Promise<Probe | undefined> {
   return page.evaluate(() => (window as unknown as { __afterlight?: Probe }).__afterlight);
 }
 
+/** Tests run on software WebGL (no GPU): use the low graphics quality. */
+export const START_URL = '/?quality=low';
+
 export async function boot(page: Page): Promise<void> {
-  await page.goto('/');
+  await page.goto(START_URL);
   await expect.poll(async () => (await probe(page))?.ready ?? false, { timeout: 60_000 }).toBe(true);
 }
 
@@ -43,7 +46,7 @@ export async function click(page: Page, id: string): Promise<void> {
 }
 
 export async function clearStorage(page: Page): Promise<void> {
-  await page.goto('/');
+  await page.goto(START_URL);
   await page.evaluate(async () => {
     const dbs = await indexedDB.databases();
     await Promise.all(dbs.map((d) => new Promise((r) => { const q = indexedDB.deleteDatabase(d.name!); q.onsuccess = q.onerror = q.onblocked = () => r(null); })));

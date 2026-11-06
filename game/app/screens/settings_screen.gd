@@ -34,6 +34,26 @@ func _ready() -> void:
 	size_row.add_child(size_pick)
 	col.add_child(size_row)
 
+	var quality_row := Kit.hbox()
+	var quality_label := Kit.label(tr("ui.settings.graphics_quality"))
+	quality_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	quality_row.add_child(quality_label)
+	var quality_pick := OptionButton.new()
+	quality_pick.custom_minimum_size = Vector2(160, UiTokens.TOUCH_TARGET)
+	for key in [
+		"ui.settings.quality_low", "ui.settings.quality_medium", "ui.settings.quality_high"
+	]:
+		quality_pick.add_item(tr(key))
+	quality_pick.select(Settings.graphics_quality)
+	quality_pick.item_selected.connect(
+		func(index: int) -> void:
+			Settings.set_graphics_quality(index)
+			flash(_status, tr("ui.settings.saved"))
+	)
+	UiProbe.register("settings.graphics_quality", quality_pick)
+	quality_row.add_child(quality_pick)
+	col.add_child(quality_row)
+
 	var motion := CheckButton.new()
 	motion.text = tr("ui.settings.reduce_motion")
 	motion.button_pressed = Settings.reduce_motion

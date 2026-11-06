@@ -21,13 +21,13 @@ test('the touch joystick moves Fern', async ({ page }) => {
   const cdp = await page.context().newCDPSession(page);
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: cx, y: cy }] });
   for (let i = 1; i <= 5; i++) {
-    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: cx, y: cy - i * 12 }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: cx, y: cy + i * 12 }] });
   }
   await expect
     .poll(async () => {
       const p = (await probe(page))!.world.player as { x: number; z: number };
       return Math.hypot(p.x - start.x, p.z - start.z);
-    }, { timeout: 12_000 })
+    }, { timeout: 20_000 })
     .toBeGreaterThanOrEqual(8);
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
 });

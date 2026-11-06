@@ -13,6 +13,7 @@ var player: ExplorePlayer
 var rig: CameraRig
 var _scene: Node3D
 var _exit_armed := false
+var _nav_region: NavigationRegion3D
 
 
 func load_location(id: String, spawn: String, content: Dictionary, move_speed: float) -> void:
@@ -30,6 +31,8 @@ func load_location(id: String, spawn: String, content: Dictionary, move_speed: f
 		location_failed.emit(id, "scene_missing")
 		return
 	add_child(_scene)
+	GraphicsQuality.apply(Settings.graphics_quality, get_viewport(), _scene)
+	_bake_navigation()
 	if player == null:
 		player = ExplorePlayer.new()
 		player.name = "Player"
@@ -78,7 +81,40 @@ func _on_exit_body(body: Node3D, area: Area3D) -> void:
 		exit_reached.emit(str(area.get_meta("to", "")), str(area.get_meta("spawn", "default")))
 
 
-## Click or tap on the ground: walk there.
+## Builds a navigation mesh from the location's static collisions (calque 1),
+## so click-to-move walks around houses, trees and rocks.
+func _bake_navigation() -> void:
+	if _nav_region:
+		_nav_region.queue_free()
+	var mesh := NavigationMesh.new()
+	mesh.geometry_parsed_geometry_type = NavigationMesh.PARSED_GEOMETRY_STATIC_COLLIDERS
+	mesh.geometry_collision_mask = 1
+	mesh.agent_radius = 0.4
+	mesh.agent_height = 1.6
+	mesh.agent_max_climb = 0.4
+	mesh.agent_max_slope = 40.0
+	mesh.cell_size = 0.25
+	mesh.cell_height = 0.1
+	var source := NavigationMeshSourceGeometryData3D.new()
+	NavigationServer3D.parse_source_geometry_data(mesh, source, _scene)
+	NavigationServer3D.bake_from_source_geometry_data(mesh, source)
+	_nav_region = NavigationRegion3D.new()
+	_nav_region.name = "Navigation"
+	_nav_region.navigation_mesh = mesh
+	_nav_region.navigation_layers = 1
+	add_child(_nav_region)
+	# Make sure the map uses the new region before the first path request.
+	NavigationServer3D.map_force_update(get_world_3d().navigation_map)
+
+
+func path_to(target: Vector3) -> PackedVector3Array:
+	var map := get_world_3d().navigation_map
+	var from := NavigationServer3D.map_get_closest_point(map, player.global_position)
+	var to := NavigationServer3D.map_get_closest_point(map, target)
+	return NavigationServer3D.map_get_path(map, from, to, true)
+
+
+## Click or tap on the ground: walk there, around obstacles.
 func click_to_move(screen_point: Vector2) -> bool:
 	if rig == null:
 		return false
@@ -87,13 +123,16 @@ func click_to_move(screen_point: Vector2) -> bool:
 	var dir := cam.project_ray_normal(screen_point)
 	var query := PhysicsRayQueryParameters3D.create(from, from + dir * 200.0, 1)
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
-	if not hit.is_empty():
-		player.move_to(hit["position"])
-		return true
-	var p: Variant = Plane(Vector3.UP, player.global_position.y).intersects_ray(from, dir)
-	if p == null:
+	var point: Variant = hit["position"] if not hit.is_empty() else null
+	if point == null:
+		point = Plane(Vector3.UP, player.global_position.y).intersects_ray(from, dir)
+	if point == null:
 		return false
-	player.move_to(p)
+	var path := path_to(point)
+	if path.size() > 1:
+		player.follow_path(path)
+	else:
+		player.move_to(point)
 	return true
 
 

@@ -41,6 +41,10 @@ locale/translations=PackedStringArray("res://game/i18n/strings.fr.translation")
 
 theme/custom_font="res://assets/fonts/AlegreyaSans-Regular.ttf"
 
+[physics]
+
+common/max_physics_steps_per_frame=15
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

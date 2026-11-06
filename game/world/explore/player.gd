@@ -15,6 +15,7 @@ var move_speed := 5.0
 ## Set by the HUD joystick, in screen space (x right, y down), length <= 1.
 var joystick := Vector2.ZERO
 var _target: Variant = null
+var _path: PackedVector3Array = []
 var _stuck_time := 0.0
 var _anim: AnimationPlayer
 var _model: Node3D
@@ -43,12 +44,28 @@ func _ready() -> void:
 
 
 func move_to(point: Vector3) -> void:
-	_target = Vector3(point.x, global_position.y, point.z)
+	follow_path(PackedVector3Array([point]))
+
+
+## Walks through `points` in order (a navigation path).
+func follow_path(points: PackedVector3Array) -> void:
+	_path = points
 	_stuck_time = 0.0
+	_next_waypoint()
 
 
 func stop() -> void:
 	_target = null
+	_path = []
+
+
+func _next_waypoint() -> void:
+	if _path.is_empty():
+		_target = null
+		return
+	var p := _path[0]
+	_path.remove_at(0)
+	_target = Vector3(p.x, global_position.y, p.z)
 
 
 func is_moving_to_target() -> bool:
@@ -58,13 +75,15 @@ func is_moving_to_target() -> bool:
 func _physics_process(delta: float) -> void:
 	var wish := _input_direction()
 	if wish != Vector3.ZERO:
-		_target = null
+		stop()
 	elif _target != null:
 		var to: Vector3 = (_target as Vector3) - global_position
 		to.y = 0.0
 		if to.length() <= ARRIVE_DISTANCE:
-			_target = null
-		else:
+			_next_waypoint()
+		if _target != null:
+			to = (_target as Vector3) - global_position
+			to.y = 0.0
 			wish = to.normalized()
 	var desired := wish * move_speed
 	var accel := move_speed / ACCEL_TIME
@@ -78,7 +97,7 @@ func _physics_process(delta: float) -> void:
 		var moved := (global_position - before).length()
 		_stuck_time = _stuck_time + delta if moved < move_speed * delta * 0.2 else 0.0
 		if _stuck_time > STUCK_SECONDS:
-			_target = null
+			stop()
 	if horizontal.length() > 0.1:
 		var yaw := atan2(-horizontal.x, -horizontal.z)
 		rotation.y = rotate_toward(rotation.y, yaw, deg_to_rad(TURN_SPEED_DEG) * delta)

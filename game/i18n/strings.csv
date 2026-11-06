@@ -112,3 +112,7 @@ ui.explore.gold,Or : {gold}
 ui.common.separator," · "
 ui.explore.map_button_touch,Carte
 ui.explore.menu_button_touch,Menu
+ui.settings.graphics_quality,Qualité graphique
+ui.settings.quality_low,Basse
+ui.settings.quality_medium,Moyenne
+ui.settings.quality_high,Haute

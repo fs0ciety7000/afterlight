@@ -2,7 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: 'tests/e2e',
-  timeout: 60_000,
+  timeout: 120_000,
+  // Each browser renders WebGL in software here; more workers starve the CPU.
+  workers: 2,
   use: { baseURL: 'http://localhost:8060', trace: 'off' },
   webServer: {
     command: 'pnpm build:web && pnpm serve',
