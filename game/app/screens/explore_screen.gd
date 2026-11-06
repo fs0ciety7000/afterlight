@@ -307,6 +307,8 @@ func _build_hud() -> void:
 	_hunt_button.size_flags_horizontal = Control.SIZE_SHRINK_END
 	_hunt_button.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
 	_hunt_button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	# A trimmed button has no width of its own: give it the panel's width.
+	_hunt_button.custom_minimum_size.x = 200.0 if narrow else 240.0
 	_hunt_button.pressed.connect(
 		func() -> void: Router.go_to("hunts", {"location": GameState.data["world"]["location_id"]})
 	)
@@ -323,6 +325,8 @@ func _build_hud() -> void:
 	_compass = Kit.label("", "MutedLabel", true)
 	_compass.size_flags_horizontal = Control.SIZE_SHRINK_END
 	_compass.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	# Wrapped text needs a width, or it grows one letter per line down the screen.
+	_compass.custom_minimum_size.x = 200.0 if narrow else 240.0
 	UiProbe.register("hud.compass", _compass)
 	right.add_child(_compass)
 	add_child(right)
