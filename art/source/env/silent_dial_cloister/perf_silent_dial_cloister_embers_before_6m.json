@@ -1,0 +1,16 @@
+{
+	"cloister_dial": {
+		"draw_calls": 54.0,
+		"fps": 2.0,
+		"objects": 54.0,
+		"primitives": 124854.0,
+		"video_mem_mb": 169.5
+	},
+	"cloister_dial_centre": {
+		"draw_calls": 51.0,
+		"fps": 1.0,
+		"objects": 51.0,
+		"primitives": 116986.0,
+		"video_mem_mb": 169.5
+	}
+}
