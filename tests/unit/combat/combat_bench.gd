@@ -19,6 +19,10 @@ const IMPLICIT := {"power": 8.0, "max_hp": 85.0, "defense": 9.0}
 const ILVL_GROWTH := 0.15
 const ENH_STAT_PER_LEVEL := 0.06
 
+const POTIONS := {"consumable.healing_draught": 3, "consumable.mana_elixir": 2}
+const PRESET := "tactics_preset.morvaine"
+const SEALS := ["ability.morvaine_ash_seal", "ability.morvaine_ash_seal_hollow"]
+
 static var _content: Dictionary = {}
 
 
@@ -41,8 +45,21 @@ static func gear(profile: String, level: int) -> Dictionary:
 	return {"flat": flat, "percent": {"power": g["power_pct"]}}
 
 
+## "starter" (GAME_BALANCE §22.6): only the guaranteed staff, uncommon ilvl
+## 1, +0, every affix at the middle of its range (affixes picked on a fixed
+## seed). Flat and percent modifiers, like gear().
+static func starter_gear() -> Dictionary:
+	var c := content()
+	var item := ItemFactory.make_item(SeededRng.new(1), c, "item.birch_staff", "uncommon", 1)
+	for a in item["affixes"]:
+		var r := ItemFactory.affix_range(c[a["id"]], 1)
+		a["value"] = (float(r[0]) + float(r[1])) * 0.5
+	var sums := ItemFactory.sum_modifiers(ItemFactory.modifiers(item, c))
+	return {"flat": sums["flat"], "percent": sums["percent"]}
+
+
 static func fern(level: int, profile: String = "typical") -> Dictionary:
-	var g := gear(profile, level)
+	var g := starter_gear() if profile == "starter" else gear(profile, level)
 	return {
 		"character": "character.fern",
 		"level": level,
@@ -52,9 +69,12 @@ static func fern(level: int, profile: String = "typical") -> Dictionary:
 	}
 
 
-## Player profiles: "idle" (default tactics, no input), "script_optimal"
-## (interrupts, shields the big hits, focuses casters, ult when full, potions),
-## "confused" (fire conversion on everything, Barrier left on manual).
+## Player profiles: "idle" (default tactics, no input), "idle_tuned" (defaults
+## + tactics_preset.morvaine, « Appliquer le conseil »; no input),
+## "script_optimal" (interrupts, shields the big hits, focuses casters, ult
+## when full, potions), "confused" (fire conversion on everything, Barrier
+## left on manual). Every profile carries the same potions (3 infusions, 2
+## elixirs); only automatic tactics or the script drink them.
 static func setup(
 	encounter: String, level: int, seed_value: int, gear_profile: String, player: String
 ) -> Dictionary:
@@ -63,8 +83,11 @@ static func setup(
 		"seed": seed_value,
 		"party": [fern(level, gear_profile)],
 		"keep_log": false,
+		"consumables": POTIONS.duplicate(),
 	}
 	match player:
+		"idle_tuned":
+			s["tactics"] = content()[PRESET]["tactics"].duplicate(true)
 		"script_optimal":
 			s["tactics"] = {
 				"targeting": "casters_first",
@@ -76,7 +99,6 @@ static func setup(
 					"spell.afterlight": "auto_full",
 				},
 			}
-			s["consumables"] = {"consumable.healing_draught": 3, "consumable.mana_elixir": 2}
 		"confused":
 			s["tactics"] = {"spells": {"spell.defensive_barrier": "manual"}}
 			var mods := {}
@@ -87,17 +109,28 @@ static func setup(
 
 
 ## Runs one fight. The optimal script also drinks potions and shields under
-## 40 % HP. Returns {result, duration_s, hp_pct, interrupts, no_mana_s}.
+## 40 % HP. Returns {result, duration_s, hp_pct, interrupts, no_mana_s,
+## cause (last hit of a defeat: "seal", "enrage" or "other", "" on a
+## victory), seals (Ash Seals that hit Fern), seals_shielded (of them, the
+## ones a shield absorbed)}.
 static func run_one(setup_data: Dictionary, player: String) -> Dictionary:
 	var sim := CombatSim.create(setup_data, content())
 	var interrupts := 0
 	var low_mana_ticks := 0
+	var seals := 0
+	var shielded := 0
+	var cause := ""
 	while not sim.finished:
 		if player == "script_optimal":
 			_script(sim)
 		for e in sim.step():
 			if e["type"] == "cast_interrupted" and e["reason"] == "interrupt":
 				interrupts += 1
+			elif e["type"] == "damage_dealt" and SEALS.has(e["spell"]):
+				seals += 1
+				shielded += 1 if float(e.get("absorbed", 0.0)) > 0.0 else 0
+			elif e["type"] == "encounter_completed" and e["result"] != "victory":
+				cause = defeat_cause(str(e["last_hit"].get("spell", "")))
 		var fern: Dictionary = sim.units[0]
 		if fern["mana"] < 25.0:
 			low_mana_ticks += 1
@@ -108,7 +141,17 @@ static func run_one(setup_data: Dictionary, player: String) -> Dictionary:
 		"hp_pct": float(f["hp"]) / float(f["max_hp"]),
 		"interrupts": interrupts,
 		"no_mana_s": low_mana_ticks * BalanceCombat.TICK_SECONDS,
+		"cause": cause,
+		"seals": seals,
+		"seals_shielded": shielded,
 	}
+
+
+## Defeat cause of GAME_BALANCE §22.6: the Seal, Cendre totale, or other.
+static func defeat_cause(last_hit_spell: String) -> String:
+	if SEALS.has(last_hit_spell):
+		return "seal"
+	return "enrage" if last_hit_spell == "ability.morvaine_enrage" else "other"
 
 
 static func _script(sim: CombatSim) -> void:
@@ -139,8 +182,9 @@ static func _script(sim: CombatSim) -> void:
 	sim.command({"type": "cast", "spell": barrier})
 
 
-## Runs `seeds` fights. Returns {win_rate, p50, p90, hp_p50, interrupts, no_mana_pct}
-## (durations over every fight, victories and defeats alike).
+## Runs `seeds` fights. Returns {win_rate, p50, p90, hp_p50, interrupts,
+## no_mana_pct, causes: {seal, enrage, other} (defeats), seals,
+## seals_shielded} (durations over every fight, victories and defeats alike).
 static func bench(
 	encounter: String, level: int, gear_profile: String, player: String, seeds: int
 ) -> Dictionary:
@@ -150,6 +194,9 @@ static func bench(
 	var interrupts := 0
 	var no_mana := 0.0
 	var total := 0.0
+	var causes := {"seal": 0, "enrage": 0, "other": 0}
+	var seals := 0
+	var shielded := 0
 	for i in seeds:
 		var r := run_one(setup(encounter, level, 1000 + i, gear_profile, player), player)
 		if r["result"] == "victory":
@@ -159,6 +206,10 @@ static func bench(
 		interrupts += r["interrupts"]
 		no_mana += r["no_mana_s"]
 		total += r["duration_s"]
+		seals += r["seals"]
+		shielded += r["seals_shielded"]
+		if r["cause"] != "":
+			causes[r["cause"]] += 1
 	durations.sort()
 	hp.sort()
 	return {
@@ -168,6 +219,9 @@ static func bench(
 		"hp_p50": hp[int(seeds * 0.5)],
 		"interrupts": float(interrupts) / float(seeds),
 		"no_mana_pct": no_mana / maxf(total, 0.001),
+		"causes": causes,
+		"seals": seals,
+		"seals_shielded": shielded,
 	}
 
 
