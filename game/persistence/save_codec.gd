@@ -4,7 +4,7 @@ extends RefCounted
 ## service handles disks, this handles format, integrity and migrations.
 
 const FORMAT := "afterlight-save"
-const CURRENT_VERSION := 3
+const CURRENT_VERSION := 4
 
 ## Error codes returned by decode(); the UI maps them to French messages.
 const ERR_NOT_JSON := "not_json"

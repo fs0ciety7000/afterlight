@@ -38,6 +38,7 @@ static func create(
 		},
 		"progress": {"cleared_encounters": {}, "quests": {}, "bestiary": {}, "discoveries": []},
 		"farming": "",
+		"offline": {"pending": []},
 		"rng": {},
 	}
 	if not content.is_empty():

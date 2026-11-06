@@ -7,7 +7,7 @@ extends RefCounted
 
 
 static func all() -> Dictionary:
-	return {1: v1_to_v2, 2: v2_to_v3}
+	return {1: v1_to_v2, 2: v2_to_v3, 3: v3_to_v4}
 
 
 ## v2 (Milestone 2): fog of war and spawn point.
@@ -35,4 +35,11 @@ static func v2_to_v3(state: Dictionary) -> Dictionary:
 	state["runes"] = {}
 	state["consumables"] = {}
 	state["artifacts"] = {}
+	return state
+
+
+## v4 (Milestone 5): offline progression. No pending offline summary yet; the
+## offline hunt keeps living in `farming`.
+static func v3_to_v4(state: Dictionary) -> Dictionary:
+	state["offline"] = {"pending": []}
 	return state

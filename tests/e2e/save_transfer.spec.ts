@@ -20,7 +20,7 @@ test('export downloads a valid save that imports back after confirmation', async
   await download.saveAs(file);
   const save = JSON.parse(readFileSync(file, 'utf8'));
   expect(save.format).toBe('afterlight-save');
-  expect(save.version).toBe(3);
+  expect(save.version).toBe(4);
   expect(save.state.party[0]).toBe('character.fern');
 
   // Fresh browser storage, then import the file from the title screen.

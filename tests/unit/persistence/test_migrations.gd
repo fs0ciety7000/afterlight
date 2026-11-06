@@ -85,7 +85,7 @@ func test_real_v2_save_migrates_to_v3_with_progression_fields() -> void:
 	var r := SaveCodec.decode(SaveCodec.encode(v2, 1, 2), SaveMigrations.all())
 	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
 	assert_eq(r["migrated_from"], 2, "from v2")
-	assert_eq(r["version"], 3, "now v3")
+	assert_eq(r["version"], SaveCodec.CURRENT_VERSION, "now current")
 	var s: Dictionary = r["state"]
 	var item: Dictionary = s["inventory"][0]
 	assert_true(not item.has("sockets"), "sockets dropped")
@@ -95,3 +95,21 @@ func test_real_v2_save_migrates_to_v3_with_progression_fields() -> void:
 	assert_eq(s["characters"]["character.fern"]["runes"], {}, "no socketed rune")
 	assert_eq([s["runes"], s["consumables"], s["artifacts"]], [{}, {}, {}], "empty stocks")
 	assert_eq(s["wallet"]["gold"], 100, "wallet untouched")
+
+
+## A state as saved by format v3 (Milestone 4): no offline block.
+func test_real_v3_save_migrates_to_v4_with_an_empty_offline_block() -> void:
+	var v3 := Fixtures.new_state()
+	v3.erase("offline")
+	v3["farming"] = "encounter.whispering_wood_02"
+	var r := SaveCodec.decode(SaveCodec.encode(v3, 1, 3), SaveMigrations.all())
+	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
+	assert_eq([r["migrated_from"], r["version"]], [3, 4], "v3 → v4")
+	assert_eq(r["state"]["offline"], {"pending": []}, "no pending summary")
+	assert_eq(r["state"]["farming"], "encounter.whispering_wood_02", "offline hunt kept")
+
+
+func test_v3_state_without_offline_is_invalid_as_v4() -> void:
+	var v3 := Fixtures.new_state()
+	v3.erase("offline")
+	assert_true(not StateSchema.validate(v3)["errors"].is_empty(), "offline is required")
