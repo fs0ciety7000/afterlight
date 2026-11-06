@@ -1,14 +1,14 @@
 [gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://assets/shaders/env_toon.gdshader" id="1_ulrpf"]
-[ext_resource type="Texture2D" path="res://assets/environment/vegetation/bush_bush.jpg" id="2_5o6bt"]
+[ext_resource type="Texture2D" path="res://assets/environment/vegetation/bush_bush_atlas.webp" id="2_5o6bt"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_ulrpf")
 shader_parameter/albedo_tex = ExtResource("2_5o6bt")
 shader_parameter/albedo_tint = Color(0.9, 0.9, 0.88, 1)
-shader_parameter/shadow_tint = Color(0.56078434, 0.627451, 0.76862746, 1)
+shader_parameter/shadow_tint = Color(0.4862745, 0.6117647, 0.6901961, 1)
 shader_parameter/band_threshold = 0.1
 shader_parameter/band_softness = 0.2
 shader_parameter/shadow_threshold = 0.5
@@ -18,12 +18,12 @@ shader_parameter/rim_strength = 0.15
 shader_parameter/use_instance_custom = true
 shader_parameter/warm_tint = Color(1, 0.86, 0.62, 1)
 shader_parameter/cool_tint = Color(0.78, 0.86, 0.72, 1)
-shader_parameter/wind_strength = 0.008184178918600083
-shader_parameter/wind_height = 1.3094686
-shader_parameter/contact_height = 1.1130483329296113
+shader_parameter/wind_strength = 0.009198826551437379
+shader_parameter/wind_height = 1.4718122
+shader_parameter/contact_height = 1.2510404109954834
 shader_parameter/contact_darkness = 0.38
 shader_parameter/atlas_grid = Vector2(1, 1)
-shader_parameter/alpha_scissor = 0.0
+shader_parameter/alpha_scissor = 0.5
 shader_parameter/cam_fade_near = 0.0
 shader_parameter/cam_fade_focus = 13.2
 shader_parameter/cam_fade_radius = 0.22

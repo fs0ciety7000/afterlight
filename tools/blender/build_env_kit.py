@@ -197,8 +197,10 @@ def build(name: str) -> None:
     print("built", name, manifest[name])
 
 
+# vegetation now comes from tools/blender/build_foliage.py (card canopies); rebuilt here only on request
+FOLIAGE = {"birch_a", "birch_b", "birch_a_lo", "birch_b_lo", "bush"}
 for n in KIT:
-    if not only or n in only:
+    if (not only and n not in FOLIAGE) or n in only:
         build(n)
 with open(manifest_path, "w") as f:
     json.dump(manifest, f, indent=1, sort_keys=True)

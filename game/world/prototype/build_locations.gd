@@ -4,6 +4,15 @@ extends "res://game/world/prototype/location_builder.gd"
 ##   xvfb-run -a godot --path . --rendering-driver opengl3 \
 ##     -s res://game/world/prototype/build_locations.gd
 
+## Door position on each house model (local x, front z) in metres, measured on the GLB front views
+## (assets/environment/buildings, front = +Z).
+const DOORS := {
+	"house_a": Vector2(-0.73, 2.7),
+	"house_b": Vector2(1.08, 2.6),
+	"house_c": Vector2(-0.85, 2.7),
+}
+const HOUSE_RING := 0.88
+
 
 func _init() -> void:
 	noise.seed = 11
@@ -52,16 +61,17 @@ func _build_aubelin() -> void:
 	rng.seed = 1701
 	_height_fn = _aubelin_height
 	_splat_fn = _aubelin_splat
-	# compact ring: the 50° / 14 m camera shows ~20 x 18 m; a small square reads as a village
+	# compact ring: the 50° / 11 m camera shows ~16 x 12 m; houses pulled in (x 0.88) so the square
+	# is framed by facades, doorsteps and flower beds instead of empty grass
 	var houses := [
-		["house_a", Vector2(-11.5, -2.5)],
-		["house_b", Vector2(-3.0, -11.5)],
-		["house_c", Vector2(5.5, -11.5)],
-		["house_a", Vector2(11.5, -5.0)],
-		["house_b", Vector2(11.0, 6.5)],
-		["house_c", Vector2(5.5, 12.0)],
-		["house_a", Vector2(-6.0, 11.5)],
-		["house_c", Vector2(-12.0, 5.5)],
+		["house_a", Vector2(-11.5, -2.5) * HOUSE_RING],
+		["house_b", Vector2(-3.0, -11.5) * HOUSE_RING],
+		["house_c", Vector2(5.5, -11.5) * HOUSE_RING],
+		["house_a", Vector2(11.5, -5.0) * HOUSE_RING],
+		["house_b", Vector2(11.0, 6.5) * HOUSE_RING],
+		["house_c", Vector2(5.5, 12.0) * HOUSE_RING],
+		["house_a", Vector2(-6.0, 11.5) * HOUSE_RING],
+		["house_c", Vector2(-12.0, 5.5) * HOUSE_RING],
 	]
 	# roads: NW to the wood, S to the fields, E over the bridge
 	var nw_road := [
@@ -95,18 +105,20 @@ func _build_aubelin() -> void:
 	fields.append(Rect2(-29, -14, 8, 7))
 	_terrain("aubelin", 70, 34, 448)
 
-	# houses face the square; tint / scale variations
+	# houses face the square; tint / scale variations; doorstep, flower bed and flowers at each door
 	for k in houses.size():
 		var at: Vector2 = houses[k][1]
 		var yaw := _face(at, Vector2.ZERO) + rng.randf_range(-0.12, 0.12)
-		_place(houses[k][0], at, yaw, rng.randf_range(0.95, 1.06))
+		var sc := rng.randf_range(0.95, 1.06)
+		_place(houses[k][0], at, yaw, sc)
+		_dress_house(houses[k][0], at, yaw, sc)
 	_place("well", Vector2(0, -0.5), 0.4)
 	_place("stall", Vector2(4.4, -3.4), _face(Vector2(4.4, -3.4), Vector2(0, 4)))
 	_place("barrels", Vector2(6.6, -1.8), 0.6, 0.9)
 	_place("cart", Vector2(-4.6, 4.4), 2.3)
 	_place("barrels", Vector2(-8.4, -6.6), 1.2, 0.85)
 	_place("barrels", Vector2(8.4, 9.6), 2.8, 0.8)
-	_place("barrels", Vector2(-2.6, 9.4), -0.4, 0.75)
+	_place("barrels", Vector2(-1.4, 8.2), -0.4, 0.75)
 	_stream_water()
 	_place("bridge", Vector2(STREAM_X + 0.3, 0.3), 0.0, 1.0)
 	# bank walls: the stream is crossed only by the bridge
@@ -139,6 +151,23 @@ func _build_aubelin() -> void:
 				z += 0.62
 			x += 0.62
 	occupied.append([Vector2.ZERO, 6.2])  # keep the square clear
+	# fruit trees in the gaps between houses, a small orchard by the south-west field (A_world.jpg)
+	for k in houses.size():
+		var a: Vector2 = houses[k][1]
+		var b: Vector2 = houses[(k + 1) % houses.size()][1]
+		var mid := (a + b).normalized() * rng.randf_range(12.5, 14.0)
+		if _free_at(mid, 1.6) and _path_dist(mid) > 2.2 and absf(mid.x - _stream_x(mid.y)) > 4.0:
+			_place("fruit_tree", mid, rng.randf() * TAU, rng.randf_range(0.9, 1.1))
+	for at in [Vector2(-11, 18), Vector2(-7.5, 21), Vector2(-11.5, 23), Vector2(-7, 26.5)]:
+		if _free_at(at, 1.4) and _path_dist(at) > 2.0:
+			_place("fruit_tree", at, rng.randf() * TAU, rng.randf_range(0.85, 1.05))
+	# flower patches around the square and along the roads
+	for i in 34:
+		var a := rng.randf() * TAU
+		var p := Vector2(cos(a), sin(a)) * rng.randf_range(6.6, 11.5)
+		if _path_dist(p) < 0.8 or not _free_at(p, 0.4) or absf(p.x - _stream_x(p.y)) < 4.0:
+			continue
+		_flower_patch(p, rng.randi_range(6, 11), 0.9)
 	# trees: a few inside the village, a dense birch belt on the hills (thicker towards the wood, NW)
 	var inner_trees := [
 		Vector2(-22, -8),
@@ -220,7 +249,8 @@ func _build_aubelin() -> void:
 	_flush()
 	_backdrop(Vector3(-10, -6, -150), 300.0)
 	_borders(30.0)
-	_environment(false, -62.0, -30.0)
+	# low warm sun from the west-north-west: long shadows towards the camera side (A_world.jpg)
+	_environment(false, -118.0, -22.0)
 	_marker("Spawns", "default", Vector3(0.5, 0, 4.0), Vector3.FORWARD)
 	_marker(
 		"Spawns", "from_whispering_wood", Vector3(-21.0, 0, -20.0), Vector3(1, 0, 1).normalized()
@@ -240,6 +270,32 @@ func _build_aubelin() -> void:
 	]:
 		_marker("Anchors", a[0], a[1], Vector3.BACK)
 	_save("aubelin.tscn")
+
+
+func _local_point(at: Vector2, yaw: float, sc: float, local: Vector2) -> Vector2:
+	# model space (x, +z front) to ground (x, z), same rotation as _place (Basis(UP, yaw))
+	var v := Vector3(local.x, 0, local.y).rotated(Vector3.UP, yaw) * sc
+	return at + Vector2(v.x, v.z)
+
+
+func _dress_house(kit_name: String, at: Vector2, yaw: float, sc: float) -> void:
+	var door: Vector2 = DOORS[kit_name]
+	_place("doorstep", _local_point(at, yaw, sc, door + Vector2(0, 0.42)), yaw, 1.0, false)
+	# flower bed along the facade on the wider side of the door
+	var side := 1.0 if door.x < 0.0 else -1.0
+	var bed := _local_point(at, yaw, sc, Vector2(door.x + side * 2.15, door.y + 0.55))
+	_place("flower_bed", bed, yaw + rng.randf_range(-0.04, 0.04), rng.randf_range(0.85, 1.0))
+	_flower_patch(bed, 8, 1.3)
+	_flower_patch(_local_point(at, yaw, sc, Vector2(door.x - side * 1.6, door.y + 0.6)), 5, 0.6)
+
+
+func _flower_patch(centre: Vector2, count: int, radius: float) -> void:
+	var cells := [CARD_DAISY, CARD_LAVENDER, CARD_BUTTERCUP, CARD_PINK]
+	var main: int = cells[rng.randi() % cells.size()]
+	for k in count:
+		var p := centre + Vector2(rng.randf_range(-1, 1), rng.randf_range(-1, 1)) * radius
+		var cell: int = main if rng.randf() < 0.7 else cells[rng.randi() % cells.size()]
+		_card(p, cell, rng.randf_range(0.5, 0.75))
 
 
 func _stream_water() -> void:
@@ -456,7 +512,7 @@ func _build_wood() -> void:
 				0, deg_to_rad(rng.randf_range(-20, 20)), deg_to_rad(-28 + rng.randf_range(-4, 4))
 			)
 	_borders(35.0)
-	_environment(true, -48.0, -38.0, 0.85, 0.85)
+	_environment(true, -112.0, -27.0, 0.85, 0.85)
 	_marker("Spawns", "default", Vector3(8, 0, 9), Vector3(-0.6, 0, -1).normalized())
 	_marker("Spawns", "from_aubelin", Vector3(26.5, 0, 25.5), Vector3(-1, 0, -1).normalized())
 	_exit(

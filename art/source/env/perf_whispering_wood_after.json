@@ -1,0 +1,30 @@
+{
+	"wood_clearing": {
+		"draw_calls": 77.0,
+		"fps": 2.0,
+		"objects": 77.0,
+		"primitives": 259996.0,
+		"video_mem_mb": 134.7
+	},
+	"wood_entrance": {
+		"draw_calls": 77.0,
+		"fps": 2.0,
+		"objects": 77.0,
+		"primitives": 259594.0,
+		"video_mem_mb": 134.7
+	},
+	"wood_path": {
+		"draw_calls": 76.0,
+		"fps": 2.0,
+		"objects": 76.0,
+		"primitives": 238744.0,
+		"video_mem_mb": 134.7
+	},
+	"wood_vista": {
+		"draw_calls": 131.0,
+		"fps": 1.0,
+		"objects": 131.0,
+		"primitives": 353214.0,
+		"video_mem_mb": 134.7
+	}
+}

@@ -1,14 +1,14 @@
 [gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://assets/shaders/env_toon.gdshader" id="1_le3hd"]
-[ext_resource type="Texture2D" path="res://assets/environment/vegetation/birch_b_birch_b.jpg" id="2_wpc8m"]
+[ext_resource type="Texture2D" path="res://assets/environment/vegetation/birch_b_birch_b_atlas.webp" id="2_wpc8m"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_le3hd")
 shader_parameter/albedo_tex = ExtResource("2_wpc8m")
 shader_parameter/albedo_tint = Color(0.9, 0.9, 0.88, 1)
-shader_parameter/shadow_tint = Color(0.56078434, 0.627451, 0.76862746, 1)
+shader_parameter/shadow_tint = Color(0.4862745, 0.6117647, 0.6901961, 1)
 shader_parameter/band_threshold = 0.1
 shader_parameter/band_softness = 0.2
 shader_parameter/shadow_threshold = 0.5
@@ -18,12 +18,12 @@ shader_parameter/rim_strength = 0.15
 shader_parameter/use_instance_custom = true
 shader_parameter/warm_tint = Color(1, 0.86, 0.62, 1)
 shader_parameter/cool_tint = Color(0.78, 0.86, 0.72, 1)
-shader_parameter/wind_strength = 0.15734283685684206
-shader_parameter/wind_height = 8.991019
-shader_parameter/contact_height = 7.642366361618042
+shader_parameter/wind_strength = 0.1575076937675476
+shader_parameter/wind_height = 9.00044
+shader_parameter/contact_height = 7.650373697280884
 shader_parameter/contact_darkness = 0.38
 shader_parameter/atlas_grid = Vector2(1, 1)
-shader_parameter/alpha_scissor = 0.0
+shader_parameter/alpha_scissor = 0.5
 shader_parameter/cam_fade_near = 10.0
 shader_parameter/cam_fade_focus = 13.2
 shader_parameter/cam_fade_radius = 0.22

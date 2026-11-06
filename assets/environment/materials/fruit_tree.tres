@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/env_toon.gdshader" id="1_a70gx"]
+[ext_resource type="Texture2D" path="res://assets/environment/vegetation/fruit_tree_fruit_tree_atlas.webp" id="2_kxipk"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_a70gx")
+shader_parameter/albedo_tex = ExtResource("2_kxipk")
+shader_parameter/albedo_tint = Color(0.9, 0.9, 0.88, 1)
+shader_parameter/shadow_tint = Color(0.4862745, 0.6117647, 0.6901961, 1)
+shader_parameter/band_threshold = 0.1
+shader_parameter/band_softness = 0.2
+shader_parameter/shadow_threshold = 0.5
+shader_parameter/rim_color = Color(1, 0.93, 0.8, 1)
+shader_parameter/rim_width = 0.2
+shader_parameter/rim_strength = 0.15
+shader_parameter/use_instance_custom = true
+shader_parameter/warm_tint = Color(1, 0.86, 0.62, 1)
+shader_parameter/cool_tint = Color(0.78, 0.86, 0.72, 1)
+shader_parameter/wind_strength = 0.058542913198471075
+shader_parameter/wind_height = 4.683433
+shader_parameter/contact_height = 3.9809180974960325
+shader_parameter/contact_darkness = 0.38
+shader_parameter/atlas_grid = Vector2(1, 1)
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/cam_fade_near = 10.0
+shader_parameter/cam_fade_focus = 13.2
+shader_parameter/cam_fade_radius = 0.22
+shader_parameter/normal_up_blend = 0.0

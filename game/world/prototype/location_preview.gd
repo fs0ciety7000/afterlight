@@ -4,6 +4,8 @@ extends Node3D
 ##
 ##   godot --path . res://game/world/prototype/location_preview.tscn -- --location=aubelin
 ##   ... -- --location=whispering_wood --shots  (writes art/source/env/shot_*.jpg, perf_*.json)
+##   --distance=11 : gameplay camera distance for the shots (default: CameraRig's first zoom step)
+##   --tag=before  : file name suffix (shot_<name>_<tag>.jpg, perf_<location>_<tag>.json)
 ## Keys: arrows move Fern, Q / E turn the camera, Z zoom, P print the render monitors.
 
 const LOCATIONS := {
@@ -34,12 +36,18 @@ var location := "aubelin"
 var fern: Node3D
 var rig: CameraRig
 var _vista := false
+var _distance := 0.0
+var _tag := ""
 
 
 func _ready() -> void:
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--location="):
 			location = a.get_slice("=", 1)
+		elif a.begins_with("--distance="):
+			_distance = a.get_slice("=", 1).to_float()
+		elif a.begins_with("--tag="):
+			_tag = "_" + a.get_slice("=", 1)
 	add_child((load(LOCATIONS[location]) as PackedScene).instantiate())
 	fern = (load(FERN) as PackedScene).instantiate()
 	add_child(fern)
@@ -112,6 +120,13 @@ func _place_vista() -> void:
 	rig.camera.look_at(target + Vector3(0, 3.0, 0) - dir * 10.0, Vector3.UP)
 
 
+func _place_at_distance(d: float) -> void:
+	# same placement as CameraRig._place_camera, at an explicit distance
+	var pitch := deg_to_rad(CameraRig.PITCH_DEG)
+	rig.camera.position = Vector3(0.0, sin(pitch) * d + 0.8, cos(pitch) * d)
+	rig.camera.rotation = Vector3(-pitch, 0.0, 0.0)
+
+
 func _frames(n: int) -> void:
 	for i in n:
 		await RenderingServer.frame_post_draw
@@ -128,17 +143,20 @@ func _take_shots() -> void:
 		rig.zoom_index = 0
 		rig.snap()
 		_vista = s[4]
-		rig.set_process(not _vista)
+		rig.set_process(not _vista and _distance <= 0.0)
 		if _vista:
 			_place_vista()
+		elif _distance > 0.0:
+			_place_at_distance(_distance)
 		await _frames(8)
 		var img := get_viewport().get_texture().get_image()
-		var path := ProjectSettings.globalize_path(SHOT_DIR + "shot_%s.jpg" % s[0])
+		var path := ProjectSettings.globalize_path(SHOT_DIR + "shot_%s%s.jpg" % [s[0], _tag])
 		img.save_jpg(path, 0.88)
 		report[s[0]] = _monitors()
 		print(s[0], " ", report[s[0]])
 	var f := FileAccess.open(
-		ProjectSettings.globalize_path(SHOT_DIR + "perf_%s.json" % location), FileAccess.WRITE
+		ProjectSettings.globalize_path(SHOT_DIR + "perf_%s%s.json" % [location, _tag]),
+		FileAccess.WRITE
 	)
 	f.store_string(JSON.stringify(report, "\t"))
 	f.close()

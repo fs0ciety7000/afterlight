@@ -37,5 +37,11 @@ esac
 #   region map: fal-ai/nano-banana-pro/edit + art/concepts/keyart/title_day.jpg, prompts/map.txt
 #   birch_b and bush retried with tripo3d/h3.1/image-to-3d (Meshy made them paper-thin), raw_tripo/
 #   post-process: python3 tools/fal/process_env_textures.py props|ground|cards|backdrop|map
+#   card canopies (birch_*, bush, fruit_tree; no fal): python3 tools/blender/build_foliage.py atlas, then
+#     blender -b --factory-startup -P tools/blender/build_foliage.py -- assets/environment
+#   doorstep / flower_bed (no fal): python3 tools/blender/build_village_props.py atlas, then
+#     blender -b --factory-startup -P tools/blender/build_village_props.py -- assets/environment
+#   stall awning stripes: blender -b --factory-startup -P tools/blender/repaint_awning.py -- assets/environment/props/stall.glb
+#   (see art/source/env/POLISH_M3.md; set meshes/generate_lods=false in the .import of card meshes)
 #   scenes: xvfb-run -a godot --path . --rendering-driver opengl3 -s res://game/world/prototype/build_locations.gd
 #     (a GL driver is required: the headless dummy renderer drops MultiMesh buffers)

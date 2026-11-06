@@ -620,5 +620,26 @@
    "art/source/env/raw_tripo/bush/bush_tripo_2.png"
   ],
   "est_cost_usd": 0.4
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "birch_a_tripo",
+  "seconds": 126.5,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 8000,
+   "image_url": "https://v3b.fal.media/files/b/0ab1525c/4Xu3HA1klEoCJ-02S1IH__birch_a.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/enemies/raw/ab_birch_a/birch_a_tripo_0.glb",
+   "art/source/enemies/raw/ab_birch_a/birch_a_tripo_1.glb",
+   "art/source/enemies/raw/ab_birch_a/birch_a_tripo_2.png"
+  ],
+  "est_cost_usd": 0.4,
+  "note": "A/B test (Tripo vs Meshy) on the env kit concept cut-out art/source/env/cut/birch_a.png; Meshy side reused from art/source/env/raw/birch_a (same endpoint and image, logged in this file's env counterpart)"
  }
 ]

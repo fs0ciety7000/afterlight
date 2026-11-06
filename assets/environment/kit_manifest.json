@@ -11,48 +11,52 @@
   "tris_raw": 4977
  },
  "birch_a": {
+  "cards": 110,
   "file": "environment/vegetation/birch_a.glb",
   "kb": 181,
   "size_m": [
-   4.12,
-   6.99,
-   2.9
+   5.0,
+   7.05,
+   4.55
   ],
-  "tris": 2599,
-  "tris_raw": 8381
+  "source": "art/source/env/raw/birch_a/birch_a_meshy_0.glb",
+  "tris": 1228
  },
  "birch_a_lo": {
+  "cards": 42,
   "file": "environment/vegetation/birch_a_lo.glb",
-  "kb": 133,
+  "kb": 131,
   "size_m": [
-   4.08,
-   6.99,
-   2.9
+   5.58,
+   7.27,
+   5.25
   ],
-  "tris": 1099,
-  "tris_raw": 8381
+  "source": "art/source/env/raw/birch_a/birch_a_meshy_0.glb",
+  "tris": 468
  },
  "birch_b": {
+  "cards": 115,
   "file": "environment/vegetation/birch_b.glb",
-  "kb": 173,
+  "kb": 168,
   "size_m": [
-   2.5,
-   8.99,
-   5.43
+   5.69,
+   9.0,
+   6.07
   ],
-  "tris": 3000,
-  "tris_raw": 7798
+  "source": "art/source/env/raw_tripo/birch_b/birch_b_tripo_0.glb",
+  "tris": 1260
  },
  "birch_b_lo": {
+  "cards": 45,
   "file": "environment/vegetation/birch_b_lo.glb",
   "kb": 121,
   "size_m": [
-   2.47,
-   9.01,
-   5.32
+   5.5,
+   9.25,
+   6.78
   ],
-  "tris": 1200,
-  "tris_raw": 7798
+  "source": "art/source/env/raw_tripo/birch_b/birch_b_tripo_0.glb",
+  "tris": 490
  },
  "bridge": {
   "file": "environment/props/bridge.glb",
@@ -66,15 +70,16 @@
   "tris_raw": 8072
  },
  "bush": {
+  "cards": 30,
   "file": "environment/vegetation/bush.glb",
-  "kb": 103,
+  "kb": 116,
   "size_m": [
-   1.51,
-   1.31,
-   2.36
+   2.42,
+   1.47,
+   2.59
   ],
-  "tris": 1200,
-  "tris_raw": 7424
+  "source": "art/source/env/raw_tripo/bush/bush_tripo_0.glb",
+  "tris": 416
  },
  "cart": {
   "file": "environment/props/cart.glb",
@@ -97,6 +102,18 @@
   ],
   "tris": 899,
   "tris_raw": 4681
+ },
+ "fruit_tree": {
+  "cards": 80,
+  "file": "environment/vegetation/fruit_tree.glb",
+  "kb": 179,
+  "size_m": [
+   3.62,
+   4.68,
+   3.41
+  ],
+  "source": "art/source/env/raw/birch_a/birch_a_meshy_0.glb",
+  "tris": 1208
  },
  "house_a": {
   "file": "environment/buildings/house_a.glb",

@@ -5,7 +5,9 @@ Usage:
 front.png: single front view; views.png: side (left half) + back (right half) sheet.
 Background = pixels close to the corner grey that are connected to the image border (flood fill),
 so grey gaps enclosed by the silhouette stay opaque only if truly enclosed.
-Writes out_dir/fern_v1_{front,side,back}_cut.png, each cropped to the figure and padded on a
+Optional: prefix (default fern_v1) and the names of the main view and the two sheet views
+(default front,side,back), e.g. `... out_dir mist_wolf side,front,back` for a creature drawn in profile.
+Writes out_dir/<prefix>_{front,side,back}_cut.png, each cropped to the figure and padded on a
 common canvas so all views share the same figure height (Meshy multi-image wants matching scale).
 """
 import sys
@@ -37,18 +39,23 @@ def cut(im: Image.Image, tol: float = 18.0) -> Image.Image:
 
 def main() -> None:
     front_p, views_p, out = sys.argv[1:4]
+    prefix = sys.argv[4] if len(sys.argv) > 4 else "fern_v1"
+    names = sys.argv[5].split(",") if len(sys.argv) > 5 else ["front", "side", "back"]
     front = cut(Image.open(front_p))
     v = Image.open(views_p)
     w, h = v.size
     side = cut(v.crop((0, 0, w // 2, h)))
     back = cut(v.crop((w // 2, 0, w, h)))
     target_h = 1600
-    for name, im in (("front", front), ("side", side), ("back", back)):
+    views = [(n, cut_im) for n, cut_im in zip(names, (front, side, back))]
+    widths = [round(im.width * target_h / im.height) for _, im in views]
+    canvas_w = max(1400, max(widths) + 200)
+    for name, im in views:
         s = target_h / im.height
         im = im.resize((max(1, round(im.width * s)), target_h), Image.LANCZOS)
-        canvas = Image.new("RGBA", (1400, 1800), (0, 0, 0, 0))
-        canvas.paste(im, ((1400 - im.width) // 2, 100), im)
-        canvas.save(f"{out}/fern_v1_{name}_cut.png")
+        canvas = Image.new("RGBA", (canvas_w, 1800), (0, 0, 0, 0))
+        canvas.paste(im, ((canvas_w - im.width) // 2, 100), im)
+        canvas.save(f"{out}/{prefix}_{name}_cut.png")
         print(name, im.size)
 
 

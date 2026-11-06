@@ -1,0 +1,30 @@
+{
+	"aubelin_east": {
+		"draw_calls": 93.0,
+		"fps": 2.0,
+		"objects": 93.0,
+		"primitives": 277059.0,
+		"video_mem_mb": 178.4
+	},
+	"aubelin_nw_exit": {
+		"draw_calls": 52.0,
+		"fps": 2.0,
+		"objects": 52.0,
+		"primitives": 149068.0,
+		"video_mem_mb": 178.4
+	},
+	"aubelin_square": {
+		"draw_calls": 87.0,
+		"fps": 1.0,
+		"objects": 87.0,
+		"primitives": 270424.0,
+		"video_mem_mb": 178.4
+	},
+	"aubelin_vista": {
+		"draw_calls": 151.0,
+		"fps": 1.0,
+		"objects": 151.0,
+		"primitives": 323184.0,
+		"video_mem_mb": 178.4
+	}
+}

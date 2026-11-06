@@ -1,0 +1,60 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "mist_wolf_concept",
+  "seconds": 28.1,
+  "arguments": {
+   "aspect_ratio": "4:3",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab1525e/RAqCxd_XWWNHytKevZygE_A_world.jpg",
+    "https://v3b.fal.media/files/b/0ab1525e/47wKR4rU0fgTwZC_8oMr2_B_combat.jpg"
+   ]
+  },
+  "prompt": "Creature model sheet for a stylized 3D anime fantasy game enemy, in the same soft cel-shaded anime game style as the reference images (AFK-Journey-like stylized 3D). Use the reference images ONLY for the rendering style and palette; draw a completely new creature. Draw ONLY ONE creature, alone, centered: a MIST WOLF, an original fantasy wolf, seen in an exact SIDE VIEW (perfect profile), facing to the LEFT of the image, standing still on all four legs in a neutral standing pose, legs straight and clearly separated (front pair and back pair both visible with gaps between them), head held level, mouth closed, tail hanging down and slightly out behind. Lean athletic wolf, slightly stylized: large head with long muzzle, big pointed ears, thick mane of fur around the neck and shoulders in a few large clean pointed tufts, slim legs with big paws, bushy tail. Colors: cool blue-grey fur on the back and sides, lighter pale grey-blue belly, chest, muzzle and legs, darker slate stripe along the spine, pale glowing ice-blue eyes, dark grey nose and claws; the tips of the mane, tail and lower legs fade into pale misty white-blue wisps like fog (painted as solid pale shapes, not transparent). IMPORTANT TEXTURE RULE: pure FLAT UNSHADED COLORS like a base-color texture map: no shadows, no shading, no highlights, no gradients, no ambient occlusion, each fur region is one single flat color, thin dark ink outlines only. Plain flat light grey background, no floor shadow, no scenery, no text, no other creatures. Clean readable silhouette.",
+  "files": [
+   "art/source/enemies/mist_wolf_concept.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "mist_wolf_views",
+  "seconds": 26.1,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15262/2tTL3Up39MJXsjyu5Ep3c_mist_wolf_concept.png"
+   ]
+  },
+  "prompt": "Creature turnaround sheet of EXACTLY the same wolf as in the reference image: same body, same proportions, same fur tufts, same colors, same flat unshaded coloring with thin dark ink outlines, same neutral standing pose on four straight legs. Show it TWO times side by side on a plain flat light grey background, same scale, paws at the same height, generous empty space between the two: LEFT figure = exact FRONT VIEW, the wolf facing the viewer straight on, symmetrical, head level, both front legs visible and apart; RIGHT figure = exact BACK VIEW, seen from directly behind, symmetrical, tail hanging down in the middle, both hind legs visible and apart. Pure flat colors only: no shading, no shadows, no gradients, no highlights. No text, no labels, no floor shadow, no scenery.",
+  "files": [
+   "art/source/enemies/mist_wolf_views.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "birch_a_tripo",
+  "seconds": 126.5,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 8000,
+   "image_url": "https://v3b.fal.media/files/b/0ab1525c/4Xu3HA1klEoCJ-02S1IH__birch_a.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/enemies/raw/ab_birch_a/birch_a_tripo_0.glb",
+   "art/source/enemies/raw/ab_birch_a/birch_a_tripo_1.glb",
+   "art/source/enemies/raw/ab_birch_a/birch_a_tripo_2.png"
+  ],
+  "est_cost_usd": 0.4,
+  "note": "A/B test (Tripo vs Meshy) on the env kit concept cut-out art/source/env/cut/birch_a.png; Meshy side reused from art/source/env/raw/birch_a (same endpoint and image, logged in this file's env counterpart)"
+ }
+]

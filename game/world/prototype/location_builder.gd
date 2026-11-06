@@ -38,11 +38,16 @@ const KIT := {
 	"lantern": {"dir": "props", "col": "post"},
 	"barrels": {"dir": "props", "col": "box"},
 	"bridge": {"dir": "props", "col": "mesh"},
-	"birch_a": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true},
-	"birch_b": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true},
-	"birch_a_lo": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true},
-	"birch_b_lo": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true},
-	"bush": {"dir": "vegetation", "col": "cyl", "r": 0.3, "wind": 0.025},
+	# card canopies (tools/blender/build_foliage.py): trunk + painted leaf-tuft cards, alpha scissor
+	"birch_a": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true, "cards": true},
+	"birch_b": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true, "cards": true},
+	"birch_a_lo": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true, "cards": true},
+	"birch_b_lo": {"dir": "vegetation", "col": "trunk", "wind": 0.07, "fade": true, "cards": true},
+	"fruit_tree": {"dir": "vegetation", "col": "trunk", "wind": 0.05, "fade": true, "cards": true},
+	"bush": {"dir": "vegetation", "col": "cyl", "r": 0.3, "wind": 0.025, "cards": true},
+	# village dressing (tools/blender/build_village_props.py); flower cards in the atlas alpha
+	"doorstep": {"dir": "props", "col": "", "cards": true},
+	"flower_bed": {"dir": "props", "col": "box", "cards": true},
 	"rock_a": {"dir": "rocks", "col": "cyl", "r": 0.42, "outline": true},
 	"rock_b": {"dir": "rocks", "col": "", "outline": true},
 }
@@ -56,15 +61,19 @@ const CARD_FERN := 5
 const CARD_PINK := 6
 const CARD_SHORT := 7
 
+## Golden-afternoon light (A_world.jpg): low warm sun, long blue-green tinted shadows, a little
+## darker overall than the first pass (owner review of docs/screens/m2/).
 const DAY := {
-	"sun": Color("#ffe2b0"),
-	"sun_energy": 0.72,
-	"ambient": Color("#a9b8d8"),
-	"ambient_energy": 0.32,
-	"shadow_tint": Color("#8fa0c4"),
+	"sun": Color("#ffd8a0"),
+	"sun_energy": 0.68,
+	"ambient": Color("#aeb3d6"),
+	"ambient_energy": 0.3,
+	"shadow_tint": Color("#7c9cb0"),
 	"sky_top": Color("#8ea4dd"),
-	"sky_horizon": Color("#efdcd8"),
+	"sky_horizon": Color("#f3d6c4"),
 	"ground_bottom": Color("#8a8f6a"),
+	"haze": Color("#efd8c4"),
+	"brightness": 0.96,
 }
 
 var meshes := {}
@@ -120,6 +129,8 @@ func _prepare_kit() -> void:
 			mat.set_shader_parameter("contact_darkness", 0.22)
 		if spec.get("fade", false):
 			mat.set_shader_parameter("cam_fade_near", 10.0)
+		if spec.get("cards", false):
+			mat.set_shader_parameter("alpha_scissor", 0.5)
 		if spec["dir"] == "rocks":
 			mat.set_shader_parameter("albedo_tint", Color(0.78, 0.76, 0.8))
 		if spec.get("outline", false):
@@ -292,6 +303,7 @@ func _environment(
 	env.ambient_light_energy = DAY["ambient_energy"] * ambient_scale
 	env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	env.adjustment_enabled = true
+	env.adjustment_brightness = DAY["brightness"]
 	env.adjustment_saturation = 1.1
 	env.adjustment_contrast = 1.1
 	if fog:
@@ -304,8 +316,8 @@ func _environment(
 		env.fog_height_density = 0.03
 	else:
 		env.fog_enabled = true
-		env.fog_light_color = Color("#e6dcdf")
-		env.fog_density = 0.004
+		env.fog_light_color = DAY["haze"]
+		env.fog_density = 0.0045
 		env.fog_sky_affect = 0.0
 	we.environment = env
 	var sun := DirectionalLight3D.new()
