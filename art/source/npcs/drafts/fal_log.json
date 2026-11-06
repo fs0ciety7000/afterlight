@@ -1,0 +1,47 @@
+[
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "npc_odile_draft",
+  "seconds": 2.6,
+  "arguments": {
+   "image_size": "portrait_4_3",
+   "num_inference_steps": 4,
+   "seed": 81,
+   "num_images": 1
+  },
+  "prompt": "Full-body character concept of an original villager for a stylized 3D anime fantasy game, soft cel-shaded anime game style, flat clean colors, simple shading, thin dark outlines. One single figure, standing, front three-quarter view, arms relaxed slightly away from the body, plain flat light grey background, no text, no scenery. ODILE, the old bell ringer of a small medieval fantasy village, a small slightly stooped woman in her seventies, silver-white hair in a tight bun, sharp amused grey eyes, thin smile lines, a long heather-plum knitted shawl over a slate-blue ankle-length wool dress, a dark brown apron, a braided hemp bell-rope cord knotted around her right wrist with a small brass ring, sturdy brown shoes.",
+  "files": [
+   "art/source/npcs/drafts/npc_odile_draft.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "npc_tobias_draft",
+  "seconds": 2.4,
+  "arguments": {
+   "image_size": "portrait_4_3",
+   "num_inference_steps": 4,
+   "seed": 82,
+   "num_images": 1
+  },
+  "prompt": "Full-body character concept of an original villager for a stylized 3D anime fantasy game, soft cel-shaded anime game style, flat clean colors, simple shading, thin dark outlines. One single figure, standing, front three-quarter view, arms relaxed slightly away from the body, plain flat light grey background, no text, no scenery. TOBIAS, the village clockmaker, a lean man in his forties, tousled copper-brown hair, neat short moustache, a brass head-mounted magnifying loupe on a leather band pushed up on his forehead, bottle-green waistcoat with a brass pocket-watch chain over a cream shirt with rolled sleeves, a short brown leather tool apron with small screwdrivers in its pockets, grey trousers, brown boots.",
+  "files": [
+   "art/source/npcs/drafts/npc_tobias_draft.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "npc_ysaline_draft",
+  "seconds": 2.2,
+  "arguments": {
+   "image_size": "portrait_4_3",
+   "num_inference_steps": 4,
+   "seed": 83,
+   "num_images": 1
+  },
+  "prompt": "Full-body character concept of an original villager for a stylized 3D anime fantasy game, soft cel-shaded anime game style, flat clean colors, simple shading, thin dark outlines. One single figure, standing, front three-quarter view, arms relaxed slightly away from the body, plain flat light grey background, no text, no scenery. YSALINE, the village herbalist, a young woman in her twenties, long chestnut hair in a loose side braid with small sprigs tucked in, calm hazel eyes, a short sage-green hooded capelet over a cream linen blouse, a rust-brown calf-length skirt, a small brass compass on a cord around her neck, brown boots, a wicker basket of pale blue glowing herbs carried on her left forearm.",
+  "files": [
+   "art/source/npcs/drafts/npc_ysaline_draft.jpg"
+  ]
+ }
+]

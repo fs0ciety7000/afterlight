@@ -1,0 +1,148 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "npc_sheet",
+  "seconds": 35.5,
+  "arguments": {
+   "aspect_ratio": "21:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 91,
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab160f7/zfyM-s3ouGtUcF1pRjXg2_ref_bastien.png",
+    "https://v3b.fal.media/files/b/0ab160f7/H_2OW6KuGRxKXTddMq5_g_ref_maelle.png",
+    "https://v3b.fal.media/files/b/0ab160f7/9yUL3gPteoXwtPobCnso0_ref_aubelin_merchant.png"
+   ]
+  },
+  "prompt": "Character lineup model sheet for a stylized 3D anime fantasy game: SIX different villagers of the small village of Aubelin, standing side by side in ONE ROW, left to right, each figure centered in its own equal-width column (six equal columns across the whole image), with clear empty background between figures; no figure touches or overlaps another. Every figure FULL BODY from the top of the head to the soles of the shoes, all feet fully visible with a small margin above and below, all drawn at the same scale on the same ground line, seen in a FRONT THREE-QUARTER VIEW (body turned about 25 degrees to the left of the image), standing still in a relaxed loose A-pose: arms hanging slightly away from the body with a clear gap between each arm and the torso, legs straight and slightly apart, neutral calm expression. Rendering style: soft cel-shaded anime game character like the reference images. The three reference images are head-and-shoulder portraits of three of these villagers: keep each one's face, hair, colors and clothing exactly: reference 1 is BASTIEN, reference 2 is MAELLE, reference 3 is ROSALIE; invent their full bodies consistently. Column 1 (far left): ODILE, the old bell ringer, a small slightly stooped woman in her seventies (about 1.58 m), silver-white hair in a tight bun, sharp amused grey eyes, smile lines, a long heather-plum knitted shawl over a slate-blue ankle-length wool dress, a dark brown apron, a braided hemp bell-rope cord knotted around her right wrist with a small brass hand bell hanging from it, sturdy brown shoes. Column 2: BASTIEN (reference 1), the blacksmith, a broad sturdy man in his fifties (about 1.82 m, the tallest), faded red cloth headband, short greying beard, rust-red linen shirt with rolled sleeves, a thick knee-length brown leather apron, dark brown trousers, heavy black boots, empty hands. Column 3: MAELLE (reference 2), the rune engraver, a slim woman around thirty (about 1.68 m), short dark teal-black bob with one tiny braid, small round brass spectacles pushed up on her head, engraving stylus behind her ear, dark green knee-length work smock over a cream high-collared blouse, charcoal leggings, brown ankle boots, a small tool roll on her belt. Column 4: ROSALIE (reference 3), the cheerful plump merchant in her forties (about 1.62 m), auburn hair in a loose bun with a straw-colored scarf, rosy freckled face, mustard-yellow knitted shawl over a cream blouse, leather coin-pouch strap across her chest, long olive-brown skirt, brown shoes. Column 5: TOBIAS, the clockmaker, a lean man in his forties (about 1.76 m), tousled copper-brown hair, neat short moustache, a brass magnifying loupe on a leather band pushed up on his forehead, bottle-green waistcoat with a brass pocket-watch chain over a cream shirt with rolled sleeves, short brown leather tool apron, grey trousers, brown boots. Column 6 (far right): YSALINE, the herbalist, a young woman in her twenties (about 1.65 m), long dark-brown hair in a loose side braid with small green sprigs, calm hazel eyes, a short sage-green hooded capelet over a cream linen blouse, a rust-brown calf-length skirt, a small brass compass on a cord around her neck, brown boots, a small wicker basket of pale-blue herbs hanging from her left forearm. IMPORTANT TEXTURE RULE: pure FLAT UNSHADED COLORS like a base-color texture map: no cast shadows, no shading, no highlights, no gradients, no ambient occlusion, each material one flat color, thin dark ink outlines only. Plain flat uniform light grey background, no floor, no ground shadow, no scenery, no text, no names, no labels, no frames.",
+  "files": [
+   "art/source/npcs/npc_sheet.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "odile_tripo",
+  "seconds": 96.9,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 15000,
+   "model_seed": 101,
+   "texture_seed": 101,
+   "image_url": "https://v3b.fal.media/files/b/0ab1610a/cn2P5LzV2BeSWNsGPSouN_odile_cut.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/raw/odile/odile_tripo_0.glb",
+   "art/source/npcs/raw/odile/odile_tripo_1.glb",
+   "art/source/npcs/raw/odile/odile_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "bastien_tripo",
+  "seconds": 97.3,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 15000,
+   "model_seed": 102,
+   "texture_seed": 102,
+   "image_url": "https://v3b.fal.media/files/b/0ab16115/txOEsEgoz8KwY9yUV61Hy_bastien_cut.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/raw/bastien/bastien_tripo_0.glb",
+   "art/source/npcs/raw/bastien/bastien_tripo_1.glb",
+   "art/source/npcs/raw/bastien/bastien_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "maelle_tripo",
+  "seconds": 97.8,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 15000,
+   "model_seed": 103,
+   "texture_seed": 103,
+   "image_url": "https://v3b.fal.media/files/b/0ab1611f/N4HvTrnHiZ5MIrm7Wy822_maelle_cut.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/raw/maelle/maelle_tripo_0.glb",
+   "art/source/npcs/raw/maelle/maelle_tripo_1.glb",
+   "art/source/npcs/raw/maelle/maelle_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "rosalie_tripo",
+  "seconds": 126.9,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 15000,
+   "model_seed": 104,
+   "texture_seed": 104,
+   "image_url": "https://v3b.fal.media/files/b/0ab16129/l8bzPB18q2e8dsMlebRlY_rosalie_cut.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/raw/rosalie/rosalie_tripo_0.glb",
+   "art/source/npcs/raw/rosalie/rosalie_tripo_1.glb",
+   "art/source/npcs/raw/rosalie/rosalie_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "tobias_tripo",
+  "seconds": 126.8,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 15000,
+   "model_seed": 105,
+   "texture_seed": 105,
+   "image_url": "https://v3b.fal.media/files/b/0ab16136/BnjNFgJb6kpsQSjU0EfR3_tobias_cut.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/raw/tobias/tobias_tripo_0.glb",
+   "art/source/npcs/raw/tobias/tobias_tripo_1.glb",
+   "art/source/npcs/raw/tobias/tobias_tripo_2.png"
+  ]
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "ysaline_tripo",
+  "seconds": 126.8,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 15000,
+   "model_seed": 106,
+   "texture_seed": 106,
+   "image_url": "https://v3b.fal.media/files/b/0ab16142/yEo2CY6LhDti8dDJbsaLQ_ysaline_cut.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/npcs/raw/ysaline/ysaline_tripo_0.glb",
+   "art/source/npcs/raw/ysaline/ysaline_tripo_1.glb",
+   "art/source/npcs/raw/ysaline/ysaline_tripo_2.png"
+  ]
+ }
+]
