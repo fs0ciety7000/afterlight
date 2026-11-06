@@ -164,11 +164,15 @@ static func _auto_shield(sim: CombatSim, u: Dictionary) -> void:
 		if CombatTactics.role_of(spell) != "shield":
 			continue
 		var mode: String = sim.tactics["spells"].get(id, "manual")
+		var low_hp := float(u["hp"]) < float(sim.tactics["barrier_hp_pct"]) * float(u["max_hp"])
 		var wanted := false
-		if mode == "auto_hp_below":
-			wanted = float(u["hp"]) < float(sim.tactics["barrier_hp_pct"]) * float(u["max_hp"])
-		elif mode == "auto_before_telegraph":
-			wanted = incoming_big_hit(sim, u)
+		match mode:
+			"auto_hp_below":
+				wanted = low_hp
+			"auto_before_telegraph":
+				wanted = incoming_big_hit(sim, u)
+			"auto_telegraph_or_hp":
+				wanted = incoming_big_hit(sim, u) or low_hp
 		if wanted and CombatActions.check_cast(sim, u, id)["reason"] == "":
 			CombatActions.start_spell(sim, u, id, u["uid"])
 

@@ -3,14 +3,16 @@ extends RefCounted
 ## Combat priorities (GDD §7.4). Tactics are a plain dictionary:
 ##   targeting       "nearest" | "lowest_hp" | "elites_first" | "casters_first"
 ##   mana_reserve    0-0.5: automatic casts never take mana below this share
-##   barrier_hp_pct  0.3-0.7: threshold of "auto_hp_below"
+##   barrier_hp_pct  0.3-0.7: threshold of "auto_hp_below" and of the fallback
+##                   of "auto_telegraph_or_hp"
 ##   min_enemies     enemy count of "auto_min_enemies"
 ##   spells          {spell_id: mode}
 ## Modes: "manual", "auto", "auto_elite_boss", "auto_interrupt",
-## "auto_min_enemies", "auto_hp_below", "auto_before_telegraph", "auto_full".
+## "auto_min_enemies", "auto_hp_below", "auto_before_telegraph",
+## "auto_telegraph_or_hp", "auto_full".
 ## Defaults follow each spell's role, read from its data (no id in code):
 ## damage (Zoltraak included) -> auto, distributed damage -> auto_min_enemies,
-## shield -> auto_hp_below, ultimate -> manual. An interrupting spell on
+## shield -> auto_telegraph_or_hp (GDD decision 22), ultimate -> manual. An interrupting spell on
 ## "auto" still turns to an enemy casting something interruptible first.
 ## Deviation from GDD §7.4 (Zoltraak "Auto pour interrompre" by default): with
 ## it, an idle player loses low-level normal fights (bench, GAME_BALANCE §22).
@@ -24,6 +26,7 @@ const MODES := [
 	"auto_min_enemies",
 	"auto_hp_below",
 	"auto_before_telegraph",
+	"auto_telegraph_or_hp",
 	"auto_full",
 ]
 
@@ -47,7 +50,7 @@ static func modes_for(spell: Dictionary) -> Array:
 		"ultimate":
 			return ["manual", "auto_full"]
 		"shield":
-			return ["manual", "auto_hp_below", "auto_before_telegraph"]
+			return ["manual", "auto_hp_below", "auto_before_telegraph", "auto_telegraph_or_hp"]
 		"interrupt":
 			return ["manual", "auto", "auto_elite_boss", "auto_interrupt"]
 		"area":
@@ -60,7 +63,7 @@ static func default_mode(spell: Dictionary) -> String:
 		"ultimate":
 			return "manual"
 		"shield":
-			return "auto_hp_below"
+			return "auto_telegraph_or_hp"
 		"area":
 			return "auto_min_enemies"
 	return "auto"

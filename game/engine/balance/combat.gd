@@ -87,7 +87,9 @@ const DODGE_MARGIN_M := 0.3
 const COMBAT_TIMEOUT_S := 600.0
 
 # --- Tactics defaults (GDD §7.4) ----------------------------------------------
-const TACTIC_BARRIER_HP_DEFAULT := 0.5
+## (provisoire, jalon 6) 0.5 -> 0.3: under 30 % an unshielded Ash Seal kills
+## anyway, so the fallback never steals the Barrier from a survivable Seal.
+const TACTIC_BARRIER_HP_DEFAULT := 0.3
 const TACTIC_BARRIER_HP_MIN := 0.3
 const TACTIC_BARRIER_HP_MAX := 0.7
 const TACTIC_MANA_RESERVE_DEFAULT := 0.2

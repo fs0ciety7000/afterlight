@@ -7,10 +7,11 @@ extends RefCounted
 ##
 ## `entry` is a CombatSim party entry (PartyBuild.entry, or a bench entry with
 ## `stats`), so the model sees exactly the stats, spells, ranks and runes the
-## simulation would use. Tactics are not saved, so an absent party fights with
-## the defaults (CombatTactics.default_mode): damage and interrupt spells on
-## cooldown, area spells while enough enemies stand, shields under a HP
-## threshold, the ultimate on manual (never cast).
+## simulation would use. An absent party always fights with the default
+## tactics, even when the player saved others (GAME_BALANCE §20.1, GDD
+## decision 25; CombatTactics.default_mode): damage and interrupt spells on
+## cooldown, area spells while enough enemies stand, shields on their
+## automatic mode, the ultimate on manual (never cast).
 
 
 ## Spell parts of a party member against a pack of `pack_size` enemies (§20.2):
