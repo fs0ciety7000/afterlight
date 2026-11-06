@@ -5,10 +5,14 @@ extends Screen
 const ZOOMS := [1.0, 1.5, 2.25]
 const FOG_SHADER := preload("res://assets/shaders/map_fog.gdshader")
 const PAN_STEP := 80.0
+## Size of the fog shader's arrays (places revealed + discovery discs).
+const FOG_POINTS := 32
 
 var _frame: Control
 var _canvas: Control
 var _markers: Control
+## « ? » of the discoveries not found yet, with the traveler's compass worn.
+var _hints: Control
 var _fog: ColorRect
 var _zoom_index := 0
 var _pan := Vector2.ZERO
@@ -72,6 +76,11 @@ func _ready() -> void:
 	_markers.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_markers.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_frame.add_child(_markers)
+	_hints = Control.new()
+	_hints.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hints.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_frame.add_child(_hints)
+	_build_hints()
 
 	layout.add_child(_side_panel(narrow))
 	_build_markers()
@@ -165,9 +174,24 @@ func _select(id: String) -> void:
 
 func _on_travel() -> void:
 	UiProbe.world["travel_clicked_ms"] = Time.get_ticks_msec()
+	# Travelling ends a dungeon expedition (confirmed when rooms were won).
+	var q := GameState.content_api.leave_dungeon_quote()
+	if q["ok"] and q.get("confirm", false):
+		var d := ConfirmDialog.open(
+			self, tr("ui.story.leave_title"), tr("ui.dungeon.leave_confirm"), "dungeon.leave"
+		)
+		d.confirmed.connect(_travel_now)
+		return
+	_travel_now()
+
+
+func _travel_now() -> void:
+	if GameState.content_api.leave_dungeon_quote()["ok"]:
+		GameState.content_api.leave_dungeon()
+	var first: bool = not GameState.data["world"]["discovered_locations"].has(_selected)
 	if GameState.travel(_selected, "default") == "":
 		SaveService.save_now()
-		Router.go_to("explore", {}, false)
+		Router.go_to("explore", {"first_visit": _selected if first else ""}, false)
 
 
 func _close() -> void:
@@ -216,19 +240,50 @@ func _apply_view() -> void:
 	for m: MapMarker in _markers.get_children():
 		var pos: Array = Content.get_entity(m.location_id)["map_pos"]
 		m.position = _pan + Vector2(pos[0], pos[1]) * scaled - m.size / 2.0
+	for h: Label in _hints.get_children():
+		var hp: Array = Content.get_entity(str(h.get_meta("discovery")))["map_pos"]
+		h.position = _pan + Vector2(hp[0], hp[1]) * scaled - h.size / 2.0
 	UiProbe.world["map"] = {"zoom": ZOOMS[_zoom_index], "pan_x": _pan.x, "pan_y": _pan.y}
 
 
 func _update_fog() -> void:
 	var points := PackedVector2Array()
+	var radii := PackedFloat32Array()
 	for id in GameState.data["world"]["revealed_locations"]:
 		var pos: Array = Content.get_entity(id).get("map_pos", [0.5, 0.5])
 		points.append(Vector2(pos[0], pos[1]))
-	while points.size() < 16:
-		points.append(Vector2(-1, -1))
+		radii.append(0.0)
+	# Each discovery found pierces the veil around its spot (fog_discs).
+	var discs := GameState.content_api.fog_discs()
+	for disc: Dictionary in discs:
+		points.append(Vector2(disc["map_pos"][0], disc["map_pos"][1]))
+		radii.append(float(disc["radius"]))
+	UiProbe.world["fog_discs"] = discs.map(func(d: Dictionary) -> String: return d["discovery_id"])
+	var count := mini(points.size(), FOG_POINTS)
+	points.resize(FOG_POINTS)
+	radii.resize(FOG_POINTS)
+	for i in range(count, FOG_POINTS):
+		points[i] = Vector2(-1, -1)
 	var mat := _fog.material as ShaderMaterial
 	mat.set_shader_parameter("points", points)
-	mat.set_shader_parameter("count", GameState.data["world"]["revealed_locations"].size())
+	mat.set_shader_parameter("radii", radii)
+	mat.set_shader_parameter("count", count)
+
+
+## « ? » marks of the current place's hidden discoveries (compass worn).
+func _build_hints() -> void:
+	if not StoryText.compass_worn():
+		return
+	var place: String = GameState.data["world"]["location_id"]
+	var ids := GameState.content_api.compass_hints(place)
+	for id: String in ids:
+		if Content.get_entity(id).get("map_pos", []).size() < 2:
+			continue
+		var h := Kit.label(tr("ui.story.hint_mark"), "SubheadingLabel")
+		h.set_meta("discovery", id)
+		h.tooltip_text = tr("ui.story.compass").format({"count": ids.size()})
+		_hints.add_child(h)
+	UiProbe.world["map_hints"] = _hints.get_child_count()
 
 
 func _on_frame_input(event: InputEvent) -> void:

@@ -5,7 +5,9 @@ shader_type canvas_item;
 uniform vec4 fog_color : source_color = vec4(0.93, 0.89, 0.80, 0.92);
 uniform vec4 fog_shade : source_color = vec4(0.78, 0.72, 0.62, 0.92);
 uniform int count = 0;
-uniform vec2 points[16];
+uniform vec2 points[32];
+// Per point: 0 = a revealed place (default radius), > 0 = a discovery's disc.
+uniform float radii[32];
 uniform float radius = 0.16;
 uniform float softness = 0.08;
 uniform float aspect = 1.7778;
@@ -26,13 +28,14 @@ void fragment() {
 	vec2 uv = UV;
 	float n = noise(uv * 9.0) * 0.6 + noise(uv * 23.0) * 0.4;
 	float clear = 0.0;
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < 32; i++) {
 		if (i >= count) {
 			break;
 		}
 		vec2 d = uv - points[i];
 		d.x *= aspect;
-		float r = radius * (0.85 + 0.3 * n);
+		float base = radii[i] > 0.0 ? radii[i] : radius;
+		float r = base * (0.85 + 0.3 * n);
 		clear = max(clear, 1.0 - smoothstep(r - softness, r, length(d)));
 	}
 	vec4 mist = mix(fog_color, fog_shade, n);

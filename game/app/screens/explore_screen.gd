@@ -8,6 +8,9 @@ const EXPLORE_CUT_RADIUS := 0.22
 const COMBAT_CUT_RADIUS := 0.36
 
 var view: ExploreView
+## Milestone 6: NPCs, discoveries, dialogues (story) and the dungeon run.
+var story: ExploreStory
+var dungeon: ExploreDungeon
 var _menu: GameMenu
 var _toast: Label
 var _toast_timer: SceneTreeTimer
@@ -30,10 +33,21 @@ var _combat_anchor: Node3D
 var _hunt_button: Button
 ## Shown once the place is loaded (e.g. the offline gains just claimed).
 var _pending_toast := ""
+var _tracker: QuestTracker
+var _banners: StoryBanners
+var _interact_button: Button
+var _journal_button: Button
+var _vitals: Label
+var _compass: Label
+## New game: the intro cards first. A place entered for the first time: Fern's line.
+var _intro := false
+var _first_visit := ""
 
 
 func setup(params: Dictionary) -> void:
 	_pending_toast = str(params.get("toast", ""))
+	_intro = bool(params.get("intro", false))
+	_first_visit = str(params.get("first_visit", ""))
 
 
 func _ready() -> void:
@@ -45,14 +59,37 @@ func _ready() -> void:
 	view.location_ready.connect(_on_location_ready)
 	view.location_failed.connect(_on_location_failed)
 	view.encounter_engaged.connect(_start_combat)
+	story = ExploreStory.new()
+	story.name = "Story"
+	story.host = self
+	story.view = view
+	dungeon = ExploreDungeon.new()
+	dungeon.name = "Dungeon"
+	dungeon.host = self
+	dungeon.view = view
+	dungeon.story = story
+	story.dungeon = dungeon
 	_build_hud()
 	for child in get_children():
-		if child != _toast:
+		if child != _toast and child is CanvasItem:
 			_explore_nodes.append(child)
+	# Banners stay over the fights (a bestiary tier comes with the victory).
+	_banners = StoryBanners.new()
+	add_child(_banners)
+	_banners.set_anchors_and_offsets_preset(
+		Control.PRESET_CENTER_TOP, Control.PRESET_MODE_MINSIZE, 150
+	)
+	_banners.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	add_child(story)
+	add_child(dungeon)
+	story.prompt_changed.connect(_on_prompt)
 	GameState.changed.connect(_refresh_hud)
+	_register_story_tests()
 	_load_current()
 	if _pending_toast != "":
 		_show_toast(_pending_toast)
+	if _intro and not UiProbe.test_skip_intro:
+		story.play_cards("intro")
 
 
 func _exit_tree() -> void:
@@ -66,9 +103,22 @@ func _load_current() -> void:
 	var world: Dictionary = GameState.data["world"]
 	var leader: String = GameState.data["party"][0]
 	_travel_started_ms = Time.get_ticks_msec()
-	view.load_location(
-		world["location_id"], world["spawn"], Content.index(), Content.move_speed(leader)
-	)
+	var inside := dungeon.load_args()
+	if inside.is_empty():
+		theme = null
+		view.load_location(
+			world["location_id"], world["spawn"], Content.index(), Content.move_speed(leader)
+		)
+	else:
+		# Night palette from the postern on (DESIGN.md, a cut at Milestone 6).
+		theme = ThemeBuilder.build(UiTokens.NIGHT, Settings.text_scale())
+		view.load_location(
+			inside["place"],
+			inside["spawn"],
+			Content.index(),
+			Content.move_speed(leader),
+			inside["encounters"]
+		)
 	if GameState.runtime_position != null and view.player:
 		view.player.global_position = GameState.runtime_position
 		view.rig.snap()
@@ -81,21 +131,43 @@ func _on_location_ready(location_id: String) -> void:
 	UiProbe.world["location_ready_at_ms"] = Time.get_ticks_msec()
 	UiProbe.world["location_id"] = location_id
 	_show_toast(tr("ui.explore.arrived").format({"place": Content.display_name(location_id)}))
+	if dungeon.inside():
+		dungeon.on_loaded()
+	story.populate()
+	if _first_visit != "":
+		story.first_visit(_first_visit)
+		_first_visit = ""
 
 
 func _on_location_failed(_location_id: String, _reason: String) -> void:
 	_show_toast(tr("ui.explore.scene_missing"), true)
 
 
+## Public entry points for the story helpers.
+func show_toast(message: String, is_error: bool = false) -> void:
+	_show_toast(message, is_error)
+
+
+func reload_place() -> void:
+	_load_current()
+	_refresh_hud()
+
+
 func _on_exit_reached(to: String, spawn: String) -> void:
+	if dungeon.inside():
+		dungeon.on_exit(to, spawn, view.last_exit)
+		return
 	var status := GameState.location_status(to)
 	if status != WorldRules.AVAILABLE:
 		_show_toast(
 			tr("ui.explore.exit_locked").format({"reason": GameState.lock_reason(to)}), true
 		)
 		return
+	var first: bool = not GameState.data["world"]["discovered_locations"].has(to)
 	var error := GameState.travel(to, spawn)
 	if error == "":
+		if first:
+			_first_visit = to
 		_load_current()
 		SaveService.save_now()
 
@@ -104,12 +176,18 @@ func _on_exit_reached(to: String, spawn: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _menu != null:
+	if _menu != null or story.busy:
 		return
 	if _combat != null:
 		_combat_input(event)
 		return
-	if event.is_action_pressed("open_map"):
+	if event.is_action_pressed("interact"):
+		if story.interact():
+			get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("open_journal"):
+		get_viewport().set_input_as_handled()
+		Router.go_to("journal")
+	elif event.is_action_pressed("open_map"):
 		get_viewport().set_input_as_handled()
 		Router.go_to("world_map")
 	elif event.is_action_pressed("open_bag"):
@@ -128,7 +206,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var mb := event as InputEventMouseButton
 		match mb.button_index:
 			MOUSE_BUTTON_LEFT:
-				view.click_to_move(mb.position)
+				if not story.click(mb.position):
+					view.click_to_move(mb.position)
 			MOUSE_BUTTON_WHEEL_UP:
 				view.rig.zoom(1)
 			MOUSE_BUTTON_WHEEL_DOWN:
@@ -232,6 +311,20 @@ func _build_hud() -> void:
 		func() -> void: Router.go_to("hunts", {"location": GameState.data["world"]["location_id"]})
 	)
 	right.add_child(_hunt_button)
+	# Quest tracker (DESIGN.md « suivi de quête »), dungeon vitals, compass.
+	_tracker = QuestTracker.new()
+	_tracker.size_flags_horizontal = Control.SIZE_SHRINK_END
+	_tracker.open_requested.connect(func() -> void: Router.go_to("journal"))
+	right.add_child(_tracker)
+	_vitals = Kit.label("", "NumberLabel")
+	_vitals.size_flags_horizontal = Control.SIZE_SHRINK_END
+	UiProbe.register("hud.dungeon_vitals", _vitals)
+	right.add_child(_vitals)
+	_compass = Kit.label("", "MutedLabel", true)
+	_compass.size_flags_horizontal = Control.SIZE_SHRINK_END
+	_compass.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	UiProbe.register("hud.compass", _compass)
+	right.add_child(_compass)
 	add_child(right)
 	right.set_anchors_and_offsets_preset(
 		Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, margin
@@ -253,6 +346,9 @@ func _build_hud() -> void:
 	var map_button := Kit.button(tr("ui.explore.map_button" + suffix), false, "hud.map")
 	map_button.pressed.connect(func() -> void: Router.go_to("world_map"))
 	bar.add_child(map_button)
+	_journal_button = Kit.button(tr("ui.explore.journal_button" + suffix), false, "hud.journal")
+	_journal_button.pressed.connect(func() -> void: Router.go_to("journal"))
+	bar.add_child(_journal_button)
 	var menu_button := Kit.button(tr("ui.explore.menu_button" + suffix), false, "hud.menu")
 	menu_button.pressed.connect(_open_menu)
 	bar.add_child(menu_button)
@@ -264,6 +360,20 @@ func _build_hud() -> void:
 		Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, margin
 	)
 	bar.grow_horizontal = Control.GROW_DIRECTION_BOTH
+
+	# What Fern can use nearby (« E — Parler à Odile »), also a tap target.
+	_interact_button = Kit.button("", true, "hud.interact")
+	_interact_button.focus_mode = Control.FOCUS_NONE
+	_interact_button.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
+	_interact_button.visible = false
+	_interact_button.pressed.connect(func() -> void: story.interact())
+	add_child(_interact_button)
+	_interact_button.set_anchors_and_offsets_preset(
+		Control.PRESET_CENTER_BOTTOM,
+		Control.PRESET_MODE_MINSIZE,
+		margin + int(UiTokens.at_least_css(UiTokens.TOUCH_TARGET)) + UiTokens.SPACE["md"]
+	)
+	_interact_button.grow_horizontal = Control.GROW_DIRECTION_BOTH
 
 	# Bottom-left: touch joystick.
 	if DisplayServer.is_touchscreen_available() or narrow:
@@ -300,7 +410,27 @@ func _refresh_hud() -> void:
 	var s := GameState.summary()
 	_level.text = tr("ui.explore.level").format({"level": s["level"]})
 	_gold.text = tr("ui.explore.gold").format({"gold": s["gold"]})
-	_place.text = Content.display_name(s["location_id"])
+	var here: String = s["dungeon"] if s["dungeon"] != "" else s["location_id"]
+	_place.text = Content.display_name(here)
+	var touch := DisplayServer.is_touchscreen_available()
+	_journal_button.text = tr(
+		(
+			"ui.explore.journal_button_claim"
+			if GameState.content_api.contracts_claimable()
+			else ("ui.explore.journal_button" + ("_touch" if touch else ""))
+		)
+	)
+	var vitals := GameState.content_api.dungeon_vitals()
+	_vitals.visible = s["dungeon"] != ""
+	_vitals.text = tr("ui.story.vitals").format(
+		{
+			"hp": roundi(float(vitals["hp_pct"]) * 100.0),
+			"mana": roundi(float(vitals["mana_pct"]) * 100.0)
+		}
+	)
+	var hints := GameState.content_api.compass_hints(here) if StoryText.compass_worn() else []
+	_compass.visible = not hints.is_empty()
+	_compass.text = tr("ui.story.compass").format({"count": hints.size()})
 	var hunt := GameState.offline_hunt()
 	_hunt_button.text = (
 		tr("ui.explore.hunt").format({"encounter": Content.display_name(hunt)})
@@ -329,6 +459,13 @@ func _show_toast(message: String, is_error: bool = false) -> void:
 
 
 func _start_combat(encounter_id: String, anchor: Node3D) -> void:
+	dungeon.before_combat(encounter_id, _begin_combat.bind(encounter_id, anchor))
+
+
+func _begin_combat(encounter_id: String, anchor: Node3D) -> void:
+	if not is_instance_valid(anchor):
+		view.engaged = ""
+		return
 	var counter := int(GameState.data["rng"].get("combat", 0))
 	GameState.data["rng"]["combat"] = counter + 1
 	var seed_value: int = absi(
@@ -338,6 +475,7 @@ func _start_combat(encounter_id: String, anchor: Node3D) -> void:
 	var setup: Dictionary = GameState.progression.combat_setup()
 	setup["seed"] = seed_value
 	setup["first_clear"] = int(cleared.get(encounter_id, 0)) == 0
+	setup = dungeon.combat_setup(encounter_id, setup)
 	if not _open_combat(encounter_id, anchor, setup):
 		view.engaged = ""
 
@@ -456,11 +594,30 @@ func _back_to_explore(id: String, victory: bool) -> void:
 		view.engaged = ""
 		SaveService.save_now()
 	else:
-		# Defeat: back to the entrance of the place, full health, nothing lost.
+		# Defeat: back to the entrance of the place, full health, nothing lost
+		# (in the dungeon: back to its checkpoint, DungeonRun moved Fern).
 		GameState.runtime_position = null
-		GameState.data["world"]["spawn"] = "default"
+		if not dungeon.inside():
+			GameState.data["world"]["spawn"] = "default"
 		_load_current()
+	dungeon.after_combat(id, victory)
 	_refresh_hud()
+
+
+func _on_prompt(text: String) -> void:
+	_interact_button.visible = text != "" and _combat == null
+	var touch := DisplayServer.is_touchscreen_available()
+	_interact_button.text = (text if touch else tr("ui.story.prompt_key").format({"action": text}))
+
+
+## Test channel (`?test=1`): story shortcuts for the Milestone 6 E2E runs.
+func _register_story_tests() -> void:
+	UiProbe.test_handlers["go_to_discovery"] = func() -> void:
+		if is_instance_valid(story):
+			story.test_go_to_discovery()
+	UiProbe.test_handlers["interact"] = func() -> void:
+		if is_instance_valid(story):
+			story.interact()
 
 
 func _combat_input(event: InputEvent) -> void:

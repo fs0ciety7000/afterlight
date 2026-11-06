@@ -111,4 +111,5 @@ func _on_new_game() -> void:
 func _start_new_game() -> void:
 	GameState.start_new(Content.start())
 	SaveService.save_now()
-	Router.go_to("explore")
+	# The intro cards play over Aubelin (docs/content/dialogues.md §2).
+	Router.go_to("explore", {"intro": true})
