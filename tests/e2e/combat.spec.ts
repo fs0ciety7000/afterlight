@@ -47,6 +47,22 @@ async function enterCombat(page: Page): Promise<string> {
 
 const world = async (page: Page) => (await probe(page))!.world;
 
+/** Zoltraak's default tactic is Auto (GDD decision 23): Fern recasts it as soon
+ * as it is ready. Set it to Manual from the paused fight, as a player would, so
+ * only the keys cast it; then resume. */
+async function zoltraakManual(page: Page): Promise<void> {
+  await click(page, 'combat.pause');
+  await expect.poll(async () => (await probe(page))!.world.combat_paused).toBe(true);
+  await click(page, 'tactics.open.combat');
+  await expect.poll(async () => (await probe(page))!.world.tactics_open, { timeout: 15_000 }).toBe(true);
+  await click(page, 'tactics.opt.zoltraak.manual');
+  await expect.poll(async () => (await probe(page))!.controls['tactics.status']?.text).toBe('Réglage enregistré.');
+  await click(page, 'tactics.close');
+  await expect.poll(async () => (await probe(page))!.world.tactics_open).toBe(false);
+  await click(page, 'combat.pause');
+  await expect.poll(async () => (await probe(page))!.world.combat_paused).toBe(false);
+}
+
 test('3.5 the first combat is won without any action and grants a level', async ({ page }) => {
   await enterCombat(page);
   await expect.poll(async () => (await world(page)).combat_result, { timeout: 120_000 }).toBe('victory');
@@ -58,6 +74,7 @@ test('3.5 the first combat is won without any action and grants a level', async 
 
 test('3.6 key 1 casts Zoltraak, the cooldown shows and a refusal is explained', async ({ page }) => {
   await enterCombat(page);
+  await zoltraakManual(page);
   await page.locator('canvas').focus();
   // Wait until Zoltraak is ready, then press 1.
   await expect
