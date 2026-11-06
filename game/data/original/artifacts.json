@@ -17,10 +17,9 @@
         0.12
       ],
       "unlock": {
-        "level_at_least": 6
+        "start": true
       },
-      "icon": "res://assets/textures/icons/artifact.cracked_hourglass.webp",
-      "notes": "Source: quest.side_clockmaker (quests land later). unlock is a placeholder until then."
+      "icon": "res://assets/textures/icons/artifact.cracked_hourglass.webp"
     },
     {
       "id": "artifact.pressed_flower",
@@ -37,10 +36,9 @@
         0.3
       ],
       "unlock": {
-        "location_cleared": "location.lantern_mire"
+        "start": true
       },
-      "icon": "res://assets/textures/icons/artifact.pressed_flower.webp",
-      "notes": "Source: a discovery in the Lantern Mire (discoveries land later). unlock is a placeholder until then."
+      "icon": "res://assets/textures/icons/artifact.pressed_flower.webp"
     },
     {
       "id": "artifact.traveler_compass",
@@ -57,10 +55,9 @@
         0.2
       ],
       "unlock": {
-        "level_at_least": 1
+        "start": true
       },
-      "icon": "res://assets/textures/icons/artifact.traveler_compass.webp",
-      "notes": "Source: quest.side_herbalist (quests land later). unlock is a placeholder until then."
+      "icon": "res://assets/textures/icons/artifact.traveler_compass.webp"
     },
     {
       "id": "artifact.ashen_bell",
@@ -77,10 +74,9 @@
         0.8
       ],
       "unlock": {
-        "location_cleared": "location.watch_ruins"
+        "start": true
       },
-      "icon": "res://assets/textures/icons/artifact.ashen_bell.webp",
-      "notes": "Source: first kill of Morvaine (loot.boss_morvaine, when first_clear). unlock is a placeholder until the dungeon (jalon 6)."
+      "icon": "res://assets/textures/icons/artifact.ashen_bell.webp"
     }
   ]
 }

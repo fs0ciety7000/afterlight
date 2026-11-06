@@ -54,6 +54,13 @@
       ],
       "model": "res://assets/models/characters/fern/fern.glb",
       "portrait": "res://assets/textures/portraits/fern.png"
+    },
+    {
+      "id": "character.himmel",
+      "origin": "canon",
+      "name_key": "character.himmel.name",
+      "canon_note": "Name of the hero is canon. Only cited: an original statue and plaque in the Whispering Wood (discovery.moss_statue) and one line by Rosalie name him; no act, line or appearance is attributed to him. Not playable. Texts validated by the owner (GDD, 2026-11-06).",
+      "playable": false
     }
   ]
 }

@@ -51,6 +51,21 @@
         { "kind": "rune", "chance": 1.0, "qty": [1, 1], "per": "encounter" },
         { "kind": "artifact", "ref": "artifact.ashen_bell", "chance": 1.0, "qty": [1, 1], "per": "encounter", "when": "first_clear" }
       ]
+    },
+    {
+      "id": "loot.field_chest",
+      "origin": "original",
+      "name_key": "loot.field_chest.name",
+      "rarity_profile": "chest",
+      "notes": "Gold = CHEST_GOLD_MULT x enemy gold at the chest level (qty ignored). Opened once (discovery).",
+      "entries": [
+        { "kind": "gold", "chance": 1.0, "qty": [1, 1], "per": "encounter" },
+        { "kind": "material", "ref": "material.mana_dust", "chance": 1.0, "qty": [3, 5], "per": "encounter" },
+        { "kind": "material", "ref": "material.rune_shard", "chance": 1.0, "qty": [1, 2], "per": "encounter" },
+        { "kind": "material", "ref": "material.grimoire_page", "chance": 1.0, "qty": [1, 1], "per": "encounter" },
+        { "kind": "item", "chance": 1.0, "qty": [1, 1], "per": "encounter" },
+        { "kind": "rune", "chance": 0.3, "qty": [1, 1], "per": "encounter" }
+      ]
     }
   ]
 }

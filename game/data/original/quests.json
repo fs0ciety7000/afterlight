@@ -1,0 +1,497 @@
+{
+  "schema_version": 1,
+  "type": "quest",
+  "entries": [
+    {
+      "id": "quest.main_01",
+      "origin": "original",
+      "name_key": "quest.main_01.name",
+      "desc_key": "quest.main_01.desc",
+      "kind": "main",
+      "level": 3,
+      "giver": "npc.odile",
+      "active_at_start": true,
+      "prerequisites": [
+        {
+          "start": true
+        }
+      ],
+      "next": "quest.main_02",
+      "rewards": {
+        "gold": 100,
+        "materials": {
+          "material.grimoire_page": 1
+        },
+        "unlocks": [
+          "location.lantern_mire"
+        ]
+      },
+      "objectives": [
+        {
+          "id": "clear_wood",
+          "step": 1,
+          "event": "EncounterCompleted",
+          "target": "location.whispering_wood",
+          "count": 3
+        },
+        {
+          "id": "meet_odile",
+          "step": 1,
+          "event": "TalkedTo",
+          "target": "npc.odile",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "quest.main_02",
+      "origin": "original",
+      "name_key": "quest.main_02.name",
+      "desc_key": "quest.main_02.desc",
+      "kind": "main",
+      "level": 6,
+      "giver": "npc.maelle",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_01"
+        }
+      ],
+      "next": "quest.main_03",
+      "rewards": {
+        "gold": 400,
+        "materials": {
+          "material.grimoire_page": 2
+        },
+        "runes": [
+          {
+            "id": "rune.frost",
+            "tier": 1
+          }
+        ],
+        "unlocks": [
+          "location.watch_ruins"
+        ]
+      },
+      "objectives": [
+        {
+          "id": "reach_mire",
+          "step": 1,
+          "event": "LocationVisited",
+          "target": "location.lantern_mire",
+          "count": 1
+        },
+        {
+          "id": "clear_mire",
+          "step": 2,
+          "event": "EncounterCompleted",
+          "target": "location.lantern_mire",
+          "count": 4
+        },
+        {
+          "id": "find_journal",
+          "step": 2,
+          "event": "DiscoveryFound",
+          "target": "discovery.ferryman_journal",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "quest.main_03",
+      "origin": "original",
+      "name_key": "quest.main_03.name",
+      "desc_key": "quest.main_03.desc",
+      "kind": "main",
+      "level": 9,
+      "giver": "npc.bastien",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_02"
+        }
+      ],
+      "next": "quest.main_04",
+      "rewards": {
+        "gold": 900,
+        "materials": {
+          "material.grimoire_page": 3
+        },
+        "unlocks": [
+          "dungeon.silent_dial_cloister"
+        ]
+      },
+      "objectives": [
+        {
+          "id": "sentinels",
+          "step": 1,
+          "event": "EnemyDefeated",
+          "target": "enemy.stone_sentinel",
+          "count": 4
+        },
+        {
+          "id": "key",
+          "step": 1,
+          "event": "ItemCollected",
+          "target": "material.cloister_key",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "quest.main_04",
+      "origin": "original",
+      "name_key": "quest.main_04.name",
+      "desc_key": "quest.main_04.desc",
+      "kind": "main",
+      "level": 12,
+      "giver": "npc.odile",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_03"
+        }
+      ],
+      "rewards": {
+        "gold": 2000,
+        "materials": {
+          "material.grimoire_page": 3
+        }
+      },
+      "objectives": [
+        {
+          "id": "enter",
+          "step": 1,
+          "event": "LocationVisited",
+          "target": "dungeon.silent_dial_cloister",
+          "count": 1
+        },
+        {
+          "id": "morvaine",
+          "step": 2,
+          "event": "EncounterCompleted",
+          "target": "encounter.cloister_boss",
+          "count": 1
+        },
+        {
+          "id": "return",
+          "step": 3,
+          "event": "TalkedTo",
+          "target": "npc.odile",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "quest.side_clockmaker",
+      "origin": "original",
+      "name_key": "quest.side_clockmaker.name",
+      "desc_key": "quest.side_clockmaker.desc",
+      "kind": "side",
+      "level": 6,
+      "giver": "npc.tobias",
+      "prerequisites": [
+        {
+          "level_at_least": 6
+        }
+      ],
+      "rewards": {
+        "gold": 500,
+        "artifacts": [
+          "artifact.cracked_hourglass"
+        ],
+        "unlocks": [
+          "artifact_slot_1"
+        ]
+      },
+      "objectives": [
+        {
+          "id": "shards",
+          "step": 1,
+          "event": "ItemDelivered",
+          "target": "material.rune_shard",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "quest.side_herbalist",
+      "origin": "original",
+      "name_key": "quest.side_herbalist.name",
+      "desc_key": "quest.side_herbalist.desc",
+      "kind": "side",
+      "level": 6,
+      "giver": "npc.ysaline",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_01"
+        }
+      ],
+      "rewards": {
+        "gold": 300,
+        "materials": {
+          "material.grimoire_page": 1
+        },
+        "artifacts": [
+          "artifact.traveler_compass"
+        ]
+      },
+      "objectives": [
+        {
+          "id": "herbs",
+          "step": 1,
+          "event": "ItemDelivered",
+          "target": "material.mist_herb",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "quest.side_statue",
+      "origin": "original",
+      "name_key": "quest.side_statue.name",
+      "desc_key": "quest.side_statue.desc",
+      "kind": "side",
+      "level": 3,
+      "giver": "npc.aubelin_merchant",
+      "canon_refs": [
+        "character.himmel"
+      ],
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_01"
+        }
+      ],
+      "rewards": {
+        "gold": 150,
+        "materials": {
+          "material.grimoire_page": 1
+        },
+        "memory": true
+      },
+      "objectives": [
+        {
+          "id": "clean",
+          "step": 1,
+          "event": "DiscoveryFound",
+          "target": "discovery.moss_statue",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_wolves",
+      "origin": "original",
+      "name_key": "quest.daily_wolves.name",
+      "desc_key": "quest.daily_wolves.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "start": true
+        }
+      ],
+      "tier": "M",
+      "weight": 10,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "EnemyDefeated",
+          "target": "enemy.mist_wolf",
+          "count": 20
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_wood_patrol",
+      "origin": "original",
+      "name_key": "quest.daily_wood_patrol.name",
+      "desc_key": "quest.daily_wood_patrol.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "start": true
+        }
+      ],
+      "tier": "S",
+      "weight": 8,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "EncounterCompleted",
+          "target": "location.whispering_wood",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_lanterns",
+      "origin": "original",
+      "name_key": "quest.daily_lanterns.name",
+      "desc_key": "quest.daily_lanterns.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_01"
+        }
+      ],
+      "tier": "M",
+      "weight": 10,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "EnemyDefeated",
+          "target": "enemy.wandering_lantern",
+          "count": 15
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_mire_patrol",
+      "origin": "original",
+      "name_key": "quest.daily_mire_patrol.name",
+      "desc_key": "quest.daily_mire_patrol.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_01"
+        }
+      ],
+      "tier": "S",
+      "weight": 8,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "EncounterCompleted",
+          "target": "location.lantern_mire",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_interrupts",
+      "origin": "original",
+      "name_key": "quest.daily_interrupts.name",
+      "desc_key": "quest.daily_interrupts.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_01"
+        }
+      ],
+      "tier": "L",
+      "weight": 6,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "CastInterrupted",
+          "target": "character.fern",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_sentinels",
+      "origin": "original",
+      "name_key": "quest.daily_sentinels.name",
+      "desc_key": "quest.daily_sentinels.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_02"
+        }
+      ],
+      "tier": "M",
+      "weight": 10,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "EnemyDefeated",
+          "target": "enemy.stone_sentinel",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_ruins_patrol",
+      "origin": "original",
+      "name_key": "quest.daily_ruins_patrol.name",
+      "desc_key": "quest.daily_ruins_patrol.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_02"
+        }
+      ],
+      "tier": "S",
+      "weight": 8,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "EncounterCompleted",
+          "target": "location.watch_ruins",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_frozen",
+      "origin": "original",
+      "name_key": "quest.daily_frozen.name",
+      "desc_key": "quest.daily_frozen.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_02"
+        }
+      ],
+      "tier": "L",
+      "weight": 6,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "StatusApplied",
+          "target": "status.frozen",
+          "count": 5,
+          "source": "character.fern"
+        }
+      ]
+    },
+    {
+      "id": "quest.daily_alpha",
+      "origin": "original",
+      "name_key": "quest.daily_alpha.name",
+      "desc_key": "quest.daily_alpha.desc",
+      "kind": "daily",
+      "prerequisites": [
+        {
+          "quest_completed": "quest.main_03"
+        }
+      ],
+      "tier": "L",
+      "weight": 5,
+      "rewards": {},
+      "objectives": [
+        {
+          "id": "main",
+          "step": 1,
+          "event": "EncounterCompleted",
+          "target": "encounter.cloister_alpha",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

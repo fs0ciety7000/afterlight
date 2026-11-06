@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "type": "dungeon",
+  "entries": [
+    {
+      "id": "dungeon.silent_dial_cloister",
+      "origin": "original",
+      "name_key": "dungeon.silent_dial_cloister.name",
+      "desc_key": "dungeon.silent_dial_cloister.desc",
+      "location": "location.watch_ruins",
+      "level": 10,
+      "map_pos": [
+        0.86,
+        0.1
+      ],
+      "scene": "res://game/world/dungeons/silent_dial_cloister.tscn",
+      "unlock": {
+        "quest_completed": "quest.main_03"
+      },
+      "rooms": [
+        {
+          "id": "vestibule",
+          "kind": "encounter",
+          "encounter": "encounter.cloister_vestibule"
+        },
+        {
+          "id": "gallery",
+          "kind": "encounter",
+          "encounter": "encounter.cloister_gallery"
+        },
+        {
+          "id": "fountain",
+          "kind": "rest",
+          "heal_pct": 0.3
+        },
+        {
+          "id": "courtyard",
+          "kind": "encounter",
+          "encounter": "encounter.cloister_courtyard"
+        },
+        {
+          "id": "kennel",
+          "kind": "elite",
+          "encounter": "encounter.cloister_alpha"
+        },
+        {
+          "id": "campfire",
+          "kind": "checkpoint",
+          "heal_pct": 1.0
+        },
+        {
+          "id": "dial",
+          "kind": "boss",
+          "encounter": "encounter.cloister_boss"
+        }
+      ]
+    }
+  ]
+}

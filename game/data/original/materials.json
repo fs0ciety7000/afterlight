@@ -33,6 +33,31 @@
       "desc_key": "material.ashen_essence.desc",
       "rarity": "epic",
       "icon": "res://assets/textures/icons/material.ashen_essence.webp"
+    },
+    {
+      "id": "material.cloister_key",
+      "origin": "original",
+      "name_key": "material.cloister_key.name",
+      "desc_key": "material.cloister_key.desc",
+      "rarity": "rare",
+      "stack_max": 1,
+      "tags": [
+        "key",
+        "no_salvage"
+      ],
+      "icon": "res://assets/textures/icons/material.cloister_key.webp"
+    },
+    {
+      "id": "material.mist_herb",
+      "origin": "original",
+      "name_key": "material.mist_herb.name",
+      "desc_key": "material.mist_herb.desc",
+      "rarity": "common",
+      "stack_max": 6,
+      "tags": [
+        "quest"
+      ],
+      "icon": "res://assets/textures/icons/material.mist_herb.webp"
     }
   ]
 }

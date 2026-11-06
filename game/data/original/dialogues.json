@@ -1,0 +1,594 @@
+{
+  "schema_version": 1,
+  "type": "dialogue",
+  "entries": [
+    {
+      "id": "dialogue.odile_intro",
+      "origin": "original",
+      "name_key": "dialogue.odile_intro.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_03"
+        },
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_04"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odile_main01_wait",
+      "origin": "original",
+      "name_key": "dialogue.odile_main01_wait.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odile_main01_done",
+      "origin": "original",
+      "name_key": "dialogue.odile_main01_done.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_03"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odile_idle",
+      "origin": "original",
+      "name_key": "dialogue.odile_idle.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odile_main04_offer",
+      "origin": "original",
+      "name_key": "dialogue.odile_main04_offer.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_03"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odile_main04_wait",
+      "origin": "original",
+      "name_key": "dialogue.odile_main04_wait.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odile_epilogue",
+      "origin": "original",
+      "name_key": "dialogue.odile_epilogue.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_03"
+        },
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_04"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odile_after",
+      "origin": "original",
+      "name_key": "dialogue.odile_after.name",
+      "lines": [
+        {
+          "speaker": "npc.odile",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.maelle_greet",
+      "origin": "original",
+      "name_key": "dialogue.maelle_greet.name",
+      "lines": [
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.maelle_main02_offer",
+      "origin": "original",
+      "name_key": "dialogue.maelle_main02_offer.name",
+      "lines": [
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_03"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.maelle_main02_wait",
+      "origin": "original",
+      "name_key": "dialogue.maelle_main02_wait.name",
+      "lines": [
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.maelle_main02_done",
+      "origin": "original",
+      "name_key": "dialogue.maelle_main02_done.name",
+      "lines": [
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "npc.maelle",
+          "key_suffix": "line_03"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.bastien_greet",
+      "origin": "original",
+      "name_key": "dialogue.bastien_greet.name",
+      "lines": [
+        {
+          "speaker": "npc.bastien",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.bastien_main03_offer",
+      "origin": "original",
+      "name_key": "dialogue.bastien_main03_offer.name",
+      "lines": [
+        {
+          "speaker": "npc.bastien",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.bastien",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "npc.bastien",
+          "key_suffix": "line_03"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.bastien_main03_wait",
+      "origin": "original",
+      "name_key": "dialogue.bastien_main03_wait.name",
+      "lines": [
+        {
+          "speaker": "npc.bastien",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.bastien_main03_done",
+      "origin": "original",
+      "name_key": "dialogue.bastien_main03_done.name",
+      "lines": [
+        {
+          "speaker": "npc.bastien",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.bastien",
+          "key_suffix": "line_02"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odette_greet",
+      "origin": "original",
+      "name_key": "dialogue.odette_greet.name",
+      "lines": [
+        {
+          "speaker": "npc.aubelin_merchant",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odette_statue_offer",
+      "origin": "original",
+      "name_key": "dialogue.odette_statue_offer.name",
+      "lines": [
+        {
+          "speaker": "npc.aubelin_merchant",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.aubelin_merchant",
+          "key_suffix": "line_02"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odette_statue_offer_found",
+      "origin": "original",
+      "name_key": "dialogue.odette_statue_offer_found.name",
+      "lines": [
+        {
+          "speaker": "npc.aubelin_merchant",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odette_statue_wait",
+      "origin": "original",
+      "name_key": "dialogue.odette_statue_wait.name",
+      "lines": [
+        {
+          "speaker": "npc.aubelin_merchant",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.odette_statue_done",
+      "origin": "original",
+      "name_key": "dialogue.odette_statue_done.name",
+      "lines": [
+        {
+          "speaker": "npc.aubelin_merchant",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.aubelin_merchant",
+          "key_suffix": "line_02"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.tobias_early",
+      "origin": "original",
+      "name_key": "dialogue.tobias_early.name",
+      "lines": [
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.tobias_offer",
+      "origin": "original",
+      "name_key": "dialogue.tobias_offer.name",
+      "lines": [
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_03"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.tobias_wait",
+      "origin": "original",
+      "name_key": "dialogue.tobias_wait.name",
+      "lines": [
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.tobias_done",
+      "origin": "original",
+      "name_key": "dialogue.tobias_done.name",
+      "lines": [
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_02"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.tobias_idle",
+      "origin": "original",
+      "name_key": "dialogue.tobias_idle.name",
+      "lines": [
+        {
+          "speaker": "npc.tobias",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.ysaline_offer",
+      "origin": "original",
+      "name_key": "dialogue.ysaline_offer.name",
+      "lines": [
+        {
+          "speaker": "npc.ysaline",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.ysaline",
+          "key_suffix": "line_02"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.ysaline_wait",
+      "origin": "original",
+      "name_key": "dialogue.ysaline_wait.name",
+      "lines": [
+        {
+          "speaker": "npc.ysaline",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.ysaline_done",
+      "origin": "original",
+      "name_key": "dialogue.ysaline_done.name",
+      "lines": [
+        {
+          "speaker": "npc.ysaline",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "npc.ysaline",
+          "key_suffix": "line_02"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.ysaline_idle",
+      "origin": "original",
+      "name_key": "dialogue.ysaline_idle.name",
+      "lines": [
+        {
+          "speaker": "npc.ysaline",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.notice_board_read",
+      "origin": "original",
+      "name_key": "dialogue.notice_board_read.name",
+      "lines": [
+        {
+          "speaker": "npc.notice_board",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_enter_mire",
+      "origin": "original",
+      "name_key": "dialogue.fern_enter_mire.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_enter_ruins",
+      "origin": "original",
+      "name_key": "dialogue.fern_enter_ruins.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_afterlight_unlock",
+      "origin": "original",
+      "name_key": "dialogue.fern_afterlight_unlock.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_dungeon_enter",
+      "origin": "original",
+      "name_key": "dialogue.fern_dungeon_enter.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_fountain",
+      "origin": "original",
+      "name_key": "dialogue.fern_fountain.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_campfire",
+      "origin": "original",
+      "name_key": "dialogue.fern_campfire.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_moss_statue",
+      "origin": "original",
+      "name_key": "dialogue.fern_moss_statue.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.morvaine_intro",
+      "origin": "original",
+      "name_key": "dialogue.morvaine_intro.name",
+      "lines": [
+        {
+          "speaker": "enemy.morvaine",
+          "key_suffix": "line_01"
+        },
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_02"
+        },
+        {
+          "speaker": "enemy.morvaine",
+          "key_suffix": "line_03"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.morvaine_retry",
+      "origin": "original",
+      "name_key": "dialogue.morvaine_retry.name",
+      "lines": [
+        {
+          "speaker": "enemy.morvaine",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.morvaine_phase_veil",
+      "origin": "original",
+      "name_key": "dialogue.morvaine_phase_veil.name",
+      "lines": [
+        {
+          "speaker": "enemy.morvaine",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.morvaine_phase_hollow",
+      "origin": "original",
+      "name_key": "dialogue.morvaine_phase_hollow.name",
+      "lines": [
+        {
+          "speaker": "enemy.morvaine",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.morvaine_defeat",
+      "origin": "original",
+      "name_key": "dialogue.morvaine_defeat.name",
+      "lines": [
+        {
+          "speaker": "enemy.morvaine",
+          "key_suffix": "line_01"
+        }
+      ]
+    },
+    {
+      "id": "dialogue.fern_after_boss",
+      "origin": "original",
+      "name_key": "dialogue.fern_after_boss.name",
+      "lines": [
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_01"
+        }
+      ]
+    }
+  ]
+}

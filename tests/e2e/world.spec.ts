@@ -71,11 +71,11 @@ test('the world map opens, zooms, pans and explains locked places', async ({ pag
   await click(page, 'map.zoom_out');
   await click(page, 'map.zoom_out');
   await click(page, 'map.marker.lantern_mire');
-  await expect.poll(async () => (await probe(page))!.controls['map.detail_status'].text).toContain('Accessible au niveau 4');
+  await expect.poll(async () => (await probe(page))!.controls['map.detail_status'].text).toContain('Terminez la quête « Une cloche qui ne sonne plus »');
   expect((await probe(page))!.controls['map.travel'].disabled).toBe(true);
 });
 
-test('travel from the map loads the place fast; fog stays lifted after a reload', async ({ page }) => {
+test('travel from the map loads the place fast; the visit survives a reload', async ({ page }) => {
   await newGame(page);
   expect((await probe(page))!.controls['map.marker.watch_ruins']).toBeUndefined();
   await click(page, 'hud.map');
@@ -96,7 +96,8 @@ test('travel from the map loads the place fast; fog stays lifted after a reload'
   expect((await probe(page))!.state.location_id).toBe('location.whispering_wood');
   await click(page, 'hud.map');
   await waitScreen(page, 'world_map');
-  await expect.poll(async () => (await probe(page))!.controls['map.marker.watch_ruins']?.visible).toBe(true);
+  // Milestone 6: the Wood no longer lifts the Ruins' fog (a discovery or main_02 does).
+  expect((await probe(page))!.controls['map.marker.watch_ruins']).toBeUndefined();
 });
 
 test('walking into a zone exit leads to the neighbouring place', async ({ page }) => {

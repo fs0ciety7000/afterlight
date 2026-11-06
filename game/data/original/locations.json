@@ -20,6 +20,25 @@
       "fog_reveal": [
         "location.whispering_wood",
         "location.lantern_mire"
+      ],
+      "exits": [
+        {
+          "to": "location.whispering_wood",
+          "spawn": "from_aubelin"
+        },
+        {
+          "to": "location.lantern_mire",
+          "spawn": "from_aubelin"
+        }
+      ],
+      "npcs": [
+        "npc.odile",
+        "npc.aubelin_merchant",
+        "npc.bastien",
+        "npc.maelle",
+        "npc.tobias",
+        "npc.ysaline",
+        "npc.notice_board"
       ]
     },
     {
@@ -45,8 +64,20 @@
       "unlock": {
         "start": true
       },
-      "fog_reveal": [
-        "location.watch_ruins"
+      "fog_reveal": [],
+      "discoveries": [
+        "discovery.moss_statue",
+        "discovery.dead_birch_vista",
+        "discovery.wood_chest",
+        "discovery.mist_herb_wood_01",
+        "discovery.mist_herb_wood_02",
+        "discovery.mist_herb_wood_03"
+      ],
+      "exits": [
+        {
+          "to": "location.aubelin",
+          "spawn": "from_whispering_wood"
+        }
       ]
     },
     {
@@ -63,9 +94,33 @@
         0.51
       ],
       "unlock": {
-        "level_at_least": 4
+        "quest_completed": "quest.main_01"
       },
-      "notes": "Unlocked by level until quest.main_01/main_02 exist (Milestones 3 and 6); then switch to quest_completed as in GDD §5.2."
+      "encounters": [
+        "encounter.lantern_mire_01",
+        "encounter.lantern_mire_02",
+        "encounter.lantern_mire_03",
+        "encounter.lantern_mire_04",
+        "encounter.lantern_mire_05"
+      ],
+      "discoveries": [
+        "discovery.ferryman_journal",
+        "discovery.pressed_flower",
+        "discovery.mire_chest",
+        "discovery.mist_herb_mire_01",
+        "discovery.mist_herb_mire_02",
+        "discovery.mist_herb_mire_03"
+      ],
+      "exits": [
+        {
+          "to": "location.aubelin",
+          "spawn": "from_lantern_mire"
+        },
+        {
+          "to": "location.watch_ruins",
+          "spawn": "from_lantern_mire"
+        }
+      ]
     },
     {
       "id": "location.watch_ruins",
@@ -81,9 +136,26 @@
         0.22
       ],
       "unlock": {
-        "level_at_least": 7
+        "quest_completed": "quest.main_02"
       },
-      "notes": "Unlocked by level until quest.main_01/main_02 exist (Milestones 3 and 6); then switch to quest_completed as in GDD §5.2."
+      "encounters": [
+        "encounter.watch_ruins_01",
+        "encounter.watch_ruins_02",
+        "encounter.watch_ruins_03",
+        "encounter.watch_ruins_04",
+        "encounter.watch_ruins_05"
+      ],
+      "discoveries": [
+        "discovery.fallen_tower_vista",
+        "discovery.watch_roll",
+        "discovery.ruins_chest"
+      ],
+      "exits": [
+        {
+          "to": "location.lantern_mire",
+          "spawn": "from_watch_ruins"
+        }
+      ]
     }
   ]
 }

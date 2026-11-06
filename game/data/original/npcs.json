@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "type": "npc",
+  "entries": [
+    {
+      "id": "npc.odile",
+      "origin": "original",
+      "name_key": "npc.odile.name",
+      "location": "location.aubelin",
+      "role": "quest",
+      "anchor": "npc_well",
+      "model": "res://assets/models/npcs/odile.glb",
+      "dialogues": [
+        {
+          "dialogue": "dialogue.odile_epilogue",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_04",
+              "state": "completed"
+            }
+          },
+          "turns_in": "quest.main_04"
+        },
+        {
+          "dialogue": "dialogue.odile_epilogue",
+          "condition": {
+            "all": [
+              {
+                "quest_state": {
+                  "id": "quest.main_04",
+                  "state": "active"
+                }
+              },
+              {
+                "objective": {
+                  "quest": "quest.main_04",
+                  "id": "morvaine",
+                  "done": true
+                }
+              }
+            ]
+          },
+          "turns_in": "quest.main_04"
+        },
+        {
+          "dialogue": "dialogue.odile_main04_offer",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_04",
+              "state": "available"
+            }
+          },
+          "offers": "quest.main_04"
+        },
+        {
+          "dialogue": "dialogue.odile_main04_wait",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_04",
+              "state": "active"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.odile_main01_done",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_01",
+              "state": "completed"
+            }
+          },
+          "turns_in": "quest.main_01"
+        },
+        {
+          "dialogue": "dialogue.odile_intro",
+          "condition": {
+            "all": [
+              {
+                "quest_state": {
+                  "id": "quest.main_01",
+                  "state": "active"
+                }
+              },
+              {
+                "objective": {
+                  "quest": "quest.main_01",
+                  "id": "meet_odile",
+                  "done": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "dialogue": "dialogue.odile_main01_wait",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_01",
+              "state": "active"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.odile_after",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_04",
+              "state": "turned_in"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.odile_idle"
+        }
+      ]
+    },
+    {
+      "id": "npc.aubelin_merchant",
+      "origin": "original",
+      "name_key": "npc.aubelin_merchant.name",
+      "location": "location.aubelin",
+      "role": "merchant",
+      "anchor": "npc_stall",
+      "model": "res://assets/models/npcs/rosalie.glb",
+      "dialogues": [
+        {
+          "dialogue": "dialogue.odette_statue_done",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_statue",
+              "state": "completed"
+            }
+          },
+          "turns_in": "quest.side_statue"
+        },
+        {
+          "dialogue": "dialogue.odette_statue_offer_found",
+          "condition": {
+            "all": [
+              {
+                "quest_state": {
+                  "id": "quest.side_statue",
+                  "state": "available"
+                }
+              },
+              {
+                "discovery_found": "discovery.moss_statue"
+              }
+            ]
+          },
+          "offers": "quest.side_statue"
+        },
+        {
+          "dialogue": "dialogue.odette_statue_offer",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_statue",
+              "state": "available"
+            }
+          },
+          "offers": "quest.side_statue"
+        },
+        {
+          "dialogue": "dialogue.odette_statue_wait",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_statue",
+              "state": "active"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.odette_greet"
+        }
+      ]
+    },
+    {
+      "id": "npc.bastien",
+      "origin": "original",
+      "name_key": "npc.bastien.name",
+      "location": "location.aubelin",
+      "role": "smith",
+      "anchor": "npc_forge",
+      "model": "res://assets/models/npcs/bastien.glb",
+      "dialogues": [
+        {
+          "dialogue": "dialogue.bastien_main03_done",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_03",
+              "state": "completed"
+            }
+          },
+          "turns_in": "quest.main_03"
+        },
+        {
+          "dialogue": "dialogue.bastien_main03_offer",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_03",
+              "state": "available"
+            }
+          },
+          "offers": "quest.main_03"
+        },
+        {
+          "dialogue": "dialogue.bastien_main03_wait",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_03",
+              "state": "active"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.bastien_greet"
+        }
+      ]
+    },
+    {
+      "id": "npc.maelle",
+      "origin": "original",
+      "name_key": "npc.maelle.name",
+      "location": "location.aubelin",
+      "role": "runecarver",
+      "anchor": "npc_runecarver",
+      "model": "res://assets/models/npcs/maelle.glb",
+      "dialogues": [
+        {
+          "dialogue": "dialogue.maelle_main02_done",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_02",
+              "state": "completed"
+            }
+          },
+          "turns_in": "quest.main_02"
+        },
+        {
+          "dialogue": "dialogue.maelle_main02_offer",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_02",
+              "state": "available"
+            }
+          },
+          "offers": "quest.main_02"
+        },
+        {
+          "dialogue": "dialogue.maelle_main02_wait",
+          "condition": {
+            "quest_state": {
+              "id": "quest.main_02",
+              "state": "active"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.maelle_greet"
+        }
+      ]
+    },
+    {
+      "id": "npc.tobias",
+      "origin": "original",
+      "name_key": "npc.tobias.name",
+      "location": "location.aubelin",
+      "role": "quest",
+      "anchor": "npc_clockmaker",
+      "model": "res://assets/models/npcs/tobias.glb",
+      "dialogues": [
+        {
+          "dialogue": "dialogue.tobias_done",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_clockmaker",
+              "state": "completed"
+            }
+          },
+          "turns_in": "quest.side_clockmaker"
+        },
+        {
+          "dialogue": "dialogue.tobias_offer",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_clockmaker",
+              "state": "available"
+            }
+          },
+          "offers": "quest.side_clockmaker"
+        },
+        {
+          "dialogue": "dialogue.tobias_wait",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_clockmaker",
+              "state": "active"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.tobias_early",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_clockmaker",
+              "state": "not_started"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.tobias_idle"
+        }
+      ]
+    },
+    {
+      "id": "npc.ysaline",
+      "origin": "original",
+      "name_key": "npc.ysaline.name",
+      "location": "location.aubelin",
+      "role": "quest",
+      "anchor": "npc_herbalist",
+      "model": "res://assets/models/npcs/ysaline.glb",
+      "dialogues": [
+        {
+          "dialogue": "dialogue.ysaline_done",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_herbalist",
+              "state": "completed"
+            }
+          },
+          "turns_in": "quest.side_herbalist"
+        },
+        {
+          "dialogue": "dialogue.ysaline_offer",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_herbalist",
+              "state": "available"
+            }
+          },
+          "offers": "quest.side_herbalist"
+        },
+        {
+          "dialogue": "dialogue.ysaline_wait",
+          "condition": {
+            "quest_state": {
+              "id": "quest.side_herbalist",
+              "state": "active"
+            }
+          }
+        },
+        {
+          "dialogue": "dialogue.ysaline_idle"
+        }
+      ]
+    },
+    {
+      "id": "npc.notice_board",
+      "origin": "original",
+      "name_key": "npc.notice_board.name",
+      "location": "location.aubelin",
+      "role": "board",
+      "anchor": "board",
+      "model": "res://assets/models/props/notice_board.glb",
+      "dialogues": [
+        {
+          "dialogue": "dialogue.notice_board_read"
+        }
+      ]
+    }
+  ]
+}

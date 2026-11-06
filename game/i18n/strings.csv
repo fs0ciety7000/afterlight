@@ -582,3 +582,299 @@ ui.hunt.next,Combat suivant dans un instant…
 ui.hunt.stopped_defeat,La chasse s'arrête après cette défaite.
 ui.hunt.started_offline,Chasse lancée : elle devient aussi votre chasse hors ligne
 ui.hunt.started_not_offline,"Chasse lancée, sans chasse hors ligne : {reason}"
+quest.main_01.name,Une cloche qui ne sonne plus
+quest.main_01.desc,"Les loups du Bois des Murmures descendent jusqu'au village. Odile, la sonneuse, attend une mage."
+quest.main_01.objective_clear_wood,Vaincre des meutes dans le Bois des Murmures ({n}/3)
+quest.main_01.objective_meet_odile,"Parler à Odile, près du puits d'Aubelin"
+quest.main_02.name,Lueurs sur la tourbière
+quest.main_02.desc,Maëlle s'inquiète des lueurs qui incantent sur la tourbière. Le vieux passeur y a laissé un journal.
+quest.main_02.objective_reach_mire,Se rendre à la Tourbière aux Lanternes
+quest.main_02.objective_clear_mire,Disperser les lueurs de la tourbière ({n}/4)
+quest.main_02.objective_find_journal,Retrouver le journal du passeur
+quest.main_03.name,Le guet abandonné
+quest.main_03.desc,"Bastien veut la clé du cloître, que gardent les sentinelles de pierre des Ruines du Guet."
+quest.main_03.objective_sentinels,Abattre les sentinelles du guet ({n}/4)
+quest.main_03.objective_key,Récupérer la clé du cloître
+quest.main_04.name,Le cadran éteint
+quest.main_04.desc,Quelque chose empêche la cloche du cloître de sonner. Odile veut savoir quoi.
+quest.main_04.objective_enter,Entrer dans le cloître du Cadran Éteint
+quest.main_04.objective_morvaine,Vaincre ce qui habite le cloître
+quest.main_04.objective_return,Revenir auprès d'Odile
+quest.side_clockmaker.name,Les rouages de Tobias
+quest.side_clockmaker.desc,Tobias répare l'horloge du cloître. Il lui manque des rouages qui tiennent la magie.
+quest.side_clockmaker.objective_shards,Apporter des éclats runiques à Tobias ({n}/10)
+quest.side_herbalist.name,Herbes de brume
+quest.side_herbalist.desc,"Ysaline cherche des herbes de brume, dans le Bois et sur la tourbière."
+quest.side_herbalist.objective_herbs,Cueillir des herbes de brume ({n}/6)
+quest.side_statue.name,Une statue sous la mousse
+quest.side_statue.desc,"À l'orée du Bois, une statue disparaît sous la mousse. Rosalie aimerait lui rendre son visage."
+quest.side_statue.objective_clean,Nettoyer la statue à l'orée du Bois
+quest.side_statue.memory,"La statue regarde la route de l'ouest. Une grand-mère l'a brossée chaque printemps, longtemps après que le village a oublié pourquoi."
+quest.daily_wolves.name,Chasse aux loups
+quest.daily_wolves.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_wolves.objective_main,Vaincre des loups des brumes ({n}/20)
+quest.daily_wood_patrol.name,Patrouille du Bois
+quest.daily_wood_patrol.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_wood_patrol.objective_main,Patrouiller dans le Bois des Murmures ({n}/8)
+quest.daily_lanterns.name,Lanternes errantes
+quest.daily_lanterns.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_lanterns.objective_main,Éteindre des lanternes errantes ({n}/15)
+quest.daily_mire_patrol.name,Patrouille de la tourbière
+quest.daily_mire_patrol.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_mire_patrol.objective_main,Patrouiller sur la tourbière ({n}/8)
+quest.daily_interrupts.name,Incantations coupées
+quest.daily_interrupts.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_interrupts.objective_main,Interrompre des incantations ({n}/10)
+quest.daily_sentinels.name,Sentinelles de pierre
+quest.daily_sentinels.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_sentinels.objective_main,Abattre des sentinelles de pierre ({n}/6)
+quest.daily_ruins_patrol.name,Patrouille des Ruines
+quest.daily_ruins_patrol.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_ruins_patrol.objective_main,Patrouiller dans les Ruines du Guet ({n}/6)
+quest.daily_frozen.name,Givre
+quest.daily_frozen.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_frozen.objective_main,Geler des ennemis ({n}/5)
+quest.daily_alpha.name,Le chef de meute
+quest.daily_alpha.desc,"Avis du tableau d'Aubelin, valable jusqu'à minuit."
+quest.daily_alpha.objective_main,Vaincre le loup alpha du cloître
+dialogue.odile_intro.line_01,"Une mage ? Vous tombez bien, ou très mal. Je n'ai pas encore décidé."
+dialogue.odile_intro.line_02,"Je suis Odile, sonneuse du cloître, de mère en fille. Je n'ai jamais sonné une seule fois."
+dialogue.odile_intro.line_03,La cloche est cassée ?
+dialogue.odile_intro.line_04,"Muette. Ce n'est pas pareil. Les loups du Bois, eux, ne se taisent pas : commencez par là."
+dialogue.odile_intro.name,Odile : la sonneuse
+dialogue.odile_main01_wait.line_01,Le Bois est à l'ouest. Revenez quand les loups auront compris qui commande.
+dialogue.odile_main01_wait.name,Odile : les loups
+dialogue.odile_main01_done.line_01,Les bûcherons sont rentrés sans une égratignure. Merci.
+dialogue.odile_main01_done.line_02,"Maëlle, la graveuse, veut vous parler des lueurs de la tourbière. D'habitude, elle a peur pour rien."
+dialogue.odile_main01_done.line_03,Plus maintenant.
+dialogue.odile_main01_done.name,Odile : les bûcherons
+dialogue.odile_idle.line_01,"Petite, je réglais le pain sur la cloche de midi. Maintenant, on le rate une fois sur deux."
+dialogue.odile_idle.name,Odile : la cloche de midi
+dialogue.odile_main04_offer.line_01,"Bastien dit que vous avez la clé. Je l'ai tenue une fois, à huit ans. Elle me semblait plus lourde."
+dialogue.odile_main04_offer.line_02,"Montez au cloître. Si quelque chose empêche la cloche de sonner, je veux savoir quoi."
+dialogue.odile_main04_offer.line_03,Je vous le dirai.
+dialogue.odile_main04_offer.name,Odile : la clé
+dialogue.odile_main04_wait.line_01,"Prenez votre temps. J'ai attendu quatre-vingts ans, je peux attendre la fin de la semaine."
+dialogue.odile_main04_wait.name,Odile : l'attente
+dialogue.odile_epilogue.line_01,"Je l'ai entendue, depuis le puits. Elle sonne un peu plus bas que dans mon souvenir."
+dialogue.odile_epilogue.line_02,Le bronze a vieilli.
+dialogue.odile_epilogue.line_03,Moi aussi. On s'est reconnues quand même.
+dialogue.odile_epilogue.line_04,"Demain, je monterai la sonner. Ce sera la première fois. Venez écouter, si vous passez."
+dialogue.odile_epilogue.name,Odile : la cloche
+dialogue.odile_after.line_01,Midi sonne de nouveau. Le boulanger jure que son pain n'a jamais été aussi régulier.
+dialogue.odile_after.name,Odile : midi
+dialogue.maelle_greet.line_01,Une rune ne rend pas un sort plus fort. Elle lui apprend autre chose. Que voulez-vous lui apprendre ?
+dialogue.maelle_greet.name,Maëlle : accueil
+dialogue.maelle_main02_offer.line_01,Vous êtes la mage qui a calmé le Bois ? Bien. J'ai un problème qui flotte.
+dialogue.maelle_main02_offer.line_02,Des lueurs se sont allumées sur la tourbière. Elles incantent avant de brûler.
+dialogue.maelle_main02_offer.line_03,"Une incantation, ça s'interrompt. Et le vieux passeur a laissé un journal là-bas : rapportez-le-moi."
+dialogue.maelle_main02_offer.name,Maëlle : les lueurs
+dialogue.maelle_main02_wait.line_01,"Le feu ne leur fait rien. Le froid, si. Je dis ça, je ne dis rien."
+dialogue.maelle_main02_wait.name,Maëlle : le froid
+dialogue.maelle_main02_done.line_01,"D'après ce journal, les lueurs sont apparues l'année où la cloche s'est tue. Ce n'est pas un hasard."
+dialogue.maelle_main02_done.line_02,Prenez cette rune de givre. Sertissez-la sur un sort : les lueurs vous trouveront moins drôle.
+dialogue.maelle_main02_done.line_03,"Et Bastien vous cherche. Il parle des Ruines du Guet, ce qui ne lui arrive jamais."
+dialogue.maelle_main02_done.name,Maëlle : le journal
+dialogue.bastien_greet.line_01,Posez-le sur l'enclume. Je regarde.
+dialogue.bastien_greet.name,Bastien : accueil
+dialogue.bastien_main03_offer.line_01,"Le guet, sur la colline. Mon grand-père y montait la garde."
+dialogue.bastien_main03_offer.line_02,"Les gardes avaient la clé du cloître. Maintenant, ce sont les sentinelles de pierre. Elles ne la rendent pas."
+dialogue.bastien_main03_offer.line_03,"Cassez-les. Rapportez la clé. Et méfiez-vous : la pierre, ça frappe tard mais fort."
+dialogue.bastien_main03_offer.name,Bastien : le guet
+dialogue.bastien_main03_wait.line_01,"Leur barrière tient contre tout, sauf la magie pure. Frappez juste."
+dialogue.bastien_main03_wait.name,Bastien : la barrière
+dialogue.bastien_main03_done.line_01,"C'est elle. Mon grand-père l'avait gravée sur la porte de la forge, de mémoire."
+dialogue.bastien_main03_done.line_02,"Le cloître est derrière la tour, par la poterne. Dites-le à Odile avant d'y monter."
+dialogue.bastien_main03_done.name,Bastien : la clé
+dialogue.odette_greet.line_01,"Infusions fraîches, élixirs pas trop vieux. Et pas de crédit, même pour une mage polie."
+dialogue.odette_greet.name,Rosalie : accueil
+dialogue.odette_statue_offer.line_01,"À l'orée du Bois, il y a une statue. Un héros de passage, il y a longtemps."
+dialogue.odette_statue_offer.line_02,"Ma grand-mère la brossait chaque printemps. Depuis, la mousse a gagné. Rendez-lui son visage, voulez-vous ?"
+dialogue.odette_statue_offer.name,Rosalie : la statue
+dialogue.odette_statue_offer_found.line_01,On dit que la statue du Bois est propre. C'était vous ? Alors ma grand-mère vous remercie. Moi aussi.
+dialogue.odette_statue_offer_found.name,Rosalie : la statue propre
+dialogue.odette_statue_wait.line_01,"Une brosse, de l'eau, un peu de patience. La mousse ne se défend pas."
+dialogue.odette_statue_wait.name,Rosalie : la mousse
+dialogue.odette_statue_done.line_01,Himmel. Je n'arrivais plus à lire le nom depuis la route.
+dialogue.odette_statue_done.line_02,"Tenez, pour la peine. Et pour la grand-mère."
+dialogue.odette_statue_done.name,Rosalie : le nom
+dialogue.tobias_early.line_01,"Revenez quand vous saurez porter deux choses à la fois. Niveau 6, disons."
+dialogue.tobias_early.name,Tobias : trop tôt
+dialogue.tobias_offer.line_01,"Ne bougez pas. Vous avez du mana sur vous… non, en vous. Parfait."
+dialogue.tobias_offer.line_02,"Je répare l'horloge du cloître, pièce par pièce, depuis trente ans. Il me manque des rouages qui tiennent la magie."
+dialogue.tobias_offer.line_03,"Dix éclats runiques. Je les taille, vous gagnez un sablier. Il est fêlé, mais il compte mieux que moi."
+dialogue.tobias_offer.name,Tobias : les rouages
+dialogue.tobias_wait.line_01,"Dix éclats. Pas neuf. Neuf, c'est une horloge qui retarde."
+dialogue.tobias_wait.name,Tobias : dix éclats
+dialogue.tobias_done.line_01,Voilà. Un sablier qui continue de couler quand vous ne regardez pas.
+dialogue.tobias_done.line_02,"J'ai ajusté une attache à votre ceinture : il se porte comme un artefact. Ne me remerciez pas, ça me gêne."
+dialogue.tobias_done.name,Tobias : le sablier
+dialogue.tobias_idle.line_01,"Tic, tac. Pardon, c'est une habitude."
+dialogue.tobias_idle.name,"Tobias : tic, tac"
+dialogue.ysaline_offer.line_01,"La brume dépose des herbes là où elle stagne. Bleues, un peu froides au toucher."
+dialogue.ysaline_offer.line_02,"Il m'en faut six : trois dans le Bois, trois sur la tourbière. Moi, les loups me voient venir."
+dialogue.ysaline_offer.name,Ysaline : les herbes
+dialogue.ysaline_wait.line_01,Cherchez près de l'eau et des racines. Elles luisent un peu quand on ne les regarde pas.
+dialogue.ysaline_wait.name,Ysaline : où chercher
+dialogue.ysaline_done.line_01,"Six, et bien cueillies. Merci."
+dialogue.ysaline_done.line_02,Cette boussole était à mon père. Elle ne montre pas le nord : elle montre ce qu'on n'a pas encore vu.
+dialogue.ysaline_done.name,Ysaline : la boussole
+dialogue.ysaline_idle.line_01,"Les herbes de brume sèchent mal. Comme les souvenirs, disait ma mère."
+dialogue.ysaline_idle.name,Ysaline : les souvenirs
+dialogue.notice_board_read.line_01,"Des avis cloués les uns sur les autres. Ceux du jour sont en haut, l'encre encore fraîche."
+dialogue.notice_board_read.name,Tableau des contrats
+dialogue.fern_enter_mire.line_01,Ces lueurs incantent. Il faut les couper avant la fin.
+dialogue.fern_enter_mire.name,Fern : la tourbière
+dialogue.fern_enter_ruins.line_01,Des sentinelles. Leur barrière cède plus vite à la magie pure.
+dialogue.fern_enter_ruins.name,Fern : les ruines
+dialogue.fern_afterlight_unlock.line_01,Je peux maintenant libérer toute ma réserve d'un coup. Il faudra choisir le moment.
+dialogue.fern_afterlight_unlock.name,Fern : la réserve
+dialogue.fern_dungeon_enter.line_01,"Dehors, c'est l'après-midi. Ici, il fait nuit. Quelqu'un a arrêté plus que la cloche."
+dialogue.fern_dungeon_enter.name,Fern : le cloître
+dialogue.fern_fountain.line_01,L'eau est restée claire. Une pause.
+dialogue.fern_fountain.name,Fern : la fontaine
+dialogue.fern_campfire.line_01,Quelqu'un a laissé du bois sec. On peut se préparer ici.
+dialogue.fern_campfire.name,Fern : le feu de camp
+dialogue.fern_moss_statue.line_01,La mousse avait couvert le nom. Il suffisait de l'enlever.
+dialogue.fern_moss_statue.name,Fern : la statue
+dialogue.morvaine_intro.line_01,Entrez. Il n'y a rien à craindre ici. Rien ne bouge.
+dialogue.morvaine_intro.line_02,C'est vous qui retenez la cloche.
+dialogue.morvaine_intro.line_03,"Je la protège. Le bruit use les choses, et vous vivez si peu de temps pour les entendre."
+dialogue.morvaine_intro.name,Morvaine : le cadran
+dialogue.morvaine_retry.line_01,Vous revoilà. Je savais que vous resteriez.
+dialogue.morvaine_retry.name,Morvaine : le retour
+dialogue.morvaine_phase_veil.line_01,Doucement. Je n'ai jamais fait de mal à personne ici. Personne n'est venu.
+dialogue.morvaine_phase_veil.name,Morvaine : le voile
+dialogue.morvaine_phase_hollow.line_01,"Restez. Une heure de plus, une heure de moins : qui compte, sous ce cadran ?"
+dialogue.morvaine_phase_hollow.name,Morvaine : l'heure creuse
+dialogue.morvaine_defeat.line_01,Écoutez… Non. N'écoutez pas.
+dialogue.morvaine_defeat.name,Morvaine : la fin
+dialogue.fern_after_boss.line_01,Elle a menti jusqu'au bout.
+dialogue.fern_after_boss.name,Fern : après Morvaine
+story.intro.card_01,"Il y a quatre-vingts ans, la cloche du cloître d'Aubelin s'est tue au milieu d'un après-midi."
+story.intro.card_02,"Depuis, la brume descend plus tôt sur le val, et les loups descendent avec elle."
+story.intro.card_03,"Un matin d'automne, une jeune mage arrive au village par la route de l'ouest."
+story.bell.subtitle,La cloche du cloître sonne.
+story.epilogue.card_01,"Ce jour-là, la cloche sonna midi avec quatre-vingts ans de retard."
+story.epilogue.card_02,Personne à Aubelin ne songea à la corriger.
+story.epilogue.card_03,"Fern resta encore un peu. Il restait des loups dans le Bois, et des contrats sur le tableau."
+tip.afterlight_unlocked,Lumière d'après débloquée : touche R
+npc.odile.name,Odile
+npc.odile.role,Sonneuse du cloître
+npc.tobias.name,Tobias
+npc.tobias.role,Horloger
+npc.ysaline.name,Ysaline
+npc.ysaline.role,Herboriste
+npc.notice_board.name,Tableau des contrats
+npc.notice_board.role,Contrats du jour
+discovery.moss_statue.name,Statue sous la mousse
+discovery.moss_statue.lore,Au héros Himmel. Le village d'Aubelin se souvient.
+discovery.moss_statue.action,Nettoyer la mousse
+discovery.dead_birch_vista.name,Le grand bouleau mort
+discovery.dead_birch_vista.lore,"Depuis les racines du grand bouleau, on aperçoit au nord-est la tour effondrée d'un ancien guet."
+discovery.ferryman_journal.name,Journal du passeur
+discovery.ferryman_journal.lore,Les lueurs sont venues l'automne où la cloche s'est tue. Elles ne brûlent que ceux qui s'attardent. J'ai cessé de passer les gens le soir.
+discovery.pressed_flower.name,Livre ouvert sur une pierre
+discovery.pressed_flower.lore,"Une fleur pressée entre deux pages restées blanches. Quelqu'un voulait s'en souvenir, et a oublié tout le reste."
+discovery.fallen_tower_vista.name,Sommet de la tour effondrée
+discovery.fallen_tower_vista.lore,"Du haut de la tour, le cloître apparaît, accroché à la falaise. L'aiguille de son cadran est arrêtée sur trois heures."
+discovery.watch_roll.name,Registre de la garde
+discovery.watch_roll.lore,"Dernière ligne du registre : la cloche s'est arrêtée à trois heures, une femme en gris est montée au cloître. La garde n'a pas été relevée."
+discovery.wood_chest.name,Coffre du Bois
+discovery.mire_chest.name,Coffre de la tourbière
+discovery.ruins_chest.name,Coffre des Ruines
+discovery.cloister_chest.name,Coffre du préau
+discovery.mist_herb_wood_01.name,Herbe de brume
+discovery.mist_herb_wood_02.name,Herbe de brume
+discovery.mist_herb_wood_03.name,Herbe de brume
+discovery.mist_herb_mire_01.name,Herbe de brume
+discovery.mist_herb_mire_02.name,Herbe de brume
+discovery.mist_herb_mire_03.name,Herbe de brume
+ui.discovery.found,Découverte : {name}
+ui.discovery.count,Découvertes {found}/{total}
+ui.discovery.chest_opened,Coffre ouvert
+dungeon.silent_dial_cloister.room_vestibule,Vestibule
+dungeon.silent_dial_cloister.room_gallery,Galerie des cloches
+dungeon.silent_dial_cloister.room_fountain,Fontaine
+dungeon.silent_dial_cloister.room_courtyard,Cour du préau
+dungeon.silent_dial_cloister.room_kennel,Chenil
+dungeon.silent_dial_cloister.room_campfire,Feu de camp
+dungeon.silent_dial_cloister.room_dial,Salle du Cadran
+dungeon.silent_dial_cloister.name,Cloître du Cadran Éteint
+dungeon.silent_dial_cloister.desc,"Cloître accroché à la falaise, derrière le guet. Son cadran est arrêté sur trois heures."
+ui.dungeon.leave_confirm,Quitter le cloître ? Les salles nettoyées seront de nouveau occupées.
+ui.dungeon.fountain,Boire à la fontaine
+ui.dungeon.fountain_used,La fontaine est calme.
+ui.dungeon.campfire,Se reposer
+ui.dungeon.checkpoint,Point de reprise : {room}
+ui.dungeon.door_locked,La grille est fermée.
+ui.dungeon.shortcut,Escalier du sonneur
+error.dungeon.locked,Terminez la quête « {quest} »
+error.dungeon.unknown,Ce donjon n'existe pas
+error.dungeon.not_inside,Vous n'êtes pas dans le cloître
+error.dungeon.already_inside,Vous êtes déjà dans le cloître
+error.dungeon.room_closed,La grille de cette salle est fermée
+error.dungeon.fountain_used,La fontaine est calme
+error.dungeon.not_here,Ce n'est pas possible dans cette salle
+encounter.lantern_mire_02.name,Lueurs derrière les loups
+encounter.lantern_mire_03.name,Roselière ardente
+encounter.lantern_mire_04.name,Lanternes vagabondes
+encounter.lantern_mire_05.name,Gardiens de la chaussée
+encounter.watch_ruins_02.name,Feu sous la pierre
+encounter.watch_ruins_03.name,Meute des remparts
+encounter.watch_ruins_04.name,Fracas de la cour
+encounter.watch_ruins_05.name,Gardiens de la tour
+encounter.cloister_vestibule.name,Vestibule du cloître
+encounter.cloister_gallery.name,Galerie des cloches
+encounter.cloister_courtyard.name,Cour du préau
+material.cloister_key.name,Clé du cloître
+material.cloister_key.desc,Lourde clé de bronze. Elle ouvre la poterne du cloître du Cadran Éteint.
+material.mist_herb.name,Herbe de brume
+material.mist_herb.desc,"Herbe bleu pâle, un peu froide au toucher. Ysaline en cherche six."
+loot.field_chest.name,Butin de coffre
+enemy.mist_wolf.lore,"Avant que la cloche se taise, aucun loup ne chassait dans le val. Ceux-ci arrivent avec la brume et s'y défont quand on les abat."
+enemy.mist_wolf.tip,Faible au feu. Le Bond s'annonce par une ligne au sol : c'est le moment de la Barrière.
+enemy.wandering_lantern.lore,Une flamme qui a perdu sa mèche. Le passeur de la tourbière disait qu'elles éclairent le mauvais chemin à ceux qui s'égarent.
+enemy.wandering_lantern.tip,"Faible au givre, résiste au feu. Interrompez l'Embrasement avec Zoltraak pendant l'anneau nacré."
+enemy.stone_sentinel.lore,Les gardes du guet les ont taillées pour veiller à leur place la nuit. Les gardes sont partis ; personne n'a relevé les sentinelles.
+enemy.stone_sentinel.tip,"Faible à la foudre, résiste au givre. L'arcane brise sa barrière deux fois plus vite. Sortez du cercle du Fracas."
+enemy.mist_wolf_alpha.lore,Le plus vieux de la meute. Les gens d'Aubelin disent qu'il hurle à l'heure où la cloche sonnait autrefois.
+enemy.mist_wolf_alpha.tip,"Faible au feu, résiste au givre. Interrompez le Hurlement, sinon la meute revient plus rapide."
+enemy.morvaine.lore,"Une démone installée dans le cloître. Elle a arrêté la cloche pour que plus personne ne monte, et elle appelait cela le calme."
+enemy.morvaine.tip,"Faible au givre, résiste au feu. Abattez ses lanternes, gardez la Barrière pour le Sceau de cendre."
+ui.bestiary.title,Bestiaire
+ui.bestiary.tier_1,nouvelle fiche
+ui.bestiary.tier_2,affinités révélées
+ui.bestiary.tier_3,statistiques révélées
+ui.bestiary.unlocked,"Bestiaire : {name}, {tier}"
+ui.bestiary.unknown,???
+ui.bestiary.victories,Vaincu {count} fois
+ui.contracts.title,Contrats du jour
+ui.contracts.renews,Nouveaux contrats à minuit
+ui.contracts.claim,Récupérer
+ui.contracts.claimed,Récupéré
+ui.contracts.empty,Aucun contrat pour l'instant. Revenez demain.
+ui.contracts.new_day,De nouveaux contrats sont affichés.
+ui.contracts.auto_claimed,Contrats d'hier récupérés : +{gold} or.
+ui.contracts.offline_note,Les victoires hors ligne ne comptent pas pour les contrats.
+ui.contracts.reward,"+{gold} or, +{dust} poussières, +{shards} éclats"
+ui.quest.activated,Nouvelle quête : {quest}
+ui.quest.completed,Quête terminée : {quest}. Retournez voir {npc}.
+ui.quest.turned_in,Quête rendue : {quest}
+ui.quest.rewards,"+{xp} XP, +{gold} or"
+ui.quest.tobias_waits,Tobias attend 10 éclats
+error.quest.unknown,Quête inconnue
+error.quest.not_available,Cette quête n'est pas disponible
+error.quest.not_completed,Les objectifs ne sont pas encore remplis
+error.quest.already_started,Cette quête est déjà commencée
+error.npc.unknown,Personne ici ne répond à ce nom
+error.dialogue.mismatch,Ce dialogue ne correspond pas
+error.contract.unknown,Ce contrat n'existe plus
+error.contract.not_completed,Ce contrat n'est pas encore rempli
+error.discovery.unknown,Il n'y a rien à trouver ici
+error.discovery.found,Déjà trouvé
+error.discovery.unavailable,Rien à ramasser pour l'instant
+error.discovery.room_not_cleared,Battez d'abord les occupants de la salle
+error.artifact_slot_quest,Terminez la quête « {quest} »
+character.himmel.name,Himmel
+error.hunt.dungeon_room,Pas de chasse dans le cloître : chaque salle se gagne une fois par expédition

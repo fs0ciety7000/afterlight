@@ -61,6 +61,8 @@ Au chargement : on relit `state`, `step` et `counts`, puis on réévalue les obj
 | `quest.side_statue` | 3 | 210 | 150 | 1 | Souvenir (texte de lore) |
 | **Total** | | **28 302** | **4 350** | **11** | |
 
+**Mise à jour après le banc (jalon 6)** : `QUEST_XP_MAIN` relevé à 1,1 *(provisoire)* ; XP des principales : `main_01` 770, `main_02` 4 642, `main_03` 13 310, `main_04` 28 138. Quêtes rendues avant le boss : 21 464 XP, 29,4 % de l'XP jusqu'au niveau 12 (GAME_BALANCE §22.4).
+
 Cohérence : 11 pages = « 11 par les quêtes » (GAME_BALANCE §16). L'or des quêtes (4 350) plus les contrats (`contracts.md`, ~13 000) reste dans les ~20 000 de §21.3. XP des quêtes avant le boss : 12 954, soit ~18 % de l'XP cumulée jusqu'au niveau 12 (72 940) ; avec les premières victoires et les découvertes, ~22 %. §21.2 suppose ~30 % : **écart à mesurer au banc (critère 6.7)** ; levier prévu : `QUEST_XP_MAIN`, pas le hors ligne.
 
 ## 2. PNJ (`npcs.json`)

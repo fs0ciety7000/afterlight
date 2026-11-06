@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "type": "discovery",
+  "entries": [
+    {
+      "id": "discovery.moss_statue",
+      "origin": "original",
+      "name_key": "discovery.moss_statue.name",
+      "location": "location.whispering_wood",
+      "kind": "memorial",
+      "trigger": "interact_hold",
+      "level": 3,
+      "anchor": "discovery_01",
+      "reward": {
+        "xp": true
+      },
+      "map_pos": [
+        0.33,
+        0.47
+      ],
+      "fog_radius": 0.05,
+      "canon_refs": [
+        "character.himmel"
+      ]
+    },
+    {
+      "id": "discovery.dead_birch_vista",
+      "origin": "original",
+      "name_key": "discovery.dead_birch_vista.name",
+      "location": "location.whispering_wood",
+      "kind": "vista",
+      "trigger": "zone",
+      "level": 3,
+      "anchor": "discovery_02",
+      "reward": {
+        "xp": true
+      },
+      "map_pos": [
+        0.24,
+        0.36
+      ],
+      "fog_radius": 0.1,
+      "reveals": [
+        "location.watch_ruins"
+      ]
+    },
+    {
+      "id": "discovery.ferryman_journal",
+      "origin": "original",
+      "name_key": "discovery.ferryman_journal.name",
+      "location": "location.lantern_mire",
+      "kind": "lore",
+      "trigger": "interact",
+      "level": 6,
+      "anchor": "discovery_01",
+      "reward": {
+        "xp": true
+      },
+      "map_pos": [
+        0.66,
+        0.46
+      ],
+      "fog_radius": 0.05,
+      "reveals": [
+        "location.watch_ruins"
+      ]
+    },
+    {
+      "id": "discovery.pressed_flower",
+      "origin": "original",
+      "name_key": "discovery.pressed_flower.name",
+      "location": "location.lantern_mire",
+      "kind": "pickup",
+      "trigger": "interact",
+      "level": 6,
+      "anchor": "discovery_02",
+      "reward": {
+        "xp": true,
+        "artifacts": [
+          "artifact.pressed_flower"
+        ]
+      },
+      "map_pos": [
+        0.78,
+        0.56
+      ],
+      "fog_radius": 0.05
+    },
+    {
+      "id": "discovery.fallen_tower_vista",
+      "origin": "original",
+      "name_key": "discovery.fallen_tower_vista.name",
+      "location": "location.watch_ruins",
+      "kind": "vista",
+      "trigger": "zone",
+      "level": 9,
+      "anchor": "discovery_01",
+      "reward": {
+        "xp": true
+      },
+      "map_pos": [
+        0.8,
+        0.17
+      ],
+      "fog_radius": 0.1,
+      "reveals": [
+        "dungeon.silent_dial_cloister"
+      ]
+    },
+    {
+      "id": "discovery.watch_roll",
+      "origin": "original",
+      "name_key": "discovery.watch_roll.name",
+      "location": "location.watch_ruins",
+      "kind": "lore",
+      "trigger": "interact",
+      "level": 9,
+      "anchor": "discovery_02",
+      "reward": {
+        "xp": true
+      },
+      "map_pos": [
+        0.74,
+        0.24
+      ],
+      "fog_radius": 0.05
+    },
+    {
+      "id": "discovery.wood_chest",
+      "origin": "original",
+      "name_key": "discovery.wood_chest.name",
+      "location": "location.whispering_wood",
+      "kind": "chest",
+      "trigger": "interact",
+      "level": 3,
+      "anchor": "chest_01",
+      "reward": {
+        "loot_table": "loot.field_chest"
+      },
+      "counts_for_location": false
+    },
+    {
+      "id": "discovery.mire_chest",
+      "origin": "original",
+      "name_key": "discovery.mire_chest.name",
+      "location": "location.lantern_mire",
+      "kind": "chest",
+      "trigger": "interact",
+      "level": 6,
+      "anchor": "chest_01",
+      "reward": {
+        "loot_table": "loot.field_chest"
+      },
+      "counts_for_location": false
+    },
+    {
+      "id": "discovery.ruins_chest",
+      "origin": "original",
+      "name_key": "discovery.ruins_chest.name",
+      "location": "location.watch_ruins",
+      "kind": "chest",
+      "trigger": "interact",
+      "level": 9,
+      "anchor": "chest_01",
+      "reward": {
+        "loot_table": "loot.field_chest"
+      },
+      "counts_for_location": false
+    },
+    {
+      "id": "discovery.cloister_chest",
+      "origin": "original",
+      "name_key": "discovery.cloister_chest.name",
+      "location": "dungeon.silent_dial_cloister",
+      "kind": "chest",
+      "trigger": "interact",
+      "level": 11,
+      "anchor": "room4_chest",
+      "reward": {
+        "loot_table": "loot.field_chest"
+      },
+      "counts_for_location": false,
+      "room": "courtyard"
+    },
+    {
+      "id": "discovery.mist_herb_wood_01",
+      "origin": "original",
+      "name_key": "discovery.mist_herb_wood_01.name",
+      "location": "location.whispering_wood",
+      "kind": "pickup",
+      "trigger": "interact",
+      "level": 3,
+      "anchor": "herb_01",
+      "reward": {
+        "materials": {
+          "material.mist_herb": 1
+        }
+      },
+      "counts_for_location": false,
+      "available_if": {
+        "quest_state": {
+          "id": "quest.side_herbalist",
+          "state": "active"
+        }
+      }
+    },
+    {
+      "id": "discovery.mist_herb_wood_02",
+      "origin": "original",
+      "name_key": "discovery.mist_herb_wood_02.name",
+      "location": "location.whispering_wood",
+      "kind": "pickup",
+      "trigger": "interact",
+      "level": 3,
+      "anchor": "herb_02",
+      "reward": {
+        "materials": {
+          "material.mist_herb": 1
+        }
+      },
+      "counts_for_location": false,
+      "available_if": {
+        "quest_state": {
+          "id": "quest.side_herbalist",
+          "state": "active"
+        }
+      }
+    },
+    {
+      "id": "discovery.mist_herb_wood_03",
+      "origin": "original",
+      "name_key": "discovery.mist_herb_wood_03.name",
+      "location": "location.whispering_wood",
+      "kind": "pickup",
+      "trigger": "interact",
+      "level": 3,
+      "anchor": "herb_03",
+      "reward": {
+        "materials": {
+          "material.mist_herb": 1
+        }
+      },
+      "counts_for_location": false,
+      "available_if": {
+        "quest_state": {
+          "id": "quest.side_herbalist",
+          "state": "active"
+        }
+      }
+    },
+    {
+      "id": "discovery.mist_herb_mire_01",
+      "origin": "original",
+      "name_key": "discovery.mist_herb_mire_01.name",
+      "location": "location.lantern_mire",
+      "kind": "pickup",
+      "trigger": "interact",
+      "level": 6,
+      "anchor": "herb_01",
+      "reward": {
+        "materials": {
+          "material.mist_herb": 1
+        }
+      },
+      "counts_for_location": false,
+      "available_if": {
+        "quest_state": {
+          "id": "quest.side_herbalist",
+          "state": "active"
+        }
+      }
+    },
+    {
+      "id": "discovery.mist_herb_mire_02",
+      "origin": "original",
+      "name_key": "discovery.mist_herb_mire_02.name",
+      "location": "location.lantern_mire",
+      "kind": "pickup",
+      "trigger": "interact",
+      "level": 6,
+      "anchor": "herb_02",
+      "reward": {
+        "materials": {
+          "material.mist_herb": 1
+        }
+      },
+      "counts_for_location": false,
+      "available_if": {
+        "quest_state": {
+          "id": "quest.side_herbalist",
+          "state": "active"
+        }
+      }
+    },
+    {
+      "id": "discovery.mist_herb_mire_03",
+      "origin": "original",
+      "name_key": "discovery.mist_herb_mire_03.name",
+      "location": "location.lantern_mire",
+      "kind": "pickup",
+      "trigger": "interact",
+      "level": 6,
+      "anchor": "herb_03",
+      "reward": {
+        "materials": {
+          "material.mist_herb": 1
+        }
+      },
+      "counts_for_location": false,
+      "available_if": {
+        "quest_state": {
+          "id": "quest.side_herbalist",
+          "state": "active"
+        }
+      }
+    }
+  ]
+}
