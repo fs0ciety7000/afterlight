@@ -191,7 +191,7 @@ soin     = valeur × (1 + 0)   # pas de bonus de soin dans la tranche, pas de cr
 | `SHIELD_DURATION_S` | 4,0 | 3-6 | Un nouveau bouclier remplace l'ancien s'il est plus grand ; sinon, il rafraîchit seulement la durée |
 | `HEALING_DRAUGHT_PCT` | 0,35 | 0,25-0,5 | Infusion de soin |
 | `MANA_ELIXIR_AMOUNT` | 50 | 30-80 | |
-| `CONSUMABLE_SHARED_CD_S` | 20 | 15-30 | |
+| `CONSUMABLE_SHARED_CD_S` | **40** *(provisoire, jalon 6)* | 20-40 | Était 20. Au plus une infusion par fenêtre de Sceau : Fern passive ne peut plus enchaîner les soins contre Morvaine (§22.6) |
 | `CONSUMABLE_CARRY_MAX` | 5 | 3-10 | |
 
 **Exemple** : Fern niveau 10 (914 PV, `power` 98,8) → 0,25 × 914 + 1,5 × 98,8 = 228,5 + 148,2 = **376,7**, soit 41 % de ses PV.
@@ -234,10 +234,12 @@ barrier     = barrier_ratio × hp(Le)
 | `enemy.mist_wolf` | 300 | 14 | 0,20 | 0 | 1,4 | 1,0 | 1,8 | 5,5 | 9 | 1,0 | 1,0 | feu / - |
 | `enemy.wandering_lantern` | 220 | 17 | 0,10 | 0 | 2,2 | 1,3 (feu) | 10 | 3,0 | 11 | 1,0 | 1,0 | givre / feu |
 | `enemy.stone_sentinel` | 520 | 20 | 0,60 | 0,25 | 2,6 | 1,2 | 2,2 | 2,5 | 7 | 1,6 | 1,5 | foudre / givre |
-| `enemy.mist_wolf_alpha` (élite) | 1 800 | 21 ¹ | 0,30 | 0 | 1,2 | 1,1 | 2,0 | 6,0 | 12 | 6,0 | 5,0 | feu / givre |
-| `enemy.morvaine` (boss) | 7 500 | 18 ¹ | 0,35 | 0,15 (phase 2) | 2,5 | 0,6 (feu) ¹ | 12 | 2,0 | - | 30 | 25 | givre / feu |
+| `enemy.mist_wolf_alpha` (élite) | 1 800 | 23 ² | 0,30 | 0 | 1,2 | 1,1 | 2,0 | 6,0 | 12 | 6,0 | 5,0 | feu / givre |
+| `enemy.morvaine` (boss) | 7 500 | 18 ¹ | 0,35 | 0,15 (phase 2) | 2,5 | 0,35 (feu) ² | 12 | 2,0 | - | 30 | 25 | givre / feu |
 
 ¹ Recalé par le banc de simulation du jalon 3 (2026-11-06, `tools/combat_bench.gd`, Fern typique). Valeurs d'origine : `POWER_L1` de l'alpha 22, de Morvaine 24, `coeff` du Trait de cendre 0,9. Avec elles : alpha `idle` 10 % de victoires (cible 30-60 %) ; Morvaine `script_optimal` 0 % (cible ≥ 80 %), Fern tombe vers 125-145 s. Cause : le budget du §11 compte ~10 Barrières pleines (4 290), alors qu'un bouclier de 4 s n'absorbe qu'environ 100 points de dégâts continus ; seule la Barrière posée sur le Sceau sert en entier. Après recalage : alpha `idle` 34 %, `script_optimal` 100 % ; Morvaine `script_optimal` 86 % (p50 157 s), `idle` 0 %, `confus` 0 %. Le Sceau non bouclié fait encore ~380, soit 35 % des PV de Fern niveau 11.
+
+² *(provisoire, jalon 6)* Recalé par le banc du §22.6 après la décision 32 du GDD (Infusion de soin en automatique par défaut) : `coeff` du Trait de cendre 0,6 → **0,35** (usure de Morvaine), `POWER_L1` de l'alpha 21 → **23** (l'infusion automatique le rendait gagné à 97 % par `idle`).
 
 ### 10.3 Capacités
 
@@ -249,7 +251,7 @@ barrier     = barrier_ratio × hp(Le)
 | `ability.sentinel_barrier` | - | - | revient après 8 s sans dégâts arcane | - | Revient pleine |
 | `ability.alpha_howl` | - | 1,5 | à 70 % et 35 % des PV | **oui** | 2 loups au niveau `Le − 1` + Frénésie |
 | `ability.alpha_chain_lunge` | 1,5 × 3 | 0,8 chacun | 14 | non | |
-| `ability.morvaine_ash_bolt` | 0,6 ¹ | - | 2,5 (1,9 en phase 3) | - | Brûlure 0,3 |
+| `ability.morvaine_ash_bolt` | 0,35 ¹ ² | - | 2,5 (1,9 en phase 3) | - | Brûlure 0,3 |
 | `ability.morvaine_bound_lanterns` | - | - | 30 (phase 1) | - | 2 lanternes au niveau `Le − 2`, 4 au plus ; −0,15 de dégâts subis par lanterne, plafonné à `ENEMY_DAMAGE_REDUCTION_CAP` |
 | `ability.morvaine_veil` | - | - | revient après 10 s sans arcane (phase 2) | - | 15 % des PV max |
 | `ability.morvaine_false_word` | - | 2,0 | 18 | **oui** | Affaibli sur Fern |
@@ -293,7 +295,7 @@ crit_factor    = 1 + crit_chance × (crit_damage − 1)
 - DPS : 161, donc **~200 s**. L'enrage à 300 s laisse une marge de ×1,5.
 
 **Pression subie par Fern contre le boss** (Fern : 1 075 PV, défense 61,3, mitigation 136 / 197,3 = 0,689) :
-- Trait de cendre : 49,1 × 0,9 × 0,689 = 30,4 toutes les 2,5 s, soit 12,2 dégâts/s.
+- Trait de cendre : 49,1 × 0,9 × 0,689 = 30,4 toutes les 2,5 s, soit 12,2 dégâts/s (`coeff` d'origine ; avec 0,35, §10.2 note ², 11,8 toutes les 2,5 s, soit 4,7 dégâts/s).
 - Sceau de cendre : 49,1 × 15 × 0,689 = 507, soit **47 % des PV**. Le bouclier (429) le ramène à 78.
 - Bien joué (Sceau bouclié, lanternes tuées), la moyenne est ~21 dégâts/s, soit ~4 200 sur 200 s.
 - Budget de Fern : PV + ~10 Barrières (4 290) + 3 infusions (1 128) ≈ 6 500. Marge ×1,55.
@@ -572,7 +574,7 @@ Pas de revente d'objets contre de l'or : seul le recyclage existe, pour éviter 
 | `OFFLINE_RUNE_KEEP_MAX` | 20 | | Au-delà, recyclage en éclats |
 | `OFFLINE_RUNE_SAMPLE_MAX` | 500 | | *(provisoire, jalon 5)* Comme les objets : au-delà, recyclage à l'espérance |
 
-Entrées : `last_save_unix` (= `meta.last_active_at` de l'état), `now_unix` (passé en paramètre au moteur), la rencontre de chasse (`farming` dans l'état) (définition + niveau), l'instantané des statistiques dérivées du groupe et de ses sorts et runes au moment du calcul, et la table de butin. Le groupe absent joue toujours les tactiques **par défaut**, même si le joueur en a sauvegardé d'autres *(provisoire, jalon 6 : les tactiques sont désormais sauvegardées, GDD décision 25 ; le hors ligne les ignore)*. Le calcul ne fait tourner **aucun tick** (code : `game/engine/idle/`).
+Entrées : `last_save_unix` (= `meta.last_active_at` de l'état), `now_unix` (passé en paramètre au moteur), la rencontre de chasse (`farming` dans l'état) (définition + niveau), l'instantané des statistiques dérivées du groupe et de ses sorts et runes au moment du calcul, et la table de butin. Le groupe absent joue toujours les tactiques **par défaut**, même si le joueur en a sauvegardé d'autres *(provisoire, jalon 6 : les tactiques sont désormais sauvegardées, GDD décision 25 ; le hors ligne les ignore)*. *(provisoire, jalon 6)* L'Infusion de soin en automatique par défaut (GDD décision 32) ne change rien ici : le hors ligne ne consomme aucune potion, et la simulation n'en boit aucune dans les rencontres éligibles au niveau du banc (§22.6). Le calcul ne fait tourner **aucun tick** (code : `game/engine/idle/`).
 
 ```
 Δ = now − last_save
@@ -750,9 +752,9 @@ Les puits absorbent 85 à 100 % des revenus. Il ne doit pas y avoir d'or « inut
 - Le module de combat tourne seul, sans rendu, à pleine vitesse. Pour chaque rencontre et chaque profil : **200 graines**.
 - **Profils d'équipement** : nu, typique, bon (§21.1), et malchanceux (tous les tirages au 10e centile). *(provisoire, jalon 6)* `starter` : seulement le bâton garanti (§22.6).
 - **Profils de joueur** :
-  - `idle` : tactiques par défaut, aucune action manuelle.
+  - `idle` : tactiques par défaut, aucune action manuelle. *(provisoire, jalon 6)* Depuis la décision 32 du GDD, le défaut comprend l'Infusion de soin « Auto si PV < 30 % ».
   - `idle_tuned` *(provisoire, jalon 6)* : défauts + préréglage `tactics_preset.morvaine` (le bouton « Appliquer le conseil »), aucune action manuelle.
-  - *(provisoire, jalon 6)* Chaque profil porte 3 Infusions de soin et 2 Élixirs de mana ; seuls les modes automatiques (`idle_tuned`) ou le script (`script_optimal`) les boivent.
+  - *(provisoire, jalon 6)* Chaque profil porte 3 Infusions de soin et 2 Élixirs de mana ; seuls les modes automatiques (l'infusion par défaut, donc tous les profils sauf réglage contraire) ou le script (`script_optimal`) les boivent.
   - `script_optimal` : un script interrompt, bouclie le Sceau et focalise les lanternes.
   - `confus` : rune de feu contre les lanternes, Barrière en manuel jamais lancée.
 - **Mesures** : taux de victoire, durée p50 et p90, PV restants, temps passé sans mana, part de dégâts par sort, interruptions réussies.
@@ -831,10 +833,11 @@ Décisions 22 à 31 du GDD. Toutes `[H]`, à confirmer par le banc (200 graines 
 | `TACTIC_BARRIER_PRECAST_S` | 1,0 | - | Inchangée ; le Sceau (3 s d'incantation) est vu à 1 s de l'impact, bouclier de 4 s |
 | `TACTIC_MIN_ENEMIES_DEFAULT` | 3 | - | Curseur affiché 2-5 (`TACTIC_MIN_ENEMIES_SHOWN_MIN` / `_MAX` ; le moteur accepte 1-5) |
 | `TACTIC_MANA_RESERVE_DEFAULT` | 0,2 | - | |
-| `TACTIC_HEAL_HP_PCT` | **0,35** *(provisoire, jalon 6)* | - | Réponse 2 du propriétaire : Infusion de soin « Auto si PV < 35 % » (`auto_low_hp`), défaut Manuel. Seuil fixe, sans curseur |
-| `TACTIC_ELIXIR_MANA_PCT` | **0,2** *(provisoire, jalon 6)* | - | Élixir de mana « Auto si mana < 20 % » (`auto_low_mana`), défaut Manuel. Les deux partagent la recharge des potions ; le soin passe d'abord |
+| `TACTIC_HEAL_HP_PCT` | **0,30** *(provisoire, jalon 6)* | 0,35 | Infusion de soin « Auto si PV < 30 % » (`auto_low_hp`), **défaut Auto** (décision 32 du GDD ; réponse 2 : Manuel). Seuil fixe, sans curseur. 0,35 → 0,30 : courbe `idle` plus progressive (ci-dessous) |
+| `CONSUMABLE_SHARED_CD_S` | **40** *(provisoire, jalon 6)* | 20 | Recharge partagée des potions (§8) |
+| `TACTIC_ELIXIR_MANA_PCT` | **0,2** *(provisoire, jalon 6)* | - | Élixir de mana « Auto si mana < 20 % » (`auto_low_mana`), défaut Manuel (inchangé par la décision 32). Les deux partagent la recharge des potions ; le soin passe d'abord |
 
-Préréglage `tactics_preset.morvaine` *(provisoire, jalon 6)* : Ciblage « Lanceurs d'abord », Barrière « Avant un coup télégraphé », **Infusion de soin « Auto si PV < 35 % »** (réponse 2 : le conseil met l'infusion en automatique ; l'élixir reste en manuel, sans effet mesurable au banc). Le hors ligne ignore les consommables comme les tactiques sauvegardées (§20.1).
+Préréglage `tactics_preset.morvaine` *(provisoire, jalon 6)* : Ciblage « Lanceurs d'abord », Barrière « Avant un coup télégraphé », **Infusion de soin « Auto si PV < 30 % »** (réponse 2 : le conseil met l'infusion en automatique ; l'élixir reste en manuel, sans effet mesurable au banc). Depuis la décision 32, c'est aussi le défaut : la ligne reste dans le préréglage pour rétablir l'automatique chez qui l'aurait coupé, mais n'apparaît plus dans l'écart affiché. Le hors ligne ignore les consommables comme les tactiques sauvegardées (§20.1).
 
 Pourquoi 0,3 : un Sceau non bouclié fait ~35 % des PV de Fern typique niveau 11 (§10.2 note ¹). Sous 30 % de PV, il tue de toute façon ; la Barrière lancée sur le seuil n'est donc jamais « volée » à un Sceau qu'on aurait survécu. Recharge de la Barrière 18 s < Sceau 25 s en phase 2 : en `auto_before_telegraph`, chaque Sceau de phase 2 est bouclié ; en phase 3 (Sceau toutes les 15 s), un sur deux environ sans rune de Célérité. C'est la part laissée au jeu actif.
 
@@ -842,7 +845,7 @@ Pourquoi 0,3 : un Sceau non bouclié fait ~35 % des PV de Fern typique niveau 11
 
 | Profil | L11 | L12 | L14 | L16 | L20 |
 |---|---|---|---|---|---|
-| `idle` (défauts du jalon 6) | ≤ 20 % (§22.1) | - | ≥ 40 % | ≥ 70 % | ≥ 90 % |
+| `idle` (défauts du jalon 6, infusion en Auto) | ≤ 20 % (§22.1) | - | ≈ 45 % | ≈ 75 % (≥ 70 %) | ≈ 95 % (≥ 90 %) |
 | `idle_tuned` (défauts + conseil) | 40-65 % | ≥ 60 % | ≥ 85 % | - | - |
 | `script_optimal` | ≥ 80 %, p50 150-210 s (§22.1) | - | - | - | - |
 | `confus` (Barrière manuelle jamais lancée) | ≤ 10 % | ≤ 10 % | - | - | - |
@@ -914,10 +917,62 @@ Leviers essayés, dans l'ordre (16 graines par ligne, aucun retenu, **aucune val
 4. Non déclenché (écart avec `script_optimal` de 86 points).
 
 **Points ouverts pour `game-designer`** (mesures à 16 graines, pour décider) :
-- `idle` avec l'Infusion de soin en **Auto par défaut** (au lieu de Manuel, réponse 2) et 3 infusions portées : 0 % (niv. 11), 38 % (niv. 14), 100 % (niv. 16), 100 % (niv. 20) : tient presque toutes les cibles `idle`. Avec le défaut Manuel décidé, un joueur qui n'ouvre jamais les tactiques ne boit jamais et reste à 0 % jusqu'au niveau 20 (cible du niveau 16 acceptée par le propriétaire, réponse 1, non tenue).
+- *(résolu : décision 32 du GDD, ci-dessous)* `idle` avec l'Infusion de soin en **Auto par défaut** (au lieu de Manuel, réponse 2) et 3 infusions portées : 0 % (niv. 11), 38 % (niv. 14), 100 % (niv. 16), 100 % (niv. 20) : tient presque toutes les cibles `idle`. Avec le défaut Manuel décidé, un joueur qui n'ouvre jamais les tactiques ne boit jamais et reste à 0 % jusqu'au niveau 20 (cible du niveau 16 acceptée par le propriétaire, réponse 1, non tenue).
 - `idle_tuned` au niveau 11 : le préréglage + l'ultime en « Dès que pleine » donne 31 % (niv. 11) et 100 % (niv. 12) ; le préréglage + l'élixir en automatique ne change rien (6 %). Les défaites restantes viennent surtout du Sceau en phase 3 (recharge de la Barrière 18 s > Sceau 15 s).
-- Élite (`cloister_alpha`, `idle`) : **10 %** (cible §22.1 : 30-60 %), conséquence du seuil 0,3 de la décision 22 (37 % avec 0,5 ; le mode télégraphe n'y change rien). Le test garde seulement le plafond.
+- *(résolu ci-dessous : 54 % avec l'infusion par défaut et l'alpha à 23)* Élite (`cloister_alpha`, `idle`) : **10 %** (cible §22.1 : 30-60 %), conséquence du seuil 0,3 de la décision 22 (37 % avec 0,5 ; le mode télégraphe n'y change rien). Le test garde seulement le plafond.
 - Hors ligne : la Barrière part désormais au premier bond de loup (coup télégraphé) et coupe le Mana voilé ; `lantern_mire_03` passe à −25 % (16 graines : 14,5 s analytiques contre 19,3 s simulées) et `whispering_wood_04` au niveau 3 à −19 % (tueries « quantifiées » de 4 loups plus faibles que Fern). Aucun `OFFLINE_DPS_CALIBRATION` unique ne tient les 14 rencontres (écarts de −25 % à +11 %) ; tolérances provisoires 30 % et 22 % dans `test_offline_bench.gd`.
+
+**Courbe passive de Morvaine** *(provisoire, jalon 6 ; décision 32 du GDD, 2026-11-06)*. L'Infusion de soin passe en « Auto si PV < 30 % » par défaut ; l'Élixir reste Manuel. Objectif du propriétaire : un joueur qui ne touche jamais aux tactiques (`idle`) progresse niveau par niveau (≈ 45 % au niveau 14, ≈ 75 % au 16, ≈ 95 % au 20, ≤ 20 % au 11) au lieu d'une falaise ; autres cibles inchangées.
+
+Avant (infusion en Auto par défaut, données d'avant, 32 graines) : `idle` 0 / 0 / 0 / 19 / 66 / 100 % aux niveaux 11 / 12 / 13 / 14 / 15 / 16 ; `idle_tuned` 6 % (niv. 11), 53 % (niv. 12). Défaites `idle` surtout par le Sceau, toutes les infusions bues dès le niveau 11.
+
+Leviers essayés (32 graines par ligne sauf mention ; « bolt » = `coeff` du Trait de cendre ; seuil = `TACTIC_HEAL_HP_PCT` ; recharge = `CONSUMABLE_SHARED_CD_S`) :
+
+| Essai | `idle` niv. 11 / 12 / 13 / 14 / 15 / 16 / 18 / 20 | `idle_tuned` niv. 11 / 12 / 13 / 14 | Lecture |
+|---|---|---|---|
+| bolt 0,45 | 0 / 0 / - / 56 / - / 100 / 100 / 100 | 19 / 97 / - / 100 | Décale, ne lisse pas |
+| bolt 0,30, Brûlure du Trait 0,3 → 0,6 | 0 / 0 / - / 13 / - / 100 / 100 / 100 | 0 / 47 / - / 100 | Plus d'aléa mais plus d'usure : pire |
+| Trait toutes les 3,0 s (au lieu de 2,5) | 0 / 0 / - / 34 / - / 100 / 100 / 100 | 6 / 91 / - / 100 | Comme bolt 0,45 |
+| bolt 0,45 + seuil 0,30 | 0 / 0 / - / 63 / - / 100 / 100 / 100 | 19 / 88 / - / 100 | |
+| bolt 0,45 + recharge 30 s | 0 / 0 / - / 22 / - / 100 / 100 / 100 | 19 / 97 / - / 94 | |
+| bolt 0,45 + 2 infusions portées (levier b, pour mesure) | 0 / 0 / - / 9 / - / 100 / 100 / 100 | 0 / 9 / - / 84 | Trop dur pour `idle_tuned` |
+| bolt 0,45 + seuil 0,25 | - / 0 / 3 / 25 / 34 / 88 / 100 / 100 | - | Seule pente au niveau 16, mais `idle_tuned` niv. 11 trop bas |
+| bolt 0,35 | 0 / 0 / 6 / 94 / 100 / 100 / - / - | 56 / 100 / 100 / 100 | Bon `idle_tuned`, falaise `idle` niv. 13-14 |
+| bolt 0,35 + seuil 0,30 | 0 / 0 / 38 / 78 / 94 / 100 / 100 / 100 | 44 / 94 / 94 / 100 | |
+| bolt 0,35 + seuil 0,25 | 0 / 0 / 16 / 16 / 66 / 100 / 100 / 100 | 38 / 88 / 75 / 91 | |
+| bolt 0,35 + seuil 0,30 + recharge 30 s (96 graines) | 0 / 0 / 34 / 58 / 83 / 99 / - / - | 47 / 88 / 68 / 95 | |
+| **bolt 0,35 + seuil 0,30 + recharge 40 s (96 graines), retenu** | 0 / 0 / 32 / 42 / 72 / 99 / - / - | 47 / 85 / 60 / 89 | Pente la plus douce aux niveaux 12-16 |
+| bolt 0,35 + seuil 0,30 + recharge 60 s | 0 / 0 / 3 / 19 / 69 / 100 / 94 / 100 | 41 / 75 / 50 / 75 | `idle_tuned` niv. 14 sous 85 % |
+| bolt 0,30 + seuil 0,30 + recharge 40 s | 0 / 0 / 44 / 22 / 75 / 100 / 100 / 100 | 72 / 78 / 69 / 81 | `idle_tuned` niv. 11 au-dessus de 65 % |
+| 5 infusions portées (bolt 0,35, seuil 0,30, recharge 30 s) | 3 / 22 / 59 / 56 / 91 / 100 / - / - | 72 / 84 / 69 / 97 | Pour mesure : le plafond de port compte |
+
+Retenu : **Trait de cendre 0,6 → 0,35** (`ability.morvaine_ash_bolt`), **seuil de l'infusion 0,35 → 0,30**, **recharge partagée 20 → 40 s**. Le plafond de 3 infusions dans le donjon (levier b) n'est **pas** retenu : le banc porte déjà 3 infusions (§22.1). Le Sceau, les Lanternes liées et la Brûlure (partagée avec les lanternes des rencontres normales) sont inchangés. Effet de bord : l'alpha `idle` passait à 97 % (infusions bues automatiquement) ; `POWER_L1` de l'alpha 21 → **23** le ramène dans la cible (§10.2 note ²).
+
+Banc final (200 graines par ligne, Morvaine, équipement typique au niveau de Fern ; victoires, entre parenthèses défaites par le Sceau / autre, aucune par *Cendre totale*) :
+
+| Niveau | `idle` | `idle_tuned` | `script_optimal` | p50 `idle` / `idle_tuned` / `script_optimal` |
+|---|---|---|---|---|
+| 11 | **0 %** ✓ (≤ 20) (118 / 82) | **51 %** ✓ (40-65) (30 / 68) | **82 %** ✓ (≥ 80) (15 / 21) | 104 / 209 / **158 s** ✓ (150-210) |
+| 12 | 0,5 % (110 / 89) | **86,5 %** ✓ (≥ 60) | 94 % | 118 / 191 / 146 s |
+| 13 | 31 % (127 / 11) | 56 % (75 / 13) | 98,5 % | 181 / 176 / 127 s |
+| 14 | **40 %** ≈ 45 (98 / 22) | **89,5 %** ✓ (≥ 85) | 100 % | 166 / 164 / 122 s |
+| 15 | 75,5 % (29 / 20) | 99,5 % | 98,5 % | 164 / 152 / 115 s |
+| 16 | **99,5 %** ✗ ≈ 75 (≥ 70 ✓) | 100 % | 100 % | 158 / 143 / 107 s |
+| 17 | 98,5 % | 100 % | 100 % | 148 / 133 / 99 s |
+| 18 | 98,5 % | 100 % | 100 % | 142 / 126 / 94 s |
+| 19 | 100 % | 100 % | 100 % | 134 / 120 / 90 s |
+| 20 | **100 %** ≈ 95 (≥ 90 ✓) | 100 % | 100 % | 129 / 114 / 86 s |
+
+`confus` : 0 % aux niveaux 11 et 12 ✓ (≤ 10 %). Écarts au niveau 11 : `idle_tuned` − `idle` = 51 points (≥ 20 ✓) ; `script_optimal` − `idle_tuned` = 31 points (≥ 15 ✓). Élite (`cloister_alpha`, niveau 10) : `idle` **54 %** ✓ (30-60), `script_optimal` 100 %. Normales : 100 % (typique et malchanceux), p90 ≤ 24,1 s ; `starter` : 100 % sur tout le Bois (`_04` au niveau 2 : 100 %). Déterminisme : 0 écart sur 300 combats.
+
+Lecture : la courbe `idle` monte maintenant sur quatre niveaux (0,5 → 31 → 40 → 75,5 → 99,5 %, niveaux 12 à 16) au lieu de deux, mais elle atteint 75 % un niveau trop tôt et plafonne dès le niveau 16. Aucun levier essayé ne fait perdre Fern passive au niveau 16 sans casser `idle_tuned` au niveau 11 : le combat est peu aléatoire (le Sceau fait 34 % des PV au niveau 11, 26 % au 16, 21 % au 20 ; dès qu'il passe sous le seuil de l'infusion, 30 %, une Fern soignée à temps lui survit), et l'équipement « typique » grandit avec le niveau (§21.1). Pour une pente plus longue, il faudrait plus d'aléa dans le combat ou un ennemi qui suit le niveau de Fern, hors de ce lot.
+
+**Hors ligne** : inchangé. Aucune infusion n'est bue dans les rencontres éligibles au niveau du banc (`test_offline_bench.gd`, 16 graines : écarts identiques avec l'infusion en Auto ou en Manuel), et le modèle analytique ignore toujours les consommables (§20.1).
+
+**Points ouverts** (pour `game-designer`) :
+- `idle_tuned` creuse au niveau 13 (56 % contre 86,5 % au 12), défaites par le Sceau : à ce DPS, la phase 3 commence quand la Barrière (recharge 18 s) n'est pas revenue. Hors cible, mais non monotone.
+- L'infusion automatique boit aussi pendant « Chasser ici » et dans les salles du donjon avant le boss (PV non rendus entre les salles) : un joueur passif peut arriver devant Morvaine avec moins de 3 infusions. Le banc part de 3 infusions et des PV pleins.
+- Un joueur peut porter 5 infusions (`CONSUMABLE_CARRY_MAX`) ; avec 5 (mesuré avec la recharge à 30 s, 32 graines), `idle_tuned` niveau 11 monte à ~72 % (au-dessus de 65 %) et `idle` niveau 12 à ~22 %. Si la cible doit tenir pour un joueur qui a fait le plein, le levier b (3 infusions au plus dans le donjon) est la réponse ; il faut alors un texte d'interface (règle visible à l'entrée et chez la marchande).
 
 ## 23. Quêtes, contrats, coffres et bestiaire (jalon 6)
 

@@ -137,6 +137,8 @@ Les ressources : la **mana** se dépense, se régénère et revient avec les att
 | Salve de mana | Manuel / Auto / Auto si ≥ 3 ennemis | Auto si ≥ 3 ennemis |
 | Barrière défensive | Manuel / Auto si PV < X % (X : 30-70, pas de 10) / Auto avant un coup télégraphé / Auto avant un coup télégraphé, sinon si PV < X % | Avant un coup télégraphé, sinon si PV < 30 % (décision 22) |
 | Lumière d'après | Manuel / Auto dès que pleine | Manuel |
+| Infusion de soin | Manuel / Auto si PV < 30 % | Auto si PV < 30 % (décision 32) |
+| Élixir de mana | Manuel / Auto si mana < 20 % | Manuel |
 | Réserve de mana | 0-50 % (pas de 10) : les sorts auto ne descendent pas sous ce seuil | 20 % |
 
 L'IA auto tient compte de ces réglages et jamais d'un savoir caché. Un joueur qui ne touche à rien gagne les rencontres normales de son niveau. L'élite et le boss demandent des actions manuelles ou des tactiques bien réglées `[H]`.
@@ -263,7 +265,7 @@ L'arbitrage voulu : progresser hors ligne (Sablier) ou être plus fort en combat
 ### 10.6 Ressources et inventaire
 
 - **Or** (`currency.gold`), **poussière de mana** (`material.mana_dust`, amélioration), **éclat runique** (`material.rune_shard`, fusion), **page de grimoire** (`material.grimoire_page`, rangs des sorts), **essence de cendre** (`material.ashen_essence`, artefacts).
-- **Consommables** (Rosalie, marchande d'Aubelin, personnage original) : Infusion de soin (`consumable.healing_draught`), Élixir de mana (`consumable.mana_elixir`). Recharge partagée, 5 au plus de chaque sur soi.
+- **Consommables** (Rosalie, marchande d'Aubelin, personnage original) : Infusion de soin (`consumable.healing_draught`), Élixir de mana (`consumable.mana_elixir`). Recharge partagée (40 s, GAME_BALANCE §8), 5 au plus de chaque sur soi.
 - **Inventaire** : 60 cases d'équipement. Les matériaux, les runes et les consommables vont dans des onglets empilables à part, sans limite pratique. Inventaire plein : le butin d'objets est recyclé automatiquement, avec une ligne dans le résumé. Il n'est jamais perdu en silence.
 
 ## 11. Butin
@@ -515,7 +517,15 @@ Constat (`fullrun.spec.ts`, banc §22.4) : (1) aucune interface ne permet de ré
 **Réponses du propriétaire (2026-11-06)** : oui aux quatre.
 
 1. **Boss en jouant passif** : accepté, ≥ 70 % au niveau 16 sans ouvrir les tactiques.
-2. **Consommables automatiques** : ajoutés. Tactique « Infusion de soin : Manuel / Auto si PV < 35 % » (et l'Élixir de mana sur le même modèle, seuil de mana), défaut Manuel, réglable dans l'écran des tactiques et utilisable par le préréglage Morvaine.
+2. **Consommables automatiques** : ajoutés. Tactique « Infusion de soin : Manuel / Auto si PV < 35 % » (et l'Élixir de mana sur le même modèle, seuil de mana), défaut Manuel, réglable dans l'écran des tactiques et utilisable par le préréglage Morvaine. *(Défaut de l'infusion et seuil remplacés par la décision 32.)*
 3. **Ligne de Fern au feu de camp** : ajoutée (`dialogue.fern_campfire.line_02`, texte proposé ci-dessus), à relire avec les autres dialogues (6.2).
 4. **Tactiques dès le niveau 1** : oui, l'écran est disponible dès le début de partie.
+
+### Décision du 2026-11-06 (jalon 6, courbe passive de Morvaine)
+
+Constat (banc GAME_BALANCE §22.6) : avec l'infusion en Manuel par défaut, un joueur qui n'ouvre jamais les tactiques ne boit jamais et perd contre Morvaine jusqu'au niveau 20 ; avec l'infusion en Auto, la victoire passe de 0 % à 100 % entre les niveaux 13 et 16 (falaise). `[H]`, chiffres dans GAME_BALANCE §22.6.
+
+| # | Sujet | Décision | Remplace ou précise |
+|---|---|---|---|
+| 32 | Infusion de soin par défaut | La tactique « Infusion de soin » est **« Auto si PV < 30 % » par défaut** ; l'Élixir de mana reste Manuel. Seuil `TACTIC_HEAL_HP_PCT` 0,35 → 0,30. Pour lisser la courbe du joueur passif (cibles : ≤ 20 % au niveau 11, ≈ 45 % au 14, ≈ 75 % au 16, ≈ 95 % au 20) : Trait de cendre de Morvaine `coeff` 0,6 → 0,35, recharge partagée des potions 20 → 40 s ; alpha `POWER_L1` 21 → 23 (élite gardée à 30-60 % pour `idle`). Le Sceau, les Lanternes et la sémantique des tactiques sont inchangés. Le préréglage `tactics_preset.morvaine` garde la ligne de l'infusion (elle rétablit l'automatique), qui ne figure plus dans l'écart affiché. Le hors ligne n'en est pas affecté (GAME_BALANCE §20.1) | Réponse 2 du propriétaire (défaut Manuel, seuil 35 %) ; §7.4 ; §10.6 |
 
