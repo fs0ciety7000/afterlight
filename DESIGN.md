@@ -23,7 +23,7 @@
 | Lumière jour | soleil chaud bas (`#ffe2b0`), ciel lavande-bleu, ombres longues teintées bleu-vert, pétales ou poussière en suspension |
 | Lumière nuit | lune froide (`#bcd0ff`), ambiance `#1a2433`, sources chaudes ponctuelles (fenêtres, lanternes), particules de mana pâles |
 | Magie | cercles runiques blanc nacré (jamais de pentagramme), rayons fins et nets, particules contrôlées (< 200 par effet) |
-| Passage jour → nuit | entrée en donjon : fondu de 600 ms vers la palette nuit, le HUD bascule de thème ; instantané si « réduire les animations » est actif |
+| Passage jour → nuit | entrée en donjon : fondu de 1,6 s de l'environnement, du soleil et du brouillard vers la palette nuit, les lampes s'allument dans la seconde moitié ; le HUD bascule de thème à l'entrée ; instantané si « réduire les animations » est actif |
 
 ## Couleurs de l'interface
 
@@ -85,7 +85,7 @@ Contraste minimal 4,5:1 pour le texte courant, 3:1 pour les icônes et grands ch
 
 ## Mouvement
 
-- Durées : 120 ms (survol, appui), 200 ms (ouverture de panneau), 320 ms (changement d'écran), 600 ms (jour → nuit).
+- Durées : 120 ms (survol, appui), 200 ms (ouverture de panneau), 320 ms (changement d'écran), 1,6 s (jour → nuit, `EnvFade.SECONDS`).
 - Courbes : sortie douce (`ease_out` cubique) à l'ouverture, entrée douce à la fermeture. Pas de rebond sauf récompense légendaire.
 - Coup : arrêt sur image 40-60 ms sur critique et coup de boss ; secousse caméra seulement sur critique, boss et ultime.
 - `Réduire les animations` (réglage, activé si le système le demande sur le web) : fondus remplacés par des coupes, pas de secousse, particules réduites de moitié.

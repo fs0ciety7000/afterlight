@@ -56,7 +56,7 @@ Les rencontres de salle normales ne sont **pas** éligibles au hors ligne ni à 
 | Règle | Comportement attendu (testable) |
 |---|---|
 | Entrée | `interact` sur la poterne (`Anchors/dungeon_gate` des Ruines). Verrouillée : « Terminez *Le guet abandonné* ». Émet `location_visited {dungeon.silent_dial_cloister}` |
-| Palette | Thème Nuit du HUD et éclairage nuit dès l'entrée (DESIGN.md : fondu de 600 ms au jalon 7, coupe au jalon 6) |
+| Palette | Thème Nuit du HUD et éclairage nuit dès l'entrée (DESIGN.md : fondu de 1,6 s au jalon 7, coupe au jalon 6) |
 | Portes | La porte vers la salle suivante est fermée (grille) tant que la rencontre de la salle n'est pas gagnée ; elle s'ouvre à `encounter_completed` (victoire) avec un son de grille. Les salles de repos sont toujours ouvertes. Revenir en arrière est permis |
 | Entre deux salles | Les PV ne remontent pas ; la mana remonte à `mana_regen` par seconde ; la charge d'ultime persiste (GDD §6) |
 | Fontaine (3) | `interact` : +30 % des PV max, une fois par expédition ; ensuite « La fontaine est calme » |
@@ -123,7 +123,7 @@ Courbe en dents de scie : 0,4 → 0,6 → 0,1 → 0,7 → 0,8 → 0,1 → 1,0 (G
 | Jalon | Livré |
 |---|---|
 | 6 | `Environment` nuit par salle (lune `#bcd0ff`, ambiance `#1a2433`, sources chaudes ponctuelles), HUD en thème Nuit dès l'entrée, retour au thème Jour à la sortie. Coupe nette |
-| 7 | Fondu de 600 ms à la poterne (coupe si « Réduire les animations ») ; lumière chaude de 3 s à la mort de Morvaine ; particules de poussière dans le vestibule (< 200) |
+| 7 | Fondu de 1,6 s à la poterne (environnement, soleil, brouillard ; lampes allumées en seconde moitié ; coupe si « Réduire les animations ») ; lumière chaude de 3 s à la mort de Morvaine : `dial/AfterLight` descend du puits et dépasse d'un tiers son énergie avant de se poser, les fils de braise s'éteignent (état final immédiat si « Réduire les animations ») — `game/world/explore/env_fade.gd` ; particules de poussière dans le vestibule (< 200) |
 
 ## 3. Ruines du Guet (`location.watch_ruins`, terrain, niveaux 7-9)
 

@@ -71,6 +71,8 @@ func on_loaded() -> void:
 				_centres[room] = (area as Area3D).global_position
 				(area as Area3D).body_entered.connect(_on_room_body.bind(room))
 	apply_gates()
+	if _boss_cleared():
+		EnvFade.after_light(view.scene_node("."), true)
 	_publish()
 
 
@@ -166,7 +168,10 @@ func enter(target: String) -> void:
 		return
 	_boss_tried = false
 	GameState.runtime_position = null
+	# Day -> night: the cloister's light starts from the place left (a cut when reduced).
+	var day := EnvFade.snapshot(view.scene_node("."))
 	host.call("reload_place")
+	EnvFade.play(view.scene_node("."), day, Settings.reduce_motion)
 	SaveService.save_now()
 	if r.get("first", false):
 		story.play_dialogue("dialogue.fern_dungeon_enter", true)
@@ -323,6 +328,14 @@ func _publish() -> void:
 # --- Combat ---------------------------------------------------------------------------------
 
 
+## Morvaine's room is won in this run (the after-light stays on).
+func _boss_cleared() -> bool:
+	for r: Dictionary in GameState.content_api.dungeon_view().get("rooms", []):
+		if r["kind"] == "boss" and r["cleared"]:
+			return true
+	return false
+
+
 ## Room of an encounter of the running dungeon ({} if none).
 func room_of(encounter_id: String) -> Dictionary:
 	var v := GameState.content_api.dungeon_view()
@@ -368,4 +381,7 @@ func after_combat(encounter_id: String, victory: bool) -> void:
 	lines.append({"speaker": "", "key": "story.bell.subtitle"})
 	UiProbe.world["bell_rung"] = true
 	Audio.ring_bell()
+	# « Lumière d'après »: warm light down the shaft in 3 s, the ember threads die out.
+	EnvFade.after_light(view.scene_node("."), Settings.reduce_motion)
+	UiProbe.world["after_light"] = true
 	story.play_lines(lines, true)
