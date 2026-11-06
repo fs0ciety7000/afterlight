@@ -6,7 +6,9 @@ extends RefCounted
 
 ## `start` is the content's start definition (see game/data/*/start.json):
 ## {party: [character ids], region, location, gold, materials}.
-static func create(start: Dictionary, seed_value: int, now_unix: int) -> Dictionary:
+static func create(
+	start: Dictionary, seed_value: int, now_unix: int, content: Dictionary = {}
+) -> Dictionary:
 	var party: Array = []
 	var characters := {}
 	for i in StateSchema.PARTY_SLOTS:
@@ -14,7 +16,7 @@ static func create(start: Dictionary, seed_value: int, now_unix: int) -> Diction
 		party.append(member)
 		if member != "":
 			characters[member] = _new_character()
-	return {
+	var state := {
 		"meta":
 		{"seed": seed_value, "created_at": now_unix, "last_active_at": now_unix, "play_time": 0.0},
 		"party": party,
@@ -28,11 +30,16 @@ static func create(start: Dictionary, seed_value: int, now_unix: int) -> Diction
 			"location_id": start["location"],
 			"unlocked_regions": [start["region"]],
 			"discovered_locations": [start["location"]],
+			"revealed_locations": [start["location"]],
+			"spawn": "default",
 		},
 		"progress": {"cleared_encounters": {}, "quests": {}, "bestiary": {}, "discoveries": []},
 		"farming": "",
 		"rng": {},
 	}
+	if not content.is_empty():
+		WorldRules.visit(start["location"], state, content)
+	return state
 
 
 static func _new_character() -> Dictionary:

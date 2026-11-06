@@ -3,9 +3,17 @@ extends RefCounted
 ## Save format migrations: version n -> n + 1. Never edit a released step;
 ## add a new one and bump SaveCodec.CURRENT_VERSION.
 ##
-## v1 is the first released format, so the table is empty for now. Each new
-## step gets a test in tests/unit/persistence/test_migrations.gd.
+## Each step gets a test in tests/unit/persistence/test_migrations.gd.
 
 
 static func all() -> Dictionary:
-	return {}
+	return {1: v1_to_v2}
+
+
+## v2 (Milestone 2): fog of war and spawn point.
+## revealed_locations starts as the discovered ones; spawn is "default".
+static func v1_to_v2(state: Dictionary) -> Dictionary:
+	var world: Dictionary = state["world"]
+	world["revealed_locations"] = (world["discovered_locations"] as Array).duplicate()
+	world["spawn"] = "default"
+	return state

@@ -69,6 +69,7 @@ func write(state: Dictionary, now_unix: int) -> Dictionary:
 	var err := _replace(temp, main_path())
 	if err != OK:
 		return {"ok": false, "error": "cannot move save into place (%d)" % err}
+	_flush()
 	return {"ok": true, "error": ""}
 
 
@@ -105,6 +106,7 @@ func restore_backup(now_unix: int) -> Dictionary:
 	if has_main():
 		quarantine(now_unix)
 	DirAccess.copy_absolute(backup_path(), main_path())
+	_flush()
 	return {"ok": true, "error": "", "decoded": backup}
 
 
@@ -112,6 +114,16 @@ func _decode_backup() -> Dictionary:
 	if not FileAccess.file_exists(backup_path()):
 		return {}
 	return SaveCodec.decode(read_text(backup_path()), migrations)
+
+
+## On the web, Godot copies user:// into IndexedDB when a file is closed, not
+## when one is renamed. Writing a tiny marker after the rename makes the new
+## save durable right away (it was lost on reload otherwise).
+func _flush() -> void:
+	var marker := FileAccess.open(dir_path.path_join(".flush"), FileAccess.WRITE)
+	if marker:
+		marker.store_string(str(Time.get_ticks_msec()))
+		marker.close()
 
 
 static func _replace(from: String, to: String) -> int:

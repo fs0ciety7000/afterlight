@@ -6,7 +6,8 @@ signal screen_changed(screen_id: String)
 
 const SCREENS := {
 	"title": "res://game/app/screens/title_screen.gd",
-	"camp": "res://game/app/screens/camp_screen.gd",
+	"explore": "res://game/app/screens/explore_screen.gd",
+	"world_map": "res://game/app/screens/world_map_screen.gd",
 	"settings": "res://game/app/screens/settings_screen.gd",
 	"save_recovery": "res://game/app/screens/save_recovery_screen.gd",
 	"content_error": "res://game/app/screens/content_error_screen.gd",
@@ -14,15 +15,18 @@ const SCREENS := {
 const FADE_SECONDS := 0.16  # x2 (out + in) = 320 ms, DESIGN.md
 
 var current_id := ""
+## Parent for 3D views (owned by Main, drawn under the UI).
+var world_root: Node3D
 var current: Control
 var _host: Control
 var _veil: ColorRect
 var _history: Array[String] = []
 
 
-func attach(host: Control, veil: ColorRect) -> void:
+func attach(host: Control, veil: ColorRect, world: Node3D) -> void:
 	_host = host
 	_veil = veil
+	world_root = world
 
 
 func go_to(screen_id: String, params: Dictionary = {}, remember: bool = true) -> void:

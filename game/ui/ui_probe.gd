@@ -3,6 +3,8 @@ extends Node
 ## their on-screen rectangles and a state summary to `window.__afterlight`.
 ## Playwright reads it to click like a player and check the outcome.
 
+## Free-form facts from the 3D views (player position, timings, map view).
+var world := {}
 var _controls := {}
 var _elapsed := 0.0
 var _messages: Array[String] = []
@@ -31,10 +33,11 @@ func _process(delta: float) -> void:
 func snapshot() -> Dictionary:
 	var controls := {}
 	for id in _controls.keys():
-		var c: Control = _controls[id]
-		if not is_instance_valid(c) or not c.is_inside_tree():
+		var ref: Variant = _controls[id]
+		if not is_instance_valid(ref) or not (ref as Control).is_inside_tree():
 			_controls.erase(id)
 			continue
+		var c: Control = ref
 		var rect := c.get_viewport().get_screen_transform() * c.get_global_rect()
 		var entry := {
 			"x": rect.position.x,
@@ -55,5 +58,6 @@ func snapshot() -> Dictionary:
 		"state": GameState.summary(),
 		"save": {"last_saved_at": SaveService.last_saved_at, "error": SaveService.last_error},
 		"messages": _messages,
+		"world": world,
 		"settings": {"text_scale": Settings.text_scale(), "reduce_motion": Settings.reduce_motion},
 	}

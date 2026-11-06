@@ -74,7 +74,7 @@ func _on_restore() -> void:
 	var r := SaveService.store.restore_backup(GameState.now_unix())
 	if r["ok"]:
 		GameState.adopt(r["decoded"]["state"])
-		Router.go_to("camp", {}, false)
+		Router.go_to("explore", {}, false)
 	else:
 		flash(_status, r["error"], true)
 
@@ -90,5 +90,5 @@ func _on_new_game() -> void:
 		func() -> void:
 			GameState.start_new(Content.start())
 			SaveService.save_now()
-			Router.go_to("camp", {}, false)
+			Router.go_to("explore", {}, false)
 	)

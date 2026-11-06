@@ -50,3 +50,33 @@ export async function clearStorage(page: Page): Promise<void> {
     localStorage.clear();
   });
 }
+
+/** Waits until the save file stored in IndexedDB contains `text`. */
+export async function waitSaved(page: Page, text: string): Promise<void> {
+  await expect
+    .poll(
+      () =>
+        page.evaluate(
+          () =>
+            new Promise<string>((resolve) => {
+              const req = indexedDB.open('/userfs');
+              req.onerror = () => resolve('');
+              req.onsuccess = () => {
+                const db = req.result;
+                if (!db.objectStoreNames.contains('FILE_DATA')) return resolve('');
+                const get = db
+                  .transaction('FILE_DATA', 'readonly')
+                  .objectStore('FILE_DATA')
+                  .get('/userfs/godot/app_userdata/Afterlight/saves/slot_0.json');
+                get.onsuccess = () => {
+                  const v = get.result as { contents?: Uint8Array } | undefined;
+                  resolve(v?.contents ? new TextDecoder().decode(v.contents) : '');
+                };
+                get.onerror = () => resolve('');
+              };
+            }),
+        ),
+      { timeout: 20_000, message: `save contains ${text}` },
+    )
+    .toContain(text);
+}

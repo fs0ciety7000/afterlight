@@ -77,6 +77,8 @@ static func spec() -> Dictionary:
 					"location_id": ID,
 					"unlocked_regions": {"type": "array", "items": ID},
 					"discovered_locations": {"type": "array", "items": ID},
+					"revealed_locations": {"type": "array", "items": ID},
+					"spawn": {"type": "string", "min": 1},
 				},
 			},
 			"progress":

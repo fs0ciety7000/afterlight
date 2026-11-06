@@ -17,6 +17,6 @@ test('title and settings work with the keyboard alone', async ({ page }) => {
   // Back on the title, Enter on the focused first button starts a game.
   await page.waitForTimeout(500);
   await page.keyboard.press('Enter');
-  await waitScreen(page, 'camp');
+  await waitScreen(page, 'explore');
   expect((await probe(page))!.state.leader).toBe('character.fern');
 });

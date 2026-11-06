@@ -2,9 +2,8 @@ class_name ContentRules
 extends RefCounted
 ## Cross-entity validation rules (docs/CONTENT_PIPELINE.md §8). Structural
 ## rules (V1-V4, V6-V8, V19) are applied by ContentLoader while reading.
-## Not yet enforced: V15 (quest graph), V16 (world reachability), V20 (save
-## compatibility); they land with the milestones that introduce quests and
-## travel (see docs/ROADMAP.md).
+## Not yet enforced: V15 (quest graph) and V20 (save compatibility); they
+## land with the milestones that introduce quests (see docs/ROADMAP.md).
 
 const CONDITION_KEYS := {
 	"start": "",
@@ -73,6 +72,7 @@ static func check(ctx: Dictionary, translations: Dictionary) -> void:
 			"quest":
 				for c in e["prerequisites"]:
 					_check_condition(c, by_id, f)
+	_check_world_reachability(ctx)
 	var starts: Array = ctx["by_type"].get("start", [])
 	if starts.size() != 1:
 		ContentLoader.fail(
@@ -249,3 +249,71 @@ static func _check_condition(c: Variant, by_id: Dictionary, f: Callable) -> void
 				f.call("V6", "%s: unknown %s '%s'" % [key, want, value])
 			elif by_id[str(value)]["_type"] != want:
 				f.call("V6", "%s: '%s' is not a %s" % [key, value, want])
+
+
+## V16: every location must be reachable from the start, following fog
+## reveals (a location must be revealed by the start or by a reachable
+## location) and unlock conditions that can be satisfied.
+static func _check_world_reachability(ctx: Dictionary) -> void:
+	var by_id: Dictionary = ctx["by_id"]
+	var starts: Array = ctx["by_type"].get("start", [])
+	if starts.size() != 1:
+		return
+	var start: Dictionary = starts[0]
+	var revealed := {start["location"]: true}
+	var reachable := {}
+	var changed := true
+	while changed:
+		changed = false
+		for loc in ctx["by_type"].get("location", []):
+			var id: String = loc["id"]
+			if reachable.has(id) or not revealed.has(id):
+				continue
+			if _satisfiable(loc["unlock"], by_id, reachable, {}):
+				reachable[id] = true
+				for other in loc["fog_reveal"]:
+					revealed[other] = true
+				changed = true
+	for loc in ctx["by_type"].get("location", []):
+		if not reachable.has(loc["id"]):
+			var why := (
+				"never revealed by fog_reveal"
+				if not revealed.has(loc["id"])
+				else "unlock condition can never be met"
+			)
+			ContentLoader.fail(
+				ctx, "V16", ctx["files"][loc["id"]], loc["id"], "unreachable from the start: " + why
+			)
+
+
+static func _satisfiable(
+	c: Dictionary, by_id: Dictionary, reachable: Dictionary, seen: Dictionary
+) -> bool:
+	if c.is_empty():
+		return true
+	var key: String = c.keys()[0]
+	var value: Variant = c[key]
+	match key:
+		"start":
+			return true
+		"level_at_least":
+			return int(value) <= BalanceProgression.LEVEL_CAP
+		"location_cleared":
+			return reachable.has(str(value))
+		"item_owned":
+			return by_id.has(str(value))
+		"quest_completed":
+			var quest_id := str(value)
+			if seen.has(quest_id) or not by_id.has(quest_id):
+				return false
+			seen[quest_id] = true
+			for pre in by_id[quest_id].get("prerequisites", []):
+				if not _satisfiable(pre, by_id, reachable, seen):
+					return false
+			return true
+		"all":
+			for sub in value:
+				if not _satisfiable(sub, by_id, reachable, seen):
+					return false
+			return true
+	return false

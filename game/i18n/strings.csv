@@ -81,3 +81,34 @@ passive.veiled_mana.desc,"Après quelques secondes sans sort actif, le prochain 
 lore.defensive_magic.name,Magie défensive
 lore.mana_concealment.name,Dissimulation du mana
 lore.demons.name,Démons
+location.aubelin.desc,"Village de la vallée, au bord de la rivière. Forge, graveuse de runes et marchande."
+location.whispering_wood.desc,"Bois de bouleaux où la brume s'accroche. Des loups y rôdent depuis peu."
+location.lantern_mire.desc,"Tourbière où flottent des lueurs. Mieux vaut savoir interrompre une incantation."
+location.watch_ruins.desc,"Ancien poste de guet sur la colline. Des sentinelles de pierre gardent encore l'entrée."
+ui.lock.level,Accessible au niveau {level}
+ui.lock.quest,Terminez la quête « {quest} »
+ui.lock.location_cleared,Libérez d'abord : {location}
+ui.lock.item,Il vous faut : {item}
+ui.lock.unknown,Lieu verrouillé
+ui.explore.level,Niv. {level}
+ui.explore.exit_locked,"Ce chemin est fermé : {reason}"
+ui.explore.scene_missing,"Ce lieu n'est pas encore disponible."
+ui.explore.arrived,Vous arrivez à {place}
+ui.menu.pause_title,Pause
+ui.menu.resume,Reprendre
+ui.map.title,Carte du monde
+ui.map.travel,Voyager
+ui.map.here,Vous êtes ici
+ui.map.close,Fermer
+ui.map.zoom_in,Zoomer
+ui.map.zoom_out,Dézoomer
+ui.map.level,Niveau {level}
+ui.map.hub,Village
+ui.map.hint,"Glissez pour déplacer, molette ou boutons pour zoomer. Flèches et Entrée au clavier."
+ui.map.select_hint,Choisissez un lieu sur la carte.
+ui.explore.map_button,Carte · M
+ui.explore.menu_button,Menu · Échap
+ui.explore.gold,Or : {gold}
+ui.common.separator," · "
+ui.explore.map_button_touch,Carte
+ui.explore.menu_button_touch,Menu

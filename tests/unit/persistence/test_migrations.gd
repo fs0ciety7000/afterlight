@@ -40,3 +40,19 @@ func test_released_table_covers_every_version_below_current() -> void:
 	var table := SaveMigrations.all()
 	for v in range(1, SaveCodec.CURRENT_VERSION):
 		assert_true(table.has(v), "migration from v%d exists" % v)
+
+
+func test_real_v1_save_migrates_to_v2_with_fog_and_spawn() -> void:
+	var v1 := Fixtures.new_state()
+	v1["world"].erase("revealed_locations")
+	v1["world"].erase("spawn")
+	v1["world"]["discovered_locations"] = ["location.test_village", "location.other"]
+	var r := SaveCodec.decode(SaveCodec.encode(v1, 1, 1), SaveMigrations.all(), 2)
+	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
+	assert_eq(r["migrated_from"], 1, "from v1")
+	assert_eq(
+		r["state"]["world"]["revealed_locations"],
+		["location.test_village", "location.other"],
+		"fog"
+	)
+	assert_eq(r["state"]["world"]["spawn"], "default", "spawn")

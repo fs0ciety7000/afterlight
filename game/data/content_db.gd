@@ -22,6 +22,16 @@ func load_all(roots: Array) -> bool:
 	return errors.is_empty()
 
 
+## All entities by id (read-only view for the engine).
+func index() -> Dictionary:
+	return _by_id
+
+
+## Walking speed of a character, from its base stats (GAME_BALANCE §2.1).
+func move_speed(character_id: String) -> float:
+	return float(get_entity(character_id).get("base_stats", {}).get("move_speed", 5.0))
+
+
 func is_valid() -> bool:
 	return errors.is_empty()
 

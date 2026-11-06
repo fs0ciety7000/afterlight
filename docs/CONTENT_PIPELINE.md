@@ -111,7 +111,7 @@ Règles :
 
 ## 5. Entités et champs
 
-Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités : `id` (R, string), `origin` (R), `name_key` (R), `desc_key` (R ou O, §3), `canon_note` (R si canon), `canon_refs` (O), `tags` (O, array<string>), `deprecated` (O, bool, défaut false).
+Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités : `id` (R, string), `origin` (R), `name_key` (R), `desc_key` (R ou O, §3), `canon_note` (R si canon), `canon_refs` (O), `tags` (O, array<string>), `deprecated` (O, bool, défaut false), `notes` (O, string : note d'équipe, jamais affichée).
 
 ### 5.1 Combat
 

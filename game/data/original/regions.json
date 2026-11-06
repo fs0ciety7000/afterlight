@@ -9,20 +9,19 @@
       "desc_key": "region.aubelin_vale.desc",
       "level_range": [
         1,
-        10
+        12
       ],
       "locations": [
         "location.aubelin",
-        "location.whispering_wood"
+        "location.whispering_wood",
+        "location.lantern_mire",
+        "location.watch_ruins"
       ],
       "hub": "location.aubelin",
       "map_texture": "res://assets/textures/map/aubelin_vale.png",
       "unlock": {
         "start": true
-      },
-      "tags": [
-        "m1_seed"
-      ]
+      }
     }
   ]
 }

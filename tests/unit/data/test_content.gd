@@ -459,3 +459,28 @@ func test_v12_dungeon_ends_with_the_boss() -> void:
 	var w := _combat_world()
 	w["original/dungeons.json"][1][0]["rooms"].reverse()
 	_expect(w, "V12", "last room must be the boss")
+
+
+func test_v16_every_location_is_reachable_from_the_start() -> void:
+	var w := _base()
+	var locations: Array = w["original/locations.json"][1]
+	locations[0]["fog_reveal"] = ["location.far"]
+	w["original/regions.json"][1][0]["locations"].append("location.far")
+	var far := _entry(
+		"location.far",
+		{
+			"region": "region.r",
+			"kind": "field",
+			"level": 3,
+			"scene": "res://f.tscn",
+			"map_pos": [0.2, 0.2],
+			"unlock": {"level_at_least": 3},
+		}
+	)
+	locations.append(far)
+	assert_eq(_errors(w), "", "reachable through fog and level")
+	far["unlock"] = {"level_at_least": 99}
+	_expect(w, "V16", "condition can never be met")
+	far["unlock"] = {"start": true}
+	locations[0]["fog_reveal"] = []
+	_expect(w, "V16", "never revealed")

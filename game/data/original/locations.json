@@ -6,32 +6,77 @@
       "id": "location.aubelin",
       "origin": "original",
       "name_key": "location.aubelin.name",
+      "desc_key": "location.aubelin.desc",
       "region": "region.aubelin_vale",
       "kind": "hub",
       "scene": "res://game/world/locations/aubelin.tscn",
       "map_pos": [
-        0.42,
-        0.58
+        0.46,
+        0.62
       ],
       "unlock": {
         "start": true
-      }
+      },
+      "fog_reveal": [
+        "location.whispering_wood",
+        "location.lantern_mire"
+      ]
     },
     {
       "id": "location.whispering_wood",
       "origin": "original",
       "name_key": "location.whispering_wood.name",
+      "desc_key": "location.whispering_wood.desc",
       "region": "region.aubelin_vale",
       "kind": "field",
       "level": 1,
       "scene": "res://game/world/locations/whispering_wood.tscn",
       "map_pos": [
-        0.28,
-        0.4
+        0.26,
+        0.44
       ],
       "unlock": {
         "start": true
-      }
+      },
+      "fog_reveal": [
+        "location.watch_ruins"
+      ]
+    },
+    {
+      "id": "location.lantern_mire",
+      "origin": "original",
+      "name_key": "location.lantern_mire.name",
+      "desc_key": "location.lantern_mire.desc",
+      "region": "region.aubelin_vale",
+      "kind": "field",
+      "level": 4,
+      "scene": "res://game/world/locations/lantern_mire.tscn",
+      "map_pos": [
+        0.68,
+        0.38
+      ],
+      "unlock": {
+        "level_at_least": 4
+      },
+      "notes": "Unlocked by level until quest.main_01/main_02 exist (Milestones 3 and 6); then switch to quest_completed as in GDD §5.2."
+    },
+    {
+      "id": "location.watch_ruins",
+      "origin": "original",
+      "name_key": "location.watch_ruins.name",
+      "desc_key": "location.watch_ruins.desc",
+      "region": "region.aubelin_vale",
+      "kind": "dungeon_entrance",
+      "level": 7,
+      "scene": "res://game/world/locations/watch_ruins.tscn",
+      "map_pos": [
+        0.78,
+        0.22
+      ],
+      "unlock": {
+        "level_at_least": 7
+      },
+      "notes": "Unlocked by level until quest.main_01/main_02 exist (Milestones 3 and 6); then switch to quest_completed as in GDD §5.2."
     }
   ]
 }

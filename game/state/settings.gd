@@ -20,7 +20,7 @@ func _ready() -> void:
 		var prefers: Variant = JavaScriptBridge.eval(
 			"window.matchMedia('(prefers-reduced-motion: reduce)').matches", true
 		)
-		reduce_motion = prefers == true
+		reduce_motion = prefers != null and bool(prefers)
 
 
 func text_scale() -> float:

@@ -629,6 +629,7 @@ static func entity_spec(type_name: String) -> Dictionary:
 		"canon_refs": opt({"type": "array", "items": {"type": "string"}}, []),
 		"tags": opt({"type": "array", "items": {"type": "string"}}, []),
 		"deprecated": opt({"type": "bool"}, false),
+		"notes": opt({"type": "string"}, ""),
 	}
 	fields.merge(fields_for(type_name))
 	return {"type": "dict", "fields": fields}

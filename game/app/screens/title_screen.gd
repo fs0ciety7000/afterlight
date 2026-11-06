@@ -72,8 +72,7 @@ func _ready() -> void:
 	holder.add_child(scroll)
 	add_child(holder)
 
-	SaveService.import_ready.connect(_on_import_ready)
-	SaveService.import_failed.connect(_on_import_failed)
+	SaveFlows.wire_import(self, _status, func() -> void: Router.go_to("explore"))
 
 
 func grab_initial_focus() -> void:
@@ -90,7 +89,7 @@ func _on_continue() -> void:
 			Router.go_to("save_recovery", {"boot": r})
 			return
 		GameState.adopt(r["decoded"]["state"])
-	Router.go_to("camp")
+	Router.go_to("explore")
 
 
 func _on_new_game() -> void:
@@ -109,33 +108,4 @@ func _on_new_game() -> void:
 func _start_new_game() -> void:
 	GameState.start_new(Content.start())
 	SaveService.save_now()
-	Router.go_to("camp")
-
-
-func _on_import_ready(decoded: Dictionary) -> void:
-	var state: Dictionary = decoded["state"]
-	var leader: String = state["party"][0]
-	var body := (
-		tr("ui.import.confirm_body")
-		. format(
-			{
-				"name": Content.display_name(leader),
-				"level": state["characters"][leader]["level"],
-				"date": Kit.format_date(decoded["saved_at"]),
-			}
-		)
-	)
-	var d := ConfirmDialog.open(self, tr("ui.import.confirm_title"), body, "import_confirm")
-	d.confirmed.connect(
-		func() -> void:
-			SaveService.apply_import(decoded)
-			Router.go_to("camp")
-	)
-	d.cancelled.connect(func() -> void: flash(_status, tr("ui.import.cancelled")))
-
-
-func _on_import_failed(code: String) -> void:
-	if code == "cancelled":
-		flash(_status, tr("ui.import.cancelled"))
-	else:
-		flash(_status, tr("ui.import.failed").format({"reason": tr("error.save." + code)}), true)
+	Router.go_to("explore")

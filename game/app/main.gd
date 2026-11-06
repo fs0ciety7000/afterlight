@@ -11,10 +11,16 @@ var _veil: ColorRect
 
 func _ready() -> void:
 	TranslationServer.set_locale("fr")
+	InputActions.install()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var world := Node3D.new()
+	world.name = "World"
+	add_child(world)
 	_host = Control.new()
 	_host.name = "ScreenHost"
 	_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_host.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_host)
 	_veil = ColorRect.new()
 	_veil.name = "Veil"
@@ -23,7 +29,7 @@ func _ready() -> void:
 	_veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_veil.visible = false
 	add_child(_veil)
-	Router.attach(_host, _veil)
+	Router.attach(_host, _veil, world)
 
 	_apply_theme()
 	Settings.changed.connect(_apply_theme)
