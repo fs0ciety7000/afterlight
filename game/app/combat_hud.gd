@@ -85,14 +85,18 @@ func _build() -> void:
 	# Bottom-right: spells (an arc for the thumb on touch screens, a row otherwise).
 	var snap := view.snapshot()
 	var hero := _hero(snap)
-	var keys := ["1", "2", "3"]
+	var keys := [
+		InputActions.key_hint("combat_spell_1"),
+		InputActions.key_hint("combat_spell_2"),
+		InputActions.key_hint("combat_spell_3"),
+	]
 	var spells: Array = hero.get("spells", [])
 	var buttons: Array[SpellButton] = []
 	for i in spells.size():
 		buttons.append(_spell_button(spells[i], keys[i] if i < keys.size() else "", false))
 	var ult: SpellButton = null
 	if str(hero.get("ultimate", "")) != "":
-		ult = _spell_button(hero["ultimate"], "R", true)
+		ult = _spell_button(hero["ultimate"], InputActions.key_hint("combat_ultimate"), true)
 	if DisplayServer.is_touchscreen_available():
 		_layout_arc(buttons, ult, margin)
 	else:

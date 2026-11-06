@@ -1025,3 +1025,59 @@ ui.tactics.live_hint,"Combat en pause : vos changements s'appliquent dès la rep
 ui.tactics.badge,Tactique : {mode}
 ui.tactics.campfire_title,Feu de camp
 ui.tactics.campfire_hint,Le feu crépite. C'est le moment de revoir les tactiques de Fern.
+ui.settings.tab.general,Affichage
+ui.settings.tab.controls,Commandes
+ui.controls.hint,"Choisissez une commande, puis appuyez sur la touche ou le bouton voulu. Échap, B ou Start annulent."
+ui.controls.action,Action
+ui.controls.keyboard,Clavier
+ui.controls.gamepad,Manette
+ui.controls.action.move_forward,Avancer
+ui.controls.action.move_back,Reculer
+ui.controls.action.move_left,Aller à gauche
+ui.controls.action.move_right,Aller à droite
+ui.controls.action.interact,Interagir
+ui.controls.action.open_map,Carte
+ui.controls.action.open_journal,Journal
+ui.controls.action.open_bag,Sac
+ui.controls.action.open_character,Personnage
+ui.controls.action.open_grimoire,Grimoire
+ui.controls.action.combat_spell_1,Sort 1
+ui.controls.action.combat_spell_2,Sort 2
+ui.controls.action.combat_spell_3,Sort 3
+ui.controls.action.combat_ultimate,Ultime
+ui.controls.action.combat_pause,Pause du combat
+ui.controls.action.combat_speed,Vitesse du combat
+ui.controls.action.consumable_1,Consommable 1
+ui.controls.action.consumable_2,Consommable 2
+ui.controls.press_key,Appuyez sur une touche…
+ui.controls.press_button,Appuyez sur un bouton…
+ui.controls.unbound,Aucune
+ui.controls.reset,Rétablir les commandes par défaut
+ui.controls.reset_done,Commandes par défaut rétablies.
+ui.controls.saved,« {action} » : {input}.
+ui.controls.swapped,"{input} servait à « {other} » : « {action} » et « {other} » ont échangé leurs commandes."
+ui.controls.cancelled,Changement annulé.
+ui.controls.error_reserved,"Échap, B et Start sont réservés au menu et au retour."
+ui.controls.error_unsupported,Cette entrée ne peut pas servir de commande.
+ui.key.space,Espace
+ui.key.up,Haut
+ui.key.down,Bas
+ui.key.left,Gauche
+ui.key.right,Droite
+ui.key.enter,Entrée
+ui.key.tab,Tab
+ui.key.shift,Maj
+ui.key.ctrl,Ctrl
+ui.key.backspace,Retour arrière
+ui.pad.dpad_up,Croix haut
+ui.pad.dpad_down,Croix bas
+ui.pad.dpad_left,Croix gauche
+ui.pad.dpad_right,Croix droite
+ui.pad.left_stick_up,Stick G haut
+ui.pad.left_stick_down,Stick G bas
+ui.pad.left_stick_left,Stick G gauche
+ui.pad.left_stick_right,Stick G droite
+ui.pad.right_stick_up,Stick D haut
+ui.pad.right_stick_down,Stick D bas
+ui.pad.right_stick_left,Stick D gauche
+ui.pad.right_stick_right,Stick D droite

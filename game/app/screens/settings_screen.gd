@@ -1,27 +1,93 @@
 extends Screen
-## Settings: text size and reduced motion, stored per device.
+## Settings, stored per device. Two tabs: display (text size, graphics
+## quality, reduced motion) and controls (keyboard and gamepad rebinding with
+## conflict swap and reset, ROADMAP 7.6).
 
+const TABS := ["general", "controls"]
+
+var _tab := "general"
 var _status: Label
+var _card: PanelContainer
+var _scroll: ScrollContainer
+var _body: VBoxContainer
+var _tab_buttons := {}
+var _bind_buttons := {}
+var _capture_action := ""
+var _capture_slot := ""
+
+
+func setup(params: Dictionary) -> void:
+	var tab := str(params.get("tab", "general"))
+	_tab = tab if tab in TABS else "general"
 
 
 func _ready() -> void:
 	add_backdrop(0.7)
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(center)
-	var card := Kit.panel()
-	card.custom_minimum_size = Vector2(minf(560, get_viewport_rect().size.x - 32), 0)
-	center.add_child(card)
+	_card = Kit.panel()
+	_card.custom_minimum_size = Vector2(minf(720, get_viewport_rect().size.x - 32), 0)
+	_card.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	add_child(Kit.margin(_card, is_narrow()))
 	var col := Kit.vbox(UiTokens.SPACE["lg"])
-	card.add_child(col)
+	_card.add_child(col)
 	col.add_child(Kit.label(tr("ui.settings.title"), "TitleLabel"))
 
-	var size_row := Kit.hbox()
-	var size_label := Kit.label(tr("ui.settings.text_size"))
-	size_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	size_row.add_child(size_label)
-	var size_pick := OptionButton.new()
-	size_pick.custom_minimum_size = Vector2(160, UiTokens.TOUCH_TARGET)
+	var tabs := Kit.hbox(UiTokens.SPACE["sm"])
+	for tab: String in TABS:
+		var b := Kit.button(tr("ui.settings.tab." + tab), false, "settings.tab." + tab)
+		b.toggle_mode = true
+		b.pressed.connect(func() -> void: _show_tab(tab))
+		_tab_buttons[tab] = b
+		tabs.add_child(b)
+	col.add_child(tabs)
+
+	_scroll = ScrollContainer.new()
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.follow_focus = true
+	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_body = Kit.vbox(UiTokens.SPACE["lg"])
+	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_scroll.add_child(_body)
+	col.add_child(_scroll)
+
+	_status = Kit.label("", "MutedLabel", true)
+	UiProbe.register("settings.status", _status)
+	col.add_child(_status)
+	var back := Kit.button(tr("ui.menu.back"), true, "settings.back")
+	back.pressed.connect(func() -> void: Router.back())
+	col.add_child(back)
+	_show_tab(_tab)
+
+
+func grab_initial_focus() -> void:
+	(_tab_buttons[_tab] as Control).grab_focus()
+
+
+func _show_tab(tab: String) -> void:
+	_cancel_capture()
+	_tab = tab
+	for t: String in _tab_buttons:
+		var b: Button = _tab_buttons[t]
+		b.set_pressed_no_signal(t == tab)
+		b.theme_type_variation = "PrimaryButton" if t == tab else "SecondaryButton"
+	for c in _body.get_children():
+		_body.remove_child(c)
+		c.queue_free()
+	_bind_buttons.clear()
+	# The display tab is short: the card fits its content. The controls list
+	# scrolls inside a card as tall as the screen.
+	var long := tab == "controls"
+	_scroll.vertical_scroll_mode = (
+		ScrollContainer.SCROLL_MODE_AUTO if long else ScrollContainer.SCROLL_MODE_DISABLED
+	)
+	_card.size_flags_vertical = Control.SIZE_FILL if long else Control.SIZE_SHRINK_CENTER
+	if long:
+		_build_controls()
+	else:
+		_build_general()
+
+
+func _build_general() -> void:
+	var size_pick := _option_row("ui.settings.text_size", "settings.text_size")
 	for i in UiTokens.TEXT_SCALES.size():
 		size_pick.add_item("%d %%" % roundi(UiTokens.TEXT_SCALES[i] * 100), i)
 	size_pick.select(Settings.text_scale_index)
@@ -30,16 +96,8 @@ func _ready() -> void:
 			Settings.set_text_scale_index(index)
 			flash(_status, tr("ui.settings.saved"))
 	)
-	UiProbe.register("settings.text_size", size_pick)
-	size_row.add_child(size_pick)
-	col.add_child(size_row)
 
-	var quality_row := Kit.hbox()
-	var quality_label := Kit.label(tr("ui.settings.graphics_quality"))
-	quality_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	quality_row.add_child(quality_label)
-	var quality_pick := OptionButton.new()
-	quality_pick.custom_minimum_size = Vector2(160, UiTokens.TOUCH_TARGET)
+	var quality_pick := _option_row("ui.settings.graphics_quality", "settings.graphics_quality")
 	for key in [
 		"ui.settings.quality_low", "ui.settings.quality_medium", "ui.settings.quality_high"
 	]:
@@ -50,9 +108,6 @@ func _ready() -> void:
 			Settings.set_graphics_quality(index)
 			flash(_status, tr("ui.settings.saved"))
 	)
-	UiProbe.register("settings.graphics_quality", quality_pick)
-	quality_row.add_child(quality_pick)
-	col.add_child(quality_row)
 
 	var motion := CheckButton.new()
 	motion.text = tr("ui.settings.reduce_motion")
@@ -64,20 +119,128 @@ func _ready() -> void:
 			flash(_status, tr("ui.settings.saved"))
 	)
 	UiProbe.register("settings.reduce_motion", motion)
-	col.add_child(motion)
-	col.add_child(Kit.label(tr("ui.settings.reduce_motion_hint"), "MutedLabel", true))
-
-	_status = Kit.label("", "MutedLabel")
-	col.add_child(_status)
-	var back := Kit.button(tr("ui.menu.back"), true, "settings.back")
-	back.pressed.connect(func() -> void: Router.back())
-	col.add_child(back)
+	_body.add_child(motion)
+	_body.add_child(Kit.label(tr("ui.settings.reduce_motion_hint"), "MutedLabel", true))
 
 
-func grab_initial_focus() -> void:
-	var b: Control = UiProbe._controls.get("settings.back")
-	if b:
-		b.grab_focus()
+## A labelled row with a picker; returns the picker.
+func _option_row(label_key: String, probe_id: String) -> OptionButton:
+	var row := Kit.hbox()
+	var label := Kit.label(tr(label_key), "", true)
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	label.custom_minimum_size = Vector2(120, 0)
+	row.add_child(label)
+	var pick := OptionButton.new()
+	pick.custom_minimum_size = Vector2(160, UiTokens.TOUCH_TARGET)
+	UiProbe.register(probe_id, pick)
+	row.add_child(pick)
+	_body.add_child(row)
+	return pick
+
+
+func _build_controls() -> void:
+	_body.add_child(Kit.label(tr("ui.controls.hint"), "MutedLabel", true))
+	var head := Kit.hbox()
+	for key in ["ui.controls.action", "ui.controls.keyboard", "ui.controls.gamepad"]:
+		var h := Kit.label(tr(key), "MutedLabel", true)
+		h.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		head.add_child(h)
+	_body.add_child(head)
+	for action: String in InputActions.REMAPPABLE:
+		var row := Kit.hbox()
+		var name_label := Kit.label(tr("ui.controls.action." + action), "", true)
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		name_label.custom_minimum_size = Vector2(120, 0)
+		row.add_child(name_label)
+		for slot in ["key", "pad"]:
+			var b := Kit.button("", false, "controls.%s.%s" % [slot, action])
+			b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			b.custom_minimum_size = Vector2(120, UiTokens.TOUCH_TARGET)
+			b.pressed.connect(_start_capture.bind(action, slot))
+			_bind_buttons["%s/%s" % [slot, action]] = b
+			row.add_child(b)
+		_body.add_child(row)
+	var reset := Kit.button(tr("ui.controls.reset"), false, "controls.reset")
+	reset.pressed.connect(_on_reset)
+	_body.add_child(reset)
+	_refresh_bindings()
+
+
+func _refresh_bindings() -> void:
+	for id: String in _bind_buttons:
+		var slot := id.get_slice("/", 0)
+		var action := id.get_slice("/", 1)
+		var b: Button = _bind_buttons[id]
+		if action == _capture_action and slot == _capture_slot:
+			b.text = tr("ui.controls.press_key" if slot == "key" else "ui.controls.press_button")
+		else:
+			var text := InputActions.label(action, slot)
+			b.text = text if text != "" else tr("ui.controls.unbound")
+
+
+func _start_capture(action: String, slot: String) -> void:
+	_capture_action = action
+	_capture_slot = slot
+	_refresh_bindings()
+
+
+func _cancel_capture() -> void:
+	_capture_action = ""
+	_capture_slot = ""
+
+
+## Takes the next key or gamepad input while a binding waits for one. Runs
+## before the GUI so Space, Enter or A are captured, not pressed.
+func _input(event: InputEvent) -> void:
+	if _capture_action == "" or not InputActions.is_bindable(event):
+		return
+	get_viewport().set_input_as_handled()
+	if InputActions.is_reserved(event):
+		_cancel_capture()
+		_refresh_bindings()
+		flash(_status, tr("ui.controls.cancelled"))
+		return
+	if InputActions.slot_of(event) != _capture_slot:
+		return
+	var action := _capture_action
+	_cancel_capture()
+	var result := InputActions.rebind(action, event)
+	_refresh_bindings()
+	if not result["ok"]:
+		flash(_status, tr(str(result["error"])), true)
+		return
+	Settings.set_bindings(InputActions.overrides())
+	var input := InputActions.label(action, InputActions.slot_of(event))
+	var other := str(result["swapped_with"])
+	if other != "":
+		flash(
+			_status,
+			(
+				tr("ui.controls.swapped")
+				. format(
+					{
+						"input": input,
+						"action": tr("ui.controls.action." + action),
+						"other": tr("ui.controls.action." + other),
+					}
+				)
+			)
+		)
+	else:
+		flash(
+			_status,
+			tr("ui.controls.saved").format(
+				{"input": input, "action": tr("ui.controls.action." + action)}
+			)
+		)
+
+
+func _on_reset() -> void:
+	_cancel_capture()
+	InputActions.reset_all()
+	Settings.set_bindings({})
+	_refresh_bindings()
+	flash(_status, tr("ui.controls.reset_done"))
 
 
 func _unhandled_input(event: InputEvent) -> void:

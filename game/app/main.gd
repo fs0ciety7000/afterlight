@@ -11,7 +11,7 @@ var _veil: ColorRect
 
 func _ready() -> void:
 	TranslationServer.set_locale("fr")
-	InputActions.install()
+	InputActions.install(Settings.bindings)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var world := Node3D.new()
@@ -56,6 +56,11 @@ func _register_test_handlers() -> void:
 	UiProbe.test_handlers["grant_gold"] = func(n: String) -> void:
 		GameState.test_grant(maxi(int(n), 0), {})
 	UiProbe.test_handlers["reveal_watch_ruins"] = _test_reveal_watch_ruins
+	# Accessibility E2E (ROADMAP 1.11, 7.3, 7.7): set the options without the pickers.
+	UiProbe.test_handlers["text_scale"] = func(i: String) -> void:
+		Settings.set_text_scale_index(int(i))
+	UiProbe.test_handlers["reduce_motion"] = func(on: String) -> void:
+		Settings.set_reduce_motion(on == "1")
 
 
 ## Test channel only (idle E2E 5.5): shows the Watch Ruins on the map, where
@@ -80,6 +85,12 @@ func _test_grant_level() -> void:
 	hero["level"] = mini(int(hero["level"]) + 1, BalanceProgression.LEVEL_CAP)
 	hero["xp"] = 0
 	GameState.commit_action(next)
+
+
+## Reduced-motion render flags for the E2E probe (UiProbe publishes on the web only).
+func _process(_delta: float) -> void:
+	if OS.has_feature("web"):
+		UiProbe.world["motion_flags"] = MotionFlags.snapshot()
 
 
 func _boot() -> void:

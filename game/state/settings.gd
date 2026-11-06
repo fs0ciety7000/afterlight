@@ -2,6 +2,8 @@ extends Node
 ## Autoload "Settings": per-device preferences, stored apart from saves.
 
 signal changed
+## Input bindings saved (no theme rebuild needed).
+signal bindings_changed
 
 const PATH := "user://settings.cfg"
 
@@ -9,6 +11,9 @@ var text_scale_index := 1
 var reduce_motion := false
 ## GraphicsQuality level (0 low, 1 medium, 2 high).
 var graphics_quality := 2
+## Player input overrides {action: {"key": [...], "pad": [...]}}, see
+## InputActions.overrides(). Validated when applied.
+var bindings := {}
 
 
 func _ready() -> void:
@@ -19,6 +24,8 @@ func _ready() -> void:
 		)
 		reduce_motion = bool(cfg.get_value("ui", "reduce_motion", false))
 		graphics_quality = clampi(int(cfg.get_value("video", "quality", _default_quality())), 0, 2)
+		var saved: Variant = cfg.get_value("input", "bindings", {})
+		bindings = saved if saved is Dictionary else {}
 	elif OS.has_feature("web"):
 		var prefers: Variant = JavaScriptBridge.eval(
 			"window.matchMedia('(prefers-reduced-motion: reduce)').matches", true
@@ -49,6 +56,12 @@ func set_graphics_quality(level: int) -> void:
 	_save()
 
 
+func set_bindings(value: Dictionary) -> void:
+	bindings = value.duplicate(true)
+	_save(false)
+	bindings_changed.emit()
+
+
 ## Touch devices start at medium quality, desktops at high.
 func _default_quality() -> int:
 	return 1 if DisplayServer.is_touchscreen_available() else 2
@@ -67,10 +80,12 @@ func _apply_url_override() -> void:
 		graphics_quality = index
 
 
-func _save() -> void:
+func _save(notify: bool = true) -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value("ui", "text_scale_index", text_scale_index)
 	cfg.set_value("ui", "reduce_motion", reduce_motion)
 	cfg.set_value("video", "quality", graphics_quality)
+	cfg.set_value("input", "bindings", bindings)
 	cfg.save(PATH)
-	changed.emit()
+	if notify:
+		changed.emit()

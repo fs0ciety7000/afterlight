@@ -104,5 +104,10 @@ func snapshot() -> Dictionary:
 		"save": {"last_saved_at": SaveService.last_saved_at, "error": SaveService.last_error},
 		"messages": _messages,
 		"world": world,
-		"settings": {"text_scale": Settings.text_scale(), "reduce_motion": Settings.reduce_motion},
+		"settings":
+		{
+			"text_scale": Settings.text_scale(),
+			"reduce_motion": Settings.reduce_motion,
+			"bindings": Settings.bindings,
+		},
 	}

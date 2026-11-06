@@ -838,6 +838,10 @@ func _combat_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("combat_speed"):
 		_combat.cycle_speed()
 		_combat_hud._refresh_controls()
+	elif event.is_action_pressed("consumable_1"):
+		_use_consumable(0)
+	elif event.is_action_pressed("consumable_2"):
+		_use_consumable(1)
 	elif event.is_action_pressed("ui_cancel"):
 		_open_menu()
 	elif event is InputEventMouseButton and event.pressed:
@@ -861,6 +865,15 @@ func _combat_input(event: InputEvent) -> void:
 		handled = false
 	if handled:
 		get_viewport().set_input_as_handled()
+
+
+## Consumable keys (4, 5 by default): the hero's n-th consumable, in the
+## order of the HUD buttons.
+func _use_consumable(index: int) -> void:
+	var hero := CombatHud._hero(_combat.snapshot())
+	var ids: Array = (hero.get("consumables", {}) as Dictionary).keys()
+	if index < ids.size():
+		_combat.command({"type": "use_consumable", "consumable": ids[index]})
 
 
 ## Keyboard or stick movement during combat becomes short move orders.
