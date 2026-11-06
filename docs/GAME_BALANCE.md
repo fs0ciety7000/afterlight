@@ -135,6 +135,7 @@ Pas de réaction en chaîne : un coup déclenche au plus une réaction, et l'exp
 | Constante | Défaut | Plage |
 |---|---|---|
 | `GLOBAL_COOLDOWN_S` | 0,5 | 0,3-0,8 |
+| `REPOSITION_HOLD_S` (temps pendant lequel Fern tient la position choisie par le joueur, GDD §7.2) | 4,0 | 2-6 |
 | `INPUT_BUFFER_S` | 0,30 | 0,15-0,40 |
 | `INTERRUPT_STUN_S` | 1,0 (boss : × `BOSS_CC_DURATION_MULT`) | 0,5-1,5 |
 
@@ -540,7 +541,7 @@ Pas de revente d'objets contre de l'or : seul le recyclage existe, pour éviter 
 |---|---|---|---|
 | `OFFLINE_CAP_S` | 28 800 (8 h) | fixe | Exigence du propriétaire |
 | `OFFLINE_MIN_S` | 60 | 30-300 | |
-| `OFFLINE_EFFICIENCY` | 0,40 | 0,25-0,60 | 8 h hors ligne valent 3,2 h de chasse active |
+| `OFFLINE_EFFICIENCY` | 0,25 | 0,20-0,40 | 8 h hors ligne valent 2 h de chasse active (décision du propriétaire, 2026-11-06) |
 | `OFFLINE_DPS_CALIBRATION` | 0,85 | 0,7-1,0 | Déplacements, surplus de dégâts, changements de cible. Calibré sur la simulation (§22) |
 | `ENGAGE_S` | 2,0 | | Approche en début de rencontre |
 | `ENCOUNTER_RESPAWN_S` | 6,0 | 4-10 | Entre deux rencontres de la boucle « Chasser ici » |
@@ -620,18 +621,18 @@ Paramètres de l'exemple :
    - Dégâts subis : (2 × 10,5 + 13,75) × 0,6 = 20,85/s.
    - Réserve : 895 + 343,75 × (15,21/18 + 1) = 1 529.
    - Survie : 73,3 s ≥ 1,25 × 15,21 = 19,0. Condition remplie.
-7. N = 28 800 × 0,40 / 21,21 = **543,14** rencontres.
+7. N = 28 800 × 0,25 / 21,21 = **339,46** rencontres.
 8. Gains :
 
 | Gain | Espérance par rencontre | Total |
 |---|---|---|
-| XP | 3 × 20 = 60 (écart de 1 : pas de pénalité) | 32 588 → niveau 8 → 10 (11 568 / 15 920) |
-| Or | 3 × 8,8 = 26,4 | 14 338 |
-| Poussière de mana | 3 × 0,15 × 1,5 = 0,675 | 366 + Bernoulli(0,62) |
-| Éclat runique | 0,12 | 65 + Bernoulli(0,18) |
-| Page de grimoire | 0,01 | 5 + Bernoulli(0,43) |
-| Objets | 0,25 | 135 + Bernoulli(0,79) tirés ; 30 gardés ; ~106 recyclés ≈ 624 poussières (espérance 5,89 par objet ilvl 7) |
-| Runes | 0,03 | 16 + Bernoulli(0,29) |
+| XP | 3 × 20 = 60 (écart de 1 : pas de pénalité) | 20 368 → niveau 8 → 9 (11 454 / 12 104) |
+| Or | 3 × 8,8 = 26,4 | 8 962 |
+| Poussière de mana | 3 × 0,15 × 1,5 = 0,675 | 229 + Bernoulli(0,14) |
+| Éclat runique | 0,12 | 40 + Bernoulli(0,74) |
+| Page de grimoire | 0,01 | 3 + Bernoulli(0,39) |
+| Objets | 0,25 | 84 + Bernoulli(0,87) tirés ; 30 gardés ; ~55 recyclés ≈ 324 poussières (espérance 5,89 par objet ilvl 7) |
+| Runes | 0,03 | 10 + Bernoulli(0,18) |
 
 ## 21. Tables de cohérence
 
@@ -661,7 +662,7 @@ Base : chasse au même niveau, 145 rencontres/h (cycle de 24,8 s). Les quêtes a
 | L15 | 2 039 | 14,1 | Jour 4-5 |
 | L20 | 4 686 | 32,3 | ~2 semaines en jeu léger |
 
-Gain par nuit de 8 h (équivalent à 3,2 h de chasse) : +2 à 3 niveaux vers L8, ~+1 niveau vers L15. **Point à surveiller** en test (T6) : voir §22.
+Gain par nuit de 8 h (équivalent à 2 h de chasse avec `OFFLINE_EFFICIENCY = 0,25`) : ~+1 niveau vers L8, ~+0,6 niveau vers L15. La colonne « estimation réelle » ci-dessus a été établie avec 0,40 : le banc (§22) doit la recaler ; si L20 dépasse nettement 2 semaines, compenser par l'XP des quêtes plutôt que par le hors ligne. **Point à surveiller** en test (T6) : voir §22.
 
 ### 21.3 Économie de l'or (ordre de grandeur sur la tranche)
 

@@ -30,7 +30,7 @@ Toute fonctionnalité doit servir au moins un pilier. Sinon, elle va dans la sec
 | **Secondes** (combat) | Lancer un sort, changer de cible, poser la Barrière avant un gros coup, interrompre une incantation | Rayon, chiffre flottant, arrêt sur image au critique, barre de recharge, icône de statut | Ennemi abattu, charge d'ultime, mana récupérée |
 | **Minutes** (rencontre, lieu) | Enchaîner 3 à 6 rencontres, explorer un lieu, ouvrir un coffre, rendre une quête | Butin au sol, résumé de victoire, brouillard qui se lève | Objets, or, matériaux, XP, lieu suivant débloqué |
 | **Session** (15-60 min) | Améliorer l'équipement à la forge, fusionner des runes, battre l'élite ou le boss, choisir la rencontre à chasser | Comparaison d'objets vert/rouge, puissance affichée, nouveau palier de sort | Saut de puissance, nouvelle zone, artefact |
-| **Jours** (idle) | Choisir la chasse hors ligne, fermer le jeu, revenir | Écran « Pendant votre absence » | XP, or, matériaux, objets (8 h max) ; contrats du jour `[H]` |
+| **Jours** (idle) | Choisir la chasse hors ligne, fermer le jeu, revenir | Écran « Pendant votre absence » | XP, or, matériaux, objets (8 h max) ; contrats du jour |
 
 **Boucle idle détaillée** : dans un lieu, le joueur bat une rencontre une première fois → il active « Chasser ici » (la rencontre se rejoue en boucle dans la scène, en temps réel) → cette rencontre devient la **chasse hors ligne** → à la fermeture, l'horodatage est sauvegardé → au retour, les gains sont calculés analytiquement (voir `GAME_BALANCE.md` §20) → écran résumé → le joueur dépense ses gains → il pousse une rencontre plus difficile, qui devient la nouvelle chasse.
 
@@ -113,7 +113,10 @@ Les ressources : la **mana** se dépense, se régénère et revient avec les att
 | Se placer à portée, sortir d'une zone télégraphiée si c'est atteignable | Lancer Zoltraak, Salve, Barrière, l'ultime (touches 1, 2, 3, R ou boutons) |
 | Attaques auto, génération de mana et de charge | Utiliser un consommable (touches 4 et 5) |
 | Lancer les sorts réglés sur « Auto » ou « Auto si… » | Changer les tactiques (pendant la pause aussi) |
+| | **Repositionner Fern** : clic ou appui au sol, ZQSD/WASD ou joystick (voir ci-dessous) |
 | | Vitesse ×1 / ×2 / ×4, pause (Espace) |
+
+**Repositionnement** (décision du propriétaire, 2026-11-06) : le joueur peut déplacer Fern pendant le combat. Un clic ou un appui au sol donne un ordre de déplacement (marqueur au sol) ; au clavier ou au joystick, Fern suit la direction tant que la touche est tenue. Pendant le déplacement, elle n'attaque pas et ne lance rien : un sort demandé part dès l'arrêt. À l'arrivée, elle **tient sa position** pendant `REPOSITION_HOLD_S` et attaque depuis là si sa cible est à portée ; ensuite, ou si aucune cible n'est à portée, l'IA reprend le placement automatique. L'esquive automatique des zones télégraphiées reste active : le déplacement manuel permet de mieux faire, il n'est jamais obligatoire.
 
 **Pause tactique** : en pause, le joueur peut sélectionner une cible et mettre un sort en file. Ils partent au premier tick après la reprise.
 
@@ -300,7 +303,7 @@ L'arbitrage voulu : progresser hors ligne (Sablier) ou être plus fort en combat
 
 `quest.side_statue` fait référence (`canon_refs`) au héros Himmel et aux statues qui lui sont élevées dans l'œuvre. La statue, le lieu et le texte sont originaux.
 
-- **Contrats du jour** `[H]` : 3 contrats tirés chaque jour local à minuit (« Vaincre 20 loups »), petite récompense en or et matériaux. Optionnels, sans série à entretenir.
+- **Contrats du jour** (gardés, décision du propriétaire) : 3 contrats tirés chaque jour local à minuit (« Vaincre 20 loups »), petite récompense en or et matériaux. Optionnels, sans série à entretenir.
 - **Bestiaire** : une fiche par ennemi, débloquée à la 1re victoire (nom, illustration, lore). À 5 victoires : affinités. À 25 victoires : statistiques. Pas de récompense de collection dans la tranche.
 - **Découvertes** (`discovery.*`) : 2 par terrain. Ce sont des points de vue, des stèles de lore, des coffres et des herbes. Chacune donne de l'XP ou un objet et lève le brouillard alentour sur la carte. Le compteur s'affiche par lieu (« Découvertes 1/2 »).
 
@@ -323,7 +326,7 @@ L'arbitrage voulu : progresser hors ligne (Sablier) ou être plus fort en combat
 
 | Action | Clavier/souris | Tactile (mobile paysage) |
 |---|---|---|
-| Se déplacer | Clic au sol, ZQSD ou WASD | Joystick virtuel à gauche |
+| Se déplacer (exploration et combat) | Clic au sol, ZQSD ou WASD | Joystick virtuel à gauche |
 | Interagir | E ou clic | Bouton contextuel |
 | Sorts 1-3, ultime | 1, 2, 3, R | Arc de 4 boutons à droite, ultime plus grand |
 | Consommables | 4, 5 | 2 petits boutons au-dessus de l'arc |
@@ -379,7 +382,6 @@ Les règles techniques (périodicité, emplacement, copie de secours, récupéra
 ## 18. Hors périmètre (tranche verticale)
 
 - Plus d'un personnage jouable (Frieren, Stark et les autres sont des compagnons futurs) ; menace et soins multi-personnages ; synergies de groupe.
-- Déplacement manuel de Fern pendant le combat `[H]` (voir questions ouvertes).
 - Aura et tout autre antagoniste canon nommé en combat (prévus plus tard, avec vérification du canon).
 - Deuxième région, donjons procéduraux, mode infini, boss du monde.
 - Artisanat d'objets à partir de matériaux (seuls l'amélioration et la fusion sont prévus), reforge des affixes, sets d'objets.
@@ -403,12 +405,12 @@ Les règles techniques (périodicité, emplacement, copie de secours, récupéra
 | T7 Build | Niveau 8+ | Change-t-il de rune selon la zone ? | ≥ 1 changement de conversion en réponse aux affinités |
 | T8 Tactile | Tablette ou téléphone | Erreurs d'appui, sorts accessibles au pouce | < 1 erreur d'appui par combat |
 
-## 20. Questions ouvertes (à trancher par le propriétaire)
+## 20. Décisions du propriétaire (2026-11-06)
 
-Les réponses mettront à jour les règles `[H]` concernées.
-
-1. **Déplacement en combat** : Fern se place seule (proposition actuelle, comme AFK Journey), ou le joueur peut la repositionner d'un clic ? La seconde option ajoute de l'esquive, mais aussi de la complexité au tactile.
-2. **Générosité du hors ligne** : `OFFLINE_EFFICIENCY = 0,4` (8 h valent 3,2 h de chasse, soit +2 à 3 niveaux par nuit vers le niveau 8). Faut-il garder cette valeur ou être plus sobre (0,25) ?
-3. **Canon** : peut-on confirmer les graphies françaises « Fern » et « Zoltraak », la statue de Himmel en clin d'œil, et un boss démon original (Morvaine) plutôt qu'Aura dans la tranche ?
-4. **Contrats du jour** : faut-il les garder (petite boucle quotidienne, sans série à entretenir) ou les couper, au nom du pilier « pas de culpabilisation » ?
-5. **Durée de la tranche** : niveau max 20, boss vers le niveau 12 au jour 2 ou 3, plafond atteint en ~2 semaines de jeu léger. Est-ce la bonne ambition ?
+| # | Question | Décision | Effet |
+|---|---|---|---|
+| 1 | Déplacement en combat | **Fern peut être repositionnée** par le joueur | §7.2 (Repositionnement), §15 ; `REPOSITION_HOLD_S` dans GAME_BALANCE §5 |
+| 2 | Générosité du hors ligne | **`OFFLINE_EFFICIENCY = 0,25`** (8 h valent 2 h de chasse) | GAME_BALANCE §20 et §21.2 recalculés |
+| 3 | Canon | Graphies « Fern » et « Zoltraak », statue de Himmel en clin d'œil, boss démon original **Morvaine** plutôt qu'Aura : **validés** | §9.3 inchangé |
+| 4 | Contrats du jour | **Gardés** (optionnels, sans série à entretenir) | §12 |
+| 5 | Durée de la tranche | **Validée** : niveau max 20, boss vers le niveau 12 au jour 2-3, plafond en ~2 semaines de jeu léger | GAME_BALANCE §21.2 à recaler par le banc de simulation avec la nouvelle efficacité hors ligne |
