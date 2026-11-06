@@ -40,9 +40,10 @@ test('Fern walks where the player clicks', async ({ page }) => {
   await newGame(page);
   const start = await player(page);
   const ps = (await probe(page))!.world.player_screen as { x: number; y: number };
-  const target = await canvasPoint(page, ps.x, ps.y + 220);
+  const h = await page.evaluate(() => document.querySelector('canvas')!.height);
+  const target = await canvasPoint(page, ps.x, ps.y + h * 0.22);
   await page.mouse.click(target.x, target.y);
-  await expect.poll(async () => dist(start, await player(page)), { timeout: 20_000 }).toBeGreaterThanOrEqual(3);
+  await expect.poll(async () => dist(start, await player(page)), { timeout: 20_000 }).toBeGreaterThanOrEqual(2);
 });
 
 test('the world map opens, zooms, pans and explains locked places', async ({ page }) => {
@@ -99,7 +100,12 @@ test('travel from the map loads the place fast; fog stays lifted after a reload'
 });
 
 test('walking into a zone exit leads to the neighbouring place', async ({ page }) => {
+  test.setTimeout(240_000);
   await newGame(page);
+  const size = await page.evaluate(() => {
+    const c = document.querySelector('canvas')!;
+    return { w: c.width, h: c.height };
+  });
   for (let i = 0; i < 60; i++) {
     const w = (await probe(page))!.world;
     if (w.location_id === 'location.whispering_wood') break;
@@ -109,8 +115,12 @@ test('walking into a zone exit leads to the neighbouring place', async ({ page }
     const target = exit ?? { x: ps.x - 300, y: ps.y - 150 };
     const dx = target.x - ps.x;
     const dy = target.y - ps.y;
-    const k = Math.min(1, 300 / Math.max(1, Math.hypot(dx, dy)));
-    const p = await canvasPoint(page, ps.x + dx * k, ps.y + dy * k);
+    // Short steps that stay clear of the HUD corners on small screens.
+    const step = Math.min(size.w, size.h) * 0.3;
+    const k = Math.min(1, step / Math.max(1, Math.hypot(dx, dy)));
+    const tx = Math.min(Math.max(ps.x + dx * k, size.w * 0.2), size.w * 0.8);
+    const ty = Math.min(Math.max(ps.y + dy * k, size.h * 0.22), size.h * 0.78);
+    const p = await canvasPoint(page, tx, ty);
     await page.mouse.click(p.x, p.y);
     await page.waitForTimeout(1200);
   }

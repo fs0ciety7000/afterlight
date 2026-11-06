@@ -4,14 +4,14 @@ extends Node3D
 ## two zoom steps.
 
 const PITCH_DEG := 50.0
-const DISTANCES := [14.0, 10.5, 8.0]
+const DISTANCES := [11.0, 8.5, 6.5]
 const FOLLOW_SHARPNESS := 6.0
 const FOV := 40.0
 
 var target: Node3D
 var zoom_index := 0
 var camera: Camera3D
-var _distance := 14.0
+var _distance := 11.0
 
 
 func _ready() -> void:
@@ -39,6 +39,11 @@ func _process(delta: float) -> void:
 		global_position = global_position.lerp(target.global_position, t)
 	_distance = lerpf(_distance, DISTANCES[zoom_index], 1.0 - exp(-8.0 * delta))
 	_place_camera()
+	if target:
+		# Environment shaders cut out what stands in front of the hero.
+		RenderingServer.global_shader_parameter_set(
+			"hero_depth", camera.global_position.distance_to(target.global_position + Vector3.UP)
+		)
 
 
 func _place_camera() -> void:

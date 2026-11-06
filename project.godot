@@ -45,6 +45,13 @@ theme/custom_font="res://assets/fonts/AlegreyaSans-Regular.ttf"
 
 common/max_physics_steps_per_frame=15
 
+[shader_globals]
+
+hero_depth={
+"type": "float",
+"value": 0.0
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

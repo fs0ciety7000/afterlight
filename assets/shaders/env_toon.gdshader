@@ -28,9 +28,11 @@ uniform float contact_darkness : hint_range(0.0, 1.0) = 0.25;
 // Atlas cards: columns, rows and alpha scissor (0 = opaque mesh).
 uniform vec2 atlas_grid = vec2(1.0, 1.0);
 uniform float alpha_scissor : hint_range(0.0, 1.0) = 0.0;
-// Camera fade (dithered): hides what stands between the camera and the hero, so tree canopies and roofs
-// never cover Fern. Fragments closer than cam_fade_near metres fade everywhere; inside the central screen
-// circle, everything in front of cam_fade_focus fades. 0 disables it.
+// Camera cut-out: hides what stands between the camera and the hero, so tree canopies and roofs
+// never cover Fern. Only inside a screen circle around the hero, and only for fragments in front
+// of her (hero_depth, set every frame by CameraRig). A clean cut with a thin dithered rim, not a
+// screen-wide dither. cam_fade_near > 0 enables it (kept for scene compatibility).
+global uniform float hero_depth;
 uniform float cam_fade_near = 0.0;
 uniform float cam_fade_focus = 13.2;
 uniform float cam_fade_radius = 0.22;
@@ -71,11 +73,11 @@ void fragment() {
 		float depth = -VERTEX.z;
 		vec2 sc = SCREEN_UV - vec2(0.5);
 		sc.x *= VIEWPORT_SIZE.x / VIEWPORT_SIZE.y;
-		float centre = 1.0 - smoothstep(cam_fade_radius * 0.55, cam_fade_radius, length(sc));
-		float fade = max(
-				1.0 - smoothstep(cam_fade_near - 2.5, cam_fade_near, depth),
-				centre * (1.0 - smoothstep(cam_fade_focus - 2.0, cam_fade_focus, depth)));
-		if (fade * 0.9 > dither(FRAGCOORD.xy)) {
+		float focus = hero_depth > 0.0 ? hero_depth - 1.2 : cam_fade_focus;
+		float inside = 1.0 - smoothstep(cam_fade_radius * 0.9, cam_fade_radius, length(sc));
+		float in_front = 1.0 - smoothstep(focus - 1.0, focus, depth);
+		float cut = inside * in_front;
+		if (cut > 0.999 || cut > 0.02 && cut > dither(FRAGCOORD.xy)) {
 			discard;
 		}
 	}

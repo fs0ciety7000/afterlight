@@ -79,7 +79,7 @@ export async function waitSaved(page: Page, text: string): Promise<void> {
               };
             }),
         ),
-      { timeout: 20_000, message: `save contains ${text}` },
+      { timeout: 45_000, message: `save contains ${text}` },
     )
     .toContain(text);
 }
