@@ -69,6 +69,52 @@ static func is_clipped(c: Control) -> bool:
 	return false
 
 
+## True when the control sits in a scroll list: it may be scrolled out of
+## view (and clipped) on purpose.
+static func in_scroll_list(c: Control) -> bool:
+	var node := c.get_parent()
+	while node != null:
+		if node is ScrollContainer:
+			return true
+		node = node.get_parent()
+	return false
+
+
+## True when a label or button shows only part of its text: one line clipped
+## or ellipsized short of its width, or wrapped lines that do not all fit.
+static func is_truncated(c: Control) -> bool:
+	if not (c is Label or c is Button):
+		return false
+	var text := str(c.get("text"))
+	if text == "" or c.size.x <= 0.0:
+		return false
+	if c.get("autowrap_mode") != TextServer.AUTOWRAP_OFF:
+		if c is Label:
+			var l := c as Label
+			return l.get_visible_line_count() < l.get_line_count()
+		return false
+	var cut: bool = (
+		c.get("clip_text") or c.get("text_overrun_behavior") != TextServer.OVERRUN_NO_TRIMMING
+	)
+	if not cut:
+		return false
+	var room := c.size.x
+	var box := c.get_theme_stylebox("normal")
+	if box:
+		room -= box.get_minimum_size().x
+	if c is Button and (c as Button).icon != null:
+		room -= ((c as Button).icon.get_width() + float(c.get_theme_constant("h_separation")))
+	var font := c.get_theme_font("font")
+	var width := (
+		font
+		. get_multiline_string_size(
+			text, HORIZONTAL_ALIGNMENT_LEFT, -1, c.get_theme_font_size("font_size")
+		)
+		. x
+	)
+	return width > room + 1.0
+
+
 ## `name` or `name:arg`: a handler registered under `name` gets `arg` (a
 ## String) when the command carries one.
 func _on_test_command(args: Array) -> void:
@@ -119,6 +165,8 @@ func snapshot() -> Dictionary:
 			"h": rect.size.y,
 			"visible": c.is_visible_in_tree(),
 			"clipped": is_clipped(c),
+			"scrolled": in_scroll_list(c),
+			"truncated": is_truncated(c),
 		}
 		if c is BaseButton:
 			entry["disabled"] = (c as BaseButton).disabled
