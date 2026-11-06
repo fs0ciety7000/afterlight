@@ -41,7 +41,9 @@ game/data/
 │   ├── npcs.json
 │   ├── dialogues.json
 │   ├── discoveries.json
-│   └── shops.json            # stock des marchands shop.*
+│   ├── shops.json            # stock des marchands shop.*
+│   ├── tactics_presets.json  # préréglages de tactiques tactics_preset.*
+│   └── tips.json             # conseils tip.*
 ├── schemas.gd                # schémas de validation (ARCHITECTURE)
 └── content_db.gd             # autoload Content : chargement, validation, index
 game/engine/balance/          # constantes UPPER_SNAKE de GAME_BALANCE.md (pas de JSON : règle 4 d'ARCHITECTURE)
@@ -61,7 +63,7 @@ Un fichier par type d'entité et par origine. Il est inutile de créer un fichie
 
 ## 3. Conventions d'ID
 
-Format : `<préfixe>.<snake_case>`, avec l'expression régulière `^[a-z]+\.[a-z0-9_]+$`, en anglais, 48 caractères au plus.
+Format : `<préfixe>.<snake_case>`, avec l'expression régulière `^[a-z][a-z_]*\.[a-z0-9_]+$` (le préfixe peut contenir `_` depuis le jalon 6 : `tactics_preset.`), en anglais, 48 caractères au plus.
 
 | Type | Préfixe | Exemple |
 |---|---|---|
@@ -91,6 +93,8 @@ Format : `<préfixe>.<snake_case>`, avec l'expression régulière `^[a-z]+\.[a-z
 | Découverte | `discovery.` | `discovery.moss_statue` |
 | Lore (canon) | `lore.` | `lore.demons` |
 | Boutique | `shop.` | `shop.aubelin_merchant` |
+| Préréglage de tactiques | `tactics_preset.` | `tactics_preset.morvaine` |
+| Conseil | `tip.` | `tip.campfire_tactics` |
 
 Les éléments (`arcane`, `fire`, `frost`, `lightning`), les raretés (`common`, `uncommon`, `rare`, `epic`, `legendary`), les emplacements (`weapon`, `head`, `chest`, `hands`, `feet`, `amulet`) et les statistiques (`power`, `max_hp`...) sont des **énumérations fixes** sans préfixe. Ajouter une valeur à l'une d'elles est un changement de code.
 
@@ -200,7 +204,7 @@ Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités 
 | `region` | `level_range` (R, [min, max]), `locations` (R, array<ID>), `hub` (R, ID de lieu), `map_texture` (R), `unlock` (R, `condition`) |
 | `location` | `region` (R), `kind` (R, `hub`, `field` ou `dungeon_entrance`), `level` (R sauf hub), `scene` (R, chemin `.tscn`), `map_pos` (R, [x, y] normalisé 0-1), `encounters` (O, array<ID>), `discoveries` (O), `exits` (O, array<{`to`: ID, `spawn`: string}>), `unlock` (R), `fog_reveal` (O, array<ID>), `npcs` (O) |
 | `dungeon` | `location` (R), `level` (R), `scene` (R, chemin `.tscn`), `map_pos` (R, [x, y] 0-1), `rooms` (R, array<{`id`, `kind`: `encounter`, `rest`, `elite`, `boss` ou `checkpoint`, `encounter`?: ID, `heal_pct`?: 0-1}>), `unlock` (R) ; `desc_key` (O). Nom d'une salle : `<id>.room_<room_id>` |
-| `encounter` | `location` (R ; pour une salle de donjon, le lieu de l'entrée), `kind` (R, `normal`, `elite` ou `boss`), `level` (R), `enemies` (R, array<{`enemy`: ID, `count`: int ≥ 1, `level_offset`?: int}>), `loot_table` (R), `offline_eligible` (R, bool), `speed_cap` (R, 1, 2 ou 4), `first_clear_rewards` (O, {`materials`: {ID: qté}}, ajoutés au butin de la première victoire), `anchor` (R, nom du nœud dans la scène), `arena_center` (O, `contact` (défaut) ou `anchor` : l'arène est centrée sur l'ancre, salles de donjon), `respawn_s` (O, défaut 60) |
+| `encounter` | `location` (R ; pour une salle de donjon, le lieu de l'entrée), `kind` (R, `normal`, `elite` ou `boss`), `level` (R), `enemies` (R, array<{`enemy`: ID, `count`: int ≥ 1, `level_offset`?: int}>), `loot_table` (R), `offline_eligible` (R, bool), `speed_cap` (R, 1, 2 ou 4), `first_clear_rewards` (O, {`materials`?: {ID: qté}, `items`?: [{`base`: ID `item.`, `rarity`}]}, ajoutés au butin de la première victoire ; un objet a l'ilvl de la rencontre et ses affixes tirés dans le flux `loot`, et sa base doit avoir `min_ilvl` ≤ `level`, règle V8), `anchor` (R, nom du nœud dans la scène), `arena_center` (O, `contact` (défaut) ou `anchor` : l'arène est centrée sur l'ancre, salles de donjon), `respawn_s` (O, défaut 60) |
 | `loot_table` | `rarity_profile` (R, `normal`, `elite`, `boss`, `boss_first_kill` ou `chest`), `entries` (R, au moins 1, array<{`kind`: `gold`, `material`, `item`, `rune`, `artifact` ou `consumable`, `ref`?: ID (facultatif pour `item` et `rune` : base ou rune tirée au hasard), `chance`: 0-1, `qty`: [min, max], `per`: `enemy` ou `encounter`, `when`?: `always` (défaut), `first_clear` ou `repeat`}>), `guaranteed` (O). Premier kill d'un boss : profil `boss_first_kill` |
 | `discovery` | `location` (R, lieu ou donjon), `kind` (R, `vista`, `lore`, `chest`, `memorial` ou `pickup`), `trigger` (R, `zone`, `interact` ou `interact_hold`), `level` (R : XP et niveau du coffre), `reward` (R, {`xp`?: bool (`DISCOVERY_XP`), `materials`?: {ID: qté}, `artifacts`?: array<ID>, `loot_table`?: ID}), `reveals` (O, lieux ou donjons), `anchor` (R), `map_pos` (O, R si comptée), `fog_radius` (O, 0-1 : disque percé dans le voile de la carte), `counts_for_location` (O, défaut true : « Découvertes n/2 »), `available_if` (O, condition : herbes de quête), `room` (O : salle du donjon à gagner avant d'ouvrir) |
 
@@ -213,6 +217,9 @@ Légende : **R** = requis, O = optionnel. Champs communs à toutes les entités 
 | `quest` | `kind` (R, `main`, `side` ou `daily`), `level` (R sauf `daily` : niveau du contenu, base de l'XP), `giver` (O, ID `npc.`), `active_at_start` (O : active dès la nouvelle partie), `prerequisites` (O, array<condition> ; pour un contrat, son éligibilité), `objectives` (R, au moins 1, array<{`id`, `step` (O, défaut 1), `event`, `target`: ID, `source`? (ID `character.`), `count`: int ≥ 1}>), `rewards` (R, {`xp_factor`? (remplace `QUEST_XP_*`), `gold`?, `materials`? {ID: qté}, `runes`? [{`id`, `tier`}], `artifacts`? [ID], `unlocks`? (lieux ou donjons révélés, ou jeton `artifact_slot_1`), `memory`? bool}), `next` (O, ID) ; contrat (`daily`) : `tier` (R, `S`, `M` ou `L`), `weight` (R) |
 | `npc` | `location` (R), `role` (O, `smith`, `runecarver`, `merchant`, `quest` ou `board`), `anchor` (R), `dialogues` (O, liste ordonnée de {`dialogue`: ID, `condition`?, `offers`?: ID quête, `turns_in`?: ID quête} : la première dont la condition tient est jouée), `model` (R) |
 | `dialogue` | `lines` (R, array<{`speaker`: ID `npc.`, `character.` ou `enemy.`, `key_suffix`: string, `condition`?: condition}>), `choices` (O, 3 au plus : {`key_suffix`, `sets_flag`?, `next`?}) |
+
+| `tactics_preset` | `character` (R), `tactics` (R : tactiques partielles, même forme que les `overrides` de `CombatTactics.build` : `targeting`, `mana_reserve`, `barrier_hp_pct`, `min_enemies`, `spells` {ID : mode}, `consumables` {ID : mode} ; chaque valeur doit être acceptée par `CombatTactics.set_value`, règle V7) |
+| `tip` | `trigger` (R, `level_reached`, `first_campfire`, `boss_cast` ou `defeat`), `display` (R, `toast`, `panel`, `banner` ou `defeat`), `level` (requis pour `level_reached`), `dungeon`?, `encounter`?, `abilities` (requis pour `boss_cast` et `defeat` : sort du dernier coup ou incantation), `repeat` (O, défaut `false` : montré une fois par sauvegarde, `progress.tips_seen`), `duration_s`?, `preset`? (ID `tactics_preset.`, requis par l'action `apply_preset`), `actions` (O, `apply_preset`, `open_tactics`, `later`, `close`). Le texte du conseil a pour clé l'ID lui-même (`tip.campfire_tactics`, règle V9), son titre `<id>.name` |
 
 Événements d'objectif et cibles admises (`ContentSchemas.OBJECTIVE_TARGETS`, règle V15) : `EnemyDefeated` → `enemy` ; `EncounterCompleted` → `encounter` ou `location` (rencontres de `location.encounters`, donc hors donjon) ; `TalkedTo` → `npc` ; `DiscoveryFound` → `discovery` ; `ItemCollected` → `material` ou `artifact` ; `ItemDelivered` → `material` (quantité détenue, retirée au rendu) ; `LocationVisited` → `location` ou `dungeon` ; `CastInterrupted` → `character` (qui interrompt) ; `StatusApplied` → `status` (`source` optionnelle).
 
