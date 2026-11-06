@@ -6,8 +6,19 @@ extends SceneTree
 
 const TESTS_DIR := "res://tests/unit"
 
+var _done := false
 
-func _initialize() -> void:
+
+## Tests run on the first frame, once the autoloads (Content, GameState,
+## UiProbe...) are in the tree and ready, so UI screens can be built.
+func _process(_delta: float) -> bool:
+	if not _done:
+		_done = true
+		_run()
+	return false
+
+
+func _run() -> void:
 	var files := _collect(TESTS_DIR)
 	files.sort()
 	var passed := 0
