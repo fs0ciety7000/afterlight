@@ -1,6 +1,8 @@
 extends ProgressionScreen
 ## Grimoire (GDD §10.3-§10.4, §17 panel.spellbook): spells with their rank,
 ## the next rank's cost, rune slots, socketing from the stock and removal.
+## « Tactiques » and each spell's tactic badge open panel.tactics (GDD
+## decision 23 a), on that spell for a badge.
 
 var _selected := ""
 
@@ -21,6 +23,13 @@ func _build(into: VBoxContainer) -> void:
 	var panes := two_panes(into, 0.8)
 	var left := panes[0]
 	var right := panes[1]
+	var tactics := button(tr("ui.tactics.tab"), false, "tactics.open.grimoire")
+	tactics.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	tactics.pressed.connect(open_tactics)
+	left.add_child(tactics)
+	var modes := {}
+	for row: Dictionary in GameState.tactics.tactics_view().get("rows", []):
+		modes[row["id"]] = TacticsPanel.current_label(row)
 	heading(left, tr("ui.grimoire.spells"))
 	for s: Dictionary in spells:
 		var short: String = str(s["id"]).get_slice(".", 1)
@@ -41,7 +50,20 @@ func _build(into: VBoxContainer) -> void:
 				_refocus_id = "grimoire.spell." + short
 				_queue_refresh()
 		)
-		left.add_child(b)
+		if not modes.has(s["id"]):
+			left.add_child(b)
+			continue
+		# The spell's tactic as a badge: a click opens the panel on it.
+		var row := Kit.hbox(UiTokens.SPACE["sm"])
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(b)
+		var badge := button(
+			tr("ui.tactics.badge").format({"mode": modes[s["id"]]}), false, "tactics.badge." + short
+		)
+		badge.theme_type_variation = "SecondaryButton"
+		badge.pressed.connect(open_tactics.bind(str(s["id"])))
+		row.add_child(badge)
+		left.add_child(row)
 	for s: Dictionary in spells:
 		if s["id"] == _selected:
 			_detail(right, s)
@@ -141,6 +163,19 @@ func _detail(parent: VBoxContainer, s: Dictionary) -> void:
 			false
 		)
 		parent.add_child(row)
+
+
+## panel.tactics over the grimoire, on `focus` (a spell id) when given.
+func open_tactics(focus: String = "") -> void:
+	var p := TacticsPanel.open(self, {"focus": focus})
+	var back := (
+		"tactics.badge." + focus.get_slice(".", 1) if focus != "" else "tactics.open.grimoire"
+	)
+	p.closed.connect(
+		func() -> void:
+			_refocus_id = back
+			_queue_refresh()
+	)
 
 
 func _rank_up(spell_id: String) -> void:

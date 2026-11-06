@@ -1013,3 +1013,15 @@ ui.tactics.say.healing_draught.auto_low_hp,Fern boit une infusion de soin quand 
 ui.tactics.say.mana_elixir.manual,L'élixir de mana ne se boit que sur votre ordre.
 ui.tactics.say.mana_elixir.auto_low_mana,Fern boit un élixir de mana quand sa mana passe sous {x} %.
 dialogue.fern_campfire.line_02,"Ce cadran sent la cendre. Si elle frappe fort, je garderai ma barrière pour ce coup-là."
+ui.tactics.confirm_preset,Appliquer ces changements
+ui.tactics.cancel,Annuler
+ui.tactics.diff_title,Ce conseil change :
+ui.tactics.applied,Conseil appliqué.
+ui.tactics.saved,Réglage enregistré.
+ui.tactics.reset_done,Réglages par défaut rétablis.
+ui.tactics.reset_none,Vos réglages sont déjà ceux par défaut.
+ui.tactics.hint,Chaque changement s'applique et s'enregistre aussitôt.
+ui.tactics.live_hint,"Combat en pause : vos changements s'appliquent dès la reprise, et aux combats suivants."
+ui.tactics.badge,Tactique : {mode}
+ui.tactics.campfire_title,Feu de camp
+ui.tactics.campfire_hint,Le feu crépite. C'est le moment de revoir les tactiques de Fern.
