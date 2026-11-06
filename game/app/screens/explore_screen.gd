@@ -376,11 +376,16 @@ func _build_hud() -> void:
 	_interact_button.pressed.connect(func() -> void: story.interact())
 	add_child(_interact_button)
 	_interact_button.set_anchors_and_offsets_preset(
-		Control.PRESET_CENTER_BOTTOM,
-		Control.PRESET_MODE_MINSIZE,
-		margin + int(UiTokens.at_least_css(UiTokens.TOUCH_TARGET)) + UiTokens.SPACE["md"]
+		Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, margin
+	)
+	# Just above the bar, whatever its height (taller on touch screens), and
+	# growing upwards so a longer label never covers the bar's buttons.
+	_interact_button.offset_bottom = bar.offset_top - UiTokens.SPACE["md"]
+	_interact_button.offset_top = (
+		_interact_button.offset_bottom - _interact_button.custom_minimum_size.y
 	)
 	_interact_button.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_interact_button.grow_vertical = Control.GROW_DIRECTION_BEGIN
 
 	# Bottom-left: touch joystick.
 	if DisplayServer.is_touchscreen_available() or narrow:
