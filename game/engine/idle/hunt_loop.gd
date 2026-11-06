@@ -7,14 +7,26 @@ extends RefCounted
 
 
 ## Can the party hunt `encounter_id` here? Only an encounter already won
-## (elites and bosses included: only the offline hunt excludes them).
+## (elites and bosses included: only the offline hunt excludes them), never a
+## normal dungeon room (docs/content/dungeon.md §2.2: an expedition).
 static func check(state: Dictionary, encounter_id: String, content: Dictionary) -> Dictionary:
 	var e: Dictionary = content.get(encounter_id, {})
 	if e.get("_type", "") != "encounter":
 		return ActionResult.refuse("error.hunt.unknown_encounter")
+	if e["kind"] == "normal" and _in_dungeon(encounter_id, content):
+		return ActionResult.refuse("error.hunt.dungeon_room")
 	if int(state["progress"]["cleared_encounters"].get(encounter_id, 0)) <= 0:
 		return ActionResult.refuse("error.hunt.not_cleared", {"encounter": e["name_key"]})
 	return ActionResult.success({})
+
+
+static func _in_dungeon(encounter_id: String, content: Dictionary) -> bool:
+	for id in content:
+		if content[id].get("_type", "") == "dungeon":
+			for room in content[id]["rooms"]:
+				if room.get("encounter", "") == encounter_id:
+					return true
+	return false
 
 
 ## Starts hunting here. The encounter also becomes the offline hunt when

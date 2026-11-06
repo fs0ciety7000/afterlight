@@ -179,10 +179,10 @@ test('4.10 progression buttons work and a disabled button shows its reason', asy
   await click(page, 'bag.view.consumables');
   await expect.poll(() => text(page, 'bag.consumable.healing_draught')).toBe('Porté : 0 / 5');
 
-  // Personnage: artifact slots are locked with their level.
+  // Personnage: artifact slot 1 opens with the clockmaker's quest (jalon 6).
   await click(page, 'prog.tab.character');
   await waitScreen(page, 'character');
-  await expect.poll(() => text(page, 'character.artifact_slot.0')).toBe('Emplacement disponible au niveau 6');
+  await expect.poll(() => text(page, 'character.artifact_slot.0')).toBe('Terminez la quête « Les rouages de Tobias »');
 
   // With gold, the purchase goes through and the carried count updates.
   await testCommand(page, 'grant_forge_funds');

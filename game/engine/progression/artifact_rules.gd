@@ -1,8 +1,9 @@
 class_name ArtifactRules
 extends RefCounted
 ## Artifacts (GDD §10.5, GAME_BALANCE §18): owned artifacts have a level
-## (1-5, raised with ashen essence and gold); a character wears up to two,
-## the slots opening at ARTIFACT_SLOT_LEVELS.
+## (1-5, raised with ashen essence and gold); a character wears up to two.
+## Slot 1 opens with the clockmaker's quest (progress.unlocks token), slot 2 at
+## ARTIFACT_SLOT_2_LEVEL.
 
 
 ## {type (effect_type), value (at the owned level), level}; level 0 if not owned.
@@ -45,6 +46,24 @@ static func slot_level(index: int) -> int:
 	return int(BalanceEconomy.ARTIFACT_SLOT_LEVELS[index])
 
 
+static func slot_open(state: Dictionary, character: String, index: int) -> bool:
+	return slot_lock(state, character, index).is_empty()
+
+
+## Refusal explaining why slot `index` is closed, or {} when it is open.
+static func slot_lock(state: Dictionary, character: String, index: int) -> Dictionary:
+	if index == 0:
+		if state["progress"].get("unlocks", []).has(BalanceEconomy.ARTIFACT_SLOT_1_TOKEN):
+			return {}
+		return ActionResult.refuse(
+			"error.artifact_slot_quest", {"quest": BalanceEconomy.ARTIFACT_SLOT_1_QUEST + ".name"}
+		)
+	var need := slot_level(index)
+	if int(state["characters"].get(character, {}).get("level", 1)) < need:
+		return ActionResult.refuse("error.artifact_slot_locked", {"level": need})
+	return {}
+
+
 ## Wears an owned artifact in slot `index` (0 or 1). Result extra:
 ## {index, replaced}.
 static func equip(state: Dictionary, character: String, index: int, id: String) -> Dictionary:
@@ -52,9 +71,9 @@ static func equip(state: Dictionary, character: String, index: int, id: String) 
 		return ActionResult.refuse("error.artifact_slot_empty")
 	if not state["artifacts"].has(id) or not state["characters"].has(character):
 		return ActionResult.refuse("error.artifact_not_owned", {"artifact": id + ".name"})
-	var need := slot_level(index)
-	if int(state["characters"][character]["level"]) < need:
-		return ActionResult.refuse("error.artifact_slot_locked", {"level": need})
+	var lock := slot_lock(state, character, index)
+	if not lock.is_empty():
+		return lock
 	var slots: Array = state["characters"][character]["artifacts"]
 	for i in slots.size():
 		if i != index and slots[i] == id:

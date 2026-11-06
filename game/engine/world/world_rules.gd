@@ -25,7 +25,22 @@ static func is_met(condition: Dictionary, state: Dictionary, content: Dictionary
 		"level_at_least":
 			return leader_level(state) >= int(value)
 		"quest_completed":
-			return state["progress"]["quests"].get(str(value), {}).get("status", "") == "done"
+			return (
+				state["progress"]["quests"].get(str(value), {}).get("state", "")
+				== QuestRules.TURNED_IN
+			)
+		"quest_state":
+			var quest_state: String = QuestRules.state_of(state, str(value["id"]), content)
+			if value["state"] == "not_started":
+				return quest_state in [QuestRules.AVAILABLE, QuestRules.LOCKED]
+			return quest_state == value["state"]
+		"objective":
+			var done: bool = QuestRules.objective_done(
+				state, str(value["quest"]), str(value["id"]), content
+			)
+			return done == bool(value["done"])
+		"discovery_found":
+			return state["progress"]["discoveries"].has(str(value))
 		"location_cleared":
 			return _location_cleared(str(value), state, content)
 		"item_owned":
@@ -84,6 +99,12 @@ static func status(location_id: String, state: Dictionary, content: Dictionary) 
 	if location.is_empty() or not is_met(location["unlock"], state, content):
 		return LOCKED
 	return AVAILABLE
+
+
+## Lifts the fog over a location or dungeon (a quest unlock, a discovery).
+## Mutates `state`.
+static func reveal(state: Dictionary, place_id: String) -> void:
+	_add_unique(state["world"]["revealed_locations"], place_id)
 
 
 ## Marks a location visited: discovered, and the locations it reveals lose

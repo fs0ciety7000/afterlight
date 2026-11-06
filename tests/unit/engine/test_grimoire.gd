@@ -126,11 +126,14 @@ func test_spell_rank_costs_and_level_gates() -> void:
 func test_artifact_slots_levels_and_stat_effects() -> void:
 	var s := _rich(5)
 	s["artifacts"] = {"artifact.traveler_compass": 1, "artifact.cracked_hourglass": 1}
-	var locked := ArtifactRules.equip(s, FERN, 0, "artifact.traveler_compass")
-	assert_eq(
-		[locked["error"], locked["params"]], ["error.artifact_slot_locked", {"level": 6}], "L5"
-	)
 	s["characters"][FERN]["level"] = 6
+	var quest := ArtifactRules.equip(s, FERN, 0, "artifact.traveler_compass")
+	assert_eq(
+		[quest["error"], quest["params"]],
+		["error.artifact_slot_quest", {"quest": "quest.side_clockmaker.name"}],
+		"slot 1 waits for the clockmaker's quest"
+	)
+	s["progress"]["unlocks"].append("artifact_slot_1")
 	var before := Equipment.stats(s, FERN, P.content())
 	s = ArtifactRules.equip(s, FERN, 0, "artifact.traveler_compass")["state"]
 	assert_near(

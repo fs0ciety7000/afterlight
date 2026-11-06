@@ -113,7 +113,7 @@ func test_conditions_unlock_as_the_player_progresses() -> void:
 		WorldRules.status("location.marsh", s, CONTENT), WorldRules.AVAILABLE, "level 4 opens marsh"
 	)
 	s = WorldRules.travel("location.wood", "default", s, CONTENT)["state"]
-	s["progress"]["quests"]["quest.q1"] = {"status": "done"}
+	s["progress"]["quests"]["quest.q1"] = {"state": "turned_in", "step": 1, "counts": {}}
 	assert_eq(
 		WorldRules.status("location.ruins", s, CONTENT), WorldRules.AVAILABLE, "quest + level"
 	)

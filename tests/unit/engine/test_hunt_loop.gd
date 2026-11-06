@@ -20,6 +20,17 @@ func test_only_a_won_encounter() -> void:
 	assert_eq(HuntLoop.check(s, "encounter.nope", c)["error"], "error.hunt.unknown_encounter")
 
 
+func test_normal_dungeon_rooms_are_not_hunted() -> void:
+	var c := P.content()
+	var s := _state()
+	s["progress"]["cleared_encounters"]["encounter.cloister_vestibule"] = 1
+	assert_eq(
+		HuntLoop.check(s, "encounter.cloister_vestibule", c)["error"],
+		"error.hunt.dungeon_room",
+		"an expedition, not a hunt"
+	)
+
+
 func test_an_elite_is_hunted_here_but_not_offline() -> void:
 	var c := P.content()
 	var s := _state()

@@ -7,9 +7,12 @@ const ARTIFACT_MAX_LEVEL := 5
 ## Essences to go from level n to n+1 (index 0 is 1 → 2).
 const ARTIFACT_ESSENCE_COST := [1, 2, 3, 5]
 const ARTIFACT_GOLD_BASE := 500
-## Character level that opens each artifact slot. Slot 1 opens at level 6
-## (GDD §10.5, with the clockmaker quest; provisional: level only, jalon 4).
+## Character level that opens each artifact slot. Slot 1 opens when the
+## clockmaker's quest (available at level 6) is handed in: its reward unlocks
+## the ARTIFACT_SLOT_1_TOKEN (GDD decision 14, jalon 6).
 const ARTIFACT_SLOT_1_LEVEL := 6
+const ARTIFACT_SLOT_1_TOKEN := "artifact_slot_1"
+const ARTIFACT_SLOT_1_QUEST := "quest.side_clockmaker"
 const ARTIFACT_SLOT_2_LEVEL := 15
 const ARTIFACT_SLOT_LEVELS := [ARTIFACT_SLOT_1_LEVEL, ARTIFACT_SLOT_2_LEVEL]
 const ESSENCE_ID := "material.ashen_essence"
