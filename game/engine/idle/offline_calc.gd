@@ -178,8 +178,7 @@ static func compute(
 	var summary := _empty_summary(state, hunt, from, now_unix, content)
 	out["summary"] = summary
 	if elapsed < 0:
-		summary["status"] = STATUS_CLOCK
-		return out
+		return _refuse(out, STATUS_CLOCK, "")
 	var check := hunt_check(state, hunt, content)
 	if not check["ok"]:
 		return _refuse(out, STATUS_INELIGIBLE, check["error"])
@@ -216,6 +215,7 @@ static func compute(
 	summary["level_after"] = leveled["level"]
 	summary["levels_gained"] = leveled["levels_gained"]
 	summary["xp_wasted"] = leveled["wasted"]
+	_snap_floats(summary)
 	return out
 
 
@@ -267,7 +267,15 @@ static func _empty_summary(
 static func _refuse(out: Dictionary, status: String, reason: String) -> Dictionary:
 	out["summary"]["status"] = status
 	out["summary"]["reason"] = reason
+	_snap_floats(out["summary"])
 	return out
+
+
+## Snaps the float fields of a summary (BalanceOffline.SUMMARY_FLOAT_STEP).
+static func _snap_floats(summary: Dictionary) -> void:
+	for key in summary:
+		if typeof(summary[key]) == TYPE_FLOAT:
+			summary[key] = snappedf(summary[key], BalanceOffline.SUMMARY_FLOAT_STEP)
 
 
 static func _too_slow_params(est: Dictionary) -> Dictionary:

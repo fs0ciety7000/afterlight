@@ -28,6 +28,9 @@ const OFFLINE_RUNE_SAMPLE_MAX := 500
 const ECHO_WEIGHT := 0.5
 ## Fixed-point steps settling fight time and mana ratio (not a tuning value).
 const FIXED_POINT_STEPS := 6
+## Float fields of a saved summary are snapped to this step, so they survive
+## the JSON round trip of the save checksum (see BalanceItems.AFFIX_VALUE_STEP).
+const SUMMARY_FLOAT_STEP := 0.000001
 
 
 ## Share of the mana pool at the start of a hunting fight: out-of-combat
