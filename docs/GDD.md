@@ -263,7 +263,7 @@ L'arbitrage voulu : progresser hors ligne (Sablier) ou être plus fort en combat
 ### 10.6 Ressources et inventaire
 
 - **Or** (`currency.gold`), **poussière de mana** (`material.mana_dust`, amélioration), **éclat runique** (`material.rune_shard`, fusion), **page de grimoire** (`material.grimoire_page`, rangs des sorts), **essence de cendre** (`material.ashen_essence`, artefacts).
-- **Consommables** (marchande d'Aubelin) : Infusion de soin (`consumable.healing_draught`), Élixir de mana (`consumable.mana_elixir`). Recharge partagée, 5 au plus de chaque sur soi.
+- **Consommables** (Odette, marchande d'Aubelin, personnage original) : Infusion de soin (`consumable.healing_draught`), Élixir de mana (`consumable.mana_elixir`). Recharge partagée, 5 au plus de chaque sur soi.
 - **Inventaire** : 60 cases d'équipement. Les matériaux, les runes et les consommables vont dans des onglets empilables à part, sans limite pratique. Inventaire plein : le butin d'objets est recyclé automatiquement, avec une ligne dans le résumé. Il n'est jamais perdu en silence.
 
 ## 11. Butin
