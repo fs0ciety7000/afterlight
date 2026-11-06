@@ -1,13 +1,38 @@
 extends TestCase
 ## GAME_BALANCE §12 table: xp_to_next rounded to tens.
 
+## Criterion 4.1: GAME_BALANCE §12 table, L1 to L19.
+const XP_TABLE := [
+	40,
+	240,
+	700,
+	1470,
+	2630,
+	4220,
+	6300,
+	8920,
+	12100,
+	15920,
+	20400,
+	25580,
+	31500,
+	38190,
+	45700,
+	54050,
+	63270,
+	73400,
+	84470,
+]
+
 
 func test_xp_curve_matches_the_balance_table() -> void:
-	assert_eq(BalanceProgression.xp_to_next(1), 40, "L1")
-	assert_eq(BalanceProgression.xp_to_next(2), 240, "L2")
-	assert_eq(BalanceProgression.xp_to_next(3), 700, "L3")
-	assert_eq(BalanceProgression.xp_to_next(4), 1470, "L4")
+	for level in range(1, 20):
+		assert_eq(BalanceProgression.xp_to_next(level), XP_TABLE[level - 1], "L%d" % level)
 	assert_eq(BalanceProgression.xp_to_next(20), 0, "cap")
+	var total := 0
+	for v in XP_TABLE:
+		total += v
+	assert_eq(total, 489100, "cumulated XP to reach L20")
 
 
 func test_grant_xp_levels_up_once_or_several_times() -> void:

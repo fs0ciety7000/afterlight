@@ -320,6 +320,8 @@ pénalité        = 1                                  si écart ≤ 2
 | `FIRST_CLEAR_XP_MULT` | 3 | 2-5 | XP de la première victoire sur chaque rencontre |
 | `QUEST_XP_MAIN` / `QUEST_XP_SIDE` / `DISCOVERY_XP` | 0,6 / 0,3 / 0,1 × `xp_to_next(niveau_de_la_quête)` | |
 
+**La table ci-dessous fait foi** (`XP_TO_NEXT_TABLE`, critère 4.1) : la formule donne 8 910, 12 110, 73 410 et 84 490 aux niveaux 8, 9, 18 et 19, au lieu de 8 920, 12 100, 73 400 et 84 470 *(écart relevé au jalon 4 ; provisoire, jalon 4 : on garde la table)*.
+
 Au niveau maximum, l'XP en surplus est perdue et l'écran le signale. Plusieurs niveaux peuvent être gagnés d'un coup ; les statistiques sont alors recalculées une fois.
 
 | L | `xp_to_next` | XP cumulée pour atteindre L+1 | XP par rencontre normale (3 ennemis, Le = L) | Rencontres pour passer le niveau |
