@@ -46,6 +46,19 @@ func _register_test_handlers() -> void:
 	UiProbe.test_handlers["force_item_drop"] = func() -> void: GameState.test_force_item_drop = true
 	UiProbe.test_handlers["grant_forge_funds"] = func() -> void:
 		GameState.test_grant(1000, {"material.mana_dust": 40})
+	UiProbe.test_handlers["grant_level"] = _test_grant_level
+
+
+## Test channel only (idle E2E): the leader gains one level, then the game
+## saves, so a won pack can become a hunt the party survives offline.
+func _test_grant_level() -> void:
+	if not GameState.has_game():
+		return
+	var next := GameState.data.duplicate(true)
+	var hero: Dictionary = next["characters"][next["party"][0]]
+	hero["level"] = mini(int(hero["level"]) + 1, BalanceProgression.LEVEL_CAP)
+	hero["xp"] = 0
+	GameState.commit_action(next)
 
 
 func _boot() -> void:
