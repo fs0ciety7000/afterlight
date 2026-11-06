@@ -1,0 +1,60 @@
+{
+ "_doc": "Audio map (game/audio/audio_catalog.gd). Ids are files: music/<id>.ogg, sfx/<id>.ogg; an sfx id with variants (`steps_grass`) plays <id>_1..N.ogg. `combat` rules: first match wins; fields event (required), spell, target_family, min_rarity, sfx, bus, caption (strings.csv key, subtitle for an information-carrying sound). Sources and loudness: art/source/audio/processed.json; prompts: art/source/audio/plan.json.",
+ "music": {
+  "title": "music_title",
+  "location.aubelin": "music_aubelin",
+  "location.whispering_wood": "music_whispering_wood",
+  "location.lantern_mire": "music_lantern_mire",
+  "location.watch_ruins": "music_watch_ruins",
+  "dungeon.silent_dial_cloister": "music_cloister_night",
+  "combat": "music_combat",
+  "boss": "music_boss_morvaine",
+  "victory": "sting_victory",
+  "defeat": "sting_defeat"
+ },
+ "steps": {
+  "default": "steps_grass",
+  "location.aubelin": "steps_stone",
+  "location.whispering_wood": "steps_grass",
+  "location.lantern_mire": "steps_wood",
+  "location.watch_ruins": "steps_stone",
+  "dungeon.silent_dial_cloister": "steps_stone"
+ },
+ "rooms": {
+  "rest": "amb_fountain",
+  "checkpoint": "amb_campfire"
+ },
+ "ui": {
+  "click": "ui_click",
+  "confirm": "ui_confirm",
+  "back": "ui_back"
+ },
+ "story": {
+  "level_up": "level_up",
+  "chest": "chest_open",
+  "discovery": "loot_common",
+  "room_cleared": "gate_open",
+  "bell": "bell"
+ },
+ "captions": {
+  "bell": "story.bell.subtitle"
+ },
+ "combat": [
+  {"event": "spell_cast", "spell": "spell.zoltraak", "sfx": "zoltraak_cast"},
+  {"event": "spell_cast", "spell": "spell.mana_volley", "sfx": "salve_cast"},
+  {"event": "spell_cast", "spell": "spell.defensive_barrier", "sfx": "barrier_up"},
+  {"event": "spell_cast", "spell": "spell.afterlight", "sfx": "ultimate"},
+  {"event": "spell_cast", "spell": "ability.alpha_howl", "sfx": "wolf_howl"},
+  {"event": "spell_cast", "spell": "ability.lantern_blaze", "sfx": "lantern_blaze"},
+  {"event": "telegraph_started", "spell": "ability.morvaine_ash_seal", "sfx": "ash_seal", "caption": "ui.caption.ash_seal"},
+  {"event": "telegraph_started", "spell": "ability.morvaine_ash_seal_hollow", "sfx": "ash_seal", "caption": "ui.caption.ash_seal"},
+  {"event": "telegraph_started", "sfx": "enemy_telegraph", "caption": "ui.caption.telegraph"},
+  {"event": "cast_interrupted", "sfx": "interrupt"},
+  {"event": "barrier_broken", "sfx": "barrier_break"},
+  {"event": "damage_dealt", "spell": "spell.zoltraak", "sfx": "zoltraak_impact"},
+  {"event": "damage_dealt", "target_family": "construct", "sfx": "hit_stone"},
+  {"event": "damage_dealt", "sfx": "hit_flesh"},
+  {"event": "loot_dropped", "min_rarity": "rare", "sfx": "loot_rare"},
+  {"event": "loot_dropped", "sfx": "loot_common"}
+ ]
+}
