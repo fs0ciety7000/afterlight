@@ -118,7 +118,8 @@ func _build_mire() -> void:
 	_mire_decks()
 	_mire_water_walls()
 	_place("beacon", BEACON_AT, 0.4)
-	_place("house_b", Vector2(-34, -29), _face(Vector2(-34, -29), Vector2(-29, -23)), 0.72)
+	# the ferryman's hut on its piles (tools/blender/build_mire_props.py), door towards the landing
+	_place("ferry_hut", Vector2(-33.5, -28.5), _face(Vector2(-33.5, -28.5), Vector2(-29, -23)))
 	_place("barrels", Vector2(-27.5, -29.5), 0.8, 0.8)
 	_place("barrels", Vector2(35.5, -29.0), 2.2, 0.7)
 	# lanterns: warm posts in pairs at both exits, along the causeways and at the pontoon ends
@@ -158,7 +159,7 @@ func _build_mire() -> void:
 				Vector3(BEACON_AT.x, _height(BEACON_AT.x, BEACON_AT.y) - 0.05, BEACON_AT.y)
 				+ BEACON_LAMP
 			),
-			2.4
+			3.4
 		]
 	)
 	_mire_vegetation()
@@ -186,6 +187,17 @@ func _build_mire() -> void:
 				]
 			)
 	_mire_glow(lamps)
+	# the beacon is the one lit landmark of the bog: a warm light on the reeds and the water
+	var beacon_light := OmniLight3D.new()
+	_add(_group("Glow"), beacon_light, "BeaconLight")
+	beacon_light.position = (
+		Vector3(BEACON_AT.x, _height(BEACON_AT.x, BEACON_AT.y), BEACON_AT.y) + BEACON_LAMP
+	)
+	beacon_light.light_color = Color("#ffb066")
+	beacon_light.light_energy = 1.6
+	beacon_light.omni_range = 11.0
+	beacon_light.omni_attenuation = 1.4
+	beacon_light.shadow_enabled = false
 	_mire_mist()
 	_backdrop(Vector3(40, -6, -150), 300.0)
 	_borders(40.0)
@@ -195,7 +207,9 @@ func _build_mire() -> void:
 		-24.0,
 		0.6,
 		1.15,
-		{"color": Color("#bcc2d6"), "density": 0.012, "height": 0.4, "height_density": 0.35}
+		# distance fog near the Whispering Wood value and a height fog kept under the pools: the old fog
+		# washed the far hill trees out (shot_mire_vista_before.jpg); mist banks keep the near mood
+		{"color": Color("#bcc2d6"), "density": 0.0045, "height": -0.2, "height_density": 0.35}
 	)
 	_mire_markers()
 	_save("lantern_mire.tscn")

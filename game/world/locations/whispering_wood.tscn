@@ -1745,6 +1745,18 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -16,
 [node name="discovery_01" type="Marker3D" parent="Anchors" unique_id=1224350519]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 17, 0.024588993, -21)
 
+[node name="discovery_02" type="Marker3D" parent="Anchors" unique_id=818066363]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6, -0.012489281, 3.5)
+
+[node name="herb_01" type="Marker3D" parent="Anchors" unique_id=964445382]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 19, 0.24961463, 7)
+
+[node name="herb_02" type="Marker3D" parent="Anchors" unique_id=3009212]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 9.5, -0.0031757953, 3)
+
+[node name="herb_03" type="Marker3D" parent="Anchors" unique_id=1972657138]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 18, 0.059276983, -24)
+
 [node name="Visuals" type="Node3D" parent="." unique_id=653595652]
 
 [node name="Ground" type="Node3D" parent="Visuals" unique_id=319449846]

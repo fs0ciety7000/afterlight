@@ -1799,8 +1799,17 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0
 [node name="board" type="Marker3D" parent="Anchors" unique_id=872458277]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.4, -0.007905922, -2.4)
 
-[node name="discovery_bridge" type="Marker3D" parent="Anchors" unique_id=37493012]
+[node name="npc_herbalist" type="Marker3D" parent="Anchors" unique_id=37493012]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 18, -0.045846675, 1.5)
+
+[node name="npc_forge" type="Marker3D" parent="Anchors" unique_id=1346255212]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.2841954, 0.025079718, -3.7203228)
+
+[node name="npc_runecarver" type="Marker3D" parent="Anchors" unique_id=1398593332]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.699223, -0.014212661, 3.5149925)
+
+[node name="npc_clockmaker" type="Marker3D" parent="Anchors" unique_id=404022147]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.8187258, 0.06309924, -6.3758755)
 
 [node name="Visuals" type="Node3D" parent="." unique_id=1744615420]
 
