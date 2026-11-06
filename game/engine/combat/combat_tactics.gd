@@ -7,16 +7,18 @@ extends RefCounted
 ##                   of "auto_telegraph_or_hp"
 ##   min_enemies     enemy count of "auto_min_enemies"
 ##   spells          {spell_id: mode}
-##   consumables     {consumable_id: mode}: "manual" (default), "auto_low_hp"
-##                   (healing, under TACTIC_HEAL_HP_PCT) or "auto_low_mana"
-##                   (mana, under TACTIC_ELIXIR_MANA_PCT); owner answer 2 to
-##                   GDD decisions 22-31
+##   consumables     {consumable_id: mode}: "manual", "auto_low_hp" (healing,
+##                   under TACTIC_HEAL_HP_PCT; the healing default, owner
+##                   decision of 2026-11-06) or "auto_low_mana" (mana, under
+##                   TACTIC_ELIXIR_MANA_PCT); owner answer 2 to GDD decisions 22-31
 ## Modes: "manual", "auto", "auto_elite_boss", "auto_interrupt",
 ## "auto_min_enemies", "auto_hp_below", "auto_before_telegraph",
 ## "auto_telegraph_or_hp", "auto_full".
 ## Defaults follow each spell's role, read from its data (no id in code):
 ## damage (Zoltraak included) -> auto, distributed damage -> auto_min_enemies,
-## shield -> auto_telegraph_or_hp (GDD decision 22), ultimate -> manual. An interrupting spell on
+## shield -> auto_telegraph_or_hp (GDD decision 22), ultimate -> manual,
+## healing consumable -> auto_low_hp (GDD decision 32), other consumables ->
+## manual. An interrupting spell on
 ## "auto" still turns to an enemy casting something interruptible first.
 ## Deviation from GDD §7.4 (Zoltraak "Auto pour interrompre" by default): with
 ## it, an idle player loses low-level normal fights (bench, GAME_BALANCE §22).
@@ -80,8 +82,10 @@ static func modes_for(spell: Dictionary) -> Array:
 
 static func default_mode(spell: Dictionary) -> String:
 	match role_of(spell):
-		"ultimate", "heal", "mana", "consumable":
+		"ultimate", "mana", "consumable":
 			return "manual"
+		"heal":
+			return "auto_low_hp"
 		"shield":
 			return "auto_telegraph_or_hp"
 		"area":

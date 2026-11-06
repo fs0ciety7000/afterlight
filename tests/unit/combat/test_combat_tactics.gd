@@ -130,19 +130,24 @@ func test_shield_modes_include_telegraph_or_hp() -> void:
 	assert_eq(CombatTactics.default_mode(barrier), "auto_telegraph_or_hp", "shield default")
 
 
-## Owner answer 2 (GDD, decisions 22-31): consumable tactics, Manual by
-## default; "auto_low_hp" drinks the infusion under 35 % HP.
-func test_consumable_tactics_default_manual_and_auto_low_hp() -> void:
+## Owner answer 2 (GDD, decisions 22-31) and GDD decision 32: consumable
+## tactics; the healing infusion is "auto_low_hp" (under 30 % HP) by default,
+## the mana elixir Manual.
+func test_consumable_tactics_defaults_and_auto_low_hp() -> void:
 	var content := _content([{"enemy": "enemy.mist_wolf", "count": 1}], 5)
 	var stock := {"consumable.healing_draught": 2, "consumable.mana_elixir": 1}
 	var sim := _sim(content, 5, {"tactics": _manual_tactics(), "consumables": stock})
 	assert_eq(
 		sim.tactics["consumables"],
-		{"consumable.healing_draught": "manual", "consumable.mana_elixir": "manual"},
-		"manual by default"
+		{"consumable.healing_draught": "auto_low_hp", "consumable.mana_elixir": "manual"},
+		"infusion Auto, elixir Manual by default"
 	)
+	var manual := _manual_tactics()
+	manual["consumables"] = {"consumable.healing_draught": "manual"}
+	sim = _sim(content, 5, {"tactics": manual, "consumables": stock})
 	sim.step()
 	sim.units[0]["hp"] = int(sim.units[0]["max_hp"] * 0.2)
+	sim.units[0]["mana"] = 5.0
 	assert_eq(_of(_steps(sim, 3), "consumable_used").size(), 0, "manual: never drunk")
 	var tactics := _manual_tactics()
 	tactics["consumables"] = {
@@ -151,9 +156,9 @@ func test_consumable_tactics_default_manual_and_auto_low_hp() -> void:
 	sim = _sim(content, 5, {"tactics": tactics, "consumables": stock})
 	sim.step()
 	var fern: Dictionary = sim.units[0]
-	fern["hp"] = int(fern["max_hp"] * 0.4)
-	assert_eq(_of(_steps(sim, 3), "consumable_used").size(), 0, "40 %: not yet")
-	fern["hp"] = int(fern["max_hp"] * 0.3)
+	fern["hp"] = int(fern["max_hp"] * 0.32)
+	assert_eq(_of(_steps(sim, 3), "consumable_used").size(), 0, "32 %: not yet")
+	fern["hp"] = int(fern["max_hp"] * 0.25)
 	fern["mana"] = 5.0
 	var used := _of(_steps(sim, 3), "consumable_used")
 	assert_eq(used.size(), 1, "one potion (shared cooldown)")

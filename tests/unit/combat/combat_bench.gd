@@ -69,12 +69,14 @@ static func fern(level: int, profile: String = "typical") -> Dictionary:
 	}
 
 
-## Player profiles: "idle" (default tactics, no input), "idle_tuned" (defaults
+## Player profiles: "idle" (default tactics, the healing infusion on Auto
+## since GDD decision 32, no input), "idle_tuned" (defaults
 ## + tactics_preset.morvaine, « Appliquer le conseil »; no input),
 ## "script_optimal" (interrupts, shields the big hits, focuses casters, ult
 ## when full, potions), "confused" (fire conversion on everything, Barrier
 ## left on manual). Every profile carries the same potions (3 infusions, 2
-## elixirs); only automatic tactics or the script drink them.
+## elixirs); only automatic tactics (the infusion's default included) or the
+## script drink them.
 static func setup(
 	encounter: String, level: int, seed_value: int, gear_profile: String, player: String
 ) -> Dictionary:

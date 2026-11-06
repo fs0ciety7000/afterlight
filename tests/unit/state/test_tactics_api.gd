@@ -42,7 +42,9 @@ func test_view_texts_in_french() -> void:
 	)
 	assert_eq(barrier["param"]["label"], "30 %", "slider label")
 	assert_eq(
-		_row("consumable.healing_draught")["options"][1]["label"], "Auto si PV < 35 %", "infusion"
+		_row("consumable.healing_draught")["options"][1]["label"],
+		"Auto si PV < 30 % (par défaut)",
+		"infusion: Auto by default (GDD decision 32)"
 	)
 	assert_true(_row("spell.mana_volley").is_empty(), "Volley hidden before level 3")
 	_end()

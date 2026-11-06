@@ -60,7 +60,8 @@ func test_view_lists_learned_spells_in_order_with_defaults() -> void:
 	)
 	assert_true(rows["spell.zoltraak"]["param"].is_empty(), "no slider for Zoltraak")
 	assert_eq(rows["mana_reserve"]["say_params"], {"x": 20}, "reserve 20 %")
-	assert_eq(rows[DRAUGHT]["current"], "manual", "infusion manual")
+	assert_eq(rows[DRAUGHT]["current"], "auto_low_hp", "infusion Auto (GDD decision 32)")
+	assert_eq(rows[DRAUGHT]["say_params"], {"x": 30}, "under 30 %")
 
 
 func test_set_tactic_saves_only_the_delta_and_refuses_bad_values() -> void:
@@ -127,17 +128,14 @@ func test_preset_diff_then_apply() -> void:
 	var keys := []
 	for line in d["lines"]:
 		keys.append(line["id"])
-	assert_eq(keys, ["targeting", BARRIER, DRAUGHT], "three changes, in row order")
+	# The infusion is already on Auto by default (GDD decision 32): no change.
+	assert_eq(keys, ["targeting", BARRIER], "two changes, in row order")
 	assert_eq(d["lines"][0]["from_key"], "ui.tactics.targeting.nearest", "from")
 	assert_eq(d["lines"][0]["to_key"], "ui.tactics.targeting.casters_first", "to")
 	var r := TacticsRules.apply_preset(s, FERN, PRESET, P.content())
 	assert_eq(
 		r["state"]["characters"][FERN]["tactics"],
-		{
-			"targeting": "casters_first",
-			"spells": {BARRIER: "auto_before_telegraph"},
-			"consumables": {DRAUGHT: "auto_low_hp"},
-		},
+		{"targeting": "casters_first", "spells": {BARRIER: "auto_before_telegraph"}},
 		"applied as a delta"
 	)
 	assert_eq(
