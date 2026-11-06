@@ -17,9 +17,16 @@
         "move_speed": 5.5,
         "aggro_m": 9
       },
-      "affinities": { "arcane": "neutral", "fire": "weak", "frost": "neutral", "lightning": "neutral" },
+      "affinities": {
+        "arcane": "neutral",
+        "fire": "weak",
+        "frost": "neutral",
+        "lightning": "neutral"
+      },
       "attack": "ability.wolf_bite",
-      "abilities": ["ability.wolf_lunge"],
+      "abilities": [
+        "ability.wolf_lunge"
+      ],
       "ai_profile": "ai.rusher",
       "xp_mult": 1.0,
       "gold_mult": 1.0,
@@ -40,9 +47,16 @@
         "move_speed": 3.0,
         "aggro_m": 11
       },
-      "affinities": { "arcane": "neutral", "fire": "resist", "frost": "weak", "lightning": "neutral" },
+      "affinities": {
+        "arcane": "neutral",
+        "fire": "resist",
+        "frost": "weak",
+        "lightning": "neutral"
+      },
       "attack": "ability.lantern_bolt",
-      "abilities": ["ability.lantern_blaze"],
+      "abilities": [
+        "ability.lantern_blaze"
+      ],
       "ai_profile": "ai.caster",
       "xp_mult": 1.0,
       "gold_mult": 1.0,
@@ -63,9 +77,17 @@
         "move_speed": 2.5,
         "aggro_m": 7
       },
-      "affinities": { "arcane": "neutral", "fire": "neutral", "frost": "resist", "lightning": "weak" },
+      "affinities": {
+        "arcane": "neutral",
+        "fire": "neutral",
+        "frost": "resist",
+        "lightning": "weak"
+      },
       "attack": "ability.sentinel_bash",
-      "abilities": ["ability.sentinel_slam", "ability.sentinel_barrier"],
+      "abilities": [
+        "ability.sentinel_slam",
+        "ability.sentinel_barrier"
+      ],
       "ai_profile": "ai.bulwark",
       "xp_mult": 1.6,
       "gold_mult": 1.5,
@@ -86,21 +108,31 @@
         "move_speed": 6.0,
         "aggro_m": 12
       },
-      "affinities": { "arcane": "neutral", "fire": "weak", "frost": "resist", "lightning": "neutral" },
+      "affinities": {
+        "arcane": "neutral",
+        "fire": "weak",
+        "frost": "resist",
+        "lightning": "neutral"
+      },
       "attack": "ability.alpha_bite",
-      "abilities": ["ability.alpha_howl", "ability.alpha_chain_lunge"],
+      "abilities": [
+        "ability.alpha_howl",
+        "ability.alpha_chain_lunge"
+      ],
       "ai_profile": "ai.alpha",
       "xp_mult": 6.0,
       "gold_mult": 5.0,
       "scale": 1.4,
-      "model": "res://assets/models/enemies/mist_wolf_alpha/mist_wolf_alpha.glb"
+      "model": "res://assets/models/enemies/mist_wolf/mist_wolf.glb"
     },
     {
       "id": "enemy.morvaine",
       "origin": "original",
       "name_key": "enemy.morvaine.name",
       "desc_key": "enemy.morvaine.desc",
-      "canon_refs": ["lore.demons"],
+      "canon_refs": [
+        "lore.demons"
+      ],
       "archetype": "boss",
       "family": "demon",
       "stats_l1": {
@@ -111,14 +143,23 @@
         "move_speed": 2.0,
         "aggro_m": 0
       },
-      "affinities": { "arcane": "neutral", "fire": "resist", "frost": "weak", "lightning": "neutral" },
+      "affinities": {
+        "arcane": "neutral",
+        "fire": "resist",
+        "frost": "weak",
+        "lightning": "neutral"
+      },
       "attack": "ability.morvaine_ash_bolt",
-      "abilities": ["ability.morvaine_enrage"],
+      "abilities": [
+        "ability.morvaine_enrage"
+      ],
       "phases": [
         {
           "id": "thread",
           "hp_threshold": 1.0,
-          "abilities": ["ability.morvaine_bound_lanterns"]
+          "abilities": [
+            "ability.morvaine_bound_lanterns"
+          ]
         },
         {
           "id": "veil",
@@ -132,7 +173,9 @@
         {
           "id": "hollow_hour",
           "hp_threshold": 0.3,
-          "abilities": ["ability.morvaine_ash_seal_hollow"],
+          "abilities": [
+            "ability.morvaine_ash_seal_hollow"
+          ],
           "haste": 0.3
         }
       ],

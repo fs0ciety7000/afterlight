@@ -205,3 +205,30 @@ encounter.lantern_mire_01.name,Feux de la tourbière
 encounter.watch_ruins_01.name,Gardien des ruines
 encounter.cloister_alpha.name,Le chenil
 encounter.cloister_boss.name,Salle du Cadran
+ui.combat.log,Journal
+ui.combat.log_all,Tout
+ui.combat.log_party,Groupe
+ui.combat.log_enemies,Ennemis
+ui.combat.log_damage,{source} inflige {amount} à {target}
+ui.combat.log_crit,{source} inflige {amount} (critique) à {target}
+ui.combat.log_cast,{source} lance {spell}
+ui.combat.log_status,{target} subit {status}
+ui.combat.speed,×{x}
+ui.combat.pause,Pause
+ui.combat.resume,Reprendre
+ui.combat.hp,PV {hp} / {max}
+ui.combat.boss_phase,Phase {phase}
+ui.combat.victory,Victoire
+ui.combat.defeat,Défaite
+ui.combat.defeat_body,"Fern se replie à l'entrée du lieu, ses forces rétablies. Rien n'est perdu."
+ui.combat.rewards,+{xp} XP · +{gold} or
+ui.combat.level_up,Niveau {level} atteint
+ui.combat.continue,Continuer
+ui.combat.reject.locked,Sort pas encore appris
+ui.combat.reject.no_mana,Mana insuffisante
+ui.combat.reject.no_charge,Charge d'ultime insuffisante
+ui.combat.reject.cooldown,Sort en recharge
+ui.combat.reject.no_target,Aucune cible à portée
+ui.combat.reject.expired,Ordre expiré
+ui.combat.reject.cc,Fern ne peut pas agir
+ui.combat.reject.dead,Fern est à terre

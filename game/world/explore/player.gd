@@ -12,6 +12,8 @@ const STUCK_SECONDS := 0.6
 const RUN_THRESHOLD := 0.8
 
 var move_speed := 5.0
+## True while a CombatView drives Fern from the simulation.
+var combat_driven := false
 ## Set by the HUD joystick, in screen space (x right, y down), length <= 1.
 var joystick := Vector2.ZERO
 var _target: Variant = null
@@ -19,6 +21,8 @@ var _path: PackedVector3Array = []
 var _stuck_time := 0.0
 var _anim: AnimationPlayer
 var _model: Node3D
+var _base_clip := "idle"
+var _one_shot := false
 
 
 func _ready() -> void:
@@ -40,6 +44,7 @@ func _ready() -> void:
 		for clip in ["idle", "walk", "run"]:
 			if _anim.has_animation(clip):
 				_anim.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
+		_anim.animation_finished.connect(_on_clip_finished)
 		_play("idle")
 
 
@@ -73,6 +78,8 @@ func is_moving_to_target() -> bool:
 
 
 func _physics_process(delta: float) -> void:
+	if combat_driven:
+		return
 	var wish := _input_direction()
 	if wish != Vector3.ZERO:
 		stop()
@@ -118,6 +125,30 @@ func _input_direction() -> Vector3:
 	return Vector3(v.x, 0.0, v.y).limit_length(1.0)
 
 
+## Looping state clip chosen by combat (idle or run).
+func play_base(clip: String) -> void:
+	_base_clip = clip
+	if not _one_shot:
+		_play(clip)
+
+
+## One-shot clip (cast, hit, death, victory).
+func play_once(clip: String) -> void:
+	if _anim and _anim.has_animation(clip):
+		_one_shot = true
+		_anim.play(clip, 0.08)
+		_anim.seek(0.0, true)
+
+
+func _on_clip_finished(clip: StringName) -> void:
+	if clip in [&"death", &"victory"]:
+		return
+	_one_shot = false
+	_play(_base_clip)
+
+
 func _play(clip: String) -> void:
+	if _one_shot and not combat_driven and clip != _base_clip:
+		_one_shot = false
 	if _anim and _anim.has_animation(clip) and _anim.current_animation != clip:
 		_anim.play(clip, 0.15)

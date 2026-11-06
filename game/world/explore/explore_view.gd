@@ -7,13 +7,23 @@ extends Node3D
 signal exit_reached(to_location: String, spawn: String)
 signal location_ready(location_id: String)
 signal location_failed(location_id: String, reason: String)
+signal encounter_engaged(encounter_id: String, anchor: Node3D)
+
+## Exploration aggro radius multiplier from Fern's passive (GDD §6, Mana voilé).
+const VEILED_AGGRO_MULT := 0.7
+const PACK_RADIUS_M := 1.6
 
 var location_id := ""
+## Encounter being fought ("" when exploring).
+var engaged := ""
 var player: ExplorePlayer
 var rig: CameraRig
 var _scene: Node3D
 var _exit_armed := false
 var _nav_region: NavigationRegion3D
+## encounter id -> {anchor, node, radius}. Packs defeated during this visit
+## are removed and come back when the place is entered again.
+var _packs := {}
 
 
 func load_location(id: String, spawn: String, content: Dictionary, move_speed: float) -> void:
@@ -59,7 +69,76 @@ func load_location(id: String, spawn: String, content: Dictionary, move_speed: f
 	# Exits fire only once Fern is out of the arrival area.
 	_exit_armed = false
 	get_tree().create_timer(0.5).timeout.connect(func() -> void: _exit_armed = true)
+	_spawn_packs(id, content)
 	location_ready.emit(id)
+
+
+func _spawn_packs(id: String, content: Dictionary) -> void:
+	_packs.clear()
+	engaged = ""
+	var anchors := _scene.get_node_or_null("Anchors")
+	for enc_id in content.get(id, {}).get("encounters", []):
+		var enc: Dictionary = content.get(enc_id, {})
+		if anchors == null or not anchors.has_node(str(enc.get("anchor", ""))):
+			continue
+		var anchor: Node3D = anchors.get_node(str(enc["anchor"]))
+		var pack := Node3D.new()
+		pack.name = "Pack_" + str(enc["anchor"])
+		add_child(pack)
+		pack.global_transform = anchor.global_transform
+		var radius := 0.0
+		var members := []
+		for group in enc["enemies"]:
+			for i in int(group["count"]):
+				members.append(group["enemy"])
+		for i in members.size():
+			var def: Dictionary = content.get(members[i], {})
+			var a := CombatActor.new()
+			pack.add_child(a)
+			a.setup(def, "")
+			var angle := TAU * i / maxf(members.size(), 1)
+			a.position = Vector3(sin(angle), 0.0, cos(angle)) * PACK_RADIUS_M
+			a.rotation.y = randf() * TAU
+			radius = maxf(radius, float(def.get("stats_l1", {}).get("aggro_m", 8.0)))
+		_packs[enc_id] = {"anchor": anchor, "node": pack, "radius": radius * VEILED_AGGRO_MULT}
+
+
+## Removes a pack once its encounter is won (it returns on the next visit).
+func clear_pack(encounter_id: String) -> void:
+	if _packs.has(encounter_id):
+		(_packs[encounter_id]["node"] as Node).queue_free()
+		_packs.erase(encounter_id)
+
+
+## Hides an engaged pack while the combat view shows the fight.
+func hide_pack(encounter_id: String) -> void:
+	if _packs.has(encounter_id):
+		(_packs[encounter_id]["node"] as Node3D).visible = false
+
+
+func show_pack(encounter_id: String) -> void:
+	if _packs.has(encounter_id):
+		(_packs[encounter_id]["node"] as Node3D).visible = true
+
+
+func pack_positions() -> Dictionary:
+	var out := {}
+	for id in _packs:
+		out[id] = (_packs[id]["anchor"] as Node3D).global_position
+	return out
+
+
+func _physics_process(_delta: float) -> void:
+	if player == null or engaged != "" or player.combat_driven:
+		return
+	for id in _packs:
+		var anchor: Node3D = _packs[id]["anchor"]
+		var d := player.global_position.distance_to(anchor.global_position)
+		if d <= float(_packs[id]["radius"]):
+			engaged = id
+			player.stop()
+			encounter_engaged.emit(id, anchor)
+			return
 
 
 func _spawn_marker(spawn: String) -> Node3D:
@@ -115,6 +194,19 @@ func path_to(target: Vector3) -> PackedVector3Array:
 	var from := NavigationServer3D.map_get_closest_point(map, player.global_position)
 	var to := NavigationServer3D.map_get_closest_point(map, target)
 	return NavigationServer3D.map_get_path(map, from, to, true)
+
+
+## Ground point under a screen position, or null.
+func ground_point(screen_point: Vector2) -> Variant:
+	var cam := rig.camera
+	var from := cam.project_ray_origin(screen_point)
+	var dir := cam.project_ray_normal(screen_point)
+	var hit := get_world_3d().direct_space_state.intersect_ray(
+		PhysicsRayQueryParameters3D.create(from, from + dir * 200.0, 1)
+	)
+	if not hit.is_empty():
+		return hit["position"]
+	return Plane(Vector3.UP, player.global_position.y).intersects_ray(from, dir)
 
 
 ## Click or tap on the ground: walk there, around obstacles.

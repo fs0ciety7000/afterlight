@@ -51,6 +51,10 @@ hero_depth={
 "type": "float",
 "value": 0.0
 }
+hero_cut_radius={
+"type": "float",
+"value": 0.0
+}
 
 [rendering]
 

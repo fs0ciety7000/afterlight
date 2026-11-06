@@ -52,6 +52,15 @@ func travel(location_id: String, spawn: String) -> String:
 	return ""
 
 
+## Applies a finished encounter (CombatSim's encounter_completed event).
+## Returns the summary shown on the victory screen.
+func apply_combat_result(completed: Dictionary) -> Dictionary:
+	var r := CombatOutcome.apply(data, completed)
+	data = r["state"]
+	mark_changed()
+	return r["summary"]
+
+
 func location_status(location_id: String) -> String:
 	return WorldRules.status(location_id, data, Content.index())
 

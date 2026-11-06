@@ -9,6 +9,8 @@ const FOLLOW_SHARPNESS := 6.0
 const FOV := 40.0
 
 var target: Node3D
+## Screen radius of the cut-out around the hero (wider in combat).
+var cut_radius := 0.22
 var zoom_index := 0
 var camera: Camera3D
 var _distance := 11.0
@@ -44,6 +46,7 @@ func _process(delta: float) -> void:
 		RenderingServer.global_shader_parameter_set(
 			"hero_depth", camera.global_position.distance_to(target.global_position + Vector3.UP)
 		)
+		RenderingServer.global_shader_parameter_set("hero_cut_radius", cut_radius)
 
 
 func _place_camera() -> void:

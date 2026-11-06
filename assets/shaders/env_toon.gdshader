@@ -33,6 +33,7 @@ uniform float alpha_scissor : hint_range(0.0, 1.0) = 0.0;
 // of her (hero_depth, set every frame by CameraRig). A clean cut with a thin dithered rim, not a
 // screen-wide dither. cam_fade_near > 0 enables it (kept for scene compatibility).
 global uniform float hero_depth;
+global uniform float hero_cut_radius;
 uniform float cam_fade_near = 0.0;
 uniform float cam_fade_focus = 13.2;
 uniform float cam_fade_radius = 0.22;
@@ -74,7 +75,8 @@ void fragment() {
 		vec2 sc = SCREEN_UV - vec2(0.5);
 		sc.x *= VIEWPORT_SIZE.x / VIEWPORT_SIZE.y;
 		float focus = hero_depth > 0.0 ? hero_depth - 1.2 : cam_fade_focus;
-		float inside = 1.0 - smoothstep(cam_fade_radius * 0.9, cam_fade_radius, length(sc));
+		float radius = hero_cut_radius > 0.0 ? hero_cut_radius : cam_fade_radius;
+		float inside = 1.0 - smoothstep(radius * 0.9, radius, length(sc));
 		float in_front = 1.0 - smoothstep(focus - 1.0, focus, depth);
 		float cut = inside * in_front;
 		if (cut > 0.999 || cut > 0.02 && cut > dither(FRAGCOORD.xy)) {

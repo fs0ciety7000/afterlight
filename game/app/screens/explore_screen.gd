@@ -3,6 +3,9 @@ extends Screen
 ## exploration"). Travel through exits goes through GameState.travel().
 
 const PORTRAIT_SIZE := 72.0
+## Screen radius of the environment cut-out around Fern (see env_toon).
+const EXPLORE_CUT_RADIUS := 0.22
+const COMBAT_CUT_RADIUS := 0.36
 
 var view: ExploreView
 var _menu: GameMenu
@@ -14,6 +17,11 @@ var _place: Label
 var _joystick: TouchStick
 var _travel_started_ms := 0
 var _probe_elapsed := 0.0
+var _explore_nodes: Array[Node] = []
+var _combat: CombatView
+var _combat_hud: CombatHud
+var _combat_move_cd := 0.0
+var _combat_moving := false
 
 
 func _ready() -> void:
@@ -24,7 +32,11 @@ func _ready() -> void:
 	view.exit_reached.connect(_on_exit_reached)
 	view.location_ready.connect(_on_location_ready)
 	view.location_failed.connect(_on_location_failed)
+	view.encounter_engaged.connect(_start_combat)
 	_build_hud()
+	for child in get_children():
+		if child != _toast:
+			_explore_nodes.append(child)
 	GameState.changed.connect(_refresh_hud)
 	_load_current()
 
@@ -80,6 +92,9 @@ func _on_exit_reached(to: String, spawn: String) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if _menu != null:
 		return
+	if _combat != null:
+		_combat_input(event)
+		return
 	if event.is_action_pressed("open_map"):
 		get_viewport().set_input_as_handled()
 		Router.go_to("world_map")
@@ -98,6 +113,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	_combat_steering(delta)
 	_probe_elapsed += delta
 	if _probe_elapsed < 0.1 or view == null or view.player == null:
 		return
@@ -114,11 +130,20 @@ func _process(delta: float) -> void:
 	UiProbe.world["exits"] = exits
 	var ps := to_screen * view.rig.camera.unproject_position(p)
 	UiProbe.world["player_screen"] = {"x": ps.x, "y": ps.y}
+	var packs := {}
+	for id in view.pack_positions():
+		var w: Vector3 = view.pack_positions()[id]
+		if not view.rig.camera.is_position_behind(w):
+			var sp := to_screen * view.rig.camera.unproject_position(w)
+			packs[id] = {"x": sp.x, "y": sp.y, "dist": w.distance_to(p)}
+	UiProbe.world["packs"] = packs
 
 
 func _open_menu() -> void:
 	_menu = GameMenu.new()
 	add_child(_menu)
+	if _combat:
+		_combat.paused = true
 	_menu.closed.connect(func() -> void: _menu = null)
 
 
@@ -248,3 +273,138 @@ func _show_toast(message: String, is_error: bool = false) -> void:
 			if timer == _toast_timer and is_instance_valid(_toast):
 				_toast.visible = false
 	)
+
+
+# --- Combat ----------------------------------------------------------------
+
+
+func _start_combat(encounter_id: String, anchor: Node3D) -> void:
+	var leader: String = GameState.data["party"][0]
+	var hero: Dictionary = GameState.data["characters"][leader]
+	var counter := int(GameState.data["rng"].get("combat", 0))
+	GameState.data["rng"]["combat"] = counter + 1
+	var seed_value: int = absi(
+		SeededRng.derive_seed(int(GameState.data["meta"]["seed"]), "combat", counter)
+	)
+	var cleared: Dictionary = GameState.data["progress"]["cleared_encounters"]
+	var setup := {
+		"seed": seed_value,
+		"party":
+		[
+			{
+				"character": leader,
+				"level": hero["level"],
+				"slot": 3,
+				"spell_ranks": hero.get("spells", {}),
+			}
+		],
+		"first_clear": int(cleared.get(encounter_id, 0)) == 0,
+	}
+	_combat = CombatView.new()
+	_combat.name = "Combat"
+	view.add_child(_combat)
+	var error := _combat.start(encounter_id, anchor, view.player, setup)
+	if error != "":
+		push_error("Combat %s: %s" % [encounter_id, error])
+		_combat.queue_free()
+		_combat = null
+		view.engaged = ""
+		return
+	view.hide_pack(encounter_id)
+	view.rig.cut_radius = COMBAT_CUT_RADIUS
+	for n in _explore_nodes:
+		if n is CanvasItem:
+			(n as CanvasItem).visible = n == _joystick
+	_combat_hud = CombatHud.new()
+	add_child(_combat_hud)
+	_combat_hud.bind(_combat, view.rig.camera)
+	_combat_hud.leave_requested.connect(_end_combat)
+	UiProbe.world["combat"] = encounter_id
+	UiProbe.world["combat_result"] = ""
+	_combat.finished.connect(
+		func(e: Dictionary) -> void: UiProbe.world["combat_result"] = e.get("result", "")
+	)
+
+
+func _end_combat(victory: bool) -> void:
+	var id := _combat.encounter_id
+	_combat.queue_free()
+	_combat = null
+	_combat_hud.queue_free()
+	_combat_hud = null
+	view.player.combat_driven = false
+	view.rig.cut_radius = EXPLORE_CUT_RADIUS
+	for n in _explore_nodes:
+		if n is CanvasItem:
+			(n as CanvasItem).visible = true
+	UiProbe.world["combat"] = ""
+	if victory:
+		view.clear_pack(id)
+		view.engaged = ""
+		SaveService.save_now()
+	else:
+		# Defeat: back to the entrance of the place, full health, nothing lost.
+		GameState.runtime_position = null
+		GameState.data["world"]["spawn"] = "default"
+		_load_current()
+	_refresh_hud()
+
+
+func _combat_input(event: InputEvent) -> void:
+	var handled := true
+	if event.is_action_pressed("combat_spell_1"):
+		_combat_hud.cast_index(0)
+	elif event.is_action_pressed("combat_spell_2"):
+		_combat_hud.cast_index(1)
+	elif event.is_action_pressed("combat_spell_3"):
+		_combat_hud.cast_index(2)
+	elif event.is_action_pressed("combat_ultimate"):
+		_combat_hud.cast_ultimate()
+	elif event.is_action_pressed("combat_pause"):
+		_combat_hud.toggle_pause()
+	elif event.is_action_pressed("combat_speed"):
+		_combat.cycle_speed()
+		_combat_hud._refresh_controls()
+	elif event.is_action_pressed("ui_cancel"):
+		_open_menu()
+	elif event is InputEventMouseButton and event.pressed:
+		var mb := event as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			var uid := _combat.pick_unit(view.rig.camera, mb.position)
+			if uid != "":
+				_combat.command({"type": "set_focus", "target": uid})
+			else:
+				var point: Variant = view.ground_point(mb.position)
+				if point != null:
+					var p := _combat.to_sim(point)
+					_combat.command({"type": "move_to", "x": p.x, "z": p.y})
+		elif mb.button_index == MOUSE_BUTTON_WHEEL_UP:
+			view.rig.zoom(1)
+		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			view.rig.zoom(-1)
+		else:
+			handled = false
+	else:
+		handled = false
+	if handled:
+		get_viewport().set_input_as_handled()
+
+
+## Keyboard or stick movement during combat becomes short move orders.
+func _combat_steering(delta: float) -> void:
+	if _combat == null or _combat.paused:
+		return
+	var v := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	if v == Vector2.ZERO and view.player:
+		v = view.player.joystick
+	_combat_move_cd -= delta
+	if v != Vector2.ZERO:
+		if _combat_move_cd <= 0.0:
+			var target := view.player.global_position + Vector3(v.x, 0.0, v.y).normalized() * 2.5
+			var p := _combat.to_sim(target)
+			_combat.command({"type": "move_to", "x": p.x, "z": p.y})
+			_combat_move_cd = 0.25
+			_combat_moving = true
+	elif _combat_moving:
+		_combat.command({"type": "stop"})
+		_combat_moving = false
