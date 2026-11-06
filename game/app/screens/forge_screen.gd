@@ -89,7 +89,6 @@ func _detail(parent: VBoxContainer, uid: String) -> void:
 		lines.append(ProgressionText.modifier_line(m, int(item["item_level"])))
 	var mods := Kit.label("\n".join(lines), "", true)
 	UiProbe.register("forge.item_mods", mods)
-	parent.add_child(mods)
 
 	var q: Dictionary = api.enhance_quote(uid)
 	heading(parent, tr("ui.forge.next"))
@@ -125,12 +124,16 @@ func _detail(parent: VBoxContainer, uid: String) -> void:
 				tr("ui.fmt.plus").format({"value": ProgressionText.chance(q["pity_bonus"])}),
 				"forge.pity"
 			)
-		parent.add_child(Kit.label(tr("ui.forge.rules"), "MutedLabel", true))
 	action(parent, tr("ui.forge.enhance"), "forge.enhance", q, _enhance.bind(uid))
 	var result := Kit.label(_result_text, "LeadLabel" if _result_ok else "ErrorLabel", true)
 	result.visible = _result_text != ""
 	UiProbe.register("forge.result", result)
 	parent.add_child(result)
+	# Cost, chance, the button and its result come first: on phones the rest
+	# runs below the fold. Then the item's stats and the rules.
+	parent.add_child(mods)
+	if int(q.get("from", 0)) < int(q.get("max", 0)):
+		parent.add_child(Kit.label(tr("ui.forge.rules"), "MutedLabel", true))
 
 
 func _enhance(uid: String) -> void:
