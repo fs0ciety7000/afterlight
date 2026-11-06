@@ -2,7 +2,7 @@ class_name InputActions
 extends RefCounted
 ## Registers the game's input actions. Movement uses physical key positions,
 ## so W/A/S/D on QWERTY is Z/Q/S/D on AZERTY with no extra setup; shortcuts
-## (E, M, +, -) use the printed letter, whatever the layout.
+## (E, M, I, C, K, +, -) use the printed letter, whatever the layout.
 
 const PHYSICAL := [
 	"move_forward",
@@ -22,6 +22,9 @@ const ACTIONS := {
 	"move_right": [KEY_D, KEY_RIGHT],
 	"interact": [KEY_E],
 	"open_map": [KEY_M],
+	"open_bag": [KEY_I],
+	"open_character": [KEY_C],
+	"open_grimoire": [KEY_K],
 	"map_zoom_in": [KEY_EQUAL, KEY_KP_ADD],
 	"map_zoom_out": [KEY_MINUS, KEY_KP_SUBTRACT],
 	"combat_spell_1": [KEY_1, KEY_KP_1],

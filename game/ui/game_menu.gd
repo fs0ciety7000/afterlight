@@ -1,9 +1,15 @@
 class_name GameMenu
 extends Control
-## Pause menu over the world: save, export, import, settings, main menu.
+## Pause menu over the world: save, export, import, settings, main menu, and
+## the progression screens (Personnage, Sac, Grimoire, Forge, Graveuse,
+## Marchande), which are closed during a combat (the reason is shown).
 
 signal closed
 
+const PROGRESSION := ["character", "bag", "grimoire", "forge", "runecarver", "merchant"]
+
+## Set by the explore screen before the menu enters the tree.
+var in_combat := false
 var _save_status: Label
 var _status: Label
 
@@ -18,10 +24,17 @@ func _ready() -> void:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(center)
 	var card := Kit.panel()
-	card.custom_minimum_size = Vector2(minf(440.0, get_viewport_rect().size.x - 32.0), 0)
 	center.add_child(card)
+	var columns := Kit.hbox(UiTokens.SPACE["xl"])
+	card.add_child(columns)
 	var col := Kit.vbox()
-	card.add_child(col)
+	var column_width := minf(
+		UiTokens.SPACE["huge"] * 7.0,
+		(get_viewport_rect().size.x - UiTokens.SPACE["huge"] * 3) / 2.0
+	)
+	col.custom_minimum_size = Vector2(column_width, 0)
+	columns.add_child(col)
+	columns.add_child(_progression_column(column_width))
 	col.add_child(Kit.label(tr("ui.menu.pause_title"), "TitleLabel"))
 	var resume := Kit.button(tr("ui.menu.resume"), true, "menu.resume")
 	resume.pressed.connect(close)
@@ -54,6 +67,24 @@ func _ready() -> void:
 	SaveFlows.wire_import(self, _status, func() -> void: Router.go_to("explore", {}, false))
 	_refresh()
 	resume.call_deferred("grab_focus")
+
+
+func _progression_column(width: float) -> VBoxContainer:
+	var col := Kit.vbox()
+	col.custom_minimum_size = Vector2(width, 0)
+	col.add_child(Kit.label(tr("ui.prog.menu_title"), "HeadingLabel"))
+	for id: String in PROGRESSION:
+		var b := Kit.button(tr("ui.prog.tab." + id), false, "menu.open." + id)
+		b.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
+		b.disabled = in_combat
+		b.tooltip_text = tr("ui.prog.closed_in_combat") if in_combat else ""
+		b.pressed.connect(func() -> void: Router.go_to(id))
+		col.add_child(b)
+	var reason := Kit.label(tr("ui.prog.closed_in_combat"), "MutedLabel", true)
+	reason.visible = in_combat
+	UiProbe.register("menu.progression_reason", reason)
+	col.add_child(reason)
+	return col
 
 
 func close() -> void:

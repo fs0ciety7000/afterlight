@@ -9,6 +9,12 @@ const SCREENS := {
 	"explore": "res://game/app/screens/explore_screen.gd",
 	"world_map": "res://game/app/screens/world_map_screen.gd",
 	"settings": "res://game/app/screens/settings_screen.gd",
+	"character": "res://game/app/screens/character_screen.gd",
+	"bag": "res://game/app/screens/bag_screen.gd",
+	"grimoire": "res://game/app/screens/grimoire_screen.gd",
+	"forge": "res://game/app/screens/forge_screen.gd",
+	"runecarver": "res://game/app/screens/runecarver_screen.gd",
+	"merchant": "res://game/app/screens/merchant_screen.gd",
 	"save_recovery": "res://game/app/screens/save_recovery_screen.gd",
 	"content_error": "res://game/app/screens/content_error_screen.gd",
 }

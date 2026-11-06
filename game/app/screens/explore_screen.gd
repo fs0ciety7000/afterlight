@@ -98,6 +98,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("open_map"):
 		get_viewport().set_input_as_handled()
 		Router.go_to("world_map")
+	elif event.is_action_pressed("open_bag"):
+		get_viewport().set_input_as_handled()
+		Router.go_to("bag")
+	elif event.is_action_pressed("open_character"):
+		get_viewport().set_input_as_handled()
+		Router.go_to("character")
+	elif event.is_action_pressed("open_grimoire"):
+		get_viewport().set_input_as_handled()
+		Router.go_to("grimoire")
 	elif event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		_open_menu()
@@ -141,6 +150,7 @@ func _process(delta: float) -> void:
 
 func _open_menu() -> void:
 	_menu = GameMenu.new()
+	_menu.in_combat = _combat != null
 	add_child(_menu)
 	if _combat:
 		_combat.paused = true
@@ -203,18 +213,28 @@ func _build_hud() -> void:
 		Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, margin
 	)
 
-	# Bottom: actions that work today (map, menu).
+	# Bottom: character, bag, grimoire, map, menu (DESIGN.md "HUD exploration").
 	var bar := Kit.hbox()
 	var touch := DisplayServer.is_touchscreen_available()
-	var map_key := "ui.explore.map_button_touch" if touch else "ui.explore.map_button"
-	var menu_key := "ui.explore.menu_button_touch" if touch else "ui.explore.menu_button"
-	var map_button := Kit.button(tr(map_key), false, "hud.map")
-	map_button.pressed.connect(func() -> void: Router.go_to("world_map"))
-	var menu_button := Kit.button(tr(menu_key), false, "hud.menu")
-	menu_button.pressed.connect(_open_menu)
-	for b: Button in [map_button, menu_button]:
-		b.focus_mode = Control.FOCUS_NONE
+	var suffix := "_touch" if touch else ""
+	for entry: Array in [
+		["character", "ui.explore.character_button"],
+		["bag", "ui.explore.bag_button"],
+		["grimoire", "ui.explore.grimoire_button"],
+	]:
+		var screen: String = entry[0]
+		var b := Kit.button(tr(entry[1] + suffix), false, "hud." + screen)
+		b.pressed.connect(func() -> void: Router.go_to(screen))
 		bar.add_child(b)
+	var map_button := Kit.button(tr("ui.explore.map_button" + suffix), false, "hud.map")
+	map_button.pressed.connect(func() -> void: Router.go_to("world_map"))
+	bar.add_child(map_button)
+	var menu_button := Kit.button(tr("ui.explore.menu_button" + suffix), false, "hud.menu")
+	menu_button.pressed.connect(_open_menu)
+	bar.add_child(menu_button)
+	for b: Button in bar.get_children():
+		b.focus_mode = Control.FOCUS_NONE
+		b.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
 	add_child(bar)
 	bar.set_anchors_and_offsets_preset(
 		Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, margin
