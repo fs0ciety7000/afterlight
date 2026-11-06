@@ -239,14 +239,14 @@ Reste : E2E mobile et tablette du jalon 5 non lancés.
 |---|---|---|
 | 6.1 | Fait | `test_content.gd` (V1-V20, un témoin par règle) |
 | 6.2 | Partiel | Origines canon / original séparées ; relecture des `canon_note` et des dialogues par le propriétaire à faire |
-| 6.3 | À faire | Parcours complet jusqu'au boss et à la cloche : raccordé, pas encore joué de bout en bout |
+| 6.3 | Fait desktop et mobile | `fullrun.spec.ts` : nouvelle partie → quêtes 1-4 → donjon → Morvaine → cloche → épilogue → rechargement → gains hors ligne (13 min desktop, 22 min mobile ; niveaux, équipement et or accordés par le canal de test, combats réels). Tablette non lancée |
 | 6.4 | Fait desktop | `story.spec.ts` (premier combat < 60 s, introduction passée) |
 | 6.5 | Fait desktop | `story.spec.ts` + tests unitaires du bestiaire et des découvertes |
 | 6.6 | Fait desktop | `story.spec.ts` + `test_quests` (objectif, rechargement) |
 | 6.7 | Fait | banc : normales 100 %, alpha `script_optimal` 100 %, Morvaine `idle` 0 % / `script_optimal` 87 % ; `QUEST_XP_MAIN` 1,1 (provisoire) |
 | 6.8 | À faire | Tests de jeu T1-T8 |
 
-Reste : la salle du Cadran reste au stade de maquette (passe de décor et de lumière au jalon 7) ; coffres et herbes sans modèle ; E2E mobile et tablette des jalons 5 et 6 non relancés.
+Reste : aucun écran de tactiques — Morvaine est à 0 % sans jeu actif (le banc 6.7 utilise des tactiques que le joueur ne peut pas régler) ; `whispering_wood_04` perdu au niveau 2 avec l'équipement de départ ; fils de braise du Cadran trop vifs ; E2E mobile et tablette des jalons 5 et 6 non relancés.
 
 ---
 
