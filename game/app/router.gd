@@ -16,6 +16,7 @@ const SCREENS := {
 	"runecarver": "res://game/app/screens/runecarver_screen.gd",
 	"merchant": "res://game/app/screens/merchant_screen.gd",
 	"hunts": "res://game/app/screens/hunts_screen.gd",
+	"journal": "res://game/app/screens/journal_screen.gd",
 	"offline_summary": "res://game/app/screens/offline_summary_screen.gd",
 	"save_recovery": "res://game/app/screens/save_recovery_screen.gd",
 	"content_error": "res://game/app/screens/content_error_screen.gd",
