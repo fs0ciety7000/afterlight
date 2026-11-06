@@ -15,7 +15,7 @@ export async function probe(page: Page): Promise<Probe | undefined> {
 }
 
 /** Tests run on software WebGL (no GPU): use the low graphics quality. */
-export const START_URL = '/?quality=low';
+export const START_URL = '/?quality=low&test=1';
 
 export async function boot(page: Page): Promise<void> {
   await page.goto(START_URL);

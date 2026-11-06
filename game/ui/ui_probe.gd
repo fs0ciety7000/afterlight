@@ -5,9 +5,34 @@ extends Node
 
 ## Free-form facts from the 3D views (player position, timings, map view).
 var world := {}
+## Test-only commands from the page (`window.__afterlightTest(name)`),
+## enabled by `?test=1` in the address. Handlers are registered by screens.
+var test_handlers := {}
 var _controls := {}
+var _test_callback: JavaScriptObject
 var _elapsed := 0.0
 var _messages: Array[String] = []
+
+
+func _ready() -> void:
+	if not OS.has_feature("web"):
+		return
+	var on: Variant = JavaScriptBridge.eval(
+		"new URLSearchParams(window.location.search).get('test') === '1'", true
+	)
+	if on == true:
+		_test_callback = JavaScriptBridge.create_callback(_on_test_command)
+		JavaScriptBridge.get_interface("window").__afterlightTestCb = _test_callback
+		JavaScriptBridge.eval(
+			"window.__afterlightTest = (n) => window.__afterlightTestCb(n);", true
+		)
+
+
+func _on_test_command(args: Array) -> void:
+	var name := str(args[0]) if args.size() > 0 else ""
+	if test_handlers.has(name):
+		(test_handlers[name] as Callable).call()
+		note("test:" + name)
 
 
 func register(id: String, control: Control) -> void:

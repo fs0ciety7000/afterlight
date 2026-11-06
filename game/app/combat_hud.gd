@@ -62,23 +62,32 @@ func _build() -> void:
 		Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, margin
 	)
 
-	# Bottom-right: spells (an arc on touch screens, a row otherwise).
-	var row := Kit.hbox(UiTokens.SPACE["md"])
-	row.alignment = BoxContainer.ALIGNMENT_END
+	# Bottom-right: spells (an arc for the thumb on touch screens, a row otherwise).
 	var snap := view.snapshot()
 	var hero := _hero(snap)
 	var keys := ["1", "2", "3"]
 	var spells: Array = hero.get("spells", [])
+	var buttons: Array[SpellButton] = []
 	for i in spells.size():
-		row.add_child(_spell_button(spells[i], keys[i] if i < keys.size() else "", false))
+		buttons.append(_spell_button(spells[i], keys[i] if i < keys.size() else "", false))
+	var ult: SpellButton = null
 	if str(hero.get("ultimate", "")) != "":
-		row.add_child(_spell_button(hero["ultimate"], "R", true))
-	add_child(row)
-	row.set_anchors_and_offsets_preset(
-		Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, margin
-	)
-	row.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	row.grow_vertical = Control.GROW_DIRECTION_BEGIN
+		ult = _spell_button(hero["ultimate"], "R", true)
+	if DisplayServer.is_touchscreen_available():
+		_layout_arc(buttons, ult, margin)
+	else:
+		var row := Kit.hbox(UiTokens.SPACE["md"])
+		row.alignment = BoxContainer.ALIGNMENT_END
+		for b in buttons:
+			row.add_child(b)
+		if ult:
+			row.add_child(ult)
+		add_child(row)
+		row.set_anchors_and_offsets_preset(
+			Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, margin
+		)
+		row.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+		row.grow_vertical = Control.GROW_DIRECTION_BEGIN
 
 	_consumables = Kit.hbox()
 	for id in hero.get("consumables", {}):
@@ -139,17 +148,22 @@ func _build() -> void:
 	log_panel.add_child(log_col)
 	var head := Kit.hbox()
 	head.add_child(Kit.label(tr("ui.combat.log"), "SubheadingLabel"))
-	var filter := OptionButton.new()
-	for key in ["ui.combat.log_all", "ui.combat.log_party", "ui.combat.log_enemies"]:
-		filter.add_item(tr(key))
-	filter.item_selected.connect(
-		func(i: int) -> void:
-			_log_filter = ["all", "party", "enemies"][i]
-			_render_log()
-	)
-	filter.focus_mode = Control.FOCUS_NONE
-	UiProbe.register("combat.log_filter", filter)
-	head.add_child(filter)
+	var group := ButtonGroup.new()
+	for mode in ["all", "party", "enemies"]:
+		var b := Button.new()
+		b.text = tr("ui.combat.log_" + mode)
+		b.toggle_mode = true
+		b.button_group = group
+		b.button_pressed = mode == "all"
+		b.focus_mode = Control.FOCUS_NONE
+		b.custom_minimum_size = Vector2(0, UiTokens.TOUCH_TARGET)
+		b.pressed.connect(
+			func() -> void:
+				_log_filter = mode
+				_render_log()
+		)
+		UiProbe.register("combat.log_filter." + mode, b)
+		head.add_child(b)
 	log_col.add_child(head)
 	_log = RichTextLabel.new()
 	_log.fit_content = false
@@ -173,6 +187,25 @@ func _build() -> void:
 	UiProbe.register("combat.toast", _toast)
 	add_child(_toast)
 	_refresh_controls()
+
+
+## Thumb arc (DESIGN.md mobile): the ultimate in the corner, spells around it.
+func _layout_arc(buttons: Array[SpellButton], ult: SpellButton, margin: float) -> void:
+	var holder := Control.new()
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	holder.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(holder)
+	var corner := get_viewport_rect().size - Vector2(margin, margin)
+	var centre := corner - Vector2(52, 52)
+	if ult:
+		holder.add_child(ult)
+		ult.position = centre - ult.custom_minimum_size / 2.0
+	var radius := 120.0
+	for i in buttons.size():
+		var b := buttons[i]
+		holder.add_child(b)
+		var a := deg_to_rad(180.0 + 90.0 * (i + 0.5) / maxf(buttons.size(), 1))
+		b.position = centre + Vector2(cos(a), sin(a)) * radius - b.custom_minimum_size / 2.0
 
 
 func _bar(color: Color, width: float) -> ProgressBar:
@@ -266,6 +299,8 @@ func _process(_delta: float) -> void:
 		"hero_mana": hero.get("mana", 0),
 		"cooldowns": hero.get("cooldowns", {}),
 		"queued": hero.get("queued", ""),
+		"focus": hero.get("focus", ""),
+		"targets": _enemy_screen_points(snap),
 		"enemies":
 		(
 			snap["units"]
@@ -273,6 +308,25 @@ func _process(_delta: float) -> void:
 			. size()
 		),
 	}
+
+
+## Screen points (window pixels) of living enemies, for tests and tooling.
+func _enemy_screen_points(snap: Dictionary) -> Dictionary:
+	var out := {}
+	if camera == null:
+		return out
+	var to_screen := get_viewport().get_screen_transform()
+	for u in snap["units"]:
+		var node := view.actor(u["uid"])
+		if (
+			u["side"] == "enemy"
+			and u["alive"]
+			and node
+			and not camera.is_position_behind(node.global_position)
+		):
+			var p := to_screen * camera.unproject_position(node.global_position + Vector3.UP * 0.6)
+			out[u["uid"]] = {"x": p.x, "y": p.y}
+	return out
 
 
 func _update_enemy_bars(snap: Dictionary) -> void:

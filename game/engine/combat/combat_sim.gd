@@ -172,6 +172,13 @@ func command(cmd: Dictionary) -> void:
 
 
 ## Advances one tick and returns its events, in order.
+## Test helper (E2E defeat path): sets every party member to 1 HP.
+func test_defeat_party() -> void:
+	for u in units:
+		if u["side"] == "party" and u["alive"]:
+			u["hp"] = 1.0
+
+
 func step() -> Array:
 	_events = _pending
 	_pending = []

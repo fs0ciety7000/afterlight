@@ -321,6 +321,9 @@ func _start_combat(encounter_id: String, anchor: Node3D) -> void:
 	_combat_hud.leave_requested.connect(_end_combat)
 	UiProbe.world["combat"] = encounter_id
 	UiProbe.world["combat_result"] = ""
+	UiProbe.test_handlers["defeat_party"] = func() -> void:
+		if _combat and _combat.sim:
+			_combat.sim.test_defeat_party()
 	_combat.finished.connect(
 		func(e: Dictionary) -> void: UiProbe.world["combat_result"] = e.get("result", "")
 	)
