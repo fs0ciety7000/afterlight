@@ -1,6 +1,6 @@
 class_name StateSchema
 extends RefCounted
-## Shape of a game state (save format v5). See docs/ARCHITECTURE.md.
+## Shape of a game state (save format v6). See docs/ARCHITECTURE.md.
 
 const PARTY_SLOTS := 4
 const EQUIPMENT_SLOTS := ["weapon", "head", "chest", "hands", "feet", "amulet"]
@@ -46,6 +46,8 @@ static func spec() -> Dictionary:
 				"max": ARTIFACT_SLOTS,
 				"items": {"type": "string"},
 			},
+			# Partial tactics (TacticsRules): only the deviations from the defaults.
+			"tactics": {"type": "dict"},
 		},
 	}
 	var item_instance := item_spec()
@@ -111,6 +113,7 @@ static func spec() -> Dictionary:
 					"contracts": contracts_spec(),
 					"dungeon_run": dungeon_run_spec(),
 					"unlocks": {"type": "array", "items": {"type": "string", "min": 1}},
+					"tips_seen": {"type": "array", "items": ID},
 				},
 			},
 			"farming": {"type": "string"},

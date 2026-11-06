@@ -11,7 +11,7 @@ const RETIRED_IDS := {}
 
 
 static func all() -> Dictionary:
-	return {1: v1_to_v2, 2: v2_to_v3, 3: v3_to_v4, 4: v4_to_v5}
+	return {1: v1_to_v2, 2: v2_to_v3, 3: v3_to_v4, 4: v4_to_v5, 5: v5_to_v6}
 
 
 ## v2 (Milestone 2): fog of war and spawn point.
@@ -80,4 +80,14 @@ static func v4_to_v5(state: Dictionary) -> Dictionary:
 	if int(hero.get("level", 1)) >= 6 or (worn.size() > 0 and str(worn[0]) != ""):
 		unlocks.append("artifact_slot_1")
 	progress["unlocks"] = unlocks
+	return state
+
+
+## v6 (Milestone 6, tactics): saved tactics per character (deltas from the
+## defaults, none yet) and the tips already shown (none: a v5 player sees
+## each tip once).
+static func v5_to_v6(state: Dictionary) -> Dictionary:
+	for id in state.get("characters", {}):
+		state["characters"][id]["tactics"] = {}
+	state["progress"]["tips_seen"] = []
 	return state

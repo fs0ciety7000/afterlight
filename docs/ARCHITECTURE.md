@@ -56,7 +56,7 @@
 - Une graine par usage (`combat`, `loot`, `offline`), dérivée de la graine de partie et d'un compteur, pour qu'un tirage de butin n'en décale pas un autre.
 - La simulation de combat avance par tics fixes (`TICK_SECONDS`), indépendants du nombre d'images par seconde. Vitesse ×2 / ×4 = plus de tics par image, pas des tics plus longs.
 
-## État de la partie (format v5)
+## État de la partie (format v6)
 
 Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour être sérialisé tel quel :
 
@@ -64,14 +64,14 @@ Dictionnaire de types simples (nombres, chaînes, tableaux, dictionnaires), pour
 |---|---|
 | `meta` | `seed`, `created_at`, `last_active_at` (secondes Unix), `play_time` |
 | `party` | 4 emplacements : ID de personnage ou `""` |
-| `characters` | par ID : `level`, `xp`, `equipment` (par emplacement : `uid` d'un objet de `inventory` ou `""`), `spells` (rang par ID de sort, 1 si absent), `loadout`, `runes` (par ID de sort : runes serties [{`id`, `tier`}]), `artifacts` (2 emplacements : ID ou `""`) |
+| `characters` | par ID : `level`, `xp`, `equipment` (par emplacement : `uid` d'un objet de `inventory` ou `""`), `spells` (rang par ID de sort, 1 si absent), `loadout`, `runes` (par ID de sort : runes serties [{`id`, `tier`}]), `artifacts` (2 emplacements : ID ou `""`), `tactics` (v6 : tactiques sauvegardées, **seulement les écarts au défaut**, même forme que les `overrides` de `CombatTactics.build` : `targeting`, `mana_reserve`, `barrier_hp_pct`, `min_enemies`, `spells` {ID : mode}, `consumables` {ID : mode} ; `TacticsRules`, une valeur refusée est ignorée au chargement ; combat, « Chasser ici » et donjon les jouent, le hors ligne garde les défauts) |
 | `wallet` | `gold`, `materials` (par ID) |
 | `inventory` | toutes les instances d'objets, portées ou non (`uid`, `item_id`, `rarity`, `item_level`, `affixes` [{`id`, `value`}], `legendary`, `enhance`, `enhance_attempts`, `pity` = échecs d'amélioration consécutifs). Le sac compte les objets non portés (60 cases) |
 | `runes` | réserve de runes non serties : ID → 5 quantités (paliers 1 à 5) |
 | `consumables` | ID → quantité portée (5 au plus) |
 | `artifacts` | artefacts possédés : ID → niveau (1-5) |
 | `world` | `region_id`, `location_id`, `unlocked_regions`, `discovered_locations` |
-| `progress` | `cleared_encounters` ; `quests` (ID → {`state` : `active`, `completed` ou `turned_in`, `step`, `counts` par objectif, `order` d'acceptation}) ; `bestiary` (ID d'ennemi → victoires jouées, 0 = rencontré) ; `discoveries` (ID trouvés) ; `contracts` ({`day_index` (-1 = jamais tiré), `offers` [{`id`, `count`, `state`, `reward` {`gold`, `dust`, `shards`}}]}) ; `dungeon_run` ({} hors donjon, sinon {`dungeon_id`, `checkpoint`, `room`, `cleared_rooms`, `fountain_used`, `vitals` {`hp_pct`, `mana_pct`, `ult_charge`}}) ; `unlocks` (jetons : `artifact_slot_1`) |
+| `progress` | `cleared_encounters` ; `quests` (ID → {`state` : `active`, `completed` ou `turned_in`, `step`, `counts` par objectif, `order` d'acceptation}) ; `bestiary` (ID d'ennemi → victoires jouées, 0 = rencontré) ; `discoveries` (ID trouvés) ; `contracts` ({`day_index` (-1 = jamais tiré), `offers` [{`id`, `count`, `state`, `reward` {`gold`, `dust`, `shards`}}]}) ; `dungeon_run` ({} hors donjon, sinon {`dungeon_id`, `checkpoint`, `room`, `cleared_rooms`, `fountain_used`, `vitals` {`hp_pct`, `mana_pct`, `ult_charge`}}) ; `unlocks` (jetons : `artifact_slot_1`) ; `tips_seen` (v6 : ID des conseils `tip.*` déjà montrés ; les conseils de défaite, `repeat`, n'y entrent jamais) |
 | `farming` | rencontre farmée hors ligne (`encounter_id`) ou `""` |
 | `offline` | `pending` : `[]` ou `[résumé]`, le résumé hors ligne pas encore récupéré (forme : `OfflineCalc`, schéma : `StateSchema.offline_summary_spec`) |
 | `rng` | compteurs par flux (`combat` pour les combats de terrain et de « Chasser ici », `item` pour les `uid` d'objets) |
@@ -279,3 +279,13 @@ Code : `game/engine/quests/` et `game/engine/world/` (moteur pur), constantes `g
 
 `encounter_completed` porte en plus `location`, `tally` ({`defeated`: {ennemi: n}, `interrupts`: {personnage: n}, `statuses`: {statut: {source: n}}}) et `leader` ({`hp_pct`, `mana_pct`, `ult_charge`}). Seul `GameState.apply_combat_result` (combat de la scène ou « Chasser ici ») passe par `StoryEvents` : la récupération hors ligne n'y passe jamais, donc les victoires hors ligne ne comptent ni pour les quêtes, ni pour les contrats, ni pour le bestiaire. `GameState.story_events(events)` relaie les événements produits (`quest_activated`, `quest_progress`, `quest_completed`, `quest_turned_in`, `bestiary_tier_unlocked`, `discovery_found`, `contracts_rolled`, `contracts_auto_claimed`, `dungeon_room_cleared`, `dungeon_respawn`, `dungeon_shortcut_opened`...) pour les bandeaux.
 
+
+## Tactiques et conseils (jalon 6)
+
+Code : `game/engine/progression/tactics_rules.gd` (`TacticsRules`, moteur pur) et `game/state/tactics_api.gd` (`GameState.tactics`, appels de l'interface). Décisions 22 à 31 du GDD et réponses du propriétaire.
+
+| Module | Rôle |
+|---|---|
+| `CombatTactics` | Modes par rôle (sorts, et consommables : `heal` → `auto_low_hp`, `mana` → `auto_low_mana`), défauts, `build(defs, overrides)`, `set_value` |
+| `TacticsRules` | Écarts sauvegardés (`characters.<id>.tactics`), vue de l'écran (lignes dans l'ordre Ciblage, sorts appris, consommables, Réserve), préréglages `tactics_preset.*` (écart puis application), nettoyage au chargement, conseils `tip.*` (`next_tip(context)`, `mark_tip_seen`) |
+| `PartyBuild.setup` | Passe les écarts du chef au `CombatSim` (`tactics`) : combat de terrain, « Chasser ici », donjon. Le hors ligne (`OfflineModel`) n'en tient pas compte |

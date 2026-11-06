@@ -45,6 +45,7 @@ static func create(
 			"contracts": {"day_index": -1, "offers": []},
 			"dungeon_run": {},
 			"unlocks": [],
+			"tips_seen": [],
 		},
 		"farming": "",
 		"offline": {"pending": []},
@@ -71,4 +72,5 @@ static func _new_character() -> Dictionary:
 		"loadout": [],
 		"runes": {},
 		"artifacts": artifacts,
+		"tactics": {},
 	}

@@ -132,7 +132,7 @@ func _v4_state(level: int, visited: Array) -> Dictionary:
 func test_real_v4_save_migrates_to_v5_with_quests_and_contracts() -> void:
 	var r := SaveCodec.decode(SaveCodec.encode(_v4_state(3, []), 1, 4), SaveMigrations.all())
 	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
-	assert_eq([r["migrated_from"], r["version"]], [4, 5], "v4 → v5")
+	assert_eq([r["migrated_from"], r["version"]], [4, SaveCodec.CURRENT_VERSION], "v4 → current")
 	var p: Dictionary = r["state"]["progress"]
 	assert_eq(p["quests"].keys(), ["quest.main_01"], "main_01 starts")
 	assert_eq(p["quests"]["quest.main_01"]["state"], "active", "active")
@@ -157,6 +157,27 @@ func test_v4_player_who_reached_the_ruins_keeps_them_open() -> void:
 func test_v4_state_is_invalid_as_v5() -> void:
 	var v4 := _v4_state(1, [])
 	assert_true(not StateSchema.validate(v4)["errors"].is_empty(), "contracts are required")
+
+
+## A state as saved by format v5 (Milestone 6 before tactics): no saved
+## tactics, no tips seen.
+func _v5_state() -> Dictionary:
+	var v5 := Fixtures.new_state()
+	v5["characters"]["character.fern"].erase("tactics")
+	v5["progress"].erase("tips_seen")
+	return v5
+
+
+func test_real_v5_save_migrates_to_v6_with_default_tactics_and_no_tip_seen() -> void:
+	var r := SaveCodec.decode(SaveCodec.encode(_v5_state(), 1, 5), SaveMigrations.all())
+	assert_true(r["ok"], "ok (%s %s)" % [r["error"], r["detail"]])
+	assert_eq([r["migrated_from"], r["version"]], [5, 6], "v5 → v6")
+	assert_eq(r["state"]["characters"]["character.fern"]["tactics"], {}, "default tactics")
+	assert_eq(r["state"]["progress"]["tips_seen"], [], "no tip seen")
+
+
+func test_v5_state_is_invalid_as_v6() -> void:
+	assert_true(not StateSchema.validate(_v5_state())["errors"].is_empty(), "tactics are required")
 
 
 ## V20: the reference save (a v5 game that went through the milestone 6

@@ -95,6 +95,10 @@ const TACTIC_BARRIER_HP_MAX := 0.7
 const TACTIC_MANA_RESERVE_DEFAULT := 0.2
 const TACTIC_MANA_RESERVE_MAX := 0.5
 const TACTIC_MIN_ENEMIES_DEFAULT := 3
+## Range of the "at least N enemies" slider on the tactics screen (the
+## engine accepts 1-5).
+const TACTIC_MIN_ENEMIES_SHOWN_MIN := 2
+const TACTIC_MIN_ENEMIES_SHOWN_MAX := 5
 ## (provisoire, jalon 6) Consumable tactics (owner answer 2 to GDD decisions
 ## 22-31): "auto_low_hp" drinks the healing infusion under this HP share,
 ## "auto_low_mana" the mana elixir under this mana share.

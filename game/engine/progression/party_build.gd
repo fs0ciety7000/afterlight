@@ -23,10 +23,13 @@ static func entry(
 
 
 ## Setup fields of CombatSim.create for the saved party (leader only in the
-## vertical slice): {party: [entry], consumables: {id: n}}.
+## vertical slice): {party: [entry], consumables: {id: n}, tactics: the
+## leader's saved deltas (GDD decision 25; field fights, "Chasser ici" and
+## the dungeon; the offline model keeps the defaults)}.
 static func setup(state: Dictionary, content: Dictionary) -> Dictionary:
 	var leader: String = state["party"][0]
 	return {
 		"party": [entry(state, leader, content)],
 		"consumables": state.get("consumables", {}).duplicate(),
+		"tactics": TacticsRules.saved(state, leader).duplicate(true),
 	}

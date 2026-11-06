@@ -22,6 +22,8 @@ var runtime_position: Variant = null
 var progression := ProgressionApi.new(self)
 ## NPCs, quests, contracts, bestiary, discoveries and dungeon (Milestone 6).
 var content_api := ContentApi.new(self)
+## Tactics screen, presets and tips (GDD decisions 23-27).
+var tactics := TacticsApi.new(self)
 ## Test channel only (`?test=1`, see UiProbe.test_handlers): the next won
 ## encounter drops at least one item, so E2E runs do not hang on the 25 %
 ## drop chance of a field pack.
@@ -74,6 +76,10 @@ func adopt(state: Dictionary, settle_offline: bool = true) -> void:
 	dirty = false
 	if settle_offline:
 		compute_offline()
+	# Saved tactics CombatTactics refuses are ignored (GDD decision 25).
+	for line in TacticsRules.sanitize(data, Content.index()):
+		push_warning("Tactic ignored on load: %s" % line)
+		dirty = true
 	if StoryEvents.on_load(data, Content.index()):
 		dirty = true
 	var rolled := []
