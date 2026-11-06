@@ -425,6 +425,7 @@ func _on_finished(e: Dictionary) -> void:
 	var victory: bool = e.get("result", "") == "victory"
 	var summary := GameState.apply_combat_result(e) if victory else {}
 	_result = Kit.panel()
+	_result.custom_minimum_size = Vector2(minf(440.0, get_viewport_rect().size.x - 32.0), 0)
 	var col := Kit.vbox()
 	_result.add_child(col)
 	var title := Kit.label(
@@ -448,7 +449,9 @@ func _on_finished(e: Dictionary) -> void:
 				)
 			)
 	else:
-		col.add_child(Kit.label(tr("ui.combat.defeat_body"), "", true))
+		var body := Kit.label(tr("ui.combat.defeat_body"), "", true)
+		body.custom_minimum_size = Vector2(_result.custom_minimum_size.x - 48.0, 0)
+		col.add_child(body)
 	var ok := Kit.button(tr("ui.combat.continue"), true, "combat.continue")
 	ok.pressed.connect(func() -> void: leave_requested.emit(victory))
 	col.add_child(ok)

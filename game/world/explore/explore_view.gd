@@ -171,7 +171,7 @@ func _bake_navigation() -> void:
 	var mesh := NavigationMesh.new()
 	mesh.geometry_parsed_geometry_type = NavigationMesh.PARSED_GEOMETRY_STATIC_COLLIDERS
 	mesh.geometry_collision_mask = 1
-	mesh.agent_radius = 0.4
+	mesh.agent_radius = 0.5
 	mesh.agent_height = 1.6
 	mesh.agent_max_climb = 0.4
 	mesh.agent_max_slope = 40.0

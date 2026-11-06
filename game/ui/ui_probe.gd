@@ -17,15 +17,16 @@ var _messages: Array[String] = []
 func _ready() -> void:
 	if not OS.has_feature("web"):
 		return
-	var on: Variant = JavaScriptBridge.eval(
-		"new URLSearchParams(window.location.search).get('test') === '1'", true
+	var flag: Variant = JavaScriptBridge.eval(
+		"new URLSearchParams(window.location.search).get('test') || ''", true
 	)
-	if on == true:
-		_test_callback = JavaScriptBridge.create_callback(_on_test_command)
-		JavaScriptBridge.get_interface("window").__afterlightTestCb = _test_callback
+	if str(flag) == "1":
 		JavaScriptBridge.eval(
-			"window.__afterlightTest = (n) => window.__afterlightTestCb(n);", true
+			"window.__afterlightSetTest = (cb) => { window.__afterlightTest = (n) => cb(n); };",
+			true
 		)
+		_test_callback = JavaScriptBridge.create_callback(_on_test_command)
+		JavaScriptBridge.get_interface("window").__afterlightSetTest(_test_callback)
 
 
 func _on_test_command(args: Array) -> void:
