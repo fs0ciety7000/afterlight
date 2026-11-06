@@ -8,6 +8,8 @@ export type Probe = {
   save: { last_saved_at: number; error: string };
   messages: string[];
   settings: { text_scale: number; reduce_motion: boolean };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  world: Record<string, any>;
 };
 
 export async function probe(page: Page): Promise<Probe | undefined> {
@@ -20,6 +22,21 @@ export const START_URL = '/?quality=low&test=1';
 export async function boot(page: Page): Promise<void> {
   await page.goto(START_URL);
   await expect.poll(async () => (await probe(page))?.ready ?? false, { timeout: 60_000 }).toBe(true);
+  await waitContent(page);
+}
+
+/** The world pack (content.pck) downloads while the title shows; « Continuer »
+ * and « Nouvelle partie » wait for it. Builds in one pack report no state. */
+export async function waitContent(page: Page): Promise<void> {
+  await expect
+    .poll(
+      async () => {
+        const w = (await probe(page))?.world as { content?: { state?: string } } | undefined;
+        return w?.content?.state ?? 'ready';
+      },
+      { timeout: 120_000, message: 'content pack ready' },
+    )
+    .toBe('ready');
 }
 
 export async function waitScreen(page: Page, screen: string): Promise<void> {
