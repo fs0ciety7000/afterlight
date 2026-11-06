@@ -47,6 +47,14 @@ func _register_test_handlers() -> void:
 	UiProbe.test_handlers["grant_forge_funds"] = func() -> void:
 		GameState.test_grant(1000, {"material.mana_dust": 40})
 	UiProbe.test_handlers["grant_level"] = _test_grant_level
+	# Full-run E2E (ROADMAP 6.3): accelerated XP and the gear a run would give.
+	UiProbe.test_handlers["grant_levels"] = func(n: String) -> void:
+		for i in maxi(int(n), 0):
+			_test_grant_level()
+	UiProbe.test_handlers["grant_gear"] = func(arg: String) -> void:
+		GameState.test_grant_gear(arg.get_slice("/", 0), int(arg.get_slice("/", 1)))
+	UiProbe.test_handlers["grant_gold"] = func(n: String) -> void:
+		GameState.test_grant(maxi(int(n), 0), {})
 	UiProbe.test_handlers["reveal_watch_ruins"] = _test_reveal_watch_ruins
 
 

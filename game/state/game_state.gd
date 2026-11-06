@@ -259,6 +259,36 @@ func test_grant(gold: int, materials: Dictionary) -> void:
 	commit_action(next)
 
 
+## Test channel only (full-run E2E 6.3): one item of `rarity` per slot at the
+## leader's level, enhanced to `enhance`, put on (the forge and the drops a
+## real run would give, without farming them). Seeded from the game seed.
+func test_grant_gear(rarity: String, enhance: int) -> void:
+	if not has_game():
+		return
+	var next := data.duplicate(true)
+	var leader: String = next["party"][0]
+	var level := int(next["characters"][leader]["level"])
+	var content := Content.index()
+	var cat := ItemFactory.catalog(content)
+	var rng := SeededRng.new(SeededRng.derive_seed(int(next["meta"]["seed"]), "test_gear", level))
+	for slot: String in ContentSchemas.SLOTS:
+		var best := ""
+		for id: String in cat["bases"].get(slot, []):
+			var min_ilvl := int(content[id]["min_ilvl"])
+			if min_ilvl <= level and (best == "" or min_ilvl >= int(content[best]["min_ilvl"])):
+				best = id
+		if best == "":
+			continue
+		var item := ItemFactory.make_item(rng, content, best, rarity, level)
+		item["enhance"] = mini(enhance, BalanceItems.enhance_max(rarity))
+		item["uid"] = Inventory.next_uid(next)
+		next["inventory"].append(item)
+		var r := Equipment.equip(next, leader, item["uid"], content)
+		if r["ok"]:
+			next = r["state"]
+	commit_action(next)
+
+
 ## Translated text of a refusal or summary line: tr(key) with its params,
 ## where "<id>.name" params are translated too ("Or insuffisant : 141 requis").
 func reason_text(r: Dictionary) -> String:

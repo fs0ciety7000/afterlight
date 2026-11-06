@@ -41,10 +41,17 @@ func _ready() -> void:
 		JavaScriptBridge.get_interface("window").__afterlightSetTest(_test_callback)
 
 
+## `name` or `name:arg`: a handler registered under `name` gets `arg` (a
+## String) when the command carries one.
 func _on_test_command(args: Array) -> void:
 	var name := str(args[0]) if args.size() > 0 else ""
 	if test_handlers.has(name):
 		(test_handlers[name] as Callable).call()
+		note("test:" + name)
+		return
+	var cut := name.find(":")
+	if cut > 0 and test_handlers.has(name.left(cut)):
+		(test_handlers[name.left(cut)] as Callable).call(name.substr(cut + 1))
 		note("test:" + name)
 
 

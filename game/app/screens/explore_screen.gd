@@ -443,6 +443,11 @@ func _refresh_hud() -> void:
 	var hints := GameState.content_api.compass_hints(here) if StoryText.compass_worn() else []
 	_compass.visible = not hints.is_empty()
 	_compass.text = tr("ui.story.compass").format({"count": hints.size()})
+	# For the E2E runs: the state of every started quest.
+	var quests := {}
+	for q: Dictionary in GameState.content_api.quest_log():
+		quests[q["id"]] = q["state"]
+	UiProbe.world["quests"] = quests
 	var hunt := GameState.offline_hunt()
 	_hunt_button.text = (
 		tr("ui.explore.hunt").format({"encounter": Content.display_name(hunt)})
@@ -630,6 +635,91 @@ func _register_story_tests() -> void:
 	UiProbe.test_handlers["interact"] = func() -> void:
 		if is_instance_valid(story):
 			story.interact()
+	# Full-run E2E (ROADMAP 6.3): Fern is put where a player would walk to;
+	# what happens there (talk, fight, door, room) is the game's own logic.
+	UiProbe.test_handlers["go_to"] = func(id: String) -> void:
+		if is_instance_valid(view) and _combat == null:
+			_test_go_to(id)
+	UiProbe.test_handlers["go_to_pack"] = func(id: String) -> void:
+		if is_instance_valid(view) and _combat == null:
+			_test_go_to_pack(id)
+	UiProbe.test_handlers["go_to_exit"] = func(exit_name: String) -> void:
+		if is_instance_valid(view) and _combat == null:
+			_test_go_to_exit(exit_name)
+	UiProbe.test_handlers["go_to_room"] = func(room: String) -> void:
+		if is_instance_valid(view) and _combat == null:
+			_test_go_to_room(room)
+
+
+## Test channel: next to an interactable (NPC, postern, fountain, campfire,
+## discovery), in talking reach.
+func _test_go_to(id: String) -> void:
+	if view.interactables == null or not view.interactables.has(id):
+		return
+	var at := view.interactables.position_of(id)
+	var away := view.player.global_position - at
+	away.y = 0.0
+	away = away.normalized() if away.length() > 0.1 else Vector3.BACK
+	view.teleport(_test_ground(at + away * 1.5))
+
+
+## Test channel: a few metres from a pack (the nearest when `id` is ""),
+## inside its aggro radius: the fight starts as if Fern walked in.
+func _test_go_to_pack(id: String) -> void:
+	var packs := view.pack_positions()
+	var p := view.player.global_position
+	if id == "":
+		var best := INF
+		for pid: String in packs:
+			var d := p.distance_to(packs[pid])
+			if d < best:
+				best = d
+				id = pid
+	if not packs.has(id):
+		return
+	var at: Vector3 = packs[id]
+	var away := p - at
+	away.y = 0.0
+	away = away.normalized() if away.length() > 0.1 else Vector3.BACK
+	view.teleport(_test_ground(at + away * 3.0))
+
+
+## Test channel: into an exit area of the scene (by node name).
+func _test_go_to_exit(exit_name: String) -> void:
+	var exits := view.scene_node("Exits")
+	var area := exits.get_node_or_null(exit_name) as Area3D if exits else null
+	if area:
+		view.teleport(_test_ground(area.global_position))
+
+
+## Test channel: just inside a room area of the dungeon (Rooms/<room>), on
+## the side Fern comes from, like a player passing its door: out of the
+## reach of the room's pack.
+func _test_go_to_room(room: String) -> void:
+	var rooms := view.scene_node("Rooms")
+	var area := rooms.get_node_or_null(room) as Area3D if rooms else null
+	if area == null:
+		return
+	var half := 6.0
+	for shape: Node in area.get_children():
+		if shape is CollisionShape3D and (shape as CollisionShape3D).shape is BoxShape3D:
+			var size := ((shape as CollisionShape3D).shape as BoxShape3D).size
+			half = minf(size.x, size.z) / 2.0
+	var at := area.global_position
+	var away := view.player.global_position - at
+	away.y = 0.0
+	away = away.normalized() if away.length() > 0.1 else Vector3.BACK
+	view.teleport(_test_ground(at + away * maxf(half - 2.0, 0.0)))
+
+
+## The ground under `at` (layer 1), or `at` itself.
+func _test_ground(at: Vector3) -> Vector3:
+	var space := view.get_world_3d().direct_space_state
+	var query := PhysicsRayQueryParameters3D.create(
+		at + Vector3.UP * 2.0, at + Vector3.DOWN * 20.0, 1
+	)
+	var hit := space.intersect_ray(query)
+	return (hit["position"] as Vector3) + Vector3.UP * 0.1 if not hit.is_empty() else at
 
 
 func _combat_input(event: InputEvent) -> void:
