@@ -9,7 +9,10 @@ extends Node3D
 ## Entry: {id, kind (npc, discovery, chest, herb, gate, fountain, campfire),
 ## anchor (Node3D), name (plate text), prompt (action text), radius (m),
 ## trigger (interact, interact_hold, zone), marker ("", offer, active,
-## turn_in), model (res:// path or "")}.
+## turn_in), model (res:// path or ""), opened (chest already taken: drawn
+## open)}. Chests, herbs and discoveries without a model use the hand-built
+## props in PROP_MODELS (placeholder shapes if a file is missing); a taken
+## chest stays in place with its lid open until the next build().
 ## A rigged NPC model loops its `idle` clip (each NPC starts at its own offset
 ## so they don't breathe in sync) and plays `talk`, when it has one, during a
 ## dialogue with it (set_talking).
@@ -17,6 +20,15 @@ extends Node3D
 const PLATE_DISTANCE_M := 9.0
 const MARKER_HEIGHT_M := 2.55
 const NPC_HEIGHT_M := 1.7
+## Hand-built props (tools/blender/build_interactable_props.py), front +Z.
+const PROP_MODELS := {
+	"chest": "res://assets/models/props/chest.glb",
+	"herb": "res://assets/models/props/mist_herb.glb",
+	"discovery": "res://assets/models/props/discovery_crystal.glb",
+}
+const GLOW_SHADER: Shader = preload("res://assets/shaders/env_glow.gdshader")
+## ChestLid turned around its hinge (X) when the chest is open.
+const LID_OPEN_RAD := -1.92
 const COLORS := {
 	"offer": Color("#6b4f8f"),
 	"active": Color("#b9a8d0"),
@@ -28,6 +40,7 @@ var _nodes := {}
 var _markers := {}
 var _plates := {}
 var _anims := {}
+var _spent: Array[Node3D] = []  # opened chests kept as decor after remove()
 var _time := 0.0
 
 
@@ -80,6 +93,10 @@ func clip_of(id: String) -> String:
 func clear() -> void:
 	for id in _nodes:
 		(_nodes[id] as Node).queue_free()
+	for n in _spent:
+		if is_instance_valid(n):
+			n.queue_free()
+	_spent.clear()
 	_entries.clear()
 	_nodes.clear()
 	_markers.clear()
@@ -100,7 +117,13 @@ func ids() -> Array:
 
 
 func remove(id: String) -> void:
-	if _nodes.has(id):
+	if _nodes.has(id) and _open_chest(_nodes[id] as Node3D, true):
+		# a taken chest stays where it was, open; it is no longer usable
+		if _markers.has(id):
+			(_markers[id] as Node).queue_free()
+		(_plates[id] as Node3D).visible = false
+		_spent.append(_nodes[id])
+	elif _nodes.has(id):
 		(_nodes[id] as Node).queue_free()
 	_entries.erase(id)
 	_nodes.erase(id)
@@ -236,6 +259,8 @@ func _add_visual(root: Node3D, e: Dictionary) -> void:
 			Toon.apply(inst)
 			_start_idle(str(e["id"]), inst)
 			return
+	if _add_prop(root, e):
+		return
 	match str(e["kind"]):
 		"npc":
 			_figure(root, e)
@@ -247,6 +272,63 @@ func _add_visual(root: Node3D, e: Dictionary) -> void:
 			_chest(root)
 		"board":
 			_board(root)
+
+
+## Chest, herb or discovery drawn with its hand-built GLB; false if none.
+func _add_prop(root: Node3D, e: Dictionary) -> bool:
+	var kind := str(e["kind"])
+	var path := str(PROP_MODELS.get(kind, ""))
+	if path == "" or not ResourceLoader.exists(path):
+		return false
+	var inst := (load(path) as PackedScene).instantiate() as Node3D
+	if inst == null:
+		return false
+	inst.name = "Prop"
+	inst.rotation.y = PI  # GLB front +Z, anchors face their -Z like the characters
+	root.add_child(inst)
+	Toon.apply(inst, false, kind == "chest")
+	match kind:
+		"chest":
+			if bool(e.get("opened", false)):
+				_open_chest(root, false)
+		"herb":
+			_halo(root, Vector3(0, 0.55, 0), 1.1, Color("#bcd0ff"), 0.32)
+		"discovery":
+			_halo(root, Vector3(0, 1.05, 0), 0.9, Color("#e8e2f4"), 0.4)
+	return true
+
+
+## Turns a chest prop's lid open (eased when `animate`); false if `root`
+## holds no chest prop.
+func _open_chest(root: Node3D, animate: bool) -> bool:
+	var lid := root.find_child("ChestLid", true, false) as Node3D
+	if lid == null:
+		return false
+	if animate and is_inside_tree():
+		var tw := create_tween()
+		tw.tween_property(lid, "rotation:x", LID_OPEN_RAD, 0.45).set_ease(Tween.EASE_OUT).set_trans(
+			Tween.TRANS_BACK
+		)
+	else:
+		lid.rotation.x = LID_OPEN_RAD
+	return true
+
+
+## Soft additive halo (env_glow: camera-facing, flickers slowly).
+func _halo(root: Node3D, at: Vector3, size: float, color: Color, intensity: float) -> void:
+	var quad := QuadMesh.new()
+	quad.size = Vector2(size, size)
+	var mat := ShaderMaterial.new()
+	mat.shader = GLOW_SHADER
+	mat.set_shader_parameter("color", color)
+	mat.set_shader_parameter("intensity", intensity)
+	quad.material = mat
+	var mi := MeshInstance3D.new()
+	mi.name = "Halo"
+	mi.mesh = quad
+	mi.position = at
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	root.add_child(mi)
 
 
 ## Loops `idle` from an offset seeded by the id (stable, but not in sync).
