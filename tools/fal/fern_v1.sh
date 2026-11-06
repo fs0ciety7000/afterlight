@@ -2,7 +2,7 @@
 # Fern v1 character pipeline (see art/source/fern_v1/PIPELINE_NOTES.md). Re-runs every step from the
 # logged fal calls (art/source/fern_v1/fal_log.json). Needs FAL_KEY in the environment (never printed).
 # fal steps cost money: run them one at a time and look at each result before the next.
-#   tools/fal/fern_v1.sh concept|views|cutout|mesh|rig|rigidle|flatten|build|qa|shots|compare|all-local
+#   tools/fal/fern_v1.sh concept|views|cutout|mesh|rig|rigidle|rigspells|flatten|build|qa|shots|compare|all-local
 # all-local = flatten + build + qa + shots + compare (no fal call).
 set -euo pipefail
 cd "$(dirname "$0")/../.."
@@ -41,21 +41,32 @@ rigidle)  # calmer idles: Idle_02(11) Idle_03(12) Idle_3(243) Idle_4(244) Idle_5
 	python3 "$FAL" fal-ai/meshy/rigging/multi-animation -o "$OUT" --name fern_v1_rig_idle \
 		--file model_url="$OUT/fern_v1_meshy_0.glb" \
 		--arg animation_action_ids='[11,12,243,244,245,246]' --arg height_meters=1.6 ;;
+rigspells) # spell clips (lot 2026-11-06, art/source/LOT_2026-11-06_assets.md, 0.92 USD):
+	#        mage_soell_cast_7(136) Punch_Forward_with_Both_Fists(214) Two_Handed_Parry(149)
+	#        mage_soell_cast_3(132) Hit_Reaction_1(179) Shot_and_Slow_Fall_Backward(185) -> _8.._18
+	python3 "$FAL" fal-ai/meshy/rigging/multi-animation -o "$OUT" --name fern_v1_rig_spells \
+		--file model_url="$OUT/fern_v1_meshy_0.glb" \
+		--arg animation_action_ids='[136,214,149,132,179,185]' --arg height_meters=1.6 ;;
 flatten)  # base colour -> flat colour regions (k-means), eyes kept, coat lifted to #37323b
 	python3 tools/blender/flatten_albedo.py "$OUT/fern_v1_meshy_7.png" "$OUT/fern_albedo.png" ;;
-build)    # chosen clips: idle=Idle_3 (trimmed to 5 s), cast=mage_soell_cast, hit, death, victory (4 s)
+build)    # chosen clips: idle=Idle_3 (trimmed to 5 s), cast=mage_soell_cast, victory (4 s); spell clips
+	#        (rigspells): cast_beam, cast_volley, cast_guard, cast_ultimate, hit=Hit_Reaction_1, death=slow fall
 	$B -P tools/blender/build_character_v1.py -- --rig "$OUT/fern_v1_rig_0.glb" \
 		--clip idle="$OUT/fern_v1_rig_idle_12.glb:1:120" --clip walk="$OUT/fern_v1_rig_10.glb" \
 		--clip run="$OUT/fern_v1_rig_12.glb" --clip cast="$OUT/fern_v1_rig_16.glb" \
-		--clip hit="$OUT/fern_v1_rig_22.glb" --clip death="$OUT/fern_v1_rig_24.glb" \
-		--clip victory="$OUT/fern_v1_rig_26.glb:1:100" \
+		--clip hit="$OUT/fern_v1_rig_spells_16.glb" --clip death="$OUT/fern_v1_rig_spells_18.glb" \
+		--clip victory="$OUT/fern_v1_rig_26.glb:1:100" --clip cast_beam="$OUT/fern_v1_rig_spells_8.glb" \
+		--clip cast_volley="$OUT/fern_v1_rig_spells_10.glb" --clip cast_guard="$OUT/fern_v1_rig_spells_12.glb" \
+		--clip cast_ultimate="$OUT/fern_v1_rig_spells_14.glb" \
+		--staff-upright idle=1,walk=0.85,run=0.8,hit=0.6,cast=0.35,death=0,victory=0,cast_beam=0.3,cast_volley=0.3,cast_guard=0.5,cast_ultimate=0.2 \
+		--in-place hit=0.15,death=0.5,cast_ultimate=0.3,cast_volley=0.3 \
 		--albedo "$OUT/fern_albedo.png" --out "$GLB" --blend "$OUT/fern_v1.blend" | grep "@@REPORT@@" ;;
 qa)       # Blender turnaround (rest) + pose strips (no springs: Blender shows the baked motion only)
 	tmp=$(mktemp -d)
 	$B -P tools/blender/render_turnaround.py -- "$GLB" "$tmp" >/dev/null
 	python3 tools/blender/compose_sheet.py "$OUT/qa_turnaround.png" "$tmp"/qa_front.png "$tmp"/qa_side.png \
 		"$tmp"/qa_back.png "$tmp"/qa_three_quarter_top.png
-	man=$($B -P tools/blender/render_pose_strip.py -- "$GLB" "$tmp/strip/x.png" --clips walk,run,cast,hit,death,victory \
+	man=$($B -P tools/blender/render_pose_strip.py -- "$GLB" "$tmp/strip/x.png" --clips walk,run,cast,hit,death,victory,cast_beam,cast_volley,cast_guard,cast_ultimate \
 		--frames 6 --view side --res 300 | grep @@MANIFEST | cut -c13-)
 	python3 tools/blender/compose_strip.py "$man" "$OUT/qa_poses.png"
 	for f in qa_turnaround qa_poses; do python3 -c "from PIL import Image; Image.open('$OUT/$f.png').convert('RGB').save('$OUT/$f.jpg', quality=88)"; rm "$OUT/$f.png"; done ;;
@@ -66,7 +77,7 @@ shots)    # real Godot frames (Compatibility renderer, software GL under xvfb)
 compare)  # v0 (art/source/fern) vs v1 at the same gameplay camera
 	python3 tools/fal/compare_shots.py art/source/fern "$OUT" "$OUT/compare_v0_v1.jpg" ;;
 all-local) for s in flatten build qa shots compare; do step "$s"; done ;;
-*) echo "usage: $0 concept|views|cutout|mesh|rig|rigidle|flatten|build|qa|shots|compare|all-local"; exit 1 ;;
+*) echo "usage: $0 concept|views|cutout|mesh|rig|rigidle|rigspells|flatten|build|qa|shots|compare|all-local"; exit 1 ;;
 esac
 }
 step "${1:-}"

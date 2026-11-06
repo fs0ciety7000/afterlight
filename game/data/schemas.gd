@@ -31,6 +31,9 @@ const RUNE_MODS := [
 	"crit_bonus", "cost_reduction", "cooldown_reduction", "echo_chance", "damage_bonus"
 ]
 ## Artifact effects: a STATS id is a flat stat bonus; the others are rules.
+## One-shot clips a spell or ability may ask its caster to play (optional `anim` field; default: the
+## caster's generic "cast" or "attack" clip). Models without the clip fall back to the generic one.
+const ANIM_CLIPS := ["attack", "cast", "cast_beam", "cast_volley", "cast_guard", "cast_ultimate"]
 const ARTIFACT_EFFECTS := ["offline_efficiency", "low_hp_heal", "gold_find", "active_bonus_damage"]
 
 ## File name (without .json) -> declared type, and the entity types its
@@ -230,6 +233,7 @@ static func _spell_fields(kinds: Array) -> Dictionary:
 		"vfx": opt({"type": "string"}, ""),
 		"sfx": opt({"type": "string"}, ""),
 		"icon": opt({"type": "string"}, ""),
+		"anim": opt(enum_of(ANIM_CLIPS), ""),
 	}
 
 

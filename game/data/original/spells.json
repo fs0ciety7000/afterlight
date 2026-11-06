@@ -63,7 +63,8 @@
       "tags": [
         "projectile"
       ],
-      "vfx": "vfx.volley_homing"
+      "vfx": "vfx.volley_homing",
+      "anim": "cast_volley"
     },
     {
       "id": "spell.defensive_barrier",
@@ -106,7 +107,8 @@
           "rank": 5
         }
       ],
-      "vfx": "vfx.barrier_dome"
+      "vfx": "vfx.barrier_dome",
+      "anim": "cast_guard"
     },
     {
       "id": "spell.afterlight",
@@ -144,7 +146,8 @@
           "rank": 5
         }
       ],
-      "vfx": "vfx.sky_rain"
+      "vfx": "vfx.sky_rain",
+      "anim": "cast_ultimate"
     },
     {
       "id": "passive.veiled_mana",

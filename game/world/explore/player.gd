@@ -133,7 +133,10 @@ func play_base(clip: String) -> void:
 
 
 ## One-shot clip (cast, hit, death, victory).
-func play_once(clip: String) -> void:
+## `fallback` plays instead when the model has no `clip` (e.g. a spell clip on an older model).
+func play_once(clip: String, fallback: String = "") -> void:
+	if _anim and not _anim.has_animation(clip) and fallback != "":
+		clip = fallback
 	if _anim and _anim.has_animation(clip):
 		_one_shot = true
 		_anim.play(clip, 0.08)

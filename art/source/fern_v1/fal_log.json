@@ -155,5 +155,45 @@
    "./fern_v1_rig_idle_18.glb",
    "./fern_v1_rig_idle_19.fbx"
   ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "fern_v1_rig_spells",
+  "seconds": 86.8,
+  "arguments": {
+   "animation_action_ids": [
+    136,
+    214,
+    149,
+    132,
+    179,
+    185
+   ],
+   "height_meters": 1.6,
+   "model_url": "https://v3b.fal.media/files/b/0ab15dbc/zYeT_G8OwmY-0-xys4SSs_fern_v1_meshy_0.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/fern_v1/fern_v1_rig_spells_0.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_1.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_2.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_3.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_4.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_5.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_6.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_7.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_8.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_9.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_10.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_11.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_12.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_13.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_14.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_15.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_16.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_17.fbx",
+   "art/source/fern_v1/fern_v1_rig_spells_18.glb",
+   "art/source/fern_v1/fern_v1_rig_spells_19.fbx"
+  ]
  }
 ]

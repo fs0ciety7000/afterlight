@@ -48,9 +48,12 @@ func play_base(clip: String) -> void:
 
 
 ## One-shot clip (attack, cast, hit, death); returns to the base clip after.
-func play_once(clip: String) -> void:
+## `fallback` plays instead when the model has no `clip` (e.g. a spell clip on an older model).
+func play_once(clip: String, fallback: String = "") -> void:
 	if not alive and clip != "death":
 		return
+	if _anim and not _anim.has_animation(clip) and fallback != "":
+		clip = fallback
 	if _anim and _anim.has_animation(clip):
 		_one_shot = true
 		_anim.play(clip, 0.08)

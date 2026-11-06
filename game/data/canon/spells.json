@@ -43,7 +43,8 @@
           "rank": 5
         }
       ],
-      "vfx": "vfx.beam_precise"
+      "vfx": "vfx.beam_precise",
+      "anim": "cast_beam"
     }
   ]
 }

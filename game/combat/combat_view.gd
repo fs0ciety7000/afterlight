@@ -184,10 +184,12 @@ func _handle(e: Dictionary) -> void:
 			_spawn_actor(e)
 		"attack_started", "spell_cast":
 			var a := actor(e["unit"])
+			var generic := "attack" if e["type"] == "attack_started" else "cast"
+			var clip := cast_clip(str(e.get("spell", "")), generic)
 			if a is CombatActor:
-				(a as CombatActor).play_once("attack" if e["type"] == "attack_started" else "cast")
+				(a as CombatActor).play_once(clip, generic)
 			elif a == _player and e["type"] == "spell_cast":
-				_player.play_once("cast")
+				_player.play_once(clip, generic)
 		"damage_dealt":
 			var t := actor(e["target"])
 			if t is CombatActor and int(e.get("hp", 1)) > 0:
@@ -204,6 +206,14 @@ func _handle(e: Dictionary) -> void:
 			if e.get("result", "") == "victory":
 				_player.play_once("victory")
 			finished.emit(e)
+
+
+## Clip a spell or ability asks its caster to play (its optional `anim` field), else `generic`.
+static func cast_clip(spell_id: String, generic: String) -> String:
+	if spell_id == "":
+		return generic
+	var anim: String = str(Content.get_entity(spell_id).get("anim", ""))
+	return anim if anim != "" else generic
 
 
 func _spawn_actor(u: Dictionary) -> void:
