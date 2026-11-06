@@ -29,6 +29,12 @@ var _hp_text: Label
 var _spells := {}
 var _speed: Button
 var _pause: Button
+## « Tactiques » beside « Reprendre » while paused (GDD decision 23 c).
+var _tactics: Button
+var _tactics_panel: TacticsPanel
+## A tip's banner under the boss bar (tip.morvaine_seal, GDD decision 27).
+var _tip_banner: PanelContainer
+var _tip_banner_until := 0
 var _boss_box: VBoxContainer
 var _boss_bar: ProgressBar
 var _boss_name: Label
@@ -131,6 +137,11 @@ func _build() -> void:
 	_pause = Kit.button("", false, "combat.pause")
 	_pause.focus_mode = Control.FOCUS_NONE
 	_pause.pressed.connect(toggle_pause)
+	_tactics = Kit.button(tr("ui.tactics.tab"), false, "tactics.open.combat")
+	_tactics.focus_mode = Control.FOCUS_NONE
+	_tactics.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
+	_tactics.pressed.connect(open_tactics)
+	ctl.add_child(_tactics)
 	ctl.add_child(_speed)
 	ctl.add_child(_pause)
 	add_child(ctl)
@@ -149,6 +160,16 @@ func _build() -> void:
 	_boss_box.add_child(_boss_bar)
 	_boss_box.visible = false
 	UiProbe.register("combat.boss_bar", _boss_name)
+	_tip_banner = Kit.panel("CardPanel")
+	var banner_text := Kit.label("", "LeadLabel", true)
+	banner_text.custom_minimum_size.x = 520
+	banner_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	banner_text.add_theme_color_override("font_color", UiTokens.NIGHT["warning"])
+	UiProbe.register("tip.banner", banner_text)
+	_tip_banner.add_child(banner_text)
+	_tip_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_tip_banner.visible = false
+	_boss_box.add_child(_tip_banner)
 	add_child(_boss_box)
 	_boss_box.set_anchors_and_offsets_preset(
 		Control.PRESET_CENTER_TOP, Control.PRESET_MODE_MINSIZE, margin
@@ -345,14 +366,55 @@ func cast_ultimate() -> void:
 		cast(hero["ultimate"])
 
 
+func tactics_open() -> bool:
+	return _tactics_panel != null
+
+
 func toggle_pause() -> void:
+	if _tactics_panel != null:
+		return
 	view.paused = not view.paused
 	_refresh_controls()
+
+
+## panel.tactics over the paused fight. Changes go to the running fight
+## (set_tactic commands, applied at the next tick) and are saved for the
+## next ones.
+func open_tactics(opts: Dictionary = {}) -> void:
+	if _tactics_panel != null:
+		return
+	var live := _result == null
+	if live:
+		view.paused = true
+		_refresh_controls()
+	var o := opts.duplicate()
+	o["live"] = live
+	_tactics_panel = TacticsPanel.open(self, o)
+	if live:
+		_tactics_panel.changed.connect(apply_live_tactics)
+	_tactics_panel.closed.connect(
+		func() -> void:
+			_tactics_panel = null
+			_refresh_controls()
+	)
+
+
+## Sends the saved tactics to the running fight, one set_tactic per setting
+## and slider value.
+func apply_live_tactics() -> void:
+	if view == null or _result != null:
+		return
+	for row: Dictionary in GameState.tactics.tactics_view().get("rows", []):
+		view.command({"type": "set_tactic", "key": row["id"], "value": row["current"]})
+		var p: Dictionary = row["param"]
+		if not p.is_empty() and row["id"] != "mana_reserve":
+			view.command({"type": "set_tactic", "key": p["key"], "value": p["value"]})
 
 
 func _refresh_controls() -> void:
 	_speed.text = tr("ui.combat.speed").format({"x": view.speed()})
 	_pause.text = tr("ui.combat.resume") if view.paused else tr("ui.combat.pause")
+	_tactics.visible = view.paused and _result == null and GameState.tactics.tactics_unlocked()
 	UiProbe.world["combat_speed"] = view.speed()
 	UiProbe.world["combat_paused"] = view.paused
 
@@ -388,6 +450,10 @@ func _process(_delta: float) -> void:
 	_update_enemy_bars(snap)
 	if _toast.visible and Time.get_ticks_msec() > _toast_until:
 		_toast.visible = false
+	if _tip_banner.visible and Time.get_ticks_msec() > _tip_banner_until:
+		_tip_banner.visible = false
+		if UiProbe.world.get("tip", "") != "":
+			UiProbe.world["tip"] = ""
 	UiProbe.world["combat_ticks"] = view.ticks
 	UiProbe.world["combat_snapshot"] = {
 		"hero_hp": hero.get("hp", 0),
@@ -476,6 +542,8 @@ func _on_event(e: Dictionary) -> void:
 			_show_toast(tr("ui.combat.reject." + str(e["reason"])))
 		"boss_phase_changed":
 			_show_toast(tr("ui.combat.boss_phase").format({"phase": e["phase"]}))
+		"cast_started", "telegraph_started":
+			_boss_cast_tip(str(e.get("spell", "")))
 	if e["type"] in LOG_TYPES:
 		_log_lines.append(e)
 		if _log_lines.size() > LOG_LINES:
@@ -524,6 +592,28 @@ func _log_text(e: Dictionary) -> String:
 	return ""
 
 
+## A boss ability with a tip (the first Ash Seal): a banner under the boss
+## bar for the tip's duration, without pausing (GDD decision 27 (3)).
+func _boss_cast_tip(spell: String) -> void:
+	if spell == "" or _tip_banner.visible:
+		return
+	if str(Content.get_entity(view.encounter_id).get("kind", "")) != "boss":
+		return
+	var tip := GameState.tactics.next_tip(
+		{"trigger": "boss_cast", "encounter": view.encounter_id, "ability": spell}
+	)
+	if tip.is_empty():
+		return
+	var label: Label = _tip_banner.get_child(0)
+	label.text = str(tip["text"])
+	_tip_banner.visible = true
+	var seconds := float(tip.get("duration_s", 0.0))
+	_tip_banner_until = Time.get_ticks_msec() + int((seconds if seconds > 0.0 else 3.0) * 1000.0)
+	UiProbe.world["tip"] = str(tip["id"])
+	UiProbe.note(label.text)
+	GameState.tactics.mark_tip_seen(str(tip["id"]))
+
+
 func _show_toast(text: String) -> void:
 	_toast.text = text
 	_toast.visible = true
@@ -533,6 +623,7 @@ func _show_toast(text: String) -> void:
 
 func _on_finished(e: Dictionary) -> void:
 	var victory: bool = e.get("result", "") == "victory"
+	_tactics.visible = false
 	# Applied on defeat too: consumables used in the fight are spent.
 	var summary := GameState.apply_combat_result(e)
 	_result = Kit.panel()
@@ -579,6 +670,7 @@ func _on_finished(e: Dictionary) -> void:
 			var stopped := Kit.label(tr("ui.hunt.stopped_defeat"), "SubheadingLabel", true)
 			stopped.custom_minimum_size = body.custom_minimum_size
 			col.add_child(stopped)
+		_defeat_tip(col, e, body.custom_minimum_size.x)
 	var focus: Control
 	if hunting and victory and not _stop_after:
 		# The loop goes on by itself; « Arrêter la chasse » stays available.
@@ -606,6 +698,55 @@ func _on_finished(e: Dictionary) -> void:
 	_result.grow_vertical = Control.GROW_DIRECTION_BOTH
 	if focus:
 		focus.call_deferred("grab_focus")
+
+
+## The defeat's advice by its cause (GDD decision 27 (4)): the tip's title
+## and text, and its buttons (« Appliquer le conseil », « Ouvrir les
+## tactiques ») opening panel.tactics over the result.
+func _defeat_tip(col: VBoxContainer, e: Dictionary, width: float) -> void:
+	var last_hit: Dictionary = e.get("last_hit", {})
+	var tip := (
+		GameState
+		. tactics
+		. next_tip(
+			{
+				"trigger": "defeat",
+				"encounter": str(e.get("encounter", view.encounter_id)),
+				"ability": str(last_hit.get("spell", "")),
+			}
+		)
+	)
+	if tip.is_empty():
+		return
+	var title := Kit.label(str(tip["title"]), "SubheadingLabel", true)
+	title.custom_minimum_size.x = width
+	UiProbe.register("tip.title", title)
+	col.add_child(title)
+	var text := Kit.label(str(tip["text"]), "", true)
+	text.custom_minimum_size.x = width
+	UiProbe.register("tip.text", text)
+	col.add_child(text)
+	var row := HFlowContainer.new()
+	row.add_theme_constant_override("h_separation", UiTokens.SPACE["sm"])
+	row.add_theme_constant_override("v_separation", UiTokens.SPACE["sm"])
+	for action: String in tip.get("actions", []):
+		var b: Button
+		match action:
+			"apply_preset":
+				b = Kit.button(tr("ui.tactics.apply_preset"), false, "tip.apply")
+				b.pressed.connect(
+					func() -> void: open_tactics({"preset": str(tip["preset"]), "show_diff": true})
+				)
+			"open_tactics":
+				b = Kit.button(tr("ui.tactics.open"), false, "tip.open")
+				b.pressed.connect(func() -> void: open_tactics())
+			_:
+				continue
+		b.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
+		row.add_child(b)
+	col.add_child(row)
+	UiProbe.world["tip"] = str(tip["id"])
+	GameState.tactics.mark_tip_seen(str(tip["id"]))
 
 
 ## « Chasser ici » on a won fight: disabled with its reason when refused.

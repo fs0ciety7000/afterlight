@@ -42,6 +42,12 @@ var _compass: Label
 ## New game: the intro cards first. A place entered for the first time: Fern's line.
 var _intro := false
 var _first_visit := ""
+## Top-left, under the portrait: the tip card (GDD decision 27), and
+## panel.tactics when open outside a fight.
+var _portrait_card: Control
+var _tip_card: TipCard
+var _tactics_panel: TacticsPanel
+var _tips_queued := false
 
 
 func setup(params: Dictionary) -> void:
@@ -176,9 +182,11 @@ func _on_exit_reached(to: String, spawn: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _menu != null or story.busy:
+	if _menu != null or story.busy or _tactics_panel != null:
 		return
 	if _combat != null:
+		if _combat_hud and _combat_hud.tactics_open():
+			return
 		_combat_input(event)
 		return
 	if event.is_action_pressed("interact"):
@@ -282,6 +290,7 @@ func _build_hud() -> void:
 	UiProbe.register("hud.gold", _gold)
 	col.add_child(_gold)
 	add_child(card)
+	_portrait_card = card
 
 	# Top-right: place name and minimap button (opens the world map).
 	var right := Kit.vbox(UiTokens.SPACE["xs"])
@@ -448,11 +457,101 @@ func _refresh_hud() -> void:
 	for q: Dictionary in GameState.content_api.quest_log():
 		quests[q["id"]] = q["state"]
 	UiProbe.world["quests"] = quests
+	_queue_tips()
 	var hunt := GameState.offline_hunt()
 	_hunt_button.text = (
 		tr("ui.explore.hunt").format({"encounter": Content.display_name(hunt)})
 		if hunt != ""
 		else tr("ui.explore.hunt_none")
+	)
+
+
+# --- Tactics and tips (GDD decisions 23-27) -------------------------------------
+
+
+## panel.tactics over the world, or over the paused fight (the HUD sends the
+## changes to it). opts: TacticsPanel options (focus, preset, show_diff).
+func open_tactics(opts: Dictionary = {}) -> void:
+	if _combat_hud:
+		_combat_hud.open_tactics(opts)
+		return
+	if _tactics_panel != null:
+		return
+	story.set_busy(true)
+	_tactics_panel = TacticsPanel.open(self, opts)
+	_tactics_panel.closed.connect(
+		func() -> void:
+			_tactics_panel = null
+			story.set_busy(false)
+	)
+
+
+## Shows `tip` (from GameState.tactics.next_tip) as a card under the
+## portrait and records it as seen. Its buttons open the panel.
+func show_tip(tip: Dictionary) -> void:
+	if tip.is_empty() or _combat != null:
+		return
+	_show_card(tip)
+	if str(tip.get("id", "")) != "":
+		GameState.tactics.mark_tip_seen(str(tip["id"]))
+
+
+## Campfire once its tip was seen: « Régler les tactiques » (GDD decision 23 b).
+func show_campfire_card() -> void:
+	_show_card(
+		{
+			"id": "",
+			"title": tr("ui.tactics.campfire_title"),
+			"text": tr("ui.tactics.campfire_hint"),
+			"actions": ["open_tactics", "close"],
+		}
+	)
+
+
+func _show_card(tip: Dictionary) -> void:
+	if is_instance_valid(_tip_card):
+		_tip_card.dismiss()
+	var narrow := is_narrow()
+	var width := minf(400.0 if not narrow else 320.0, get_viewport_rect().size.x - 32.0)
+	_tip_card = TipCard.make(tip, width)
+	_tip_card.action.connect(_on_tip_action.bind(tip))
+	add_child(_tip_card)
+	var margin: float = UiTokens.SPACE["lg"] if narrow else UiTokens.SPACE["xl"]
+	var below := margin
+	if is_instance_valid(_portrait_card):
+		below = _portrait_card.position.y + _portrait_card.get_combined_minimum_size().y
+	_tip_card.position = Vector2(margin, below + UiTokens.SPACE["md"])
+
+
+func _on_tip_action(id: String, tip: Dictionary) -> void:
+	match id:
+		"apply_preset":
+			open_tactics({"preset": str(tip.get("preset", "")), "show_diff": true})
+		"open_tactics":
+			open_tactics()
+
+
+## Tips that wait for the world (the Barrier at level 2): checked once the
+## state settles, never during a fight, a dialogue or a menu.
+func _queue_tips() -> void:
+	if _tips_queued:
+		return
+	_tips_queued = true
+	call_deferred("_check_tips")
+
+
+func _check_tips() -> void:
+	_tips_queued = false
+	if not GameState.has_game() or not is_inside_tree():
+		return
+	if _combat != null or story.busy or _menu != null or _tactics_panel != null:
+		return
+	if is_instance_valid(_tip_card):
+		return
+	show_tip(
+		GameState.tactics.next_tip(
+			{"trigger": "level_reached", "level": int(GameState.summary()["level"])}
+		)
 	)
 
 
@@ -509,6 +608,8 @@ func _open_combat(encounter_id: String, anchor: Node3D, setup: Dictionary) -> bo
 		_combat = null
 		return false
 	_combat_anchor = anchor
+	if is_instance_valid(_tip_card):
+		_tip_card.dismiss()
 	view.hide_pack(encounter_id)
 	view.rig.cut_radius = COMBAT_CUT_RADIUS
 	for n in _explore_nodes:

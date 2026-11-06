@@ -247,7 +247,19 @@ func use(kind: String) -> void:
 		)
 	else:
 		host.call("show_toast", tr("ui.story.rested"))
+		_after_rest()
 	_publish()
+
+
+## First rest at the campfire (once per save, with its tip): Fern's lines
+## (dialogue.fern_campfire), then the tip; later rests offer « Régler les
+## tactiques » (GDD decisions 23 b, 27 (2), owner answer 3).
+func _after_rest() -> void:
+	var tip := GameState.tactics.next_tip({"trigger": "first_campfire", "dungeon": dungeon_id()})
+	if tip.is_empty():
+		host.call("show_campfire_card")
+		return
+	story.play_dialogue("dialogue.fern_campfire", true, func() -> void: host.call("show_tip", tip))
 
 
 # --- Rooms --------------------------------------------------------------------------------
