@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "type": "character",
+  "entries": [
+    {
+      "id": "character.fern",
+      "origin": "canon",
+      "name_key": "character.fern.name",
+      "desc_key": "character.fern.desc",
+      "canon_note": "Name, human mage, Frieren's apprentice and fast precise offensive magic are canon. Stats, kit values and passive are game interpretation (GDD §6).",
+      "playable": true,
+      "role": "caster",
+      "base_stats": {
+        "max_hp": 420,
+        "max_mana": 100,
+        "mana_regen": 4.0,
+        "power": 30,
+        "defense": 12,
+        "crit_chance": 0.05,
+        "crit_damage": 1.5,
+        "move_speed": 5.0
+      },
+      "growth": {
+        "max_hp": 38,
+        "max_mana": 4,
+        "power": 4.5,
+        "defense": 2
+      },
+      "auto_attack": "spell.mana_bolt",
+      "spells": [
+        "spell.zoltraak",
+        "spell.mana_volley",
+        "spell.defensive_barrier"
+      ],
+      "ultimate": "spell.afterlight",
+      "passive": "passive.veiled_mana",
+      "unlocks": [
+        {
+          "level": 1,
+          "ref": "spell.zoltraak"
+        },
+        {
+          "level": 2,
+          "ref": "spell.defensive_barrier"
+        },
+        {
+          "level": 3,
+          "ref": "spell.mana_volley"
+        },
+        {
+          "level": 5,
+          "ref": "spell.afterlight"
+        }
+      ],
+      "model": "res://assets/models/characters/fern/fern.glb",
+      "portrait": "res://assets/textures/portraits/fern.png"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "type": "start",
+  "entries": [
+    {
+      "id": "start.default",
+      "origin": "original",
+      "name_key": "start.default.name",
+      "party": [
+        "character.fern"
+      ],
+      "region": "region.aubelin_vale",
+      "location": "location.aubelin",
+      "gold": 0
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "type": "spell",
+  "entries": [
+    {
+      "id": "spell.zoltraak",
+      "origin": "canon",
+      "name_key": "spell.zoltraak.name",
+      "desc_key": "spell.zoltraak.desc",
+      "canon_note": "The spell name Zoltraak is canon. Coefficients, cost, cooldown and the interrupt behaviour are game interpretation.",
+      "kind": "active",
+      "element": "arcane",
+      "mana_cost": 25,
+      "cooldown_s": 6,
+      "cast_s": 0.3,
+      "range_m": 12,
+      "targeting": "focus",
+      "interrupts": true,
+      "effects": [
+        {
+          "type": "damage",
+          "coeff": 3.2,
+          "hits": 1
+        },
+        {
+          "type": "interrupt"
+        }
+      ],
+      "ranks": [
+        {
+          "rank": 1
+        },
+        {
+          "rank": 2
+        },
+        {
+          "rank": 3
+        },
+        {
+          "rank": 4
+        },
+        {
+          "rank": 5
+        }
+      ]
+    }
+  ]
+}

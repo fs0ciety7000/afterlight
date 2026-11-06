@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "type": "spell",
+  "entries": [
+    {
+      "id": "spell.mana_bolt",
+      "origin": "original",
+      "name_key": "spell.mana_bolt.name",
+      "desc_key": "spell.mana_bolt.desc",
+      "kind": "auto",
+      "element": "arcane",
+      "interval_s": 1.2,
+      "range_m": 9,
+      "targeting": "focus",
+      "effects": [
+        {
+          "type": "damage",
+          "coeff": 1.0,
+          "hits": 1
+        }
+      ]
+    },
+    {
+      "id": "spell.mana_volley",
+      "origin": "original",
+      "name_key": "spell.mana_volley.name",
+      "desc_key": "spell.mana_volley.desc",
+      "kind": "active",
+      "element": "arcane",
+      "mana_cost": 35,
+      "cooldown_s": 10,
+      "cast_s": 0.4,
+      "range_m": 10,
+      "targeting": "distributed",
+      "effects": [
+        {
+          "type": "damage",
+          "coeff": 0.6,
+          "hits": 5
+        }
+      ],
+      "ranks": [
+        {
+          "rank": 1
+        },
+        {
+          "rank": 2
+        },
+        {
+          "rank": 3
+        },
+        {
+          "rank": 4
+        },
+        {
+          "rank": 5
+        }
+      ]
+    },
+    {
+      "id": "spell.defensive_barrier",
+      "origin": "original",
+      "name_key": "spell.defensive_barrier.name",
+      "desc_key": "spell.defensive_barrier.desc",
+      "canon_refs": [
+        "lore.defensive_magic"
+      ],
+      "kind": "active",
+      "element": "arcane",
+      "mana_cost": 30,
+      "cooldown_s": 18,
+      "targeting": "self",
+      "ignores_gcd": true,
+      "effects": [
+        {
+          "type": "shield",
+          "duration_s": 4.0
+        },
+        {
+          "type": "cleanse",
+          "count": 1
+        }
+      ],
+      "ranks": [
+        {
+          "rank": 1
+        },
+        {
+          "rank": 2
+        },
+        {
+          "rank": 3
+        },
+        {
+          "rank": 4
+        },
+        {
+          "rank": 5
+        }
+      ]
+    },
+    {
+      "id": "spell.afterlight",
+      "origin": "original",
+      "name_key": "spell.afterlight.name",
+      "desc_key": "spell.afterlight.desc",
+      "kind": "ultimate",
+      "element": "arcane",
+      "cooldown_s": 0,
+      "channel_s": 2.0,
+      "range_m": 14,
+      "targeting": "random_weighted_focus",
+      "ult_charge_cost": 100,
+      "effects": [
+        {
+          "type": "damage",
+          "coeff": 0.9,
+          "hits": 12
+        }
+      ],
+      "ranks": [
+        {
+          "rank": 1
+        },
+        {
+          "rank": 2
+        },
+        {
+          "rank": 3
+        },
+        {
+          "rank": 4
+        },
+        {
+          "rank": 5
+        }
+      ]
+    },
+    {
+      "id": "passive.veiled_mana",
+      "origin": "original",
+      "name_key": "passive.veiled_mana.name",
+      "desc_key": "passive.veiled_mana.desc",
+      "canon_refs": [
+        "lore.mana_concealment"
+      ],
+      "effects": [
+        {
+          "type": "next_active_bonus",
+          "after_idle_s": 4.0,
+          "bonus": 0.3
+        },
+        {
+          "type": "aggro_radius",
+          "mult": 0.7
+        }
+      ]
+    }
+  ]
+}

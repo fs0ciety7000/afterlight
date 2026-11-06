@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "type": "lore",
+  "entries": [
+    {
+      "id": "lore.defensive_magic",
+      "origin": "canon",
+      "name_key": "lore.defensive_magic.name",
+      "canon_note": "Defensive magic exists as a concept in the work."
+    },
+    {
+      "id": "lore.mana_concealment",
+      "origin": "canon",
+      "name_key": "lore.mana_concealment.name",
+      "canon_note": "Concealing one's mana is a canon practice."
+    },
+    {
+      "id": "lore.demons",
+      "origin": "canon",
+      "name_key": "lore.demons.name",
+      "canon_note": "Demons as a hostile race are canon."
+    }
+  ]
+}

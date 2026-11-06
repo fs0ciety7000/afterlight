@@ -1,0 +1,83 @@
+keys,fr
+ui.game.title,Afterlight
+ui.game.tagline,Fan-game non officiel dans l'univers de Frieren
+ui.game.disclaimer,"Projet personnel et non commercial, sans lien avec les ayants droit de « Frieren »."
+ui.menu.continue,Continuer
+ui.menu.new_game,Nouvelle partie
+ui.menu.import,Importer une sauvegarde
+ui.menu.settings,Réglages
+ui.menu.back,Retour
+ui.menu.main_menu,Menu principal
+ui.confirm.yes,Confirmer
+ui.confirm.cancel,Annuler
+ui.new_game.confirm_title,Commencer une nouvelle partie ?
+ui.new_game.confirm_body,"La partie actuelle sera remplacée. Une copie de secours de l'ancienne sauvegarde est conservée."
+ui.title.continue_summary,"{name}, niveau {level} · {place}"
+ui.camp.title,Campement
+ui.camp.party,Groupe
+ui.camp.empty_slot,Emplacement libre
+ui.camp.level,Niveau {level}
+ui.camp.xp,{xp} XP
+ui.camp.wallet,Bourse
+ui.camp.gold,Or
+ui.camp.play_time,Temps de jeu
+ui.camp.location,Lieu
+ui.camp.save,Sauvegarder
+ui.camp.export,Exporter la sauvegarde
+ui.camp.import,Importer une sauvegarde
+ui.save.status_never,Pas encore sauvegardé
+ui.save.status_at,Sauvegardé à {time}
+ui.save.status_failed,"Échec de la sauvegarde : {reason}"
+ui.save.autosave_hint,Sauvegarde automatique toutes les 30 secondes et à chaque changement d'écran.
+ui.export.done_web,Fichier de sauvegarde téléchargé.
+ui.export.done_path,Sauvegarde exportée dans {path}
+ui.import.confirm_title,Importer cette sauvegarde ?
+ui.import.confirm_body,"{name}, niveau {level}, sauvegardée le {date}. Elle remplacera la partie actuelle ; une copie de secours de l'ancienne est conservée."
+ui.import.done,Sauvegarde importée.
+ui.import.cancelled,Import annulé.
+ui.import.failed,"Ce fichier ne peut pas être importé : {reason}"
+error.save.not_json,le fichier n'est pas lisible (JSON invalide).
+error.save.not_a_save,ce n'est pas une sauvegarde Afterlight.
+error.save.future_version,elle vient d'une version plus récente du jeu.
+error.save.checksum,son contenu a été modifié ou abîmé (somme de contrôle incorrecte).
+error.save.migration,elle n'a pas pu être convertie au format actuel.
+error.save.invalid_state,son contenu est incomplet ou incohérent.
+ui.recovery.title,Sauvegarde endommagée
+ui.recovery.body,"La sauvegarde n'a pas pu être chargée : {reason} Elle n'a pas été effacée : une copie est conservée à part."
+ui.recovery.restore,Restaurer la copie de secours
+ui.recovery.restore_detail,"Copie du {date} : {name}, niveau {level}."
+ui.recovery.no_backup,Aucune copie de secours valide n'est disponible.
+ui.recovery.export,Exporter le fichier endommagé
+ui.recovery.new_game,Commencer une nouvelle partie
+ui.recovery.new_confirm_body,"Une nouvelle partie remplacera la sauvegarde endommagée, qui reste conservée à part."
+ui.settings.title,Réglages
+ui.settings.text_size,Taille du texte
+ui.settings.reduce_motion,Réduire les animations
+ui.settings.reduce_motion_hint,"Remplace les fondus par des coupes, supprime les secousses de caméra et réduit les particules."
+ui.settings.saved,Réglages enregistrés.
+error.content.title,Données du jeu invalides
+error.content.body,Le jeu ne peut pas démarrer : les fichiers de données contiennent des erreurs.
+start.default.name,Départ
+character.fern.name,Fern
+character.fern.desc,"Mage humaine, apprentie de Frieren. Sa magie offensive est rapide et précise."
+region.aubelin_vale.name,Val d'Aubelin
+region.aubelin_vale.desc,"Vallée d'automne aux champs dorés. Au fond, un cloître dont la cloche s'est tue."
+location.aubelin.name,Aubelin
+location.whispering_wood.name,Bois des Murmures
+location.lantern_mire.name,Tourbière aux Lanternes
+location.watch_ruins.name,Ruines du Guet
+spell.mana_bolt.name,Trait de mana
+spell.mana_bolt.desc,"Projectile arcane sur la cible actuelle. Chaque coup rend un peu de mana."
+spell.zoltraak.name,Zoltraak
+spell.zoltraak.desc,"Rayon arcane rapide et précis qui inflige de lourds dégâts à une cible et interrompt les incantations. Double effet contre les barrières."
+spell.mana_volley.name,Salve de mana
+spell.mana_volley.desc,"Cinq projectiles répartis sur les ennemis proches, en commençant par la cible choisie."
+spell.defensive_barrier.name,Barrière défensive
+spell.defensive_barrier.desc,"Bouclier instantané de quelques secondes qui retire une altération. Utilisable pendant une autre action."
+spell.afterlight.name,Lumière d'après
+spell.afterlight.desc,"Canalisation : une pluie de rayons s'abat sur les ennemis, la moitié sur la cible choisie."
+passive.veiled_mana.name,Mana voilé
+passive.veiled_mana.desc,"Après quelques secondes sans sort actif, le prochain inflige plus de dégâts. En exploration, les ennemis vous repèrent de moins loin."
+lore.defensive_magic.name,Magie défensive
+lore.mana_concealment.name,Dissimulation du mana
+lore.demons.name,Démons

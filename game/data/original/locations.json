@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "type": "location",
+  "entries": [
+    {
+      "id": "location.aubelin",
+      "origin": "original",
+      "name_key": "location.aubelin.name",
+      "region": "region.aubelin_vale",
+      "kind": "hub",
+      "scene": "res://game/world/locations/aubelin.tscn",
+      "map_pos": [
+        0.42,
+        0.58
+      ],
+      "unlock": {
+        "start": true
+      }
+    },
+    {
+      "id": "location.whispering_wood",
+      "origin": "original",
+      "name_key": "location.whispering_wood.name",
+      "region": "region.aubelin_vale",
+      "kind": "field",
+      "level": 1,
+      "scene": "res://game/world/locations/whispering_wood.tscn",
+      "map_pos": [
+        0.28,
+        0.4
+      ],
+      "unlock": {
+        "start": true
+      }
+    }
+  ]
+}
