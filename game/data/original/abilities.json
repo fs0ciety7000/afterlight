@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "type": "ability",
+  "entries": [
+    {
+      "id": "ability.wolf_bite",
+      "origin": "original",
+      "name_key": "ability.wolf_bite.name",
+      "desc_key": "ability.wolf_bite.desc",
+      "kind": "attack",
+      "element": "arcane",
+      "interval_s": 1.4,
+      "range_m": 1.8,
+      "targeting": "nearest",
+      "effects": [{ "type": "damage", "coeff": 1.0, "hits": 1 }]
+    },
+    {
+      "id": "ability.wolf_lunge",
+      "origin": "original",
+      "name_key": "ability.wolf_lunge.name",
+      "desc_key": "ability.wolf_lunge.desc",
+      "kind": "skill",
+      "element": "arcane",
+      "cooldown_s": 8,
+      "range_m": 6,
+      "targeting": "nearest",
+      "telegraph": { "shape": "line", "size_m": 6, "duration_s": 0.6 },
+      "effects": [{ "type": "damage", "coeff": 1.8, "hits": 1 }]
+    },
+    {
+      "id": "ability.lantern_bolt",
+      "origin": "original",
+      "name_key": "ability.lantern_bolt.name",
+      "desc_key": "ability.lantern_bolt.desc",
+      "kind": "attack",
+      "element": "fire",
+      "interval_s": 2.2,
+      "range_m": 10,
+      "targeting": "nearest",
+      "tags": ["projectile"],
+      "effects": [
+        { "type": "damage", "coeff": 1.3, "hits": 1 },
+        { "type": "apply_status", "status": "status.burn", "chance": 0.3 }
+      ]
+    },
+    {
+      "id": "ability.lantern_blaze",
+      "origin": "original",
+      "name_key": "ability.lantern_blaze.name",
+      "desc_key": "ability.lantern_blaze.desc",
+      "kind": "skill",
+      "element": "fire",
+      "cooldown_s": 12,
+      "channel_s": 2.0,
+      "interruptible": true,
+      "range_m": 10,
+      "targeting": "nearest",
+      "effects": [
+        { "type": "damage", "coeff": 0.5, "hits": 8, "radius_m": 3, "duration_s": 4.0 }
+      ]
+    },
+    {
+      "id": "ability.sentinel_bash",
+      "origin": "original",
+      "name_key": "ability.sentinel_bash.name",
+      "desc_key": "ability.sentinel_bash.desc",
+      "kind": "attack",
+      "element": "arcane",
+      "interval_s": 2.6,
+      "range_m": 2.2,
+      "targeting": "nearest",
+      "effects": [{ "type": "damage", "coeff": 1.2, "hits": 1 }]
+    },
+    {
+      "id": "ability.sentinel_slam",
+      "origin": "original",
+      "name_key": "ability.sentinel_slam.name",
+      "desc_key": "ability.sentinel_slam.desc",
+      "kind": "skill",
+      "element": "arcane",
+      "cooldown_s": 7,
+      "range_m": 3,
+      "targeting": "nearest",
+      "telegraph": { "shape": "circle", "size_m": 3, "duration_s": 1.2 },
+      "effects": [{ "type": "damage", "coeff": 2.4, "hits": 1 }]
+    },
+    {
+      "id": "ability.sentinel_barrier",
+      "origin": "original",
+      "name_key": "ability.sentinel_barrier.name",
+      "desc_key": "ability.sentinel_barrier.desc",
+      "kind": "skill",
+      "element": "arcane",
+      "cooldown_s": 8,
+      "targeting": "self",
+      "tags": ["barrier"],
+      "notes": "Barrier of barrier_ratio x max HP; cooldown_s counts the time since the last arcane hit, then the barrier comes back full.",
+      "effects": [{ "type": "shield" }]
+    },
+    {
+      "id": "ability.alpha_bite",
+      "origin": "original",
+      "name_key": "ability.alpha_bite.name",
+      "desc_key": "ability.alpha_bite.desc",
+      "kind": "attack",
+      "element": "arcane",
+      "interval_s": 1.2,
+      "range_m": 2.0,
+      "targeting": "nearest",
+      "effects": [{ "type": "damage", "coeff": 1.1, "hits": 1 }]
+    },
+    {
+      "id": "ability.alpha_howl",
+      "origin": "original",
+      "name_key": "ability.alpha_howl.name",
+      "desc_key": "ability.alpha_howl.desc",
+      "kind": "skill",
+      "element": "arcane",
+      "cooldown_s": 0,
+      "channel_s": 1.5,
+      "interruptible": true,
+      "targeting": "self",
+      "trigger": { "hp_below": [0.70, 0.35] },
+      "effects": [
+        { "type": "summon", "summon": "enemy.mist_wolf", "count": 2, "level_offset": -1 },
+        { "type": "apply_status", "status": "status.haste_buff", "radius_m": 30 }
+      ]
+    },
+    {
+      "id": "ability.alpha_chain_lunge",
+      "origin": "original",
+      "name_key": "ability.alpha_chain_lunge.name",
+      "desc_key": "ability.alpha_chain_lunge.desc",
+      "kind": "skill",
+      "element": "arcane",
+      "cooldown_s": 14,
+      "range_m": 6,
+      "targeting": "nearest",
+      "telegraph": { "shape": "line", "size_m": 6, "duration_s": 0.8 },
+      "effects": [{ "type": "damage", "coeff": 1.5, "hits": 3 }]
+    },
+    {
+      "id": "ability.morvaine_ash_bolt",
+      "origin": "original",
+      "name_key": "ability.morvaine_ash_bolt.name",
+      "desc_key": "ability.morvaine_ash_bolt.desc",
+      "kind": "attack",
+      "element": "fire",
+      "interval_s": 2.5,
+      "range_m": 12,
+      "targeting": "nearest",
+      "tags": ["projectile"],
+      "effects": [
+        { "type": "damage", "coeff": 0.6, "hits": 1 },
+        { "type": "apply_status", "status": "status.burn", "chance": 0.3 }
+      ]
+    },
+    {
+      "id": "ability.morvaine_bound_lanterns",
+      "origin": "original",
+      "name_key": "ability.morvaine_bound_lanterns.name",
+      "desc_key": "ability.morvaine_bound_lanterns.desc",
+      "kind": "skill",
+      "element": "fire",
+      "cooldown_s": 30,
+      "targeting": "self",
+      "effects": [
+        { "type": "summon", "summon": "enemy.wandering_lantern", "count": 2, "level_offset": -2 },
+        { "type": "damage_reduction", "coeff": 0.15 }
+      ]
+    },
+    {
+      "id": "ability.morvaine_veil",
+      "origin": "original",
+      "name_key": "ability.morvaine_veil.name",
+      "desc_key": "ability.morvaine_veil.desc",
+      "kind": "skill",
+      "element": "arcane",
+      "cooldown_s": 10,
+      "targeting": "self",
+      "tags": ["barrier"],
+      "notes": "Barrier of barrier_ratio x max HP while the phase lists it; cooldown_s counts the time since the last arcane hit.",
+      "effects": [{ "type": "shield" }]
+    },
+    {
+      "id": "ability.morvaine_false_word",
+      "origin": "original",
+      "name_key": "ability.morvaine_false_word.name",
+      "desc_key": "ability.morvaine_false_word.desc",
+      "kind": "skill",
+      "element": "arcane",
+      "cooldown_s": 18,
+      "channel_s": 2.0,
+      "interruptible": true,
+      "range_m": 14,
+      "targeting": "nearest",
+      "effects": [{ "type": "apply_status", "status": "status.weaken" }]
+    },
+    {
+      "id": "ability.morvaine_ash_seal",
+      "origin": "original",
+      "name_key": "ability.morvaine_ash_seal.name",
+      "desc_key": "ability.morvaine_ash_seal.desc",
+      "kind": "skill",
+      "element": "fire",
+      "cooldown_s": 25,
+      "cast_s": 3.0,
+      "range_m": 30,
+      "targeting": "nearest",
+      "tags": ["unavoidable"],
+      "telegraph": { "shape": "circle", "size_m": 1.5, "duration_s": 3.0 },
+      "effects": [{ "type": "damage", "coeff": 15.0, "hits": 1 }]
+    },
+    {
+      "id": "ability.morvaine_ash_seal_hollow",
+      "origin": "original",
+      "name_key": "ability.morvaine_ash_seal_hollow.name",
+      "desc_key": "ability.morvaine_ash_seal_hollow.desc",
+      "kind": "skill",
+      "element": "fire",
+      "cooldown_s": 19.5,
+      "cast_s": 3.0,
+      "range_m": 30,
+      "targeting": "nearest",
+      "tags": ["unavoidable"],
+      "notes": "Phase 3 seal: 19.5 s / (1 + 0.30 haste) = 15 s (GAME_BALANCE §10.3).",
+      "telegraph": { "shape": "circle", "size_m": 1.5, "duration_s": 3.0 },
+      "effects": [{ "type": "damage", "coeff": 15.0, "hits": 1 }]
+    },
+    {
+      "id": "ability.morvaine_enrage",
+      "origin": "original",
+      "name_key": "ability.morvaine_enrage.name",
+      "desc_key": "ability.morvaine_enrage.desc",
+      "kind": "phase",
+      "element": "fire",
+      "cooldown_s": 2,
+      "range_m": 40,
+      "targeting": "nearest",
+      "tags": ["unavoidable"],
+      "trigger": { "on_time_s": 300 },
+      "telegraph": { "shape": "circle", "size_m": 1.5, "duration_s": 1.0 },
+      "effects": [{ "type": "damage", "coeff": 99.0, "hits": 1 }]
+    }
+  ]
+}

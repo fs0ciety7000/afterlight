@@ -157,6 +157,7 @@ static func effect() -> Dictionary:
 					"interrupt",
 					"cleanse",
 					"damage_reduction",
+					"restore_mana",
 				]
 			),
 			"coeff": opt(num()),

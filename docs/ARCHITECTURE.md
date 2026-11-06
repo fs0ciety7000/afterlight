@@ -139,3 +139,94 @@ game/
 - `pnpm test` : `tools/test_runner.gd` exécute chaque `tests/unit/**/test_*.gd` (classe `TestCase`). Moteur, schémas, codec de sauvegarde, migrations et service de sauvegarde (dans un dossier `user://` de test) y sont couverts.
 - `pnpm e2e` : export web puis Playwright (desktop et mobile) : nouvelle partie, navigation, sauvegarde, rechargement de la page, reprise.
 - Un système n'est pas terminé tant que ses tests ne passent pas.
+
+## Combat : événements et instantané
+
+Code : `game/engine/combat/` (`CombatSim` et ses modules `combat_rules`, `combat_actions`, `combat_ai`, `combat_tactics`, `combat_factory`, `combat_geometry`, `combat_rewards`). Constantes et formules : `game/engine/balance/` (`combat.gd`, `statuses.gd`, `enemies.gd`, `stats.gd`). Banc : `tools/combat_bench.gd` et `tests/unit/combat/`.
+
+### Piloter la simulation
+
+```gdscript
+var sim := CombatSim.create({
+	"encounter": "encounter.whispering_wood_02", "seed": seed,
+	"party": [{"character": "character.fern", "level": 3, "slot": 3,
+	           "flat": {...}, "percent": {...},        # modificateurs d'équipement (§2.2)
+	           "spell_ranks": {}, "spell_mods": {},     # rangs, runes (élément, chances, bonus)
+	           "ult_charge": 0.0, "hp_pct": 1.0, "mana_pct": 1.0}],
+	"tactics": {...}, "consumables": {"consumable.healing_draught": 3},
+	"first_clear": true,
+}, Content.index())
+sim.command({"type": "cast", "spell": "spell.zoltraak"})  # appliqué au tic suivant
+var events := sim.step()                                    # un tic de TICK_SECONDS
+var view := sim.snapshot()                                  # données simples pour le rendu
+```
+
+- `sim.error` est non vide (et `sim.finished` vrai) si la rencontre ou le groupe ne correspond pas au contenu.
+- Pause : ne pas appeler `step()`. Vitesse ×2 / ×4 : plus d'appels par image. Le plafond est `speed_cap` (événement `encounter_started` et instantané). La simulation n'utilise jamais le temps d'image.
+- Coordonnées : mètres sur le plan du sol `(x, z)`, relatives au marqueur `Anchors/<anchor>` de la rencontre. La meute est centrée sur l'origine ; le groupe se tient côté +z (rangée avant à 6 m, arrière à 10 m). Le rendu ajoute la transformation de l'ancre et interpole entre deux instantanés.
+- `sim.event_log` garde tout le journal (désactivable par `"keep_log": false`) ; `CombatSim.hash_events(log)` sert aux tests de déterminisme.
+- Unités : `uid` stable par combat (`p1`-`p4` selon l'emplacement, `e1`, `e2`... pour les ennemis et invocations dans l'ordre d'apparition).
+
+### Commandes (`sim.command`)
+
+| `type` | Champs | Effet |
+|---|---|---|
+| `cast` | `spell`, `target`? | Part au tic suivant ; sinon attend dans le tampon (`INPUT_BUFFER_S`) derrière une incantation, un déplacement, le GCD ou une recharge presque finie ; sinon `command_rejected` avec la raison (`locked`, `no_mana`, `no_charge`, `cooldown`, `no_target`, `expired`, `cc`, `dead`) |
+| `set_focus` | `target` (`""` pour annuler) | Focalisation jusqu'à la mort de la cible |
+| `move_to` | `x`, `z` | Repositionnement : annule l'incantation en cours (sans coût), pas d'attaque pendant le trajet, puis tenue de `REPOSITION_HOLD_S` |
+| `stop` | - | Arrête le déplacement manuel (fin d'appui clavier ou joystick) |
+| `use_consumable` | `consumable` | Recharge partagée `CONSUMABLE_SHARED_CD_S` |
+| `set_tactic` | `key`, `value` | `targeting`, `mana_reserve`, `barrier_hp_pct`, `min_enemies` ou un ID de sort (mode) |
+
+Champ optionnel `unit` (par défaut, le premier membre du groupe).
+
+### Événements
+
+Chaque événement est un dictionnaire `{"type", "tick", ...}`, dans l'ordre où il se produit. `step()` rend ceux du tic ; le premier appel commence par `encounter_started`.
+
+| `type` | Champs |
+|---|---|
+| `encounter_started` | `encounter`, `kind`, `level`, `speed_cap`, `seed`, `units` [{`uid`, `def_id`, `side`, `level`, `position`, `max_hp`, `summoner`}] |
+| `attack_started` | `unit`, `spell`, `target`, `travel_s` (0 en mêlée, durée du projectile sinon) |
+| `spell_cast` | `unit`, `spell`, `target`, `kind`, `cast_s`, `channel_s` : un sort ou une capacité commence (instantané ou non) |
+| `cast_started` | `unit`, `spell`, `phase` (`cast`, `channel`, `telegraph`), `duration_s`, `interruptible`, `target` : barre d'incantation |
+| `cast_completed` | `unit`, `spell` |
+| `cast_interrupted` | `unit`, `spell`, `by`, `reason` (`interrupt`, `cc`, `moved`, `death`, `no_mana`) |
+| `telegraph_started` | `id`, `unit`, `spell`, `shape` (`circle`, `line`, `cone`), `size_m` (rayon ou longueur), `width_m`, `position`, `direction`, `duration_s` (≥ 0,6), `attached_to` (uid suivi, ou `""` si zone au sol esquivable), `interruptible`, `hit`, `hits` |
+| `telegraph_ended` | `id`, `reason` (`impact`, `cancelled`) |
+| `zone_spawned` / `zone_expired` | `id`, `unit`, `spell`, `element`, `shape`, `size_m`, `position`, `duration_s` / `id` |
+| `damage_dealt` | `source`, `target`, `spell` (ou ID du statut pour un DoT, `reaction.overload` pour l'explosion), `amount` (affiché), `hp_damage`, `absorbed`, `crit`, `element`, `reaction` (`""`, `melt`, `overload`, `extinguish`), `shock`, `hp` (après le coup) |
+| `character_healed` | `source`, `target`, `spell`, `amount`, `overheal`, `hp` |
+| `mana_restored` | `unit`, `source`, `amount` |
+| `shield_applied` | `source`, `target`, `kind` (`shield` ou `barrier` ennemie), `amount`, `total`, `duration_s` |
+| `barrier_broken` | `unit`, `source` |
+| `status_applied` | `target`, `status`, `stacks`, `duration_s`, `source` |
+| `status_expired` | `target`, `status`, `reason` (`expired`, `consumed`, `converted`, `reaction`, `cleansed`, `depleted`) |
+| `unit_spawned` | comme une unité de `encounter_started`, plus `unit` |
+| `character_defeated` / `enemy_defeated` | `unit`, `def_id`, `killer` |
+| `boss_phase_changed` | `unit`, `phase` (2, 3...), `phase_id`, `hp_pct` |
+| `focus_changed` | `unit`, `target` |
+| `move_ordered` / `hold_started` | `unit`, `position` / `unit`, `position`, `duration_s` |
+| `consumable_used` | `unit`, `consumable`, `remaining` |
+| `tactic_changed` | `unit`, `key`, `value` |
+| `command_rejected` | `unit`, `command`, `ref`, `reason` |
+| `loot_dropped` | `gold`, `materials` {ID: quantité}, `items` (vide jusqu'au jalon 4), `position` (dernier ennemi vaincu) |
+| `encounter_completed` | `encounter`, `result` (`victory`, `defeat`), `duration_s`, `ticks`, `rewards` {`xp`, `gold`, `materials`}, `first_clear`, `last_hit` {`source`, `spell`, `target`} |
+
+Les déplacements ne produisent pas d'événement par tic : le rendu lit les positions dans l'instantané.
+
+### Instantané (`sim.snapshot()`)
+
+Dictionnaire de types simples (sérialisable en JSON) :
+
+- Racine : `tick`, `time_s`, `encounter`, `speed_cap`, `finished`, `result`, `units`, `telegraphs`, `zones`, `projectiles`, `tactics`.
+- Unité : `uid`, `def_id`, `side`, `level`, `archetype`, `is_boss`, `alive`, `position` [x, z], `facing` [dx, dz], `moving`, `ai_state` (`aggro`, `approach`, `attack`, `ability`, `kite`, `dodge`, `move`, `hold`, `idle`, `dead`), `hp`, `max_hp`, `mana`, `max_mana`, `shield`, `barrier`, `barrier_max`, `damage_reduction`, `statuses` [{`id`, `stacks`, `remaining_s`}], `cast` ({} ou {`spell`, `phase`, `progress` 0-1, `remaining_s`, `interruptible`, `target`}), `cooldowns` {ID: secondes restantes}, `target`, `focus`, `summoner`.
+- En plus pour un ennemi : `phase`, `phase_count`. Pour un membre du groupe : `slot`, `row`, `spells`, `ultimate`, `ult_charge`, `ult_charge_max`, `gcd_s`, `consumables`, `consumable_cd_s`, `hold_s`, `move_target` ([x, z] ou []), `queued` (sort en attente ou `""`).
+- `telegraphs` : `id`, `unit`, `spell`, `shape`, `size_m`, `width_m`, `position`, `direction`, `remaining_s`, `duration_s`, `attached_to`. `zones` : `id`, `unit`, `spell`, `element`, `size_m`, `position`, `remaining_s`. `projectiles` : `id`, `unit`, `target`, `spell`, `progress` 0-1.
+
+### Règles de simulation à connaître côté rendu
+
+- Ordre d'un tic : commandes, statuts (DoT, expirations), minuteries et mana, projectiles, zones, progression des incantations, décisions (groupe puis ennemis), séparation des ennemis, fin de combat.
+- Les sorts du groupe paient leur mana et lancent leur recharge à la résolution ; l'ultime dépense sa charge au début de la canalisation. Les capacités ennemies lancent leur recharge au début : une incantation interrompue est perdue.
+- Les capacités ennemies ont, au début du combat ou de leur phase, la moitié de leur recharge à attendre (`ENEMY_OPENING_CD_FRACTION`).
+- Les invocations (renforts de l'alpha, lanternes liées) ne donnent ni XP ni or.

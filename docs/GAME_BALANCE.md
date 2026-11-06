@@ -234,8 +234,10 @@ barrier     = barrier_ratio × hp(Le)
 | `enemy.mist_wolf` | 300 | 14 | 0,20 | 0 | 1,4 | 1,0 | 1,8 | 5,5 | 9 | 1,0 | 1,0 | feu / - |
 | `enemy.wandering_lantern` | 220 | 17 | 0,10 | 0 | 2,2 | 1,3 (feu) | 10 | 3,0 | 11 | 1,0 | 1,0 | givre / feu |
 | `enemy.stone_sentinel` | 520 | 20 | 0,60 | 0,25 | 2,6 | 1,2 | 2,2 | 2,5 | 7 | 1,6 | 1,5 | foudre / givre |
-| `enemy.mist_wolf_alpha` (élite) | 1 800 | 22 | 0,30 | 0 | 1,2 | 1,1 | 2,0 | 6,0 | 12 | 6,0 | 5,0 | feu / givre |
-| `enemy.morvaine` (boss) | 7 500 | 24 | 0,35 | 0,15 (phase 2) | 2,5 | 0,9 (feu) | 12 | 2,0 | - | 30 | 25 | givre / feu |
+| `enemy.mist_wolf_alpha` (élite) | 1 800 | 21 ¹ | 0,30 | 0 | 1,2 | 1,1 | 2,0 | 6,0 | 12 | 6,0 | 5,0 | feu / givre |
+| `enemy.morvaine` (boss) | 7 500 | 18 ¹ | 0,35 | 0,15 (phase 2) | 2,5 | 0,6 (feu) ¹ | 12 | 2,0 | - | 30 | 25 | givre / feu |
+
+¹ Recalé par le banc de simulation du jalon 3 (2026-11-06, `tools/combat_bench.gd`, Fern typique). Valeurs d'origine : `POWER_L1` de l'alpha 22, de Morvaine 24, `coeff` du Trait de cendre 0,9. Avec elles : alpha `idle` 10 % de victoires (cible 30-60 %) ; Morvaine `script_optimal` 0 % (cible ≥ 80 %), Fern tombe vers 125-145 s. Cause : le budget du §11 compte ~10 Barrières pleines (4 290), alors qu'un bouclier de 4 s n'absorbe qu'environ 100 points de dégâts continus ; seule la Barrière posée sur le Sceau sert en entier. Après recalage : alpha `idle` 34 %, `script_optimal` 100 % ; Morvaine `script_optimal` 86 % (p50 157 s), `idle` 0 %, `confus` 0 %. Le Sceau non bouclié fait encore ~380, soit 35 % des PV de Fern niveau 11.
 
 ### 10.3 Capacités
 
@@ -247,7 +249,7 @@ barrier     = barrier_ratio × hp(Le)
 | `ability.sentinel_barrier` | - | - | revient après 8 s sans dégâts arcane | - | Revient pleine |
 | `ability.alpha_howl` | - | 1,5 | à 70 % et 35 % des PV | **oui** | 2 loups au niveau `Le − 1` + Frénésie |
 | `ability.alpha_chain_lunge` | 1,5 × 3 | 0,8 chacun | 14 | non | |
-| `ability.morvaine_ash_bolt` | 0,9 | - | 2,5 (1,9 en phase 3) | - | Brûlure 0,3 |
+| `ability.morvaine_ash_bolt` | 0,6 ¹ | - | 2,5 (1,9 en phase 3) | - | Brûlure 0,3 |
 | `ability.morvaine_bound_lanterns` | - | - | 30 (phase 1) | - | 2 lanternes au niveau `Le − 2`, 4 au plus ; −0,15 de dégâts subis par lanterne, plafonné à `ENEMY_DAMAGE_REDUCTION_CAP` |
 | `ability.morvaine_veil` | - | - | revient après 10 s sans arcane (phase 2) | - | 15 % des PV max |
 | `ability.morvaine_false_word` | - | 2,0 | 18 | **oui** | Affaibli sur Fern |
@@ -294,6 +296,7 @@ crit_factor    = 1 + crit_chance × (crit_damage − 1)
 - Bien joué (Sceau bouclié, lanternes tuées), la moyenne est ~21 dégâts/s, soit ~4 200 sur 200 s.
 - Budget de Fern : PV + ~10 Barrières (4 290) + 3 infusions (1 128) ≈ 6 500. Marge ×1,55.
 - Sans bouclier sur le Sceau : ~38 dégâts/s, soit ~7 600 > 6 500, donc défaite probable. **C'est le test de compétence voulu.**
+- *Calcul fait avec les valeurs d'avant le banc du jalon 3 (`POWER_L1` 24, Trait 0,9) : voir la note ¹ du §10.2. Mesuré en simulation avec les valeurs actuelles : ~25 dégâts/s subis en jouant bien, dont lanternes et Brûlure ; les Barrières hors Sceau absorbent ~100 chacune.*
 
 ## 12. XP et niveaux
 

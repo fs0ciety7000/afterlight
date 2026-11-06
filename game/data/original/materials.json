@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "type": "material",
+  "entries": [
+    {
+      "id": "material.mana_dust",
+      "origin": "original",
+      "name_key": "material.mana_dust.name",
+      "desc_key": "material.mana_dust.desc",
+      "rarity": "common",
+      "icon": "res://assets/textures/icons/material.mana_dust.png"
+    },
+    {
+      "id": "material.rune_shard",
+      "origin": "original",
+      "name_key": "material.rune_shard.name",
+      "desc_key": "material.rune_shard.desc",
+      "rarity": "uncommon",
+      "icon": "res://assets/textures/icons/material.rune_shard.png"
+    },
+    {
+      "id": "material.grimoire_page",
+      "origin": "original",
+      "name_key": "material.grimoire_page.name",
+      "desc_key": "material.grimoire_page.desc",
+      "rarity": "rare",
+      "icon": "res://assets/textures/icons/material.grimoire_page.png"
+    },
+    {
+      "id": "material.ashen_essence",
+      "origin": "original",
+      "name_key": "material.ashen_essence.name",
+      "desc_key": "material.ashen_essence.desc",
+      "rarity": "epic",
+      "icon": "res://assets/textures/icons/material.ashen_essence.png"
+    }
+  ]
+}

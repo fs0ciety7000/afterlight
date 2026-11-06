@@ -30,6 +30,13 @@
       "region": "region.aubelin_vale",
       "kind": "field",
       "level": 1,
+      "encounters": [
+        "encounter.whispering_wood_01",
+        "encounter.whispering_wood_02",
+        "encounter.whispering_wood_03",
+        "encounter.whispering_wood_04",
+        "encounter.whispering_wood_05"
+      ],
       "scene": "res://game/world/locations/whispering_wood.tscn",
       "map_pos": [
         0.26,

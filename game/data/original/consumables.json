@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "type": "consumable",
+  "entries": [
+    {
+      "id": "consumable.healing_draught",
+      "origin": "original",
+      "name_key": "consumable.healing_draught.name",
+      "desc_key": "consumable.healing_draught.desc",
+      "effect": { "type": "heal", "coeff": 0.35 },
+      "carry_max": 5,
+      "shared_cooldown_group": "potion",
+      "price_base": 30,
+      "notes": "Heals coeff x max HP (HEALING_DRAUGHT_PCT)."
+    },
+    {
+      "id": "consumable.mana_elixir",
+      "origin": "original",
+      "name_key": "consumable.mana_elixir.name",
+      "desc_key": "consumable.mana_elixir.desc",
+      "effect": { "type": "restore_mana", "coeff": 50 },
+      "carry_max": 5,
+      "shared_cooldown_group": "potion",
+      "price_base": 25,
+      "notes": "Restores coeff mana (MANA_ELIXIR_AMOUNT)."
+    }
+  ]
+}

@@ -18,6 +18,9 @@
           "coeff": 1.0,
           "hits": 1
         }
+      ],
+      "tags": [
+        "projectile"
       ]
     },
     {
@@ -55,6 +58,9 @@
         {
           "rank": 5
         }
+      ],
+      "tags": [
+        "projectile"
       ]
     },
     {

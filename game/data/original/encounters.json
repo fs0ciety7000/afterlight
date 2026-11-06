@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "type": "encounter",
+  "entries": [
+    {
+      "id": "encounter.whispering_wood_01",
+      "origin": "original",
+      "name_key": "encounter.whispering_wood_01.name",
+      "location": "location.whispering_wood",
+      "kind": "normal",
+      "level": 1,
+      "enemies": [
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 2
+        }
+      ],
+      "loot_table": "loot.field_normal",
+      "offline_eligible": true,
+      "speed_cap": 4,
+      "anchor": "encounter_01",
+      "notes": "First fight (GDD §16.1): two wolves, under the §11 budget on purpose."
+    },
+    {
+      "id": "encounter.whispering_wood_02",
+      "origin": "original",
+      "name_key": "encounter.whispering_wood_02.name",
+      "location": "location.whispering_wood",
+      "kind": "normal",
+      "level": 1,
+      "enemies": [
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 3
+        }
+      ],
+      "loot_table": "loot.field_normal",
+      "offline_eligible": true,
+      "speed_cap": 4,
+      "anchor": "encounter_02"
+    },
+    {
+      "id": "encounter.whispering_wood_03",
+      "origin": "original",
+      "name_key": "encounter.whispering_wood_03.name",
+      "location": "location.whispering_wood",
+      "kind": "normal",
+      "level": 2,
+      "enemies": [
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 2
+        },
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 1,
+          "level_offset": 1
+        }
+      ],
+      "loot_table": "loot.field_normal",
+      "offline_eligible": true,
+      "speed_cap": 4,
+      "anchor": "encounter_03"
+    },
+    {
+      "id": "encounter.whispering_wood_04",
+      "origin": "original",
+      "name_key": "encounter.whispering_wood_04.name",
+      "location": "location.whispering_wood",
+      "kind": "normal",
+      "level": 2,
+      "enemies": [
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 2
+        },
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 2,
+          "level_offset": -1
+        }
+      ],
+      "loot_table": "loot.field_normal",
+      "offline_eligible": true,
+      "speed_cap": 4,
+      "anchor": "encounter_04"
+    },
+    {
+      "id": "encounter.whispering_wood_05",
+      "origin": "original",
+      "name_key": "encounter.whispering_wood_05.name",
+      "location": "location.whispering_wood",
+      "kind": "normal",
+      "level": 3,
+      "enemies": [
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 3
+        }
+      ],
+      "loot_table": "loot.field_normal",
+      "offline_eligible": true,
+      "speed_cap": 4,
+      "anchor": "encounter_05"
+    },
+    {
+      "id": "encounter.lantern_mire_01",
+      "origin": "original",
+      "name_key": "encounter.lantern_mire_01.name",
+      "location": "location.lantern_mire",
+      "kind": "normal",
+      "level": 4,
+      "enemies": [
+        {
+          "enemy": "enemy.wandering_lantern",
+          "count": 2
+        },
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 1
+        }
+      ],
+      "loot_table": "loot.field_normal",
+      "offline_eligible": true,
+      "speed_cap": 4,
+      "anchor": "encounter_01",
+      "notes": "Anchor to place when the Lantern Mire scene is built."
+    },
+    {
+      "id": "encounter.watch_ruins_01",
+      "origin": "original",
+      "name_key": "encounter.watch_ruins_01.name",
+      "location": "location.watch_ruins",
+      "kind": "normal",
+      "level": 7,
+      "enemies": [
+        {
+          "enemy": "enemy.stone_sentinel",
+          "count": 1
+        },
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 1
+        }
+      ],
+      "loot_table": "loot.field_normal",
+      "offline_eligible": true,
+      "speed_cap": 4,
+      "anchor": "encounter_01",
+      "notes": "Anchor to place when the Watch Ruins scene is built."
+    },
+    {
+      "id": "encounter.cloister_alpha",
+      "origin": "original",
+      "name_key": "encounter.cloister_alpha.name",
+      "location": "location.watch_ruins",
+      "kind": "elite",
+      "level": 11,
+      "enemies": [
+        {
+          "enemy": "enemy.mist_wolf_alpha",
+          "count": 1
+        }
+      ],
+      "loot_table": "loot.elite_alpha",
+      "offline_eligible": false,
+      "speed_cap": 4,
+      "anchor": "dungeon_alpha",
+      "notes": "Temporarily at the Watch Ruins: moves to dungeon.silent_dial_cloister (room 5) with Milestone 6."
+    },
+    {
+      "id": "encounter.cloister_boss",
+      "origin": "original",
+      "name_key": "encounter.cloister_boss.name",
+      "location": "location.watch_ruins",
+      "kind": "boss",
+      "level": 12,
+      "enemies": [
+        {
+          "enemy": "enemy.morvaine",
+          "count": 1
+        }
+      ],
+      "loot_table": "loot.boss_morvaine",
+      "offline_eligible": false,
+      "speed_cap": 2,
+      "anchor": "dungeon_boss",
+      "notes": "Temporarily at the Watch Ruins: moves to dungeon.silent_dial_cloister (room 7) with Milestone 6."
+    }
+  ]
+}

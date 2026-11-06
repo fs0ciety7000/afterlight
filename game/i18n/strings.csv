@@ -116,3 +116,92 @@ ui.settings.graphics_quality,Qualité graphique
 ui.settings.quality_low,Basse
 ui.settings.quality_medium,Moyenne
 ui.settings.quality_high,Haute
+status.burn.name,Brûlure
+status.burn.desc,"Inflige des dégâts de feu à intervalles réguliers. Se cumule jusqu'à trois fois."
+status.chill.name,Refroidi
+status.chill.desc,"Ralentit les attaques et les déplacements. Au troisième cumul, la cible est gelée."
+status.frozen.name,Gelé
+status.frozen.desc,"Ne peut plus agir pendant un court instant, puis résiste au gel quelques secondes."
+status.shock.name,Choc
+status.shock.desc,"Le prochain coup reçu inflige davantage de dégâts."
+status.weaken.name,Affaibli
+status.weaken.desc,"La puissance est réduite pendant quelques secondes."
+status.stun.name,Étourdi
+status.stun.desc,"Ne peut plus agir après une incantation interrompue."
+status.haste_buff.name,Frénésie
+status.haste_buff.desc,"Attaque plus vite pendant quelques secondes."
+status.shield.name,Bouclier
+status.shield.desc,"Absorbe les dégâts reçus jusqu'à épuisement ou expiration."
+ability.wolf_bite.name,Morsure
+ability.wolf_bite.desc,"Morsure rapide au contact."
+ability.wolf_lunge.name,Bond
+ability.wolf_lunge.desc,"Après une courte préparation marquée au sol, le loup bondit en ligne droite."
+ability.lantern_bolt.name,Flammèche
+ability.lantern_bolt.desc,"Projectile de feu qui peut brûler la cible."
+ability.lantern_blaze.name,Embrasement
+ability.lantern_blaze.desc,"Canalisation interruptible. Si elle aboutit, le sol s'embrase sous la cible."
+ability.sentinel_bash.name,Coup de poing de pierre
+ability.sentinel_bash.desc,"Coup lourd au contact."
+ability.sentinel_slam.name,Fracas
+ability.sentinel_slam.desc,"Un cercle se remplit au sol, puis la sentinelle frappe toute la zone."
+ability.sentinel_barrier.name,Barrière de pierre
+ability.sentinel_barrier.desc,"Une barrière absorbe les dégâts. Elle revient si la sentinelle ne subit plus de dégâts arcaniques."
+ability.alpha_bite.name,Croc de l'alpha
+ability.alpha_bite.desc,"Morsure puissante au contact."
+ability.alpha_howl.name,Hurlement
+ability.alpha_howl.desc,"Canalisation interruptible : appelle deux loups et pousse la meute à la frénésie."
+ability.alpha_chain_lunge.name,Bonds en chaîne
+ability.alpha_chain_lunge.desc,"Trois bonds successifs, chacun annoncé au sol."
+ability.morvaine_ash_bolt.name,Trait de cendre
+ability.morvaine_ash_bolt.desc,"Projectile de feu qui peut brûler la cible."
+ability.morvaine_bound_lanterns.name,Lanternes liées
+ability.morvaine_bound_lanterns.desc,"Invoque deux lanternes. Tant qu'elles brûlent, Morvaine subit moins de dégâts."
+ability.morvaine_veil.name,Voile de mana
+ability.morvaine_veil.desc,"Une barrière qui revient si Morvaine ne subit plus de dégâts arcaniques."
+ability.morvaine_false_word.name,Parole trompeuse
+ability.morvaine_false_word.desc,"Canalisation interruptible qui affaiblit sa cible."
+ability.morvaine_ash_seal.name,Sceau de cendre
+ability.morvaine_ash_seal.desc,"Longue incantation impossible à interrompre, suivie d'un coup dévastateur. Protégez-vous."
+ability.morvaine_ash_seal_hollow.name,Sceau de cendre
+ability.morvaine_ash_seal_hollow.desc,"Longue incantation impossible à interrompre, suivie d'un coup dévastateur. Elle revient plus souvent."
+ability.morvaine_enrage.name,Cendre totale
+ability.morvaine_enrage.desc,"Quand le temps est écoulé, tout se consume."
+enemy.mist_wolf.name,Loup des brumes
+enemy.mist_wolf.desc,"Chasse en meute et vient vite au contact."
+enemy.wandering_lantern.name,Lanterne errante
+enemy.wandering_lantern.desc,"Flotte à distance et lance des flammes. Son embrasement peut être interrompu."
+enemy.stone_sentinel.name,Sentinelle de pierre
+enemy.stone_sentinel.desc,"Lente et protégée par une barrière que la magie arcanique brise plus vite."
+enemy.mist_wolf_alpha.name,Loup alpha des brumes
+enemy.mist_wolf_alpha.desc,"Chef de meute aux yeux pâles. Son hurlement appelle des renforts."
+enemy.morvaine.name,Morvaine
+enemy.morvaine.desc,"Démone qui a fait taire la cloche du cloître. Elle parle peu et ment avec douceur."
+ai.rusher.name,Fonceur
+ai.caster.name,Lanceur à distance
+ai.bulwark.name,Rempart
+ai.alpha.name,Chef de meute
+ai.morvaine.name,Tisseuse de cendres
+material.mana_dust.name,Poussière de mana
+material.mana_dust.desc,"Sert à améliorer l'équipement."
+material.rune_shard.name,Éclat runique
+material.rune_shard.desc,"Sert à fusionner les runes."
+material.grimoire_page.name,Page de grimoire
+material.grimoire_page.desc,"Sert à faire progresser les sorts."
+material.ashen_essence.name,Essence de cendre
+material.ashen_essence.desc,"Sert à éveiller les artefacts."
+consumable.healing_draught.name,Infusion de soin
+consumable.healing_draught.desc,"Rend une partie des PV."
+consumable.mana_elixir.name,Élixir de mana
+consumable.mana_elixir.desc,"Rend de la mana."
+loot.field_normal.name,Butin de terrain
+loot.elite_alpha.name,Butin de l'alpha
+loot.boss_morvaine.name,Butin de Morvaine
+encounter.whispering_wood_01.name,Deux loups à l'orée
+encounter.whispering_wood_02.name,Meute du sentier
+encounter.whispering_wood_03.name,Meute du vieux bouleau
+encounter.whispering_wood_04.name,Meute des fougères
+encounter.whispering_wood_05.name,Meute de la clairière
+encounter.lantern_mire_01.name,Feux de la tourbière
+encounter.watch_ruins_01.name,Gardien des ruines
+encounter.cloister_alpha.name,Le chenil
+encounter.cloister_boss.name,Salle du Cadran

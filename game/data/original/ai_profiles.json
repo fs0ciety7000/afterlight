@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "type": "ai_profile",
+  "entries": [
+    {
+      "id": "ai.rusher",
+      "origin": "original",
+      "name_key": "ai.rusher.name",
+      "states": ["idle", "aggro", "approach", "attack", "ability", "dead"],
+      "target_rule": "nearest",
+      "ability_priority": ["ability.wolf_lunge"],
+      "repath_s": 0.5
+    },
+    {
+      "id": "ai.caster",
+      "origin": "original",
+      "name_key": "ai.caster.name",
+      "states": ["idle", "aggro", "approach", "attack", "ability", "kite", "dead"],
+      "target_rule": "nearest",
+      "keep_distance_m": 9.0,
+      "flee_below_m": 4.0,
+      "ability_priority": ["ability.lantern_blaze"],
+      "repath_s": 0.5
+    },
+    {
+      "id": "ai.bulwark",
+      "origin": "original",
+      "name_key": "ai.bulwark.name",
+      "states": ["idle", "aggro", "approach", "attack", "ability", "dead"],
+      "target_rule": "nearest",
+      "ability_priority": ["ability.sentinel_barrier", "ability.sentinel_slam"],
+      "repath_s": 0.5
+    },
+    {
+      "id": "ai.alpha",
+      "origin": "original",
+      "name_key": "ai.alpha.name",
+      "states": ["idle", "aggro", "approach", "attack", "ability", "dead"],
+      "target_rule": "nearest",
+      "ability_priority": ["ability.alpha_howl", "ability.alpha_chain_lunge"],
+      "repath_s": 0.5
+    },
+    {
+      "id": "ai.morvaine",
+      "origin": "original",
+      "name_key": "ai.morvaine.name",
+      "states": ["aggro", "approach", "attack", "ability", "dead"],
+      "target_rule": "nearest",
+      "keep_distance_m": 10.0,
+      "ability_priority": [
+        "ability.morvaine_enrage",
+        "ability.morvaine_veil",
+        "ability.morvaine_ash_seal_hollow",
+        "ability.morvaine_ash_seal",
+        "ability.morvaine_false_word",
+        "ability.morvaine_bound_lanterns"
+      ],
+      "repath_s": 0.5
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "type": "enemy",
+  "entries": [
+    {
+      "id": "enemy.mist_wolf",
+      "origin": "original",
+      "name_key": "enemy.mist_wolf.name",
+      "desc_key": "enemy.mist_wolf.desc",
+      "archetype": "rusher",
+      "family": "beast",
+      "stats_l1": {
+        "hp": 300,
+        "power": 14,
+        "def_ratio": 0.2,
+        "barrier_ratio": 0,
+        "move_speed": 5.5,
+        "aggro_m": 9
+      },
+      "affinities": { "arcane": "neutral", "fire": "weak", "frost": "neutral", "lightning": "neutral" },
+      "attack": "ability.wolf_bite",
+      "abilities": ["ability.wolf_lunge"],
+      "ai_profile": "ai.rusher",
+      "xp_mult": 1.0,
+      "gold_mult": 1.0,
+      "model": "res://assets/models/enemies/mist_wolf/mist_wolf.glb"
+    },
+    {
+      "id": "enemy.wandering_lantern",
+      "origin": "original",
+      "name_key": "enemy.wandering_lantern.name",
+      "desc_key": "enemy.wandering_lantern.desc",
+      "archetype": "caster",
+      "family": "spirit",
+      "stats_l1": {
+        "hp": 220,
+        "power": 17,
+        "def_ratio": 0.1,
+        "barrier_ratio": 0,
+        "move_speed": 3.0,
+        "aggro_m": 11
+      },
+      "affinities": { "arcane": "neutral", "fire": "resist", "frost": "weak", "lightning": "neutral" },
+      "attack": "ability.lantern_bolt",
+      "abilities": ["ability.lantern_blaze"],
+      "ai_profile": "ai.caster",
+      "xp_mult": 1.0,
+      "gold_mult": 1.0,
+      "model": "res://assets/models/enemies/wandering_lantern/wandering_lantern.glb"
+    },
+    {
+      "id": "enemy.stone_sentinel",
+      "origin": "original",
+      "name_key": "enemy.stone_sentinel.name",
+      "desc_key": "enemy.stone_sentinel.desc",
+      "archetype": "bulwark",
+      "family": "construct",
+      "stats_l1": {
+        "hp": 520,
+        "power": 20,
+        "def_ratio": 0.6,
+        "barrier_ratio": 0.25,
+        "move_speed": 2.5,
+        "aggro_m": 7
+      },
+      "affinities": { "arcane": "neutral", "fire": "neutral", "frost": "resist", "lightning": "weak" },
+      "attack": "ability.sentinel_bash",
+      "abilities": ["ability.sentinel_slam", "ability.sentinel_barrier"],
+      "ai_profile": "ai.bulwark",
+      "xp_mult": 1.6,
+      "gold_mult": 1.5,
+      "model": "res://assets/models/enemies/stone_sentinel/stone_sentinel.glb"
+    },
+    {
+      "id": "enemy.mist_wolf_alpha",
+      "origin": "original",
+      "name_key": "enemy.mist_wolf_alpha.name",
+      "desc_key": "enemy.mist_wolf_alpha.desc",
+      "archetype": "elite",
+      "family": "beast",
+      "stats_l1": {
+        "hp": 1800,
+        "power": 21,
+        "def_ratio": 0.3,
+        "barrier_ratio": 0,
+        "move_speed": 6.0,
+        "aggro_m": 12
+      },
+      "affinities": { "arcane": "neutral", "fire": "weak", "frost": "resist", "lightning": "neutral" },
+      "attack": "ability.alpha_bite",
+      "abilities": ["ability.alpha_howl", "ability.alpha_chain_lunge"],
+      "ai_profile": "ai.alpha",
+      "xp_mult": 6.0,
+      "gold_mult": 5.0,
+      "scale": 1.4,
+      "model": "res://assets/models/enemies/mist_wolf_alpha/mist_wolf_alpha.glb"
+    },
+    {
+      "id": "enemy.morvaine",
+      "origin": "original",
+      "name_key": "enemy.morvaine.name",
+      "desc_key": "enemy.morvaine.desc",
+      "canon_refs": ["lore.demons"],
+      "archetype": "boss",
+      "family": "demon",
+      "stats_l1": {
+        "hp": 7500,
+        "power": 18,
+        "def_ratio": 0.35,
+        "barrier_ratio": 0.15,
+        "move_speed": 2.0,
+        "aggro_m": 0
+      },
+      "affinities": { "arcane": "neutral", "fire": "resist", "frost": "weak", "lightning": "neutral" },
+      "attack": "ability.morvaine_ash_bolt",
+      "abilities": ["ability.morvaine_enrage"],
+      "phases": [
+        {
+          "id": "thread",
+          "hp_threshold": 1.0,
+          "abilities": ["ability.morvaine_bound_lanterns"]
+        },
+        {
+          "id": "veil",
+          "hp_threshold": 0.65,
+          "abilities": [
+            "ability.morvaine_veil",
+            "ability.morvaine_false_word",
+            "ability.morvaine_ash_seal"
+          ]
+        },
+        {
+          "id": "hollow_hour",
+          "hp_threshold": 0.3,
+          "abilities": ["ability.morvaine_ash_seal_hollow"],
+          "haste": 0.3
+        }
+      ],
+      "enrage_s": 300,
+      "ai_profile": "ai.morvaine",
+      "xp_mult": 30.0,
+      "gold_mult": 25.0,
+      "model": "res://assets/models/enemies/morvaine/morvaine.glb"
+    }
+  ]
+}

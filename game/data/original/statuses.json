@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "type": "status",
+  "entries": [
+    {
+      "id": "status.burn",
+      "origin": "original",
+      "name_key": "status.burn.name",
+      "desc_key": "status.burn.desc",
+      "kind": "dot",
+      "duration_s": 4.0,
+      "max_stacks": 3,
+      "stack_rule": "add_refresh",
+      "tick_s": 0.5,
+      "icon": "res://assets/textures/icons/status.burn.png"
+    },
+    {
+      "id": "status.chill",
+      "origin": "original",
+      "name_key": "status.chill.name",
+      "desc_key": "status.chill.desc",
+      "kind": "debuff",
+      "duration_s": 3.0,
+      "max_stacks": 3,
+      "stack_rule": "add_refresh",
+      "modifiers": [
+        { "stat": "attack_speed", "kind": "percent", "value": -0.1 },
+        { "stat": "move_speed", "kind": "percent", "value": -0.1 }
+      ],
+      "converts_to": { "at_stacks": 3, "status": "status.frozen" },
+      "icon": "res://assets/textures/icons/status.chill.png"
+    },
+    {
+      "id": "status.frozen",
+      "origin": "original",
+      "name_key": "status.frozen.name",
+      "desc_key": "status.frozen.desc",
+      "kind": "cc",
+      "duration_s": 1.5,
+      "max_stacks": 1,
+      "stack_rule": "none",
+      "immunity_after_s": 4.0,
+      "icon": "res://assets/textures/icons/status.frozen.png"
+    },
+    {
+      "id": "status.shock",
+      "origin": "original",
+      "name_key": "status.shock.name",
+      "desc_key": "status.shock.desc",
+      "kind": "debuff",
+      "duration_s": 5.0,
+      "max_stacks": 1,
+      "stack_rule": "refresh",
+      "icon": "res://assets/textures/icons/status.shock.png"
+    },
+    {
+      "id": "status.weaken",
+      "origin": "original",
+      "name_key": "status.weaken.name",
+      "desc_key": "status.weaken.desc",
+      "kind": "debuff",
+      "duration_s": 8.0,
+      "max_stacks": 1,
+      "stack_rule": "refresh",
+      "modifiers": [{ "stat": "power", "kind": "percent", "value": -0.3 }],
+      "boss_duration_mult": 0.5,
+      "icon": "res://assets/textures/icons/status.weaken.png"
+    },
+    {
+      "id": "status.stun",
+      "origin": "original",
+      "name_key": "status.stun.name",
+      "desc_key": "status.stun.desc",
+      "kind": "cc",
+      "duration_s": 1.0,
+      "max_stacks": 1,
+      "stack_rule": "none",
+      "boss_duration_mult": 0.5,
+      "icon": "res://assets/textures/icons/status.stun.png"
+    },
+    {
+      "id": "status.haste_buff",
+      "origin": "original",
+      "name_key": "status.haste_buff.name",
+      "desc_key": "status.haste_buff.desc",
+      "kind": "buff",
+      "duration_s": 8.0,
+      "max_stacks": 1,
+      "stack_rule": "refresh",
+      "modifiers": [{ "stat": "attack_speed", "kind": "percent", "value": 0.25 }],
+      "icon": "res://assets/textures/icons/status.haste_buff.png"
+    },
+    {
+      "id": "status.shield",
+      "origin": "original",
+      "name_key": "status.shield.name",
+      "desc_key": "status.shield.desc",
+      "kind": "shield",
+      "duration_s": 4.0,
+      "max_stacks": 1,
+      "stack_rule": "keep_highest",
+      "icon": "res://assets/textures/icons/status.shield.png"
+    }
+  ]
+}
