@@ -57,7 +57,9 @@ const SHIELD_POWER_COEFF := 1.5
 const SHIELD_DURATION_S := 4.0
 const HEALING_DRAUGHT_PCT := 0.35
 const MANA_ELIXIR_AMOUNT := 50.0
-const CONSUMABLE_SHARED_CD_S := 20.0
+## (provisoire, jalon 6) 20 -> 40 s: one infusion per Ash Seal window at most,
+## so a passive Fern cannot chain heals through the Morvaine fight (§22.6).
+const CONSUMABLE_SHARED_CD_S := 40.0
 const CONSUMABLE_CARRY_MAX := 5
 
 # --- §16 Spell ranks ----------------------------------------------------------

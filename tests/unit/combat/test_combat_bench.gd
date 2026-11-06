@@ -64,13 +64,27 @@ func test_elite() -> void:
 	assert_true(best["win_rate"] >= 0.9, "script %s" % best)
 
 
+## GAME_BALANCE §22.6 (provisional, milestone 6): three layers of engagement,
+## and a passive player (defaults only) who levels up wins in the end. The
+## full curve (200 seeds, levels 11-20) is in §22.6.
 func test_boss() -> void:
 	var idle := CombatBench.bench("encounter.cloister_boss", 11, "typical", "idle", 3)
 	assert_true(idle["win_rate"] <= 0.2, "idle %s" % idle)
 	var confused := CombatBench.bench("encounter.cloister_boss", 11, "typical", "confused", 3)
 	assert_true(confused["win_rate"] <= 0.1, "confused %s" % confused)
-	var tuned := CombatBench.bench("encounter.cloister_boss", 14, "typical", "idle_tuned", 4)
+	var tuned := CombatBench.bench("encounter.cloister_boss", 11, "typical", "idle_tuned", 10)
+	assert_true(tuned["win_rate"] >= 0.4 and tuned["win_rate"] <= 0.65, "idle_tuned L11 %s" % tuned)
+	tuned = CombatBench.bench("encounter.cloister_boss", 14, "typical", "idle_tuned", 4)
 	assert_true(tuned["win_rate"] >= 0.85, "idle_tuned L14 %s" % tuned)
-	var best := CombatBench.bench("encounter.cloister_boss", 11, "typical", "script_optimal", 10)
+	var best := CombatBench.bench("encounter.cloister_boss", 11, "typical", "script_optimal", 20)
 	assert_true(best["win_rate"] >= 0.8, "script %s" % best)
 	assert_true(best["p50"] >= 150.0 and best["p50"] <= 210.0, "duration %s" % best)
+
+
+## The passive player levels up and wins (GDD decision 28, owner decision of
+## 2026-11-06: the infusion on Auto by default).
+func test_boss_idle_wins_by_levelling() -> void:
+	var l16 := CombatBench.bench("encounter.cloister_boss", 16, "typical", "idle", 4)
+	assert_true(l16["win_rate"] >= 0.7, "idle L16 %s" % l16)
+	var l20 := CombatBench.bench("encounter.cloister_boss", 20, "typical", "idle", 4)
+	assert_true(l20["win_rate"] >= 0.9, "idle L20 %s" % l20)

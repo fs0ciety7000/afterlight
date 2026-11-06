@@ -242,7 +242,7 @@
       "effects": [
         {
           "type": "damage",
-          "coeff": 0.6,
+          "coeff": 0.35,
           "hits": 1
         },
         {

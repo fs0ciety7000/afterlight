@@ -31,15 +31,39 @@ const ELITE := ["encounter.cloister_alpha", 10]
 const BOSS := ["encounter.cloister_boss", 11]
 
 ## Boss lines of GAME_BALANCE §22.1 and §22.6: [player, level, target].
+## (provisional, milestone 6) idle, idle_tuned and script_optimal at every
+## level from 11 to 20 (owner decision of 2026-11-06, smooth idle curve).
 const BOSS_LINES := [
 	["idle", 11, "win <= 20 %"],
-	["idle", 14, "win >= 40 %"],
-	["idle", 16, "win >= 70 %"],
-	["idle", 20, "win >= 90 %"],
+	["idle", 12, "-"],
+	["idle", 13, "-"],
+	["idle", 14, "win ~45 %"],
+	["idle", 15, "-"],
+	["idle", 16, "win ~75 % (>= 70 %)"],
+	["idle", 17, "-"],
+	["idle", 18, "-"],
+	["idle", 19, "-"],
+	["idle", 20, "win ~95 % (>= 90 %)"],
 	["idle_tuned", 11, "win 40-65 %"],
 	["idle_tuned", 12, "win >= 60 %"],
+	["idle_tuned", 13, "-"],
 	["idle_tuned", 14, "win >= 85 %"],
+	["idle_tuned", 15, "-"],
+	["idle_tuned", 16, "-"],
+	["idle_tuned", 17, "-"],
+	["idle_tuned", 18, "-"],
+	["idle_tuned", 19, "-"],
+	["idle_tuned", 20, "-"],
 	["script_optimal", 11, "win >= 80 %, p50 150-210 s"],
+	["script_optimal", 12, "-"],
+	["script_optimal", 13, "-"],
+	["script_optimal", 14, "-"],
+	["script_optimal", 15, "-"],
+	["script_optimal", 16, "-"],
+	["script_optimal", 17, "-"],
+	["script_optimal", 18, "-"],
+	["script_optimal", 19, "-"],
+	["script_optimal", 20, "-"],
 	["confused", 11, "win <= 10 %"],
 	["confused", 12, "win <= 10 %"],
 ]
