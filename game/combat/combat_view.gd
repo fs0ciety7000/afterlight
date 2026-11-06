@@ -18,6 +18,9 @@ const GLOW_KEYS := [
 	"glow_hdr_threshold",
 ]
 
+## Hit-stops applied since boot (all views), read by MotionFlags for the E2E probe.
+static var hit_stops_applied := 0
+
 var sim: CombatSim
 var paused := false
 var speed_index := 0
@@ -65,11 +68,16 @@ func _setup_vfx() -> void:
 	vfx.quality = Settings.graphics_quality
 	add_child(vfx)
 	_fx = CombatFx.new(vfx, self)
-	vfx.hit_stop_requested.connect(func(s: float) -> void: _hit_stop = maxf(_hit_stop, s))
+	vfx.hit_stop_requested.connect(_on_hit_stop)
 	vfx.shake_requested.connect(_on_shake)
 	if _rig:
 		vfx.prewarm(_rig.camera)
 	_enable_glow()
+
+
+func _on_hit_stop(seconds: float) -> void:
+	hit_stops_applied += 1
+	_hit_stop = maxf(_hit_stop, seconds)
 
 
 func _on_shake(trauma: float) -> void:

@@ -304,7 +304,7 @@ func _open_chest(root: Node3D, animate: bool) -> bool:
 	var lid := root.find_child("ChestLid", true, false) as Node3D
 	if lid == null:
 		return false
-	if animate and is_inside_tree():
+	if animate and is_inside_tree() and not Settings.reduce_motion:
 		var tw := create_tween()
 		tw.tween_property(lid, "rotation:x", LID_OPEN_RAD, 0.45).set_ease(Tween.EASE_OUT).set_trans(
 			Tween.TRANS_BACK

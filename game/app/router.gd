@@ -24,6 +24,8 @@ const SCREENS := {
 const FADE_SECONDS := 0.16  # x2 (out + in) = 320 ms, DESIGN.md
 
 var current_id := ""
+## Screen fades played since boot (none with reduced motion), for the E2E probe.
+var fades_played := 0
 ## Parent for 3D views (owned by Main, drawn under the UI).
 var world_root: Node3D
 var current: Control
@@ -43,8 +45,9 @@ func go_to(screen_id: String, params: Dictionary = {}, remember: bool = true) ->
 	SaveService.save_if_dirty()
 	if remember and current_id != "":
 		_history.append(current_id)
-	var fade := not Settings.reduce_motion and current != null
+	var fade := fades_enabled() and current != null
 	if fade:
+		fades_played += 1
 		await _fade_to(1.0)
 	if current:
 		current.queue_free()
@@ -61,6 +64,11 @@ func go_to(screen_id: String, params: Dictionary = {}, remember: bool = true) ->
 		await _fade_to(0.0)
 	if screen.has_method("grab_initial_focus"):
 		screen.call_deferred("grab_initial_focus")
+
+
+## Fades between screens, or cuts when "Réduire les animations" is on.
+func fades_enabled() -> bool:
+	return not Settings.reduce_motion
 
 
 ## Returns to the previous screen (or the given fallback).

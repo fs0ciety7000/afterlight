@@ -10,7 +10,7 @@ extends Node3D
 ##   vfx.flash(enemy)                                   # 60 ms white hit flash
 ##
 ## Game feel requests are signals (the scene owns time and camera): hit_stop_requested,
-## shake_requested. Shake is never requested when reduce_motion is on (DESIGN.md "Mouvement").
+## shake_requested. Neither is requested when reduce_motion is on (DESIGN.md "Mouvement").
 ## Catalogue, parameters and the event -> effect table: docs/VFX.md.
 
 signal hit_stop_requested(duration_s: float)
@@ -93,16 +93,21 @@ func flash(target: Node, color: Color = Color.WHITE, duration_s: float = 0.06) -
 
 
 func particle_scale() -> float:
+	return particle_factor(reduce_motion, quality)
+
+
+## Particle budget factor: halved by reduced motion, halved again at low quality.
+static func particle_factor(reduced: bool, level: int) -> float:
 	var k := 1.0
-	if reduce_motion:
+	if reduced:
 		k *= 0.5
-	if quality <= 0:
+	if level <= 0:
 		k *= 0.5
 	return k
 
 
 func request_hit_stop(duration_s: float) -> void:
-	if duration_s > 0.0:
+	if duration_s > 0.0 and not reduce_motion:
 		hit_stop_requested.emit(duration_s)
 
 

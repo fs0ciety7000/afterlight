@@ -8,6 +8,9 @@ const DISTANCES := [11.0, 8.5, 6.5]
 const FOLLOW_SHARPNESS := 6.0
 const FOV := 40.0
 
+## Shakes accepted since boot (all rigs), read by MotionFlags for the E2E probe.
+static var shakes_applied := 0
+
 var target: Node3D
 ## Screen radius of the cut-out around the hero (wider in combat).
 var cut_radius := 0.22
@@ -32,9 +35,17 @@ func snap() -> void:
 	_place_camera()
 
 
-## Camera shake request (crits, boss hits); decays quickly.
+## Camera shake request (crits, boss hits); decays quickly. Ignored when
+## "Réduire les animations" is on (DESIGN.md "Mouvement").
 func add_shake(trauma: float) -> void:
+	if trauma <= 0.0 or not shake_allowed():
+		return
+	shakes_applied += 1
 	_trauma = clampf(_trauma + trauma, 0.0, 1.0)
+
+
+static func shake_allowed() -> bool:
+	return not Settings.reduce_motion
 
 
 func zoom(step: int) -> void:
