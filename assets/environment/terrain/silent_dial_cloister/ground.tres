@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/env_terrain.gdshader" id="1_ivfbi"]
+[ext_resource type="Texture2D" path="res://assets/environment/textures/ground_cobble.jpg" id="2_ifdlf"]
+[ext_resource type="Texture2D" path="res://assets/environment/textures/ground_dirt.jpg" id="3_0b653"]
+[ext_resource type="Texture2D" path="res://assets/environment/textures/ground_forest.jpg" id="4_sax3s"]
+[ext_resource type="Texture2D" path="res://assets/environment/textures/ground_grass.jpg" id="5_eetko"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/silent_dial_cloister/splat.res" id="6_fduxa"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ivfbi")
+shader_parameter/splat_tex = ExtResource("6_fduxa")
+shader_parameter/grass_tex = ExtResource("5_eetko")
+shader_parameter/dirt_tex = ExtResource("3_0b653")
+shader_parameter/cobble_tex = ExtResource("2_ifdlf")
+shader_parameter/forest_tex = ExtResource("4_sax3s")
+shader_parameter/splat_rect = Vector4(-56, -226, 120, 276)
+shader_parameter/grass_tile = 5.0
+shader_parameter/dirt_tile = 5.0
+shader_parameter/cobble_tile = 3.2
+shader_parameter/forest_tile = 5.0
+shader_parameter/grass_tint = Color(0.7, 0.8, 0.72, 1)
+shader_parameter/macro_dark = Color(0.84, 0.88, 0.8, 1)
+shader_parameter/macro_light = Color(1.08, 1.04, 0.92, 1)
+shader_parameter/edge_noise = 0.35
+shader_parameter/shadow_tint = Color(0.2901961, 0.3529412, 0.5019608, 1)
+shader_parameter/shadow_threshold = 0.5

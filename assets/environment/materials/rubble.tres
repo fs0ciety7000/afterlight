@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/env_toon.gdshader" id="1_q7s8f"]
+[ext_resource type="Texture2D" path="res://assets/environment/ruins/rubble_village_props_atlas.webp" id="2_hg221"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_q7s8f")
+shader_parameter/albedo_tex = ExtResource("2_hg221")
+shader_parameter/albedo_tint = Color(1, 1, 1, 1)
+shader_parameter/shadow_tint = Color(0.4862745, 0.6117647, 0.6901961, 1)
+shader_parameter/band_threshold = 0.0
+shader_parameter/band_softness = 0.06
+shader_parameter/shadow_threshold = 0.5
+shader_parameter/rim_color = Color(1, 0.93, 0.8, 1)
+shader_parameter/rim_width = 0.2
+shader_parameter/rim_strength = 0.25
+shader_parameter/use_instance_custom = true
+shader_parameter/warm_tint = Color(1, 0.86, 0.62, 1)
+shader_parameter/cool_tint = Color(0.78, 0.86, 0.72, 1)
+shader_parameter/wind_strength = 0.0
+shader_parameter/wind_height = 6.0
+shader_parameter/contact_height = 0.45
+shader_parameter/contact_darkness = 0.22
+shader_parameter/atlas_grid = Vector2(1, 1)
+shader_parameter/alpha_scissor = 0.0
+shader_parameter/cam_fade_near = 0.0
+shader_parameter/cam_fade_focus = 13.2
+shader_parameter/cam_fade_radius = 0.22
+shader_parameter/normal_up_blend = 0.0

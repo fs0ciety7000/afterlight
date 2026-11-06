@@ -55,6 +55,24 @@ const KIT := {
 	# Lantern Mire pieces (tools/blender/build_mire_props.py); the boardwalk's colliders are its deck
 	"boardwalk": {"dir": "props", "col": ""},
 	"beacon": {"dir": "props", "col": "cyl", "r": 0.4, "fade": true},
+	"ferry_hut": {"dir": "props", "col": "box", "fade": true},
+	# Watch Ruins and Silent Dial Cloister stone kit (tools/blender/build_cloister_props.py); walls
+	# and arches get one collision box per wall run from the layout, not one per piece
+	"wall": {"dir": "ruins", "col": "", "fade": true},
+	"wall_broken": {"dir": "ruins", "col": "", "fade": true},
+	"pillar": {"dir": "ruins", "col": "cyl", "r": 0.42, "fade": true},
+	"arch": {"dir": "ruins", "col": "", "fade": true},
+	"stairs": {"dir": "ruins", "col": ""},
+	"brazier": {"dir": "ruins", "col": "cyl", "r": 0.4},
+	"torch_post": {"dir": "ruins", "col": "post"},
+	"fountain": {"dir": "ruins", "col": "cyl", "r": 0.5},
+	"campfire": {"dir": "ruins", "col": ""},
+	"grille": {"dir": "ruins", "col": ""},
+	"bell": {"dir": "ruins", "col": "", "fade": true},
+	"dial": {"dir": "ruins", "col": ""},
+	"tower_ruin": {"dir": "ruins", "col": "box", "fade": true},
+	"rubble": {"dir": "ruins", "col": ""},
+	"lectern": {"dir": "ruins", "col": "post"},
 }
 ## Grass / flower atlas cells (assets/environment/textures/grass_cards.png, 4 x 2).
 const CARD_GREEN := 0
@@ -99,6 +117,8 @@ var fields: Array = []  # Rect2 (x, z)
 ## Per-location look: added to each placed prop's warm / cool tint (< 0 cooler), ground grass tint.
 var tint_bias := 0.0
 var grass_tint := Color(0.86, 0.95, 0.76)
+## Multiplies the brightness of placed props (instance custom .g): < 1 for night places.
+var bright_scale := 1.0
 var _height_fn: Callable
 var _splat_fn: Callable
 ## Pending instances per kit name: [Transform3D, custom Color], flushed as chunked MultiMeshes.
@@ -211,6 +231,7 @@ func _begin(scene_name: String) -> void:
 	clearings.clear()
 	fields.clear()
 	tint_bias = 0.0
+	bright_scale = 1.0
 	grass_tint = Color(0.86, 0.95, 0.76)
 	for n in ["Spawns", "Exits", "Anchors", "Visuals"]:
 		_add(scene_root, Node3D.new(), n)
@@ -475,7 +496,7 @@ func _place(
 	)
 	var xf := Transform3D(basis, Vector3(at.x, y, at.y))
 	var tint := rng.randf_range(-0.35, 0.35) + tint_bias
-	var bright := rng.randf_range(0.93, 1.05)
+	var bright := rng.randf_range(0.93, 1.05) * bright_scale
 	_instances.get_or_add(kit_name, []).append([xf, Color(tint, bright, rng.randf(), 0.0)])
 	if collide:
 		_collider(kit_name, xf)
@@ -628,3 +649,23 @@ func _backdrop(at: Vector3, width: float) -> void:
 	mi.mesh = quad
 	mi.position = at + Vector3(0, quad.size.y * 0.5, 0)
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+
+func _grass(extent: float, tries: int, flower_bias: float) -> void:
+	var flowers := [CARD_DAISY, CARD_LAVENDER, CARD_BUTTERCUP, CARD_PINK]
+	for i in tries:
+		var p := Vector2(rng.randf_range(-extent, extent), rng.randf_range(-extent, extent))
+		var s: Color = _splat_fn.call(p.x, p.y)
+		if s.r + s.g > 0.25 or _in_field(p, 0.3) or not _free_at(p, -0.2):
+			continue
+		var edge := _path_dist(p)
+		var cell := CARD_GREEN if rng.randf() < 0.5 else CARD_SHORT
+		# flowers gather along the roads and fences, like the A_world frame
+		if rng.randf() < flower_bias + (0.35 if edge < 2.5 else 0.0):
+			cell = flowers[rng.randi() % flowers.size()]
+		elif s.b > 0.4 and rng.randf() < 0.5:
+			cell = CARD_FERN
+		elif rng.randf() < 0.12:
+			cell = CARD_DRY
+		var size := rng.randf_range(0.45, 0.8) if cell != CARD_FERN else rng.randf_range(0.6, 0.95)
+		_card(p, cell, size)

@@ -1,5 +1,6 @@
-extends "res://game/world/prototype/mire_layout.gd"
-## Offline builder: lays out Aubelin, the Whispering Wood and the Lantern Mire with the toolkit in
+extends "res://game/world/prototype/cloister_layout.gd"
+## Offline builder: lays out Aubelin, the Whispering Wood, the Lantern Mire, the Watch Ruins and the
+## Silent Dial Cloister (dungeon) with the toolkit in
 ## location_builder.gd and saves res://game/world/locations/*.tscn.
 ##   xvfb-run -a godot --path . --rendering-driver opengl3 \
 ##     -s res://game/world/prototype/build_locations.gd [-- --only=lantern_mire,aubelin]
@@ -30,6 +31,10 @@ func _init() -> void:
 		_build_wood()
 	if only.is_empty() or "lantern_mire" in only:
 		_build_mire()
+	if only.is_empty() or "watch_ruins" in only:
+		_build_ruins()
+	if only.is_empty() or "silent_dial_cloister" in only:
+		_build_cloister()
 	quit()
 
 
@@ -114,12 +119,14 @@ func _build_aubelin() -> void:
 	_terrain("aubelin", 70, 34, 448)
 
 	# houses face the square; tint / scale variations; doorstep, flower bed and flowers at each door
+	var door_spots := []  # a step in front of each door: NPC anchors (no RNG drawn)
 	for k in houses.size():
 		var at: Vector2 = houses[k][1]
 		var yaw := _face(at, Vector2.ZERO) + rng.randf_range(-0.12, 0.12)
 		var sc := rng.randf_range(0.95, 1.06)
 		_place(houses[k][0], at, yaw, sc)
 		_dress_house(houses[k][0], at, yaw, sc)
+		door_spots.append(_local_point(at, yaw, sc, DOORS[houses[k][0]] + Vector2(0, 1.2)))
 	_place("well", Vector2(0, -0.5), 0.4)
 	_place("stall", Vector2(4.4, -3.4), _face(Vector2(4.4, -3.4), Vector2(0, 4)))
 	_place("barrels", Vector2(6.6, -1.8), 0.6, 0.9)
@@ -279,11 +286,20 @@ func _build_aubelin() -> void:
 		"location.lantern_mire",
 		"from_aubelin"
 	)
+	# NPCs (docs/content/quests.md, dungeon.md 5): Odile at the well, Rosalie at the stall, the
+	# notice board; Bastien at the forge (east house), Maëlle at her rune workshop (west house),
+	# Tobias at the clock house (north), Ysaline the herbalist by the stream
+	var forge: Vector2 = door_spots[3]
+	var runes: Vector2 = door_spots[7]
+	var clock: Vector2 = door_spots[1]
 	for a in [
 		["npc_well", Vector3(-1.8, 0, 1.6)],
 		["npc_stall", Vector3(4.0, 0, -1.4)],
 		["board", Vector3(-4.4, 0, -2.4)],
-		["discovery_bridge", Vector3(STREAM_X - 3, 0, 1.5)]
+		["npc_herbalist", Vector3(STREAM_X - 3, 0, 1.5)],
+		["npc_forge", Vector3(forge.x, 0, forge.y)],
+		["npc_runecarver", Vector3(runes.x, 0, runes.y)],
+		["npc_clockmaker", Vector3(clock.x, 0, clock.y)],
 	]:
 		_marker("Anchors", a[0], a[1], Vector3.BACK)
 	_save("aubelin.tscn")
@@ -353,26 +369,6 @@ func _stream_walls() -> void:
 			shape.shape = box
 			shape.position = Vector3(_stream_x(z + 1) + s * 2.2, 1.0, z + 1)
 			_add(obstacles, shape, "bank_%d_%d" % [z + 40, int(s)])
-
-
-func _grass(extent: float, tries: int, flower_bias: float) -> void:
-	var flowers := [CARD_DAISY, CARD_LAVENDER, CARD_BUTTERCUP, CARD_PINK]
-	for i in tries:
-		var p := Vector2(rng.randf_range(-extent, extent), rng.randf_range(-extent, extent))
-		var s: Color = _splat_fn.call(p.x, p.y)
-		if s.r + s.g > 0.25 or _in_field(p, 0.3) or not _free_at(p, -0.2):
-			continue
-		var edge := _path_dist(p)
-		var cell := CARD_GREEN if rng.randf() < 0.5 else CARD_SHORT
-		# flowers gather along the roads and fences, like the A_world frame
-		if rng.randf() < flower_bias + (0.35 if edge < 2.5 else 0.0):
-			cell = flowers[rng.randi() % flowers.size()]
-		elif s.b > 0.4 and rng.randf() < 0.5:
-			cell = CARD_FERN
-		elif rng.randf() < 0.12:
-			cell = CARD_DRY
-		var size := rng.randf_range(0.45, 0.8) if cell != CARD_FERN else rng.randf_range(0.6, 0.95)
-		_card(p, cell, size)
 
 
 # --- Whispering Wood ---------------------------------------------------------------------------
@@ -546,4 +542,13 @@ func _build_wood() -> void:
 		enc += 1
 	_marker("Anchors", "chest_01", Vector3(-16, 0, -29), Vector3.BACK)
 	_marker("Anchors", "discovery_01", Vector3(17, 0, -21), Vector3.BACK)
+	# docs/content/bestiary_discoveries.md 2.2 (markers only for now: the dead birch and the
+	# stream bank have no dressing yet): the vista by the central clearing, three mist herbs
+	for a in [
+		["discovery_02", Vector3(6, 0, 3.5)],
+		["herb_01", Vector3(19, 0, 7)],
+		["herb_02", Vector3(9.5, 0, 3)],
+		["herb_03", Vector3(18, 0, -24)],
+	]:
+		_marker("Anchors", a[0], a[1], Vector3.BACK)
 	_save("whispering_wood.tscn")
