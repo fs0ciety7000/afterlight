@@ -26,7 +26,10 @@ OUT = os.path.join(ROOT, 'assets/audio')
 TARGET = {'music': -18.0, 'sting': -16.0, 'sfx': -14.0, 'ui': -20.0, 'loop': -24.0}
 PEAK_DB = -1.0
 QUALITY = {'music': 2, 'sting': 3, 'sfx': 3, 'ui': 3, 'loop': 2}
-LOOP_XFADE_S = 3.0
+LOOP_XFADE_S = 2.0
+## Loop taken from the fal take: start (past the intro) and length range, seconds (export size budget).
+LOOP_START_S = 6.0
+LOOP_LENGTH_S = (52.0, 66.0)
 STEP_COUNT = 4
 
 
@@ -63,15 +66,54 @@ def normalise(x, target):
     return x * 10 ** (gain_db / 20), gain_db
 
 
-def make_loop(x, xfade_s=LOOP_XFADE_S, tail_s=4.0):
-    """fal music: drop a possible fade-out tail, then crossfade the end into the start (seamless wrap)."""
+def _features(mono, hop):
+    """Log band energies per frame (coarse spectrum), to compare two moments of a track."""
+    n = len(mono) // hop
+    frames = mono[:n * hop].reshape(n, hop) * np.hanning(hop)
+    spec = np.abs(np.fft.rfft(frames, axis=1))
+    edges = np.unique(np.geomspace(2, spec.shape[1] - 1, 25).astype(int))
+    bands = np.stack([spec[:, a:b].sum(axis=1) for a, b in zip(edges[:-1], edges[1:])], axis=1)
+    f = np.log(bands + 1e-6)
+    return (f - f.mean(axis=1, keepdims=True)) / (f.std(axis=1, keepdims=True) + 1e-6)
+
+
+def find_loop(x, start_s=LOOP_START_S, length_s=LOOP_LENGTH_S, window_s=4.0, tail_s=6.0):
+    """Start and length (samples) of the loop: the length near `length_s` whose next seconds sound most like
+    the start (spectral match), then aligned to the sample by cross-correlation at the seam."""
+    mono = x.mean(axis=1)
+    hop = int(0.05 * SR)
+    f = _features(mono, hop)
+    usable_s = len(x) / SR - tail_s - LOOP_XFADE_S
+    hi_s = min(length_s[1], usable_s - start_s)
+    a = int(start_s * SR / hop)
+    w = int(window_s * SR / hop)
+    best, best_len = -1e9, None
+    for L in range(int(length_s[0] * SR / hop), int(hi_s * SR / hop)):
+        if a + L + w >= len(f):
+            break
+        score = float(np.mean(f[a:a + w] * f[a + L:a + L + w]))
+        if score > best:
+            best, best_len = score, L
+    if best_len is None:  # short take: the whole usable part
+        return int(start_s * SR), int((usable_s - start_s) * SR), 0.0
+    s0, L = a * hop, best_len * hop
+    r = int(0.03 * SR)  # sample alignment within +-30 ms
+    ref = mono[s0:s0 + int(0.2 * SR)]
+    seg = mono[s0 + L - r:s0 + L + r + len(ref)]
+    shift = int(np.argmax(np.correlate(seg, ref, 'valid'))) - r
+    return s0, L + shift, best
+
+
+def make_loop(x, xfade_s=LOOP_XFADE_S):
+    """fal music: a loop of about a minute taken past the intro and before the ending, its end crossfaded into
+    its start (equal power) so the wrap is seamless."""
+    s0, L, score = find_loop(x)
     c = int(xfade_s * SR)
-    end = len(x) - int(tail_s * SR)
-    y = x[:end]
+    y = x[s0:s0 + L + c]
     body = y[c:].copy()
     ramp = np.linspace(0, 1, c)[:, None]
-    body[-c:] = y[-c:] * (1 - ramp) ** 0.5 + y[:c] * ramp ** 0.5  # equal power
-    return body
+    body[-c:] = y[-c:] * np.cos(ramp * np.pi / 2) + y[:c] * np.sin(ramp * np.pi / 2)
+    return body, {'loop_start_s': round(s0 / SR + xfade_s, 2), 'loop_match': round(score, 3)}
 
 
 def trim_silence(x, threshold_db=-50.0, keep_s=0.01):
@@ -138,9 +180,10 @@ def process(item, report):
         print('missing source', item['id'])
         return
     x = decode(path)
+    extra = {}
     if kind == 'music':
         if origin == 'fal':
-            x = make_loop(x)
+            x, extra = make_loop(x)
     elif kind == 'loop':
         x = x.mean(axis=1)  # fal `loop: true` and placeholders are already seamless
     else:
@@ -148,7 +191,7 @@ def process(item, report):
     y, gain = normalise(x, TARGET[kind])
     dest = os.path.join(OUT, folder, item['id'] + '.ogg')
     encode(y, dest, QUALITY[kind])
-    report[item['id']] = entry(dest, origin, y, gain)
+    report[item['id']] = entry(dest, origin, y, gain) | extra
 
 
 def entry(dest, origin, y, gain):

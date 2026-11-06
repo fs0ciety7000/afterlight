@@ -54,7 +54,11 @@ def write_row(n, endpoint, name, label, result, c, cum):
           f'{fmt(c)} | {fmt(cum)} |\n'
     text = open(LEDGER, encoding='utf-8').read()
     pat = re.compile(rf'^\| {n} \|.*\n', re.M)
-    text = pat.sub(row, text) if pat.search(text) else text.rstrip('\n') + '\n' + row
+    if pat.search(text):
+        text = pat.sub(row, text)
+    else:  # after the last row of the table (the ledger may go on below it)
+        last = list(re.finditer(r'^\| \d+ \|.*\n', text, re.M))[-1]
+        text = text[:last.end()] + row + text[last.end():]
     open(LEDGER, 'w', encoding='utf-8').write(text)
 
 
@@ -92,7 +96,8 @@ def run(item, plan):
     try:
         result = fal_client.subscribe(item['model'], arguments=args, with_logs=False)
     except Exception as e:  # noqa: BLE001 - recorded in the ledger, then re-raised
-        write_row(n, item['model'], item['id'], label, f'échec : {str(e)[:60]}', c, before + c)
+        # Refused before running (balance, validation): not billed. Check the bill if it failed later.
+        write_row(n, item['model'], item['id'], label, f'refusé ou échec, non facturé : {str(e)[:50]}', 0.0, before)
         raise
     os.makedirs(RAW, exist_ok=True)
     files = []

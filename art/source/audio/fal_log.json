@@ -1,0 +1,254 @@
+[
+ {
+  "id": "bell",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "a single large old bronze cloister bell struck once, deep warm resonant toll with rich overtones and a long ringing decay, heard from a stone courtyard, natural reverb",
+  "arguments": {
+   "duration_seconds": 9,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 9,
+  "cost_usd": 0.018,
+  "seconds": 4.9,
+  "files": [
+   "art/source/audio/raw/bell.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "music_title",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Main menu theme. Solo nylon-string guitar and soft celesta over warm string pad, slow 72 BPM in D major, wistful and hopeful, golden autumn afternoon, a quiet journey begins. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 100,
+   "seed": 7101,
+   "num_inference_steps": 8
+  },
+  "seed": 7101,
+  "duration_s": 100,
+  "cost_usd": 0.2,
+  "seconds": 33.4,
+  "files": [
+   "art/source/audio/raw/music_title.wav"
+  ],
+  "result_seed": 7101
+ },
+ {
+  "id": "music_aubelin",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Peaceful village theme. Lute, wooden recorder, light frame drum and pizzicato strings, 92 BPM in G major, warm pastoral countryside, harvest fields, friendly and calm. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 110,
+   "seed": 7102,
+   "num_inference_steps": 8
+  },
+  "seed": 7102,
+  "duration_s": 110,
+  "cost_usd": 0.2,
+  "seconds": 7.3,
+  "files": [
+   "art/source/audio/raw/music_aubelin.wav"
+  ],
+  "result_seed": 7102
+ },
+ {
+  "id": "music_whispering_wood",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Birch forest exploration theme. Concert harp arpeggios, airy flute, soft clarinet, light shaker, 84 BPM in E minor, curious and slightly mysterious, rustling autumn leaves. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 100,
+   "seed": 7103,
+   "num_inference_steps": 8
+  },
+  "seed": 7103,
+  "duration_s": 100,
+  "cost_usd": 0.2,
+  "seconds": 5.7,
+  "files": [
+   "art/source/audio/raw/music_whispering_wood.wav"
+  ],
+  "result_seed": 7103
+ },
+ {
+  "id": "music_lantern_mire",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Misty marsh at dusk theme. Low bowed drone, glass harmonica, sparse kalimba and soft vibraphone, 70 BPM in A minor, eerie but gentle, floating will-o-wisp lights over still water. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 100,
+   "seed": 7104,
+   "num_inference_steps": 8
+  },
+  "seed": 7104,
+  "duration_s": 100,
+  "cost_usd": 0.2,
+  "seconds": 8.7,
+  "files": [
+   "art/source/audio/raw/music_lantern_mire.wav"
+  ],
+  "result_seed": 7104
+ },
+ {
+  "id": "music_watch_ruins",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Ancient ruins theme. Melancholic solo cello and sparse piano, soft low strings, light wind texture, 66 BPM in C minor, crumbling watchtower, memory of a lost age. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 100,
+   "seed": 7105,
+   "num_inference_steps": 8
+  },
+  "seed": 7105,
+  "duration_s": 100,
+  "cost_usd": 0.2,
+  "seconds": 5.5,
+  "files": [
+   "art/source/audio/raw/music_watch_ruins.wav"
+  ],
+  "result_seed": 7105
+ },
+ {
+  "id": "music_cloister_night",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Moonlit cloister dungeon theme. Soft pipe organ drone, music box melody, muted low strings, distant chimes, 68 BPM in F sharp minor, still, cold night, stopped clock, quiet tension. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 110,
+   "seed": 7106,
+   "num_inference_steps": 8
+  },
+  "seed": 7106,
+  "duration_s": 110,
+  "cost_usd": 0.2,
+  "seconds": 12.5,
+  "files": [
+   "art/source/audio/raw/music_cloister_night.wav"
+  ],
+  "result_seed": 7106
+ },
+ {
+  "id": "music_combat",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Light fantasy battle theme. Driving staccato string ostinato, taiko and frame drums, bright brass stabs, harp runs, 132 BPM in D minor, energetic and focused but not heavy. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 90,
+   "seed": 7107,
+   "num_inference_steps": 8
+  },
+  "seed": 7107,
+  "duration_s": 90,
+  "cost_usd": 0.2,
+  "seconds": 39.1,
+  "files": [
+   "art/source/audio/raw/music_combat.wav"
+  ],
+  "result_seed": 7107
+ },
+ {
+  "id": "music_boss_morvaine",
+  "endpoint": "fal-ai/stable-audio-25/text-to-audio",
+  "prompt": "Boss battle theme. Dark waltz in 3/4, harpsichord, low tremolo strings, pipe organ, tolling low bell, timpani, 138 BPM in B minor, elegant and menacing, a soft-spoken demon. original instrumental game soundtrack, no vocals, no lyrics, gentle fantasy, contemplative, clean mix, seamless loop, consistent tempo, no fade out",
+  "arguments": {
+   "seconds_total": 100,
+   "seed": 7108,
+   "num_inference_steps": 8
+  },
+  "seed": 7108,
+  "duration_s": 100,
+  "cost_usd": 0.2,
+  "seconds": 30.8,
+  "files": [
+   "art/source/audio/raw/music_boss_morvaine.wav"
+  ],
+  "result_seed": 7108
+ },
+ {
+  "id": "sting_victory",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "short orchestral victory fanfare sting, bright harp glissando, warm strings and soft horns resolving to a major chord, gentle fantasy, ends cleanly",
+  "arguments": {
+   "duration_seconds": 5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 5,
+  "cost_usd": 0.01,
+  "seconds": 3.5,
+  "files": [
+   "art/source/audio/raw/sting_victory.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "sting_defeat",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "short sad orchestral defeat sting, descending solo cello and low piano notes resolving to a minor chord, soft, fantasy game, ends cleanly",
+  "arguments": {
+   "duration_seconds": 5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 5,
+  "cost_usd": 0.01,
+  "seconds": 3.6,
+  "files": [
+   "art/source/audio/raw/sting_defeat.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "zoltraak_cast",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "magic beam spell cast, quick rising crystalline charge then a sharp focused zap of white light, clean, fantasy game",
+  "arguments": {
+   "duration_seconds": 1.5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1.5,
+  "cost_usd": 0.003,
+  "seconds": 3.3,
+  "files": [
+   "art/source/audio/raw/zoltraak_cast.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "zoltraak_impact",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "magic light bolt impact, sharp crack with a bright shimmering burst and short low thump, fantasy game",
+  "arguments": {
+   "duration_seconds": 1.2,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1.2,
+  "cost_usd": 0.0024,
+  "seconds": 3.0,
+  "files": [
+   "art/source/audio/raw/zoltraak_impact.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "salve_cast",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "rapid volley of five small magic light bolts fired in quick succession, whooshing zips, fantasy game",
+  "arguments": {
+   "duration_seconds": 1.5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1.5,
+  "cost_usd": 0.003,
+  "seconds": 2.5,
+  "files": [
+   "art/source/audio/raw/salve_cast.mp3"
+  ],
+  "result_seed": null
+ }
+]
