@@ -1,7 +1,8 @@
 class_name VfxDamageNumbers
 extends Node3D
 ## Floating combat numbers anchored in 3D (GDD §14, DESIGN.md): white (normal), gold and bigger
-## (crit), green with "+" (heal), grey in parentheses (absorbed by a shield). Rise 1.2 m and fade
+## (crit), green with "+" (heal), grey in parentheses (absorbed by a shield), the word
+## « Interrompu ! » in pale blue (interrupt, amount unused). Rise 1.2 m and fade
 ## over 0.8 s with a 1.3 -> 1 pop in 120 ms; reduce motion: no pop, shorter rise. Hits on the
 ## same target within 100 ms are merged into one number.
 
@@ -16,6 +17,7 @@ const STYLES := {
 	"crit": {"color": Color("#f2c14e"), "size": 36},
 	"heal": {"color": Color("#9ee08a"), "size": 28},
 	"absorbed": {"color": Color("#a7adb8"), "size": 24},
+	"interrupt": {"color": Color("#9fd8ff"), "size": 32},
 }
 
 ## Height above the target origin where numbers start (m).
@@ -109,4 +111,6 @@ static func _text(amount: int, kind: String) -> String:
 			return "+%d" % amount
 		"absorbed":
 			return "(%d)" % amount
+		"interrupt":
+			return TranslationServer.translate("ui.combat.interrupted")
 	return str(amount)

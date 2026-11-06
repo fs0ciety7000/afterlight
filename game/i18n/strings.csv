@@ -218,6 +218,7 @@ ui.combat.pause,Pause
 ui.combat.resume,Reprendre
 ui.combat.hp,PV {hp} / {max}
 ui.combat.boss_phase,Phase {phase}
+ui.combat.interrupted,Interrompu !
 ui.combat.victory,Victoire
 ui.combat.defeat,Défaite
 ui.combat.defeat_body,"Fern se replie à l'entrée du lieu, ses forces rétablies. Rien n'est perdu."

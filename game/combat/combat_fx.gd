@@ -7,6 +7,9 @@ const BOSS_HIT_STOP_S := 0.06
 const BOSS_SHAKE := 0.6
 const CRIT_HIT_STOP_S := 0.045
 const CRIT_SHAKE := 0.35
+## Successful interrupt (GDD §14): sharp sound (audio map), the word, a 50 ms hit-stop.
+const INTERRUPT_HIT_STOP_S := 0.05
+const INTERRUPT_SHAKE := 0.3
 
 var vfx: Vfx
 var view: CombatView
@@ -32,6 +35,7 @@ func handle(e: Dictionary) -> void:
 		"cast_interrupted":
 			_cancel(_casts, e["unit"])
 			_play("vfx.hit", {"target": view.actor(e["unit"]), "element": "arcane"})
+			_on_interrupted(e)
 		"telegraph_started":
 			_on_telegraph(e)
 		"telegraph_ended":
@@ -167,6 +171,18 @@ func _on_damage(e: Dictionary) -> void:
 	if source.get("is_boss", false):
 		vfx.request_hit_stop(BOSS_HIT_STOP_S)
 		vfx.request_shake(BOSS_SHAKE)
+
+
+## The party broke an enemy cast: reward the right read (« grand » tier).
+func _on_interrupted(e: Dictionary) -> void:
+	var unit := view.actor(e["unit"])
+	if e.get("reason", "") != "interrupt" or unit == null:
+		return
+	if view.snapshot_unit(e["unit"]).get("side", "") != "enemy":
+		return
+	vfx.number(unit, 0, "interrupt")
+	vfx.request_hit_stop(INTERRUPT_HIT_STOP_S)
+	vfx.request_shake(INTERRUPT_SHAKE)
 
 
 func _targets(e: Dictionary) -> Array:

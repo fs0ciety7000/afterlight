@@ -369,6 +369,7 @@ func _bar(color: Color, width: float) -> ProgressBar:
 func _spell_button(id: String, key: String, ultimate: bool) -> SpellButton:
 	var b := SpellButton.new()
 	b.setup(id, key, ultimate)
+	b.reduce_motion = Settings.reduce_motion
 	b.pressed.connect(func() -> void: cast(id))
 	UiProbe.register("combat.spell." + id.get_slice(".", 1), b)
 	_spells[id] = b
@@ -376,6 +377,12 @@ func _spell_button(id: String, key: String, ultimate: bool) -> SpellButton:
 
 
 func cast(spell_id: String) -> void:
+	# Answer the press in the same frame (≤ 120 ms, ROADMAP 7.5), before the sim's next tick.
+	var b: SpellButton = _spells.get(spell_id)
+	if b:
+		b.press_feedback()
+	Audio.play_ui("click")
+	UiProbe.world["combat_feedback"] = {"spell": spell_id, "at_ms": Time.get_ticks_msec()}
 	view.command({"type": "cast", "spell": spell_id})
 
 
@@ -468,6 +475,7 @@ func _process(_delta: float) -> void:
 			b.cooldown_total = maxf(b.cooldown_total, b.cooldown_s)
 			if b.cooldown_s <= 0.0:
 				b.cooldown_total = 0.0
+			b.queued = str(hero.get("queued", "")) == id
 			if id == hero.get("ultimate", ""):
 				b.charge_ratio = (
 					float(hero["ult_charge"]) / maxf(float(hero["ult_charge_max"]), 1.0)
@@ -566,6 +574,9 @@ func _on_event(e: Dictionary) -> void:
 	match e["type"]:
 		"command_rejected":
 			_show_toast(tr("ui.combat.reject." + str(e["reason"])))
+			var b: SpellButton = _spells.get(str(e.get("ref", "")))
+			if b and e.get("command", "") == "cast":
+				b.reject_feedback()
 		"boss_phase_changed":
 			_show_toast(tr("ui.combat.boss_phase").format({"phase": e["phase"]}))
 		"cast_started", "telegraph_started":
