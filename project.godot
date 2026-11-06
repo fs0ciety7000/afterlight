@@ -62,3 +62,11 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 anti_aliasing/quality/msaa_3d=2
 textures/vram_compression/import_etc2_astc=true
+
+[importer_defaults]
+
+texture={
+"compress/lossy_quality": 0.8,
+"compress/mode": 1,
+"detect_3d/compress_to": 0
+}
