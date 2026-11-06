@@ -250,5 +250,421 @@
    "art/source/audio/raw/salve_cast.mp3"
   ],
   "result_seed": null
+ },
+ {
+  "id": "barrier_up",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "magic shield barrier forming, soft glassy hum swelling with a crystalline shimmer, protective, fantasy game",
+  "arguments": {
+   "duration_seconds": 1.5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1.5,
+  "cost_usd": 0.003,
+  "seconds": 4.6,
+  "files": [
+   "art/source/audio/raw/barrier_up.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "barrier_break",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "magic glass shield shattering, bright crystalline crack and tinkling shards falling, fantasy game",
+  "arguments": {
+   "duration_seconds": 1.5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1.5,
+  "cost_usd": 0.003,
+  "seconds": 3.3,
+  "files": [
+   "art/source/audio/raw/barrier_break.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "ultimate",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "powerful ultimate magic spell, deep charging hum building to a massive bright beam blast with rumbling tail, fantasy game",
+  "arguments": {
+   "duration_seconds": 3,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 3,
+  "cost_usd": 0.006,
+  "seconds": 3.6,
+  "files": [
+   "art/source/audio/raw/ultimate.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "hit_flesh",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "short punchy body hit impact on a creature, muffled thud, game sound",
+  "arguments": {
+   "duration_seconds": 0.7,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 0.7,
+  "cost_usd": 0.0014,
+  "seconds": 3.0,
+  "files": [
+   "art/source/audio/raw/hit_flesh.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "hit_stone",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "short hard hit on a stone golem, rock crack and gravel crunch, game sound",
+  "arguments": {
+   "duration_seconds": 0.7,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 0.7,
+  "cost_usd": 0.0014,
+  "seconds": 3.5,
+  "files": [
+   "art/source/audio/raw/hit_stone.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "enemy_telegraph",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "ominous enemy spell charging warning, rising dissonant hum with a tense pulsing tone, clearly audible alert, fantasy game",
+  "arguments": {
+   "duration_seconds": 1.5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1.5,
+  "cost_usd": 0.003,
+  "seconds": 3.5,
+  "files": [
+   "art/source/audio/raw/enemy_telegraph.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "ash_seal",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "dark curse seal stamping onto the ground, heavy low thud with crackling embers and hissing ash, ominous, fantasy game",
+  "arguments": {
+   "duration_seconds": 2,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 2,
+  "cost_usd": 0.004,
+  "seconds": 2.8,
+  "files": [
+   "art/source/audio/raw/ash_seal.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "wolf_howl",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "single wolf howling in a forest, medium distance, natural reverb",
+  "arguments": {
+   "duration_seconds": 3,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 3,
+  "cost_usd": 0.006,
+  "seconds": 3.2,
+  "files": [
+   "art/source/audio/raw/wolf_howl.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "lantern_blaze",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "magic lantern flame flaring up suddenly, whoosh of fire with crackle and a ghostly tone, fantasy game",
+  "arguments": {
+   "duration_seconds": 2,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 2,
+  "cost_usd": 0.004,
+  "seconds": 3.0,
+  "files": [
+   "art/source/audio/raw/lantern_blaze.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "level_up",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "level up chime, ascending sparkling harp and bells arpeggio, uplifting, fantasy game ui",
+  "arguments": {
+   "duration_seconds": 2.5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 2.5,
+  "cost_usd": 0.005,
+  "seconds": 3.1,
+  "files": [
+   "art/source/audio/raw/level_up.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "loot_common",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "item pickup, small soft cloth pouch and a light coin clink, game ui",
+  "arguments": {
+   "duration_seconds": 1,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1,
+  "cost_usd": 0.002,
+  "seconds": 3.1,
+  "files": [
+   "art/source/audio/raw/loot_common.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "loot_rare",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "rare treasure drop, bright magical shimmer with crystal chime sparkle, fantasy game",
+  "arguments": {
+   "duration_seconds": 1.8,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 1.8,
+  "cost_usd": 0.0036,
+  "seconds": 2.7,
+  "files": [
+   "art/source/audio/raw/loot_rare.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "ui_click",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "soft wooden ui click, short and clean, menu button",
+  "arguments": {
+   "duration_seconds": 0.5,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 0.5,
+  "cost_usd": 0.001,
+  "seconds": 2.4,
+  "files": [
+   "art/source/audio/raw/ui_click.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "ui_confirm",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "gentle ui confirm sound, soft two-note bell chime rising, short, menu",
+  "arguments": {
+   "duration_seconds": 0.7,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 0.7,
+  "cost_usd": 0.0014,
+  "seconds": 2.5,
+  "files": [
+   "art/source/audio/raw/ui_confirm.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "ui_back",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "soft ui cancel sound, short paper page flip with a low muted tick, menu",
+  "arguments": {
+   "duration_seconds": 0.6,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 0.6,
+  "cost_usd": 0.0012,
+  "seconds": 2.8,
+  "files": [
+   "art/source/audio/raw/ui_back.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "steps_grass",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "five separate slow footsteps walking on dry grass and leaves, light boots, clear gaps between steps, no background",
+  "arguments": {
+   "duration_seconds": 3,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 3,
+  "cost_usd": 0.006,
+  "seconds": 3.8,
+  "files": [
+   "art/source/audio/raw/steps_grass.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "steps_stone",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "five separate slow footsteps walking on stone floor, light boots, clear gaps between steps, no background",
+  "arguments": {
+   "duration_seconds": 3,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 3,
+  "cost_usd": 0.006,
+  "seconds": 4.2,
+  "files": [
+   "art/source/audio/raw/steps_stone.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "steps_wood",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "five separate slow footsteps walking on wooden boardwalk planks, light boots, clear gaps between steps, no background",
+  "arguments": {
+   "duration_seconds": 3,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 3,
+  "cost_usd": 0.006,
+  "seconds": 3.5,
+  "files": [
+   "art/source/audio/raw/steps_wood.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "chest_open",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "old wooden treasure chest opening, creaking hinge and lid thud, with a faint magical sparkle",
+  "arguments": {
+   "duration_seconds": 2,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 2,
+  "cost_usd": 0.004,
+  "seconds": 2.8,
+  "files": [
+   "art/source/audio/raw/chest_open.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "gate_open",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "heavy iron portcullis grille rising, metal chain rattle and grinding, stone dungeon",
+  "arguments": {
+   "duration_seconds": 2,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 2,
+  "cost_usd": 0.004,
+  "seconds": 3.1,
+  "files": [
+   "art/source/audio/raw/gate_open.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "interrupt",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "spell interrupted, sharp crisp snap with a glassy cut-off, short and clear, fantasy game",
+  "arguments": {
+   "duration_seconds": 0.8,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128"
+  },
+  "seed": null,
+  "duration_s": 0.8,
+  "cost_usd": 0.0016,
+  "seconds": 3.1,
+  "files": [
+   "art/source/audio/raw/interrupt.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "amb_fountain",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "small stone fountain trickling water, steady gentle splashing, ambience loop, no birds",
+  "arguments": {
+   "duration_seconds": 12,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128",
+   "loop": true
+  },
+  "seed": null,
+  "duration_s": 12,
+  "cost_usd": 0.024,
+  "seconds": 5.0,
+  "files": [
+   "art/source/audio/raw/amb_fountain.mp3"
+  ],
+  "result_seed": null
+ },
+ {
+  "id": "amb_campfire",
+  "endpoint": "fal-ai/elevenlabs/sound-effects/v2",
+  "prompt": "small campfire crackling steadily at night, soft pops, ambience loop, no wind",
+  "arguments": {
+   "duration_seconds": 12,
+   "prompt_influence": 0.5,
+   "output_format": "mp3_44100_128",
+   "loop": true
+  },
+  "seed": null,
+  "duration_s": 12,
+  "cost_usd": 0.024,
+  "seconds": 4.8,
+  "files": [
+   "art/source/audio/raw/amb_campfire.mp3"
+  ],
+  "result_seed": null
  }
 ]

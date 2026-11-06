@@ -31,6 +31,9 @@ LOOP_XFADE_S = 2.0
 LOOP_START_S = 6.0
 LOOP_LENGTH_S = (52.0, 66.0)
 STEP_COUNT = 4
+STEP_DECAY_S = 0.07
+## Longest kept length (s) for takes that repeat their sound (the click take holds several clicks).
+MAX_S = {'ui_click': 0.09}
 
 
 def decode(path):
@@ -144,7 +147,12 @@ def split_steps(x, count=STEP_COUNT):
     out = []
     for p in sorted(picks):
         a = max(0, p - int(0.03 * SR))
-        out.append(trim_silence(x[a:a + int(0.35 * SR)]))
+        take = x[a:a + int(0.35 * SR)].copy()
+        # Decay from the step's peak: keeps the footfall, drops the rustle and noise floor around it.
+        peak = int(np.argmax(np.abs(take)))
+        env = np.ones(len(take))
+        env[peak:] = np.exp(-np.arange(len(take) - peak) / (STEP_DECAY_S * SR))
+        out.append(trim_silence(take * env))
     return out
 
 
@@ -188,6 +196,10 @@ def process(item, report):
         x = x.mean(axis=1)  # fal `loop: true` and placeholders are already seamless
     else:
         x = trim_silence(x.mean(axis=1) if kind != 'sting' else x)
+        if item['id'] in MAX_S:
+            x = x[:int(MAX_S[item['id']] * SR)].copy()
+            fade = int(0.02 * SR)
+            x[-fade:] *= np.linspace(1, 0, fade)
     y, gain = normalise(x, TARGET[kind])
     dest = os.path.join(OUT, folder, item['id'] + '.ogg')
     encode(y, dest, QUALITY[kind])

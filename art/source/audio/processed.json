@@ -1,43 +1,43 @@
 {
  "amb_campfire": {
   "file": "assets/audio/sfx/amb_campfire.ogg",
-  "origin": "placeholder",
+  "origin": "fal",
   "seconds": 12.0,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 104449
+  "gain_db": -0.2,
+  "bytes": 115270
  },
  "amb_fountain": {
   "file": "assets/audio/sfx/amb_fountain.ogg",
-  "origin": "placeholder",
+  "origin": "fal",
   "seconds": 12.0,
   "channels": 1,
-  "gain_db": -5.0,
-  "bytes": 99982
+  "gain_db": 10.8,
+  "bytes": 128853
  },
  "ash_seal": {
   "file": "assets/audio/sfx/ash_seal.ogg",
-  "origin": "placeholder",
-  "seconds": 2.0,
+  "origin": "fal",
+  "seconds": 1.54,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 21897
+  "gain_db": -0.5,
+  "bytes": 16580
  },
  "barrier_break": {
   "file": "assets/audio/sfx/barrier_break.ogg",
-  "origin": "placeholder",
-  "seconds": 1.25,
+  "origin": "fal",
+  "seconds": 1.48,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 11565
+  "gain_db": -0.9,
+  "bytes": 16257
  },
  "barrier_up": {
   "file": "assets/audio/sfx/barrier_up.ogg",
-  "origin": "placeholder",
-  "seconds": 1.4,
+  "origin": "fal",
+  "seconds": 1.23,
   "channels": 1,
-  "gain_db": -0.2,
-  "bytes": 8908
+  "gain_db": 3.4,
+  "bytes": 13582
  },
  "bell": {
   "file": "assets/audio/sfx/bell.ogg",
@@ -49,83 +49,83 @@
  },
  "chest_open": {
   "file": "assets/audio/sfx/chest_open.ogg",
-  "origin": "placeholder",
-  "seconds": 1.6,
+  "origin": "fal",
+  "seconds": 1.87,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 13238
+  "gain_db": 2.7,
+  "bytes": 19381
  },
  "enemy_telegraph": {
   "file": "assets/audio/sfx/enemy_telegraph.ogg",
-  "origin": "placeholder",
-  "seconds": 1.5,
+  "origin": "fal",
+  "seconds": 1.31,
   "channels": 1,
-  "gain_db": 1.4,
-  "bytes": 5972
+  "gain_db": 3.5,
+  "bytes": 15124
  },
  "gate_open": {
   "file": "assets/audio/sfx/gate_open.ogg",
-  "origin": "placeholder",
-  "seconds": 2.0,
+  "origin": "fal",
+  "seconds": 1.35,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 26103
+  "gain_db": 1.8,
+  "bytes": 16027
  },
  "hit_flesh": {
   "file": "assets/audio/sfx/hit_flesh.ogg",
-  "origin": "placeholder",
-  "seconds": 0.3,
+  "origin": "fal",
+  "seconds": 0.68,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 5465
+  "gain_db": -0.9,
+  "bytes": 8568
  },
  "hit_stone": {
   "file": "assets/audio/sfx/hit_stone.ogg",
-  "origin": "placeholder",
-  "seconds": 0.39,
+  "origin": "fal",
+  "seconds": 0.68,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 7093
+  "gain_db": -1.0,
+  "bytes": 9240
  },
  "interrupt": {
   "file": "assets/audio/sfx/interrupt.ogg",
-  "origin": "placeholder",
-  "seconds": 0.3,
+  "origin": "fal",
+  "seconds": 0.8,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4697
+  "gain_db": 4.0,
+  "bytes": 9905
  },
  "lantern_blaze": {
   "file": "assets/audio/sfx/lantern_blaze.ogg",
-  "origin": "placeholder",
-  "seconds": 2.0,
+  "origin": "fal",
+  "seconds": 1.43,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 31797
+  "gain_db": 2.0,
+  "bytes": 15480
  },
  "level_up": {
   "file": "assets/audio/sfx/level_up.ogg",
-  "origin": "placeholder",
-  "seconds": 2.21,
+  "origin": "fal",
+  "seconds": 1.91,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 16428
+  "gain_db": 1.2,
+  "bytes": 18038
  },
  "loot_common": {
   "file": "assets/audio/sfx/loot_common.ogg",
-  "origin": "placeholder",
-  "seconds": 0.35,
+  "origin": "fal",
+  "seconds": 0.68,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 5644
+  "gain_db": 3.7,
+  "bytes": 9692
  },
  "loot_rare": {
   "file": "assets/audio/sfx/loot_rare.ogg",
-  "origin": "placeholder",
-  "seconds": 1.65,
+  "origin": "fal",
+  "seconds": 1.76,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 13569
+  "gain_db": 6.0,
+  "bytes": 19165
  },
  "music_aubelin": {
   "file": "assets/audio/music/music_aubelin.ogg",
@@ -217,99 +217,99 @@
  },
  "steps_grass_1": {
   "file": "assets/audio/sfx/steps_grass_1.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.2,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 5867
+  "gain_db": 27.3,
+  "bytes": 5301
  },
  "steps_grass_2": {
   "file": "assets/audio/sfx/steps_grass_2.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.22,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 5719
+  "gain_db": 23.5,
+  "bytes": 5437
  },
  "steps_grass_3": {
   "file": "assets/audio/sfx/steps_grass_3.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.35,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 5652
+  "gain_db": 28.6,
+  "bytes": 6835
  },
  "steps_grass_4": {
   "file": "assets/audio/sfx/steps_grass_4.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.12,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 5827
+  "gain_db": 29.9,
+  "bytes": 4683
  },
  "steps_stone_1": {
   "file": "assets/audio/sfx/steps_stone_1.ogg",
-  "origin": "placeholder",
-  "seconds": 0.2,
+  "origin": "fal",
+  "seconds": 0.21,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4593
+  "gain_db": 8.7,
+  "bytes": 5599
  },
  "steps_stone_2": {
   "file": "assets/audio/sfx/steps_stone_2.ogg",
-  "origin": "placeholder",
-  "seconds": 0.2,
+  "origin": "fal",
+  "seconds": 0.26,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4641
+  "gain_db": 9.8,
+  "bytes": 5731
  },
  "steps_stone_3": {
   "file": "assets/audio/sfx/steps_stone_3.ogg",
-  "origin": "placeholder",
-  "seconds": 0.2,
+  "origin": "fal",
+  "seconds": 0.22,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4599
+  "gain_db": 7.5,
+  "bytes": 5369
  },
  "steps_stone_4": {
   "file": "assets/audio/sfx/steps_stone_4.ogg",
-  "origin": "placeholder",
-  "seconds": 0.2,
+  "origin": "fal",
+  "seconds": 0.25,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4616
+  "gain_db": 9.7,
+  "bytes": 5695
  },
  "steps_wood_1": {
   "file": "assets/audio/sfx/steps_wood_1.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.19,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4731
+  "gain_db": 10.9,
+  "bytes": 5144
  },
  "steps_wood_2": {
   "file": "assets/audio/sfx/steps_wood_2.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.21,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4754
+  "gain_db": 7.8,
+  "bytes": 5393
  },
  "steps_wood_3": {
   "file": "assets/audio/sfx/steps_wood_3.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.21,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4734
+  "gain_db": 9.1,
+  "bytes": 5327
  },
  "steps_wood_4": {
   "file": "assets/audio/sfx/steps_wood_4.ogg",
-  "origin": "placeholder",
-  "seconds": 0.25,
+  "origin": "fal",
+  "seconds": 0.19,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 4721
+  "gain_db": 1.5,
+  "bytes": 5167
  },
  "sting_defeat": {
   "file": "assets/audio/music/sting_defeat.ogg",
@@ -329,43 +329,43 @@
  },
  "ui_back": {
   "file": "assets/audio/sfx/ui_back.ogg",
-  "origin": "placeholder",
-  "seconds": 0.15,
+  "origin": "fal",
+  "seconds": 0.34,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 5051
+  "gain_db": 34.1,
+  "bytes": 6889
  },
  "ui_click": {
   "file": "assets/audio/sfx/ui_click.ogg",
-  "origin": "placeholder",
-  "seconds": 0.06,
+  "origin": "fal",
+  "seconds": 0.09,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 3849
+  "gain_db": 5.3,
+  "bytes": 4251
  },
  "ui_confirm": {
   "file": "assets/audio/sfx/ui_confirm.ogg",
-  "origin": "placeholder",
-  "seconds": 0.45,
+  "origin": "fal",
+  "seconds": 0.46,
   "channels": 1,
-  "gain_db": -0.6,
-  "bytes": 4999
+  "gain_db": 18.6,
+  "bytes": 6937
  },
  "ultimate": {
   "file": "assets/audio/sfx/ultimate.ogg",
-  "origin": "placeholder",
-  "seconds": 3.0,
+  "origin": "fal",
+  "seconds": 2.69,
   "channels": 1,
-  "gain_db": 2.9,
-  "bytes": 20398
+  "gain_db": -0.7,
+  "bytes": 22477
  },
  "wolf_howl": {
   "file": "assets/audio/sfx/wolf_howl.ogg",
-  "origin": "placeholder",
-  "seconds": 3.0,
+  "origin": "fal",
+  "seconds": 2.68,
   "channels": 1,
-  "gain_db": 1.0,
-  "bytes": 24911
+  "gain_db": -5.6,
+  "bytes": 20509
  },
  "zoltraak_cast": {
   "file": "assets/audio/sfx/zoltraak_cast.ogg",
