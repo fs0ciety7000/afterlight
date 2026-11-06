@@ -8,6 +8,9 @@ var world := {}
 ## Test-only commands from the page (`window.__afterlightTest(name)`),
 ## enabled by `?test=1` in the address. Handlers are registered by screens.
 var test_handlers := {}
+## Test channel: a new game skips the intro cards unless the page has
+## `intro=1` (older E2E runs expect the world right away).
+var test_skip_intro := false
 var _controls := {}
 var _test_callback: JavaScriptObject
 var _elapsed := 0.0
@@ -26,6 +29,10 @@ func _ready() -> void:
 			"new URLSearchParams(window.location.search).get('clock_offset_s') || '0'", true
 		)
 		GameState.debug_clock_offset_s = int(str(offset))
+		var intro: Variant = JavaScriptBridge.eval(
+			"new URLSearchParams(window.location.search).get('intro') || ''", true
+		)
+		test_skip_intro = str(intro) != "1"
 		JavaScriptBridge.eval(
 			"window.__afterlightSetTest = (cb) => { window.__afterlightTest = (n) => cb(n); };",
 			true
