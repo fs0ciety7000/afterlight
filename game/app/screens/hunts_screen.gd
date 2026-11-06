@@ -13,6 +13,7 @@ var _status: Label
 var _close: Button
 var _refresh_queued := false
 var _refocus_id := ""
+var _scroll: ScrollContainer
 
 
 func setup(params: Dictionary) -> void:
@@ -63,6 +64,7 @@ func _ready() -> void:
 	col.add_child(HSeparator.new())
 
 	var scroll := ScrollContainer.new()
+	_scroll = scroll
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	# The focused choice (the first one enabled on open) is scrolled into view.
@@ -143,11 +145,27 @@ func _refresh() -> void:
 			_body.add_child(_card(id, hunt))
 	var c: Control = UiProbe._controls.get(_refocus_id) if _refocus_id != "" else null
 	if c and c.is_inside_tree() and not (c as Button).disabled:
-		c.call_deferred("grab_focus")
+		_focus_after_layout(c)
 	elif _refocus_id != "" or get_viewport().gui_get_focus_owner() == null:
 		# The list was rebuilt under the focus: back to the first choice.
-		call_deferred("grab_initial_focus")
+		_focus_after_layout(null)
 	_refocus_id = ""
+
+
+## Focus only once the rebuilt list has its layout, so the scroll follows the
+## real position of the control (not the one of the freed cards).
+func _focus_after_layout(c: Control) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_inside_tree():
+		return
+	if c == null:
+		grab_initial_focus()
+		c = get_viewport().gui_get_focus_owner()
+	elif is_instance_valid(c) and c.is_inside_tree():
+		c.grab_focus()
+	if is_instance_valid(c) and c.is_inside_tree() and _scroll.is_ancestor_of(c):
+		_scroll.ensure_control_visible(c)
 
 
 ## One encounter: name, kind and level, its quote, and the choose button
