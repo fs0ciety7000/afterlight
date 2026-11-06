@@ -103,6 +103,13 @@ void light() {
 	float shadow = smoothstep(shadow_threshold - 0.05, shadow_threshold + 0.05, ATTENUATION);
 	lit *= shadow;
 	vec3 light_rgb = LIGHT_COLOR / PI;
+	if (!LIGHT_IS_DIRECTIONAL) {
+		// point lights (dungeon fires, lanterns): ATTENUATION carries the distance falloff, so it
+		// scales the light in two cel bands instead of acting as a shadow mask
+		lit = smoothstep(band_threshold - band_softness, band_threshold + band_softness, ndl);
+		light_rgb *= smoothstep(0.02, 0.1, ATTENUATION) * 0.45 + smoothstep(0.3, 0.38, ATTENUATION) * 0.55;
+		shadow = 1.0;
+	}
 	DIFFUSE_LIGHT += mix(shadow_tint.rgb, vec3(1.0), lit) * light_rgb;
 	float fres = 1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 	float rim = smoothstep(1.0 - rim_width, 1.0 - rim_width + 0.04, fres);

@@ -68,6 +68,12 @@ void fragment() {
 void light() {
 	float ndl = dot(NORMAL, LIGHT);
 	float lit = smoothstep(-0.05, 0.05, ndl);
-	lit *= smoothstep(shadow_threshold - 0.05, shadow_threshold + 0.05, ATTENUATION);
-	DIFFUSE_LIGHT += mix(shadow_tint.rgb, vec3(1.0), lit) * LIGHT_COLOR / PI;
+	if (LIGHT_IS_DIRECTIONAL) {
+		lit *= smoothstep(shadow_threshold - 0.05, shadow_threshold + 0.05, ATTENUATION);
+		DIFFUSE_LIGHT += mix(shadow_tint.rgb, vec3(1.0), lit) * LIGHT_COLOR / PI;
+	} else {
+		// point lights: distance falloff in two cel bands (ATTENUATION is not a shadow mask here)
+		float a = smoothstep(0.02, 0.1, ATTENUATION) * 0.45 + smoothstep(0.3, 0.38, ATTENUATION) * 0.55;
+		DIFFUSE_LIGHT += lit * a * LIGHT_COLOR / PI;
+	}
 }
