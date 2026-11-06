@@ -116,6 +116,10 @@ func _side_panel(narrow: bool) -> Control:
 	_travel = Kit.button(tr("ui.map.travel"), true, "map.travel")
 	_travel.pressed.connect(_on_travel)
 	col.add_child(_travel)
+	# Offline hunt choice, the selected place first (GDD §12, ROADMAP 5.5).
+	var hunts := Kit.button(tr("ui.map.hunts"), false, "map.hunts")
+	hunts.pressed.connect(func() -> void: Router.go_to("hunts", {"location": _selected}))
+	col.add_child(hunts)
 	return panel
 
 

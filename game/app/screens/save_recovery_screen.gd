@@ -74,7 +74,7 @@ func _on_restore() -> void:
 	var r := SaveService.store.restore_backup(GameState.now_unix())
 	if r["ok"]:
 		GameState.adopt(r["decoded"]["state"])
-		Router.go_to("explore", {}, false)
+		Router.go_to(OfflineSummaryScreen.entry_screen(), {}, false)
 	else:
 		flash(_status, r["error"], true)
 

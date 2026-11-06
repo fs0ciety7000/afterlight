@@ -72,7 +72,9 @@ func _ready() -> void:
 	holder.add_child(scroll)
 	add_child(holder)
 
-	SaveFlows.wire_import(self, _status, func() -> void: Router.go_to("explore"))
+	SaveFlows.wire_import(
+		self, _status, func() -> void: Router.go_to(OfflineSummaryScreen.entry_screen())
+	)
 
 
 func grab_initial_focus() -> void:
@@ -89,7 +91,8 @@ func _on_continue() -> void:
 			Router.go_to("save_recovery", {"boot": r})
 			return
 		GameState.adopt(r["decoded"]["state"])
-	Router.go_to("explore")
+	# A summary of the absence waits for its claim before the world.
+	Router.go_to(OfflineSummaryScreen.entry_screen())
 
 
 func _on_new_game() -> void:

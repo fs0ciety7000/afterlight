@@ -64,7 +64,9 @@ func _ready() -> void:
 	col.add_child(_status)
 	SaveService.saved.connect(_refresh)
 	SaveService.save_failed.connect(func(_r: String) -> void: _refresh())
-	SaveFlows.wire_import(self, _status, func() -> void: Router.go_to("explore", {}, false))
+	SaveFlows.wire_import(
+		self, _status, func() -> void: Router.go_to(OfflineSummaryScreen.entry_screen(), {}, false)
+	)
 	_refresh()
 	resume.call_deferred("grab_focus")
 
