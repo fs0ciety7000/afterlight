@@ -27,7 +27,8 @@ func test_ui_code_uses_translation_keys() -> void:
 
 func test_every_tr_key_in_code_exists() -> void:
 	var keys := ContentLoader.translation_keys("res://game/i18n/strings.csv")
-	var re := RegEx.create_from_string('tr\\("([a-z_.]+)"\\)')
+	# tr() in nodes, ProgressionText.tr_key() in static helpers.
+	var re := RegEx.create_from_string('(?<![\\w])(?:tr|tr_key)\\("([a-z_.]+)"\\)')
 	for dir_path in DIRS:
 		for path in _scripts(dir_path):
 			for m in re.search_all(FileAccess.get_file_as_string(path)):

@@ -382,3 +382,127 @@ log.loot.auto_salvaged_other,Sac plein : {count} objets recyclés automatiquemen
 log.loot.consumable_overflow,Vous portez déjà {max} × {item} : {count} laissé(s) sur place
 log.loot.artifact_known,Vous possédez déjà {artifact}
 log.xp_wasted,Niveau maximal atteint : {xp} XP perdus
+ui.prog.tab.character,Personnage
+ui.prog.tab.bag,Sac
+ui.prog.tab.grimoire,Grimoire
+ui.prog.tab.forge,Forge
+ui.prog.tab.runecarver,Graveuse
+ui.prog.tab.merchant,Marchande
+ui.prog.close,Fermer
+ui.prog.menu_title,Progression
+ui.prog.closed_in_combat,Indisponible pendant un combat
+ui.prog.gold,Or
+ui.explore.character_button,Personnage · C
+ui.explore.character_button_touch,Personnage
+ui.explore.bag_button,Sac · I
+ui.explore.bag_button_touch,Sac
+ui.explore.grimoire_button,Grimoire · K
+ui.explore.grimoire_button_touch,Grimoire
+ui.fmt.decimal,","
+ui.fmt.percent,{value} %
+ui.fmt.plus,+{value}
+ui.fmt.minus,−{value}
+ui.fmt.range,{min}-{max}
+ui.fmt.gold,{gold} or
+ui.fmt.material,{qty} × {name}
+ui.fmt.free,Gratuit
+ui.fmt.count,× {count}
+ui.item.name_enhanced,{name} +{level}
+ui.item.implicit_line,{name} : {value}
+ui.item.affix_line,{name} : {value} [{range}]
+ui.rune.name_tier,{name} {tier}
+ui.char.xp,{xp} / {next} XP
+ui.char.xp_cap,Niveau maximal ({cap})
+ui.char.equipment,Équipement
+ui.char.stats,Statistiques
+ui.char.slot_empty,Vide
+ui.char.artifacts,Artefacts
+ui.char.artifact_slot,Emplacement {n}
+ui.char.artifact_name,{name} (niveau {level})
+ui.char.artifact_remove,Retirer
+ui.char.artifact_removed,Artefact retiré
+ui.char.artifact_wear,Porter (empl. {n})
+ui.char.artifact_worn,Artefact équipé
+ui.char.artifact_level_up,Éveiller
+ui.char.artifact_leveled,Artefact éveillé
+ui.char.artifact_cost,Niveau {to} : {cost}
+ui.char.owned_artifacts,Artefacts possédés
+ui.char.no_artifacts,"Aucun artefact pour l'instant. Ils se gagnent par les quêtes, les découvertes et les boss."
+ui.bag.view.items,Équipement
+ui.bag.view.materials,Matériaux
+ui.bag.view.runes,Runes
+ui.bag.view.consumables,Consommables
+ui.bag.worn,Porté
+ui.bag.count,Sac : {count} / {max}
+ui.bag.empty,Le sac est vide. Les objets se gagnent en combat.
+ui.bag.pick_item,Choisissez un objet pour voir sa fiche.
+ui.bag.item_meta,{slot} · niveau d'objet {ilvl} · +{level} / +{max}
+ui.bag.compare,Comparaison
+ui.bag.compare_none,Rien n'est porté à cet emplacement.
+ui.bag.compare_with,Comparé à : {name}
+ui.bag.compare_better,▲ {stat} {delta}
+ui.bag.compare_worse,▼ {stat} {delta}
+ui.bag.compare_equal,= {stat}
+ui.bag.equip,Équiper
+ui.bag.equipped,Objet équipé
+ui.bag.unequip,Déséquiper
+ui.bag.unequipped,Objet rangé dans le sac
+ui.bag.salvage_one,Recycler
+ui.bag.to_forge,Forge
+ui.bag.to_runecarver,Aller chez la graveuse
+ui.bag.to_merchant,Aller chez la marchande
+ui.bag.bulk_title,Recyclage groupé
+ui.bag.bulk_quote,{count} objet(s) du sac → +{dust} poussière de mana
+ui.bag.bulk_salvage,Recycler la sélection
+ui.bag.salvage_title,Recycler ?
+ui.bag.salvage_body,{count} objet(s) seront détruits contre {dust} poussière de mana. Les objets portés ne sont pas touchés.
+ui.bag.salvaged,{count} objet(s) recyclé(s) : +{dust} poussière de mana
+ui.bag.no_runes,Aucune rune en réserve. Les ennemis en laissent parfois.
+ui.forge.pick,Objet à améliorer
+ui.forge.no_items,Aucun objet. Les objets se gagnent en combat.
+ui.forge.hint,Choisissez un objet.
+ui.forge.worn,{rarity} · porté
+ui.forge.next,Prochaine tentative
+ui.forge.level,Amélioration
+ui.forge.level_value,+{level} / +{max}
+ui.forge.target,Objectif
+ui.forge.cost,Coût
+ui.forge.chance,Chance de réussite
+ui.forge.pity,Bonus d'échecs
+ui.forge.rules,Réussite garantie jusqu'à +5. Un échec ne fait rien perdre : une partie de l'or est rendue et la tentative suivante a plus de chances.
+ui.forge.enhance,Améliorer
+ui.forge.success,Réussite : l'objet passe à +{level}
+ui.forge.failure,"Échec : l'objet reste à +{level}, {refund} or rendus"
+ui.grimoire.spells,Sorts
+ui.grimoire.spell_rank,{name} · rang {rank} / {max}
+ui.grimoire.spell_locked,{name} · niveau {level}
+ui.grimoire.rank,Rang
+ui.grimoire.rank_value,{rank} / {max}
+ui.grimoire.next_cost,Rang {rank}
+ui.grimoire.level_required,Niveau requis
+ui.grimoire.rank_up,Monter de rang
+ui.grimoire.ranked,Rang {rank} atteint
+ui.grimoire.runes,Emplacements de rune
+ui.grimoire.slot_free,Emplacement libre
+ui.grimoire.slots_hint,"Le rang 3 ouvre un 2e emplacement, le rang 5 un 3e."
+ui.grimoire.unsocket,Retirer
+ui.grimoire.unsocketed,Rune retirée et rangée
+ui.grimoire.stock,Runes en réserve
+ui.grimoire.stock_line,{name} × {count}
+ui.grimoire.socket,Sertir
+ui.grimoire.socketed,Rune sertie
+ui.runes.stock,Runes
+ui.runes.fusion,Fusion
+ui.runes.recipe,{required} × {name} donnent
+ui.runes.owned,En réserve
+ui.runes.rules,La fusion réussit toujours. Les runes serties ne comptent pas : retirez-les d'abord au grimoire.
+ui.runes.fuse,Fusionner
+ui.runes.fused,Fusion réussie : {name}
+ui.runes.salvage,Recycler une rune
+ui.runes.salvaged,Rune recyclée : +{shards} éclats runiques
+ui.shop.buy,Acheter
+ui.shop.bought,Acheté : {name}
+ui.shop.carried,Porté : {carried} / {max}
+ui.combat.loot_rune,Rune : {name}
+ui.combat.loot_artifact,Artefact : {name}
+ui.combat.loot_materials,Matériaux : {list}
