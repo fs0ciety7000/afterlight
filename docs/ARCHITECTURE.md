@@ -233,3 +233,19 @@ Dictionnaire de types simples (sérialisable en JSON) :
 - Les sorts du groupe paient leur mana et lancent leur recharge à la résolution ; l'ultime dépense sa charge au début de la canalisation. Les capacités ennemies lancent leur recharge au début : une incantation interrompue est perdue.
 - Les capacités ennemies ont, au début du combat ou de leur phase, la moitié de leur recharge à attendre (`ENEMY_OPENING_CD_FRACTION`).
 - Les invocations (renforts de l'alpha, lanternes liées) ne donnent ni XP ni or.
+
+## Progression (jalon 4)
+
+Code : `game/engine/progression/` (moteur pur) et `game/state/progression_api.gd` (`GameState.progression`, appels de l'interface).
+
+| Module | Rôle |
+|---|---|
+| `ItemFactory` | Tirage d'objets (rareté par source, ilvl, implicite, affixes sans doublon d'ID ni de `group`, effet légendaire) et de runes ; modificateurs d'un objet |
+| `Inventory` | Sac (objets non portés, 60 cases), `uid` stables (`rng.item`), réception du butin avec recyclage automatique si le sac est plein, recyclage groupé, réserves de runes, consommables (plafond) et artefacts |
+| `Equipment` | Porter / retirer, modificateurs par source (`item:<uid>`, `artifact:<id>`), statistiques finales, comparaison stat par stat |
+| `Forge` | Amélioration : coûts, chance, pitié ; tirage dérivé de (graine, `uid`, tentatives) |
+| `Grimoire`, `RuneRules`, `ArtifactRules`, `Merchant` | Rangs de sorts et sertissage, fusion et recyclage des runes, artefacts, boutique |
+| `PartyBuild` | État sauvegardé → entrée de groupe de `CombatSim` (`flat`, `percent`, `spell_ranks`, `spell_mods`, consommables) |
+| `CombatOutcome` | Applique `encounter_completed` : XP, or, matériaux, butin, consommables utilisés, lignes de résumé |
+
+Chaque action rend `ActionResult` : `{ok, error, params, state, ...}`. Un refus porte une clé `error.*` de `strings.csv` et ses paramètres (`{"required": 141}`), que `GameState.reason_text(r)` traduit (« Or insuffisant : 141 requis »). Les devis (`*_quote`) ont la même forme et ne changent rien : un bouton désactivé affiche leur raison.

@@ -365,6 +365,8 @@ or_ennemi(Le) = roundi( ENEMY_GOLD_BASE × (1 + GOLD_GROWTH × (Le − 1)) × go
 
 Les quantités sont tirées uniformément dans la plage. Le recyclage d'un objet donne `SALVAGE_DUST[rareté] × (1 + 0.1 × (ilvl − 1))` poussières. `SALVAGE_DUST` vaut 2, 5, 12, 30 et 80 pour commune, peu commune, rare, épique et légendaire.
 
+*(provisoire, jalon 4)* Arrondis : la poussière de recyclage est arrondie à l'entier inférieur (`floori`, comme les monnaies). Au premier kill du boss, les 5 essences **remplacent** les 2-3 habituelles (entrées `when: first_clear` / `repeat` de la table). Sac (`INVENTORY_SLOTS = 60`) : seuls les objets non portés comptent ; retirer un objet est refusé si le sac est plein ; un consommable de butin au-delà de 5 reste sur place et un artefact déjà possédé est signalé (ligne de résumé dans les deux cas).
+
 ## 14. Butin d'équipement
 
 ### 14.1 Rareté par source (poids sur 100)
@@ -395,6 +397,8 @@ implicite  = SLOT_IMPLICIT[slot] × ilvl_mult × RARITY_IMPLICIT_MULT[rareté] �
 | `amulet` | `crit_chance` 0,02 (suit le palier, §14.3, pas `ilvl_mult`) |
 
 `RARITY_IMPLICIT_MULT` vaut 1,0, 1,1, 1,2, 1,35 et 1,5. `AFFIX_COUNT` vaut 1, 2, 3, 4 et 4 (+ 1 effet légendaire).
+
+*(provisoire, jalon 4)* Choix de la base : l'emplacement est tiré uniformément parmi ceux qui ont une base de `min_ilvl ≤ ilvl`, puis la base uniformément dans cet emplacement. Un objet légendaire n'est tiré que sur un emplacement qui a un effet légendaire (`weapon`, `feet`, `amulet` dans la tranche).
 
 ### 14.3 Affixes
 
@@ -427,6 +431,8 @@ Le tirage se fait sans remise, pondéré par `weight`, et au plus un affixe par 
 
 Il n'existe volontairement **aucun affixe d'XP** : il dominerait dans un jeu idle.
 
+*(provisoire, jalon 4)* Groupes et couches : chaque affixe a son propre `group`, sauf les 4 bonus d'élément qui partagent `element_bonus` (un seul élément par objet). `power_flat` et `power_pct` peuvent coexister (exemple ci-dessous). Couche de §2.2 : `power_pct`, `max_hp_pct` et `move_speed` vont dans la couche `percent` ; tous les autres affixes s'ajoutent à la stat (`flat`), y compris les stats déjà exprimées en fraction (critique, hâte, résistance...).
+
 | Effet légendaire | ID | Emplacement | Effet |
 |---|---|---|---|
 | Écho du maître | `legendary.echo_of_the_master` | weapon | Zoltraak frappe une 2e fois à 40 % |
@@ -458,6 +464,8 @@ chance(n+1)        = min(1, ENH_SUCCESS[n+1] + pitié),  pitié += ENH_PITY_PER_
 | `ENH_FAIL_GOLD_REFUND` | 0,5 (la poussière est perdue) |
 
 **Anti-rechargement** : le tirage d'amélioration utilise une graine dérivée de `(graine de partie, item_uid, nombre_de_tentatives)`, sans consommer le flux `loot`. Recharger la sauvegarde ne change donc pas l'issue.
+
+*(provisoire, jalon 4)* La pitié est sauvegardée comme le nombre d'échecs consécutifs (`pity`) de l'objet : bonus = `pity × ENH_PITY_PER_FAIL`. L'or rendu après un échec est arrondi à l'entier inférieur.
 
 Exemple, objet ilvl 10 (`ilvl_mult` 2,35) :
 
@@ -518,6 +526,8 @@ fusion : 3 × rune(id, n) → rune(id, n+1),  or = FUSION_GOLD_BASE × 3^(n−1)
 
 Paliers à l'obtention : normale 90 / 10 / 0, élite 60 / 35 / 5, boss 0 / 70 / 30 (P1 / P2 / P3). Type : conversions 12 chacune, modifications 12,8 chacune.
 
+*(provisoire, jalon 4)* Coffre (`chest`) : paliers de l'élite ; premier kill du boss : paliers du boss. La rune Écho (`echo_chance`) est transmise à la simulation dans `spell_mods` mais pas encore jouée par elle.
+
 ## 18. Artefacts
 
 | ID | Niveau 1 / 2 / 3 / 4 / 5 |
@@ -528,6 +538,8 @@ Paliers à l'obtention : normale 90 / 10 / 0, élite 60 / 35 / 5, boss 0 / 70 / 
 | `artifact.ashen_bell` | Un actif sur 4 : +0,40 / 0,50 / 0,60 / 0,70 / 0,80 de dégâts (couche additive du sort) |
 
 Passer du niveau n à n+1 coûte `ARTIFACT_ESSENCE_COST[n]` essences (1 / 2 / 3 / 5) et `500 × n²` or. Deuxième emplacement au niveau 15 (`ARTIFACT_SLOT_2_LEVEL`).
+
+*(provisoire, jalon 4)* Premier emplacement au niveau 6 (`ARTIFACT_SLOT_1_LEVEL`), sans condition de quête tant que la quête de l'horloger n'existe pas. Les effets de la Fleur pressée, de la Cloche de cendre et des effets légendaires sont exposés par le moteur (`ArtifactRules.worn_effects`, `legendary` de l'objet) mais pas encore appliqués par la simulation de combat ; la Boussole (`gold_find`) l'est, par les statistiques.
 
 ## 19. Prix
 
