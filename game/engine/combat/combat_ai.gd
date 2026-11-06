@@ -17,6 +17,7 @@ static func think_party(sim: CombatSim, u: Dictionary) -> void:
 		return
 	u["moving"] = false
 	_auto_shield(sim, u)
+	_auto_consumable(sim, u)
 	_try_queued(sim, u, true)
 	if not u["cast"].is_empty() or CombatRules.is_cc(sim, u) or u["manual"]:
 		# A spell asked during a cast, a stun or a move leaves right after it.
@@ -175,6 +176,23 @@ static func _auto_shield(sim: CombatSim, u: Dictionary) -> void:
 				wanted = incoming_big_hit(sim, u) or low_hp
 		if wanted and CombatActions.check_cast(sim, u, id)["reason"] == "":
 			CombatActions.start_spell(sim, u, id, u["uid"])
+
+
+## Consumables on an automatic tactic: healing first, then mana (one shared
+## cooldown). Only the leader carries consumables.
+static func _auto_consumable(sim: CombatSim, u: Dictionary) -> void:
+	var modes: Dictionary = sim.tactics.get("consumables", {})
+	var low_hp := float(u["hp"]) < BalanceCombat.TACTIC_HEAL_HP_PCT * float(u["max_hp"])
+	var low_mana := float(u["mana"]) < BalanceCombat.TACTIC_ELIXIR_MANA_PCT * float(u["max_mana"])
+	for wanted in [["auto_low_hp", low_hp], ["auto_low_mana", low_mana]]:
+		if not wanted[1]:
+			continue
+		var ids: Array = modes.keys()
+		ids.sort()
+		for id in ids:
+			if modes[id] == wanted[0] and sim.can_use_consumable(u, id):
+				sim.use_consumable(u, id)
+				return
 
 
 ## A hostile telegraph that will hit `u` within TACTIC_BARRIER_PRECAST_S:

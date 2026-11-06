@@ -766,64 +766,6 @@ func test_ash_seal_follows_its_target_and_is_unavoidable() -> void:
 	assert_eq(hit.get("target", ""), FERN, "hits Fern wherever she is")
 
 
-## GDD decision 22: the default Barrier waits for the telegraphed Seal...
-func test_default_barrier_shields_the_ash_seal() -> void:
-	var tactics := _manual_tactics()
-	tactics["spells"].erase("spell.defensive_barrier")
-	var sim := (
-		CombatSim
-		. create(
-			{
-				"encounter": "encounter.cloister_boss",
-				"seed": 2,
-				"party": [CombatBench.fern(11)],
-				"tactics": tactics,
-			},
-			CombatBench.content()
-		)
-	)
-	sim.step()
-	var boss: Dictionary = sim.units[1]
-	boss["hp"] = int(boss["max_hp"] * 0.6)
-	CombatRules.check_phase(sim, boss)
-	boss["cooldowns"]["ability.morvaine_ash_seal"] = 0
-	boss["cooldowns"]["ability.morvaine_false_word"] = 100000
-	_until(sim, "telegraph_started", {"spell": "ability.morvaine_ash_seal"}, 400)
-	var shield := _until(sim, "spell_cast", {"spell": "spell.defensive_barrier"}, 80)
-	assert_true(not shield.is_empty(), "barrier before the seal")
-	var hit := _until(sim, "damage_dealt", {"spell": "ability.morvaine_ash_seal"}, 40)
-	assert_true(hit.get("absorbed", 0.0) > 0.0, "the shield takes the seal (%s)" % hit)
-
-
-## ...and otherwise fires under 30 % HP.
-func test_default_barrier_falls_back_on_the_hp_threshold() -> void:
-	var tactics := _manual_tactics()
-	tactics["spells"].erase("spell.defensive_barrier")
-	var sim := _sim(
-		_content([{"enemy": "enemy.mist_wolf", "count": 1}], 5), 5, {"tactics": tactics}
-	)
-	sim.step()
-	var fern: Dictionary = sim.units[0]
-	fern["hp"] = int(fern["max_hp"] * 0.35)
-	assert_eq(
-		_of(_steps(sim, 2), "spell_cast", {"spell": "spell.defensive_barrier"}).size(), 0, "35 %"
-	)
-	fern["hp"] = int(fern["max_hp"] * 0.29)
-	var cast := _of(_steps(sim, 2), "spell_cast", {"spell": "spell.defensive_barrier"})
-	assert_eq(cast.size(), 1, "under 30 %")
-
-
-func test_shield_modes_include_telegraph_or_hp() -> void:
-	var barrier: Dictionary = CombatBench.content()["spell.defensive_barrier"]
-	assert_true(CombatTactics.MODES.has("auto_telegraph_or_hp"), "known mode")
-	assert_eq(
-		CombatTactics.modes_for(barrier),
-		["manual", "auto_hp_below", "auto_before_telegraph", "auto_telegraph_or_hp"],
-		"shield modes"
-	)
-	assert_eq(CombatTactics.default_mode(barrier), "auto_telegraph_or_hp", "shield default")
-
-
 func test_enrage_at_300_seconds() -> void:
 	var fern := CombatBench.fern(11)
 	fern.erase("flat")

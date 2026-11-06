@@ -104,6 +104,10 @@ func _setup(setup: Dictionary) -> void:
 	for u in units:
 		for id in u["spells"] + ([u["ultimate"]] if u["ultimate"] != "" else []):
 			_tactic_spells[id] = def(id)
+	# Consumables take tactics too (Manual by default), carried or not.
+	for id in content:
+		if content[id].get("_type", "") == "consumable":
+			_tactic_spells[id] = content[id]
 	tactics = CombatTactics.build(_tactic_spells, setup.get("tactics", {}))
 	var list := []
 	for group in encounter["enemies"]:
@@ -732,6 +736,20 @@ func _cmd_move(u: Dictionary, x: float, z: float) -> void:
 func _cmd_stop(u: Dictionary) -> void:
 	if u["manual"]:
 		u["move"] = {"x": u["x"], "z": u["z"]}
+
+
+## Whether `u` may drink `id` now (count, shared cooldown, not stunned).
+func can_use_consumable(u: Dictionary, id: String) -> bool:
+	return (
+		int(u["consumables"].get(id, 0)) > 0
+		and int(u["consumable_cd"]) <= 0
+		and not CombatRules.is_cc(self, u)
+	)
+
+
+## A consumable drunk by the tactics (CombatAi), same rules as the command.
+func use_consumable(u: Dictionary, id: String) -> void:
+	_cmd_consumable(u, id)
 
 
 func _cmd_consumable(u: Dictionary, id: String) -> void:
