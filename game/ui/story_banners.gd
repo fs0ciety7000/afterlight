@@ -51,8 +51,6 @@ func show_text(text: String, kind: String = "") -> void:
 		var old := get_child(0)
 		remove_child(old)
 		old.queue_free()
-	get_tree().create_timer(SHOW_S).timeout.connect(
-		func() -> void:
-			if is_instance_valid(card):
-				card.queue_free()
-	)
+	# Bound to the card, not captured: a card freed earlier (screen change,
+	# MAX_SHOWN) drops the connection instead of calling a freed capture.
+	get_tree().create_timer(SHOW_S).timeout.connect(card.queue_free)
