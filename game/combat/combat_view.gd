@@ -7,7 +7,6 @@ extends Node3D
 signal sim_event(event: Dictionary)
 signal finished(completed: Dictionary)
 
-const MAX_STEPS_PER_FRAME := 40
 const SPEEDS := [1, 2, 4]
 const GLOW_KEYS := [
 	"glow_enabled",
@@ -32,12 +31,11 @@ var _player: ExplorePlayer
 var _actors := {}
 var _prev := {}
 var _curr := {}
-var _acc := 0.0
+var _clock := CombatClock.new()
 var _done := false
 var _speed_cap := 4
 var _fx: CombatFx
 var _rig: CameraRig
-var _hit_stop := 0.0
 var _look: Environment
 var _look_saved := {}
 
@@ -75,9 +73,10 @@ func _setup_vfx() -> void:
 	_enable_glow()
 
 
+## Freezes the sim clock (no tick consumed); ignored at ×4 (GDD §14, ROADMAP 7.4).
 func _on_hit_stop(seconds: float) -> void:
-	hit_stops_applied += 1
-	_hit_stop = maxf(_hit_stop, seconds)
+	if _clock.request_hit_stop(seconds, speed()):
+		hit_stops_applied += 1
 
 
 func _on_shake(trauma: float) -> void:
@@ -155,18 +154,11 @@ func snapshot() -> Dictionary:
 func _process(delta: float) -> void:
 	if sim == null or _done:
 		return
-	if _hit_stop > 0.0:
-		_hit_stop -= delta
-	elif not paused:
-		_acc += delta * speed()
-		var steps := 0
-		while _acc >= BalanceCombat.TICK_SECONDS and steps < MAX_STEPS_PER_FRAME and not _done:
-			_step_once()
-			_acc -= BalanceCombat.TICK_SECONDS
-			steps += 1
-		if steps >= MAX_STEPS_PER_FRAME:
-			_acc = 0.0
-	_place_units(clampf(_acc / BalanceCombat.TICK_SECONDS, 0.0, 1.0))
+	for i in _clock.advance(delta, speed(), paused):
+		if _done:
+			break
+		_step_once()
+	_place_units(_clock.alpha())
 
 
 func _step_once() -> void:
