@@ -1,0 +1,8 @@
+Using the attached image ONLY as a reference for brushwork, softness and colour palette, paint a completely new image: a hand-painted illustrated fantasy region map seen from straight above (top-down atlas view, like a painted map in a cozy anime-inspired RPG), a single autumn valley, warm parchment-and-watercolour look with soft painted relief shading. Composition (north at the top):
+- centre slightly left and slightly below the middle: a small cozy village of half-timbered houses with red-brown roofs around a little square, golden fields and hedges around it, a river flowing from the north-east down past the village to the south;
+- west and north-west: a large forest of birch trees with golden-yellow autumn canopies, a path from the village into it;
+- north-east: a misty low marsh with dark pools, reeds and many tiny glowing warm lanterns on posts, soft mist;
+- east-north-east, on a rocky hill above the marsh: the ruin of an old stone watch-post tower;
+- far north, near the top: a stone cloister with a tall clock-bell tower on a high hill, mountains behind it;
+- dirt roads connecting village, forest, marsh, ruin and cloister; mountain ridges and soft vignette near the edges.
+Keep a calm empty margin near all borders (meadows, hills, mountains), all five places well inside the frame. Absolutely no text, no letters, no labels, no compass rose, no icons, no legend, no frame, no UI.

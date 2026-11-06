@@ -1,0 +1,10 @@
+# Heavy fal outputs and intermediates: regenerated from fal_log.json + tools/fal/env_kit.sh,
+# tools/fal/split_sheet.py, tools/fal/process_env_textures.py, tools/blender/build_env_kit.py.
+# JPEG copies of the concept sheets and generated images are kept in preview/.
+raw/
+raw_tripo/
+tex/
+cut/
+gen/*.png
+sheet2_*.png
+*_splat.png

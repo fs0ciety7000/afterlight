@@ -1,0 +1,624 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "sheet_houses",
+  "seconds": 28.1,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15084/N8RLszI4REAKWWIBojKsU_A_world.jpg"
+   ]
+  },
+  "prompt": "Concept sheet of THREE separate stylized 3D game environment assets for a cozy fantasy village, in the hand-painted, soft, warm painterly style and daylight palette of the reference image (stylized like a modern anime-inspired 3D RPG, clean shapes, slightly chunky proportions). Arrange them side by side in one row with wide empty space between them, each object complete and fully visible, never overlapping, never cropped.\n1) a two-storey half-timbered house: cream plaster walls, dark brown timber frame, jettied upper floor, steep warm red-brown tiled roof, stone chimney, low grey stone foundation, wooden door, small shuttered windows.\n2) a small one-storey cottage: half-timbered, tall steep roof with brown tiles, a side lean-to woodshed, round stone chimney, flower box under a window.\n3) a narrow tall townhouse: half-timbered upper floors over a stone ground floor, blue-grey slate roof, dormer window, hanging wooden shop sign without any letters.\nEach house seen from a three-quarter front view, camera slightly above (about 30 degrees), same scale. Plain flat light grey background, no ground, no floor, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels.",
+  "files": [
+   "art/source/env/sheet_houses.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "sheet_props",
+  "seconds": 27.5,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15087/-b29LzVl9uYTQXxbCQ_AJ_A_world.jpg"
+   ]
+  },
+  "prompt": "Concept sheet of separate stylized 3D game props for a cozy fantasy village, in the hand-painted, soft, warm painterly style and daylight palette of the reference image (modern anime-inspired 3D RPG, clean chunky shapes). Arrange them in a clean grid of two rows with wide empty space between all objects, each one complete and fully visible, never overlapping, never cropped:\nrow 1: a round stone village well with a small wooden roof and a bucket on a rope; a short section of rustic wooden fence (three posts, two rails); a small market stall with wooden counter and a striped cream and dusty-red cloth awning, a few crates of apples on the counter; a wooden hand cart with two large wheels loaded with hay.\nrow 2: a wooden lantern post with an iron hanging lantern; a small cluster of two wooden barrels and two wooden crates; an arched old stone footbridge with low parapets (seen from the side at three-quarter angle).\nEach object seen from a three-quarter front view, camera slightly above (about 30 degrees). Plain flat light grey background, no ground, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels.",
+  "files": [
+   "art/source/env/sheet_props.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "sheet_nature",
+  "seconds": 29.4,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab1508a/nvAOUaGK6PB5B-2pVP6c3_A_world.jpg"
+   ]
+  },
+  "prompt": "Concept sheet of separate stylized 3D game nature assets for an autumn valley, in the hand-painted, soft, warm painterly style and daylight palette of the reference image (modern anime-inspired 3D RPG like AFK Journey, clean chunky stylized shapes, foliage as soft rounded clumps). Arrange them in one row with wide empty space between all objects, each one complete and fully visible, never overlapping, never cropped:\n1) a slender birch tree with a white bark trunk with dark marks and a rounded clumpy canopy of golden-yellow autumn leaves;\n2) a second birch tree, taller with two trunks and a canopy of mixed light green and yellow leaves;\n3) a round leafy bush with soft green and amber clumps;\n4) a large mossy grey boulder, rounded and chunky;\n5) a flat cluster of two smaller grey stones with a little moss.\nEach object seen from a three-quarter front view, camera slightly above (about 30 degrees). Plain flat light grey background, no ground, no grass base, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels.",
+  "files": [
+   "art/source/env/sheet_nature.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "sheet2_houses",
+  "seconds": 31.5,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Isolated asset concept sheet on a plain flat light grey studio background (the whole background is one uniform grey, no scene, no landscape, no sky, no UI). Concept sheet of THREE separate stylized 3D game environment assets for a cozy fantasy village, in a hand-painted, soft, warm painterly style with a gentle golden-afternoon palette (ivory, honey gold, sage green, warm terracotta, soft lavender-grey stone) (stylized like a modern anime-inspired 3D RPG, clean shapes, slightly chunky proportions). Arrange them side by side in one row with wide empty space between them, each object complete and fully visible, never overlapping, never cropped.\n1) a two-storey half-timbered house: cream plaster walls, dark brown timber frame, jettied upper floor, steep warm red-brown tiled roof, stone chimney, low grey stone foundation, wooden door, small shuttered windows.\n2) a small one-storey cottage: half-timbered, tall steep roof with brown tiles, a side lean-to woodshed, round stone chimney, flower box under a window.\n3) a narrow tall townhouse: half-timbered upper floors over a stone ground floor, blue-grey slate roof, dormer window, hanging wooden shop sign without any letters.\nEach house seen from a three-quarter front view, camera slightly above (about 30 degrees), same scale. Plain flat light grey background, no ground, no floor, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels.",
+  "files": [
+   "art/source/env/sheet2_houses.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "sheet2_props",
+  "seconds": 22.9,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Isolated asset concept sheet on a plain flat light grey studio background (the whole background is one uniform grey, no scene, no landscape, no sky, no UI). Concept sheet of separate stylized 3D game props for a cozy fantasy village, in a hand-painted, soft, warm painterly style with a gentle golden-afternoon palette (ivory, honey gold, sage green, warm terracotta, soft lavender-grey stone) (modern anime-inspired 3D RPG, clean chunky shapes). Arrange them in a clean grid of two rows with wide empty space between all objects, each one complete and fully visible, never overlapping, never cropped:\nrow 1: a round stone village well with a small wooden roof and a bucket on a rope; a short section of rustic wooden fence (three posts, two rails); a small market stall with wooden counter and a striped cream and dusty-red cloth awning, a few crates of apples on the counter; a wooden hand cart with two large wheels loaded with hay.\nrow 2: a wooden lantern post with an iron hanging lantern; a small cluster of two wooden barrels and two wooden crates; an arched old stone footbridge with low parapets (seen from the side at three-quarter angle).\nEach object seen from a three-quarter front view, camera slightly above (about 30 degrees). Plain flat light grey background, no ground, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels.",
+  "files": [
+   "art/source/env/sheet2_props.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "sheet2_nature",
+  "seconds": 26.9,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Isolated asset concept sheet on a plain flat light grey studio background (the whole background is one uniform grey, no scene, no landscape, no sky, no UI). Concept sheet of separate stylized 3D game nature assets for an autumn valley, in a hand-painted, soft, warm painterly style with a gentle golden-afternoon palette (ivory, honey gold, sage green, warm terracotta, soft lavender-grey stone) (modern anime-inspired 3D RPG like AFK Journey, clean chunky stylized shapes, foliage as soft rounded clumps). Arrange them in one row with wide empty space between all objects, each one complete and fully visible, never overlapping, never cropped:\n1) a slender birch tree with a white bark trunk with dark marks and a rounded clumpy canopy of golden-yellow autumn leaves;\n2) a second birch tree, taller with two trunks and a canopy of mixed light green and yellow leaves;\n3) a round leafy bush with soft green and amber clumps;\n4) a large mossy grey boulder, rounded and chunky;\n5) a flat cluster of two smaller grey stones with a little moss.\nEach object seen from a three-quarter front view, camera slightly above (about 30 degrees). Plain flat light grey background, no ground, no grass base, no cast shadows, no scenery. Even soft lighting with almost no shading, flat hand-painted colors and soft painted textures, no black ink outlines, no text, no labels.",
+  "files": [
+   "art/source/env/sheet2_nature.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "tex_grass",
+  "seconds": 24.4,
+  "arguments": {
+   "aspect_ratio": "1:1",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Hand-painted stylized game texture in a soft painterly style like a modern anime-inspired 3D RPG (AFK Journey), warm golden-afternoon palette. Seamless tileable square texture, strictly orthographic top-down view, flat even lighting with no directional shadows, no perspective, no horizon, no objects bigger than a hand, no borders, no frame, no text. Subject: a meadow grass ground seen from above, dense short grass painted as soft clumpy brush strokes in sage green, fresh green and a few honey-gold autumn tints, tiny scattered white and yellow flower dots, uniform density over the whole tile.",
+  "files": [
+   "art/source/env/gen/tex_grass.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "tex_dirt",
+  "seconds": 25.4,
+  "arguments": {
+   "aspect_ratio": "1:1",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Hand-painted stylized game texture in a soft painterly style like a modern anime-inspired 3D RPG (AFK Journey), warm golden-afternoon palette. Seamless tileable square texture, strictly orthographic top-down view, flat even lighting with no directional shadows, no perspective, no horizon, no objects bigger than a hand, no borders, no frame, no text. Subject: a packed dirt path seen from above, warm sandy ochre and light tan earth with soft painted variation, a few small rounded pebbles and faint cart-track smudges, uniform over the whole tile.",
+  "files": [
+   "art/source/env/gen/tex_dirt.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "tex_cobble",
+  "seconds": 24.6,
+  "arguments": {
+   "aspect_ratio": "1:1",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Hand-painted stylized game texture in a soft painterly style like a modern anime-inspired 3D RPG (AFK Journey), warm golden-afternoon palette. Seamless tileable square texture, strictly orthographic top-down view, flat even lighting with no directional shadows, no perspective, no horizon, no objects bigger than a hand, no borders, no frame, no text. Subject: an old village cobblestone pavement seen from above, rounded irregular stones in warm light grey, beige and faint lavender, thin sandy joints between the stones, a little moss in a few joints, uniform over the whole tile.",
+  "files": [
+   "art/source/env/gen/tex_cobble.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "tex_forest",
+  "seconds": 22.1,
+  "arguments": {
+   "aspect_ratio": "1:1",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Hand-painted stylized game texture in a soft painterly style like a modern anime-inspired 3D RPG (AFK Journey), warm golden-afternoon palette. Seamless tileable square texture, strictly orthographic top-down view, flat even lighting with no directional shadows, no perspective, no horizon, no objects bigger than a hand, no borders, no frame, no text. Subject: a birch forest floor seen from above, mossy dark-green and olive ground covered with scattered fallen golden-yellow and orange birch leaves and a few twigs, uniform over the whole tile.",
+  "files": [
+   "art/source/env/gen/tex_forest.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "grass_cards",
+  "seconds": 23.8,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Isolated sprite sheet on a plain flat light grey studio background (the whole background is one uniform grey, no ground, no scene). Hand-painted stylized vegetation sprites for a 3D game, soft painterly style like a modern anime-inspired RPG (AFK Journey), warm golden-afternoon palette. Eight separate clumps arranged in two rows of four with wide empty space between them, each clump seen from the side, complete, never overlapping, never cropped, base flat at the bottom:\nrow 1: a tuft of tall meadow grass (sage and fresh green); a tuft of dry golden autumn grass; a clump of grass with small white daisies; a clump of grass with lavender-purple flower spikes.\nrow 2: a clump of grass with small yellow buttercups; a fern-like leafy plant; a clump of grass with pale pink wildflowers; a small tuft of short green grass.\nFlat soft colors, clean painted silhouettes, no black outlines, no shadows on the background, no text.",
+  "files": [
+   "art/source/env/gen/grass_cards.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "backdrop",
+  "seconds": 34.6,
+  "arguments": {
+   "aspect_ratio": "21:9",
+   "resolution": "2K",
+   "output_format": "png"
+  },
+  "prompt": "Wide panoramic distant landscape backdrop painting for a 3D game, hand-painted soft painterly style like a modern anime-inspired RPG, golden-afternoon light, aerial perspective with pale lavender-blue haze. Rolling autumn hills with golden fields and small birch groves, and on the highest far hill in the centre a quiet stone cloister with a tall square clock-bell tower with a round clock face without numbers, slender roofs, cypress-like dark trees. Only the land: everything above the hills is a plain flat solid pure white background (no sky, no clouds, no sun). Nothing in the foreground, no people, no text.",
+  "files": [
+   "art/source/env/gen/backdrop.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "map_v1",
+  "seconds": 27.5,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab150b3/tw9Yu09wPpAD9_h5G7TCM_title_day.jpg"
+   ]
+  },
+  "prompt": "Using the attached image ONLY as a reference for brushwork, softness and colour palette, paint a completely new image: a hand-painted illustrated fantasy region map seen from straight above (top-down atlas view, like a painted map in a cozy anime-inspired RPG), a single autumn valley, warm parchment-and-watercolour look with soft painted relief shading. Composition (north at the top):\n- centre slightly left and slightly below the middle: a small cozy village of half-timbered houses with red-brown roofs around a little square, golden fields and hedges around it, a river flowing from the north-east down past the village to the south;\n- west and north-west: a large forest of birch trees with golden-yellow autumn canopies, a path from the village into it;\n- north-east: a misty low marsh with dark pools, reeds and many tiny glowing warm lanterns on posts, soft mist;\n- east-north-east, on a rocky hill above the marsh: the ruin of an old stone watch-post tower;\n- far north, near the top: a stone cloister with a tall clock-bell tower on a high hill, mountains behind it;\n- dirt roads connecting village, forest, marsh, ruin and cloister; mountain ridges and soft vignette near the edges.\nKeep a calm empty margin near all borders (meadows, hills, mountains), all five places well inside the frame. Absolutely no text, no letters, no labels, no compass rose, no icons, no legend, no frame, no UI.",
+  "files": [
+   "art/source/env/gen/map_v1.png"
+  ],
+  "est_cost_usd": 0.15
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "barrels_meshy",
+  "seconds": 171.8,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150aa/kXyCNT_uKwZkCK5Ghc-HN_barrels.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/barrels/barrels_meshy_0.glb",
+   "art/source/env/raw/barrels/barrels_meshy_1.png",
+   "art/source/env/raw/barrels/barrels_meshy_2.glb",
+   "art/source/env/raw/barrels/barrels_meshy_3.fbx",
+   "art/source/env/raw/barrels/barrels_meshy_4.obj",
+   "art/source/env/raw/barrels/barrels_meshy_5.usdz",
+   "art/source/env/raw/barrels/barrels_meshy_6.stl",
+   "art/source/env/raw/barrels/barrels_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "birch_a_meshy",
+  "seconds": 166.0,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 8000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150ad/MbOqBFUw6l-CZ7uM5tD23_birch_a.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/birch_a/birch_a_meshy_0.glb",
+   "art/source/env/raw/birch_a/birch_a_meshy_1.png",
+   "art/source/env/raw/birch_a/birch_a_meshy_2.glb",
+   "art/source/env/raw/birch_a/birch_a_meshy_3.fbx",
+   "art/source/env/raw/birch_a/birch_a_meshy_4.obj",
+   "art/source/env/raw/birch_a/birch_a_meshy_5.usdz",
+   "art/source/env/raw/birch_a/birch_a_meshy_6.stl",
+   "art/source/env/raw/birch_a/birch_a_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "birch_b_meshy",
+  "seconds": 88.1,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 8000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150b0/1Cg0ZTpKr3411DIxGC2ur_birch_b.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/birch_b/birch_b_meshy_0.glb",
+   "art/source/env/raw/birch_b/birch_b_meshy_1.png",
+   "art/source/env/raw/birch_b/birch_b_meshy_2.glb",
+   "art/source/env/raw/birch_b/birch_b_meshy_3.fbx",
+   "art/source/env/raw/birch_b/birch_b_meshy_4.obj",
+   "art/source/env/raw/birch_b/birch_b_meshy_5.usdz",
+   "art/source/env/raw/birch_b/birch_b_meshy_6.stl",
+   "art/source/env/raw/birch_b/birch_b_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "bridge_meshy",
+  "seconds": 177.0,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 8000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150ad/eNQcEshJ7Zs1b4n70vTmE_bridge.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/bridge/bridge_meshy_0.glb",
+   "art/source/env/raw/bridge/bridge_meshy_1.png",
+   "art/source/env/raw/bridge/bridge_meshy_2.glb",
+   "art/source/env/raw/bridge/bridge_meshy_3.fbx",
+   "art/source/env/raw/bridge/bridge_meshy_4.obj",
+   "art/source/env/raw/bridge/bridge_meshy_5.usdz",
+   "art/source/env/raw/bridge/bridge_meshy_6.stl",
+   "art/source/env/raw/bridge/bridge_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "bush_meshy",
+  "seconds": 166.4,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150b0/gu5h1b_7MBNPkL6cGLAK9_bush.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/bush/bush_meshy_0.glb",
+   "art/source/env/raw/bush/bush_meshy_1.png",
+   "art/source/env/raw/bush/bush_meshy_2.glb",
+   "art/source/env/raw/bush/bush_meshy_3.fbx",
+   "art/source/env/raw/bush/bush_meshy_4.obj",
+   "art/source/env/raw/bush/bush_meshy_5.usdz",
+   "art/source/env/raw/bush/bush_meshy_6.stl",
+   "art/source/env/raw/bush/bush_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "cart_meshy",
+  "seconds": 183.2,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 8000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/PtsT94zcv0rms1awtWsgk_cart.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/cart/cart_meshy_0.glb",
+   "art/source/env/raw/cart/cart_meshy_1.png",
+   "art/source/env/raw/cart/cart_meshy_2.glb",
+   "art/source/env/raw/cart/cart_meshy_3.fbx",
+   "art/source/env/raw/cart/cart_meshy_4.obj",
+   "art/source/env/raw/cart/cart_meshy_5.usdz",
+   "art/source/env/raw/cart/cart_meshy_6.stl",
+   "art/source/env/raw/cart/cart_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "fence_meshy",
+  "seconds": 129.4,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/lzyZb1Wx-hWADbLQJxM47_fence.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/fence/fence_meshy_0.glb",
+   "art/source/env/raw/fence/fence_meshy_1.png",
+   "art/source/env/raw/fence/fence_meshy_2.glb",
+   "art/source/env/raw/fence/fence_meshy_3.fbx",
+   "art/source/env/raw/fence/fence_meshy_4.obj",
+   "art/source/env/raw/fence/fence_meshy_5.usdz",
+   "art/source/env/raw/fence/fence_meshy_6.stl",
+   "art/source/env/raw/fence/fence_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "house_a_meshy",
+  "seconds": 279.9,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 12000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/1_B8lZPpEa7ok78hT7JVl_house_a.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/house_a/house_a_meshy_0.glb",
+   "art/source/env/raw/house_a/house_a_meshy_1.png",
+   "art/source/env/raw/house_a/house_a_meshy_2.glb",
+   "art/source/env/raw/house_a/house_a_meshy_3.fbx",
+   "art/source/env/raw/house_a/house_a_meshy_4.obj",
+   "art/source/env/raw/house_a/house_a_meshy_5.usdz",
+   "art/source/env/raw/house_a/house_a_meshy_6.stl",
+   "art/source/env/raw/house_a/house_a_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "house_b_meshy",
+  "seconds": 288.3,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 12000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/D5g9b6lBULQ97ee0LGq9q_house_b.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/house_b/house_b_meshy_0.glb",
+   "art/source/env/raw/house_b/house_b_meshy_1.png",
+   "art/source/env/raw/house_b/house_b_meshy_2.glb",
+   "art/source/env/raw/house_b/house_b_meshy_3.fbx",
+   "art/source/env/raw/house_b/house_b_meshy_4.obj",
+   "art/source/env/raw/house_b/house_b_meshy_5.usdz",
+   "art/source/env/raw/house_b/house_b_meshy_6.stl",
+   "art/source/env/raw/house_b/house_b_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "house_c_meshy",
+  "seconds": 128.2,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 12000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/1ftT8ZY1JA2o9tmGIiE9t_house_c.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/house_c/house_c_meshy_0.glb",
+   "art/source/env/raw/house_c/house_c_meshy_1.png",
+   "art/source/env/raw/house_c/house_c_meshy_2.glb",
+   "art/source/env/raw/house_c/house_c_meshy_3.fbx",
+   "art/source/env/raw/house_c/house_c_meshy_4.obj",
+   "art/source/env/raw/house_c/house_c_meshy_5.usdz",
+   "art/source/env/raw/house_c/house_c_meshy_6.stl",
+   "art/source/env/raw/house_c/house_c_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "lantern_meshy",
+  "seconds": 98.4,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/sQfYq67L5-VBvbxGYgZIg_lantern.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/lantern/lantern_meshy_0.glb",
+   "art/source/env/raw/lantern/lantern_meshy_1.png",
+   "art/source/env/raw/lantern/lantern_meshy_2.glb",
+   "art/source/env/raw/lantern/lantern_meshy_3.fbx",
+   "art/source/env/raw/lantern/lantern_meshy_4.obj",
+   "art/source/env/raw/lantern/lantern_meshy_5.usdz",
+   "art/source/env/raw/lantern/lantern_meshy_6.stl",
+   "art/source/env/raw/lantern/lantern_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "rock_a_meshy",
+  "seconds": 105.4,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150b2/DMyKKVty7w-MDdaHks4rz_rock_a.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/rock_a/rock_a_meshy_0.glb",
+   "art/source/env/raw/rock_a/rock_a_meshy_1.png",
+   "art/source/env/raw/rock_a/rock_a_meshy_2.glb",
+   "art/source/env/raw/rock_a/rock_a_meshy_3.fbx",
+   "art/source/env/raw/rock_a/rock_a_meshy_4.obj",
+   "art/source/env/raw/rock_a/rock_a_meshy_5.usdz",
+   "art/source/env/raw/rock_a/rock_a_meshy_6.stl",
+   "art/source/env/raw/rock_a/rock_a_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "rock_b_meshy",
+  "seconds": 196.2,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150b9/3K7Q1GpXCiX5PP_Xq6Hj-_rock_b.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/rock_b/rock_b_meshy_0.glb",
+   "art/source/env/raw/rock_b/rock_b_meshy_1.png",
+   "art/source/env/raw/rock_b/rock_b_meshy_2.glb",
+   "art/source/env/raw/rock_b/rock_b_meshy_3.fbx",
+   "art/source/env/raw/rock_b/rock_b_meshy_4.obj",
+   "art/source/env/raw/rock_b/rock_b_meshy_5.usdz",
+   "art/source/env/raw/rock_b/rock_b_meshy_6.stl",
+   "art/source/env/raw/rock_b/rock_b_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "stall_meshy",
+  "seconds": 159.5,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 8000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/aVc16q5H2WZbzC0bDzNEt_stall.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/stall/stall_meshy_0.glb",
+   "art/source/env/raw/stall/stall_meshy_1.png",
+   "art/source/env/raw/stall/stall_meshy_2.glb",
+   "art/source/env/raw/stall/stall_meshy_3.fbx",
+   "art/source/env/raw/stall/stall_meshy_4.obj",
+   "art/source/env/raw/stall/stall_meshy_5.usdz",
+   "art/source/env/raw/stall/stall_meshy_6.stl",
+   "art/source/env/raw/stall/stall_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "well_meshy",
+  "seconds": 161.7,
+  "arguments": {
+   "enable_pbr": false,
+   "should_texture": true,
+   "topology": "triangle",
+   "target_polycount": 8000,
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab150a0/73u1Nitn4GaS5vJjn5DuU_well.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw/well/well_meshy_0.glb",
+   "art/source/env/raw/well/well_meshy_1.png",
+   "art/source/env/raw/well/well_meshy_2.glb",
+   "art/source/env/raw/well/well_meshy_3.fbx",
+   "art/source/env/raw/well/well_meshy_4.obj",
+   "art/source/env/raw/well/well_meshy_5.usdz",
+   "art/source/env/raw/well/well_meshy_6.stl",
+   "art/source/env/raw/well/well_meshy_7.png"
+  ],
+  "est_cost_usd": 1.2
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "birch_b_tripo",
+  "seconds": 198.3,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 8000,
+   "image_url": "https://v3b.fal.media/files/b/0ab150d1/HMfAvRRN1oNPMO2ZJ50cd_birch_b.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw_tripo/birch_b/birch_b_tripo_0.glb",
+   "art/source/env/raw_tripo/birch_b/birch_b_tripo_1.glb",
+   "art/source/env/raw_tripo/birch_b/birch_b_tripo_2.png"
+  ],
+  "est_cost_usd": 0.4
+ },
+ {
+  "endpoint": "tripo3d/h3.1/image-to-3d",
+  "name": "bush_tripo",
+  "seconds": 255.7,
+  "arguments": {
+   "pbr": false,
+   "texture": true,
+   "texture_quality": "detailed",
+   "geometry_quality": "standard",
+   "face_limit": 8000,
+   "image_url": "https://v3b.fal.media/files/b/0ab150d1/gQMWqlV01ZS4UhN-Udvcb_bush.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/env/raw_tripo/bush/bush_tripo_0.glb",
+   "art/source/env/raw_tripo/bush/bush_tripo_1.glb",
+   "art/source/env/raw_tripo/bush/bush_tripo_2.png"
+  ],
+  "est_cost_usd": 0.4
+ }
+]

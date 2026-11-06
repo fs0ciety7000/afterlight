@@ -18,7 +18,7 @@
         "location.watch_ruins"
       ],
       "hub": "location.aubelin",
-      "map_texture": "res://assets/textures/map/aubelin_vale.png",
+      "map_texture": "res://assets/textures/map/aubelin_vale.jpg",
       "unlock": {
         "start": true
       }

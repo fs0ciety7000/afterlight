@@ -1,0 +1,189 @@
+{
+ "barrels": {
+  "file": "environment/props/barrels.glb",
+  "kb": 253,
+  "size_m": [
+   2.29,
+   1.15,
+   2.2
+  ],
+  "tris": 1798,
+  "tris_raw": 4977
+ },
+ "birch_a": {
+  "file": "environment/vegetation/birch_a.glb",
+  "kb": 181,
+  "size_m": [
+   4.12,
+   6.99,
+   2.9
+  ],
+  "tris": 2599,
+  "tris_raw": 8381
+ },
+ "birch_a_lo": {
+  "file": "environment/vegetation/birch_a_lo.glb",
+  "kb": 133,
+  "size_m": [
+   4.08,
+   6.99,
+   2.9
+  ],
+  "tris": 1099,
+  "tris_raw": 8381
+ },
+ "birch_b": {
+  "file": "environment/vegetation/birch_b.glb",
+  "kb": 173,
+  "size_m": [
+   2.5,
+   8.99,
+   5.43
+  ],
+  "tris": 3000,
+  "tris_raw": 7798
+ },
+ "birch_b_lo": {
+  "file": "environment/vegetation/birch_b_lo.glb",
+  "kb": 121,
+  "size_m": [
+   2.47,
+   9.01,
+   5.32
+  ],
+  "tris": 1200,
+  "tris_raw": 7798
+ },
+ "bridge": {
+  "file": "environment/props/bridge.glb",
+  "kb": 293,
+  "size_m": [
+   7.5,
+   2.19,
+   4.25
+  ],
+  "tris": 3000,
+  "tris_raw": 8072
+ },
+ "bush": {
+  "file": "environment/vegetation/bush.glb",
+  "kb": 103,
+  "size_m": [
+   1.51,
+   1.31,
+   2.36
+  ],
+  "tris": 1200,
+  "tris_raw": 7424
+ },
+ "cart": {
+  "file": "environment/props/cart.glb",
+  "kb": 348,
+  "size_m": [
+   2.4,
+   1.48,
+   1.62
+  ],
+  "tris": 2499,
+  "tris_raw": 8053
+ },
+ "fence": {
+  "file": "environment/props/fence.glb",
+  "kb": 183,
+  "size_m": [
+   2.4,
+   0.86,
+   0.18
+  ],
+  "tris": 899,
+  "tris_raw": 4681
+ },
+ "house_a": {
+  "file": "environment/buildings/house_a.glb",
+  "kb": 487,
+  "size_m": [
+   6.09,
+   7.59,
+   5.41
+  ],
+  "tris": 5999,
+  "tris_raw": 11698
+ },
+ "house_b": {
+  "file": "environment/buildings/house_b.glb",
+  "kb": 518,
+  "size_m": [
+   5.46,
+   6.03,
+   5.22
+  ],
+  "tris": 5998,
+  "tris_raw": 11869
+ },
+ "house_c": {
+  "file": "environment/buildings/house_c.glb",
+  "kb": 455,
+  "size_m": [
+   4.41,
+   8.79,
+   5.42
+  ],
+  "tris": 6000,
+  "tris_raw": 11564
+ },
+ "lantern": {
+  "file": "environment/props/lantern.glb",
+  "kb": 200,
+  "size_m": [
+   1.35,
+   2.9,
+   0.39
+  ],
+  "tris": 900,
+  "tris_raw": 4688
+ },
+ "rock_a": {
+  "file": "environment/rocks/rock_a.glb",
+  "kb": 113,
+  "size_m": [
+   1.91,
+   1.7,
+   1.83
+  ],
+  "tris": 1000,
+  "tris_raw": 5134
+ },
+ "rock_b": {
+  "file": "environment/rocks/rock_b.glb",
+  "kb": 114,
+  "size_m": [
+   2.63,
+   0.7,
+   3.44
+  ],
+  "tris": 700,
+  "tris_raw": 5186
+ },
+ "stall": {
+  "file": "environment/props/stall.glb",
+  "kb": 340,
+  "size_m": [
+   2.97,
+   2.79,
+   1.93
+  ],
+  "tris": 2999,
+  "tris_raw": 7836
+ },
+ "well": {
+  "file": "environment/props/well.glb",
+  "kb": 295,
+  "size_m": [
+   2.35,
+   2.7,
+   1.84
+  ],
+  "tris": 2500,
+  "tris_raw": 8106
+ }
+}

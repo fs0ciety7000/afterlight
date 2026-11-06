@@ -11,8 +11,8 @@
       "kind": "hub",
       "scene": "res://game/world/locations/aubelin.tscn",
       "map_pos": [
-        0.46,
-        0.62
+        0.44,
+        0.59
       ],
       "unlock": {
         "start": true
@@ -33,7 +33,7 @@
       "scene": "res://game/world/locations/whispering_wood.tscn",
       "map_pos": [
         0.26,
-        0.44
+        0.39
       ],
       "unlock": {
         "start": true
@@ -52,8 +52,8 @@
       "level": 4,
       "scene": "res://game/world/locations/lantern_mire.tscn",
       "map_pos": [
-        0.68,
-        0.38
+        0.72,
+        0.51
       ],
       "unlock": {
         "level_at_least": 4
@@ -70,7 +70,7 @@
       "level": 7,
       "scene": "res://game/world/locations/watch_ruins.tscn",
       "map_pos": [
-        0.78,
+        0.79,
         0.22
       ],
       "unlock": {

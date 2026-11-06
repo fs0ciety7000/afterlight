@@ -1,0 +1,4 @@
+Isolated sprite sheet on a plain flat light grey studio background (the whole background is one uniform grey, no ground, no scene). Hand-painted stylized vegetation sprites for a 3D game, soft painterly style like a modern anime-inspired RPG (AFK Journey), warm golden-afternoon palette. Eight separate clumps arranged in two rows of four with wide empty space between them, each clump seen from the side, complete, never overlapping, never cropped, base flat at the bottom:
+row 1: a tuft of tall meadow grass (sage and fresh green); a tuft of dry golden autumn grass; a clump of grass with small white daisies; a clump of grass with lavender-purple flower spikes.
+row 2: a clump of grass with small yellow buttercups; a fern-like leafy plant; a clump of grass with pale pink wildflowers; a small tuft of short green grass.
+Flat soft colors, clean painted silhouettes, no black outlines, no shadows on the background, no text.
