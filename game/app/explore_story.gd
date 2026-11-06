@@ -78,18 +78,27 @@ func populate() -> void:
 				}
 			)
 		)
+	# A taken chest stays in place, open; other found things are gone.
+	var opened := []
 	for d: Dictionary in GameState.content_api.discoveries_in(place):
-		if d["found"]:
+		if d["found"] and d["kind"] != "chest":
 			continue
 		var anchor := view.anchor(str(d["anchor"]))
 		if anchor == null:
 			continue
-		entries.append(discovery_entry(d, anchor))
+		var e := discovery_entry(d, anchor)
+		if d["found"]:
+			e["opened"] = true
+			opened.append(d["id"])
+		entries.append(e)
 	if dungeon and dungeon.inside():
 		entries.append_array(dungeon.interactables())
 	else:
 		entries.append_array(_gates())
 	view.interactables.build(entries)
+	# Drawn open, then dropped from the usable things (no prompt, no plate).
+	for id: String in opened:
+		view.interactables.remove(id)
 	_pending = ""
 	_prompt_id = "-"
 	_set_prompt("")
