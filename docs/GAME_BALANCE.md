@@ -274,7 +274,9 @@ DPS_eff        = power × ROT × crit_factor × OFFLINE_DPS_CALIBRATION
 crit_factor    = 1 + crit_chance × (crit_damage − 1)
 ```
 
-`ROT` est le coefficient de rotation soutenu, en coeff par seconde (§20.2). Il vaut **1,70** pour le kit de rang 1 sans rune.
+`ROT` est le coefficient de rotation soutenu, en coeff par seconde. Il vaut **1,70** pour le kit de rang 1 sans rune.
+
+*(jalon 5)* Les durées de ce § sont des cibles de conception, calculées avec l'ancienne rotation soutenue (ultime compris, `OFFLINE_DPS_CALIBRATION` à 0,85). Le calcul hors ligne utilise désormais la rotation de chasse du §20.2, calée sur la simulation ; le banc (§22) fait foi pour les durées réelles.
 
 **Vérification au même niveau** (3 loups, Fern équipement typique, crit 0,08) :
 - PV effectifs : 3 × 300 × m × 1,2 = 1 080 m.
@@ -559,8 +561,8 @@ Pas de revente d'objets contre de l'or : seul le recyclage existe, pour éviter 
 | `OFFLINE_CAP_S` | 28 800 (8 h) | fixe | Exigence du propriétaire |
 | `OFFLINE_MIN_S` | 60 | 30-300 | |
 | `OFFLINE_EFFICIENCY` | 0,25 | 0,20-0,40 | 8 h hors ligne valent 2 h de chasse active (décision du propriétaire, 2026-11-06) |
-| `OFFLINE_DPS_CALIBRATION` | 0,85 | 0,7-1,0 | Déplacements, surplus de dégâts, changements de cible. Calibré sur la simulation (§22) |
-| `ENGAGE_S` | 2,0 | | Approche en début de rencontre |
+| `OFFLINE_DPS_CALIBRATION` | 1,0 | 0,7-1,2 | Déplacements, surplus de dégâts, changements de cible. Calibré sur la simulation (§22) : 0,85 avant le jalon 5, 1,0 avec la rotation de chasse du §20.2 |
+| `ENGAGE_S` | 0,5 | | Approche en début de rencontre. Mesuré en simulation : premier coup à ~0,35 s (2,0 avant le jalon 5) |
 | `ENCOUNTER_RESPAWN_S` | 6,0 | 4-10 | Entre deux rencontres de la boucle « Chasser ici » |
 | `CLEAR_TIME_MIN_S` / `CLEAR_TIME_MAX_S` | 8 / 120 | | Au-delà du maximum, la rencontre n'est pas éligible |
 | `OFFLINE_INCOMING_ALIVE_FACTOR` | 0,6 | | Part moyenne des ennemis vivants pendant la rencontre |
@@ -568,40 +570,74 @@ Pas de revente d'objets contre de l'or : seul le recyclage existe, pour éviter 
 | `OFFLINE_ITEM_KEEP_MAX` | 30 (et ≤ cases libres) | | |
 | `OFFLINE_ITEM_SAMPLE_MAX` | 500 | | Au-delà, recyclage à l'espérance |
 | `OFFLINE_RUNE_KEEP_MAX` | 20 | | Au-delà, recyclage en éclats |
+| `OFFLINE_RUNE_SAMPLE_MAX` | 500 | | *(provisoire, jalon 5)* Comme les objets : au-delà, recyclage à l'espérance |
 
-Entrées : `last_save_unix` (= `meta.last_active_at` de l'état), `now_unix` (passé en paramètre au moteur), la rencontre de chasse (`farming.encounter_id`) (définition + niveau), l'instantané des statistiques dérivées du groupe et de ses sorts, runes et tactiques au moment de la sauvegarde, et la table de butin. Le calcul ne fait tourner **aucun tick**.
+Entrées : `last_save_unix` (= `meta.last_active_at` de l'état), `now_unix` (passé en paramètre au moteur), la rencontre de chasse (`farming` dans l'état) (définition + niveau), l'instantané des statistiques dérivées du groupe et de ses sorts et runes au moment du calcul, et la table de butin. Les tactiques ne sont pas sauvegardées : le groupe absent joue les tactiques par défaut. Le calcul ne fait tourner **aucun tick** (code : `game/engine/idle/`).
 
 ```
 Δ = now − last_save
-si Δ < 0           → gains nuls, last_save inchangé, mention « horloge »
+si aucune chasse     → pas de résumé
+si Δ < 0             → gains nuls, last_save inchangé, mention « horloge »
 si Δ < OFFLINE_MIN_S → pas de résumé
 Δ_eff = min(Δ, OFFLINE_CAP_S)
-éligible = rencontre.offline_eligible ∧ déjà vaincue ∧ type == normal
+éligible = rencontre.offline_eligible ∧ déjà vaincue ∧ type == normal ∧ clear_time ≤ CLEAR_TIME_MAX_S
 ```
 
-### 20.2 Rotation analytique (`ROT`)
+*(provisoire, jalon 5)* Précisions :
+- L'horodatage gardé est `max(last_save, now)` : une horloge reculée ne le fait jamais reculer, ni au calcul ni aux sauvegardes suivantes. Le temps entre l'horloge reculée et l'ancien horodatage n'est jamais compté.
+- Un résumé non récupéré reste en attente (sauvegardé). Tant qu'il attend, aucun nouveau résumé n'est calculé et le temps écoulé entre-temps n'est pas compté : pas de cumul, pas de double crédit.
+- « Récupérer » crédite le résumé une seule fois puis l'efface. Un résumé sans gain (horloge, survie, rencontre devenue inéligible) s'efface de la même façon.
+- Le choix de la chasse est refusé pour une élite, un boss, une rencontre jamais vaincue ou un `clear_time` au-delà du maximum (raison affichée). Une chasse où le groupe ne survit pas peut être choisie, avec un avertissement ; le résumé l'explique et ne crédite rien.
+- Le calcul se fait au chargement d'une sauvegarde, jamais à l'import d'un fichier (sinon réimporter le même fichier rejouerait l'absence).
+
+### 20.2 Rotation de chasse (`ROT`)
+
+*(jalon 5)* La rotation soutenue d'origine (ultime compris, `r` au régime permanent, Mana voilé ignoré) donnait un `clear_time` 35 à 70 % plus long que la simulation (critère 5.6). Le banc montre pourquoi : avec les tactiques par défaut (GDD §7.4), l'ultime est en manuel et n'est jamais lancé, la Rafale n'est lancée que tant que 3 ennemis sont debout, chaque Zoltraak part voilé (+30 %) et un combat de chasse commence réserve de mana remplie. La rotation suit donc les rôles des sorts (`CombatTactics.role_of`) :
+
+| Rôle (mode par défaut) | Dans le calcul |
+|---|---|
+| Dégâts, interruption (`auto`) | Cadence soutenue `taux_s × r` |
+| Zone (`auto_min_enemies`) | Un lancer d'ouverture par rencontre si la meute compte au moins `TACTIC_MIN_ENEMIES_DEFAULT` ennemis (salve `B`), rien ensuite |
+| Bouclier (`auto_hp_below`) | Aucun dégât ; son coût compte dans `S` (prudent) et son bouclier dans la réserve (§20.3) |
+| Ultime (`manual`) | Jamais lancé : 0 |
 
 ```
-taux_s   = 1 / recharge_eff_s                              pour chaque actif lancé
-S        = Σ coût_eff_s × taux_s                          (Barrière comprise)
+taux_s   = 1 / recharge_eff_s                                  sorts « auto » et bouclier
+S        = Σ coût_eff_s × taux_s                               (Barrière comprise)
+C        = Σ coût_eff des lancers d'ouverture
 I        = mana_regen + AUTO_MANA_RESTORE / intervalle_eff
-r        = min(1, I / S)
+réserve₀ = max_mana × min(1, (ENCOUNTER_RESPAWN_S − OOC_DELAY_S) × OOC_MANA_PCT_PER_S)   (= 0,8)
+r        = min(1, (réserve₀ − C + I × t) / (S × t))            t = durée du combat
+voilé    = 1 + VEILED_MANA_BONUS   si 1 / (Σ taux_s × r) ≥ VEILED_MANA_DELAY_S, sinon 1
 ROT      = coeff_auto / intervalle_eff
-         + Σ_dégâts coeff_s × coups_s × rank_mult_s × (1 + bonus_s) × (1 + echo_s × 0.5) × taux_s × r
-         + coeff_ult_total / (ULT_CHARGE_MAX / charge_par_s + canalisation_ult)
-charge_par_s = ULT_CHARGE_PER_AUTO / intervalle_eff + ULT_CHARGE_PER_ACTIVE × Σ taux_s × r
+         + Σ_dégâts coeff_s × coups_s × rank_mult_s × (1 + echo_s × 0.5) × taux_s × r × voilé
+B        = Σ_zone coeff_s × coups_s × rank_mult_s × (1 + echo_s × 0.5)
 ```
 
-Mana voilé est ignoré (hypothèse prudente). L'affinité de chaque ennemi est la moyenne des affinités, pondérée par la part de dégâts de chaque élément dans `ROT`.
+Chaque terme est multiplié par `(1 + bonus_s)` (couche additive de `CombatRules.make_hit` : `damage_bonus` + `element_bonus_<élément>` + bonus de rune) et par son propre `crit_factor` (chance de critique + bonus d'Acuité du sort). `t` et `r` dépendent l'un de l'autre : six itérations à point fixe depuis `r = 1` les fixent (`FIXED_POINT_STEPS`). L'affinité de chaque ennemi est la moyenne de ses affinités, pondérée par la part de dégâts de chaque élément (soutenu sur `t` plus salve) ; le multiplicateur de barrière est `1 + (BARRIER_ARCANE_MULT − 1) × part_arcane`.
+
+**Limite connue** : les combats de la tranche sont courts et « quantifiés » (un Zoltraak par loup, puis des attaques automatiques). Au même niveau, l'écart reste ≤ 11 % (banc à 16 graines, tableau ci-dessous). Bien au-dessus du niveau de la rencontre, le modèle est trop rapide (−24 % pour Fern niveau 6 contre la rencontre de niveau 3) ; la pénalité d'XP (§12) limite l'intérêt de ces chasses.
+
+| Rencontre (Fern typique, même niveau) | `clear_time` analytique | p50 simulé (16 graines) | Écart |
+|---|---|---|---|
+| `whispering_wood_01` (L1) | 11,1 s | 11,5 s | −4 % |
+| `whispering_wood_02` (L1) | 16,4 s | 15,4 s | +6 % |
+| `whispering_wood_03` (L2) | 17,2 s | 16,6 s | +4 % |
+| `whispering_wood_04` (L2) | 20,1 s | 20,5 s | −2 % |
+| `whispering_wood_05` (L3) | 14,4 s | 13,0 s | +11 % |
+| `lantern_mire_01` (L4) | 11,0 s | 11,0 s | 0 % |
+| `watch_ruins_01` (L7) | 19,6 s | 19,3 s | +2 % |
 
 ### 20.3 Durée de cycle, survie, gains
 
 ```
 DPS        = power × ROT × crit_factor × OFFLINE_DPS_CALIBRATION
-clear_time = clamp(Σ PV_effectifs_i / DPS + ENGAGE_S, CLEAR_TIME_MIN_S, ∞)
+salve      = power × B × crit_factor × OFFLINE_DPS_CALIBRATION
+clear_time = max(max(0, Σ PV_effectifs_i − salve) / DPS + ENGAGE_S, CLEAR_TIME_MIN_S)
 cycle      = clear_time + ENCOUNTER_RESPAWN_S
 
 subi       = Σ_i power_i × coeff_par_s_i × mitigation_i(def du groupe) × OFFLINE_INCOMING_ALIVE_FACTOR
+coeff_par_s_i = coeff × coups / intervalle (attaque) + Σ coeff × coups / recharge (capacités de dégâts)
 réserve    = max_hp + bouclier × (clear_time / recharge_barrière_eff + 1)
 survit     = réserve / subi ≥ OFFLINE_SAFETY_FACTOR × clear_time      (sinon gains nuls + explication)
 
@@ -614,42 +650,53 @@ Objets     = même règle → tirage individuel de la rareté et des affixes (�
 Runes      = même règle, plafond OFFLINE_RUNE_KEEP_MAX, le reste est recyclé en éclats
 ```
 
-`rng` est le flux `offline`, initialisé à partir de la graine de partie, de `last_save_unix` et de `now_unix`. Les mêmes entrées donnent donc exactement le même résumé (test unitaire). La puissance est figée au départ : les niveaux gagnés pendant l'absence n'accélèrent pas le calcul.
+`rng` est le flux `offline`, initialisé à partir de la graine de partie, de `last_save_unix` et de la fin de la fenêtre comptée `min(now_unix, last_save_unix + OFFLINE_CAP_S)` *(jalon 5 : ainsi 8 h et 8 h + 1 s donnent exactement les mêmes gains, critère 5.3)*. Les mêmes entrées donnent donc exactement le même résumé (test unitaire). La puissance est figée au départ : les niveaux gagnés pendant l'absence n'accélèrent pas le calcul.
+
+*(provisoire, jalon 5)* Précisions :
+- `coeff_par_s_i` : les zones au sol (effet avec `duration_s`, dont le groupe sort), les capacités déclenchées (`trigger`) et les statuts (Brûlure) ne comptent pas ; c'est la lecture de l'exemple du §20.4 (la Flambée des lanternes n'y figure pas).
+- XP : la pénalité s'applique ennemi par ennemi, au niveau de départ. Or : espérance du tirage `uniform(0.8, 1.2)` = 1, `gold_find` une seule fois (déjà dans `or_ennemi`).
+- Seules les entrées `gold`, `material`, `item` et `rune` de la table sont tirées hors ligne (jamais celles de premier kill) ; les consommables et artefacts d'une table ne le sont pas.
+- Tirages, dans l'ordre : matériaux (par ID trié), puis objets (rareté et affixes de chacun), puis runes. Les objets gardés sont les meilleurs (rareté, puis ilvl, puis ordre de tirage), au plus `min(OFFLINE_ITEM_KEEP_MAX, cases libres du sac)` ; le reste est recyclé (`SALVAGE_DUST`). Les runes gardées sont celles de plus haut palier ; le reste donne `2 × 3^(palier−1)` éclats.
+- Au-delà de `OFFLINE_ITEM_SAMPLE_MAX` tirages, chaque objet restant donne la poussière moyenne du profil de rareté à l'ilvl de la rencontre.
+- À la récupération, les objets gardés entrent dans le sac par la même règle que le butin (`Inventory.receive`) : si le sac s'est rempli entre-temps, ils sont recyclés et une ligne le dit. Rien n'est perdu en silence.
+- Le Sablier fêlé ajoute sa valeur (§18) à `OFFLINE_EFFICIENCY` : `bonus_sablier`.
 
 ### 20.4 Exemple chiffré
 
+*(jalon 5)* Recalculé avec la rotation de chasse du §20.2 et sans arrondi intermédiaire (l'ancienne version arrondissait le DPS à 120,2, d'où N = 339,46 au lieu de 339,30). Le test `tests/unit/engine/test_offline.gd` le reproduit exactement (critère 5.1).
+
 Paramètres de l'exemple :
-- Fern niveau 8 : `power` 80, crit 0,08 / 1,5, 895 PV, défense 48,2. Sorts au rang 1, sans rune.
+- Fern niveau 8 : `power` 80, crit 0,08 / 1,5, 895 PV, défense 48,2, 128 de mana, 4 de régénération. Sorts au rang 1, sans rune, tactiques par défaut. 0 XP au départ.
 - Chasse : rencontre niveau 7, 2 lanternes et 1 loup. Absence de 10 h.
 
 1. `Δ_eff` = min(36 000, 28 800) = 28 800 s.
-2. `ROT` :
-   - Attaque auto : 1/1,2 = 0,8333.
-   - Sorts : (3,2/6 + 3,0/10) × 0,6964 = 0,5804.
-   - Ultime : 10,8 / (100 / 2,7887 + 2) = 0,2853.
-   - Total : **1,6990**.
-3. DPS = 80 × 1,699 × 1,04 × 0,85 = **120,2**.
+2. Rotation :
+   - Sorts « auto » : Zoltraak (1/6) et Barrière (1/18). Rafale : salve d'ouverture (3 ennemis). Ultime : manuel, 0.
+   - Mana : S = 25/6 + 30/18 = 5,83/s, I = 4 + 3/1,2 = 6,5/s > S, donc **r = 1**.
+   - Voilé : 1 / (1/6 + 1/18) = 4,5 s ≥ 4 s, donc Zoltraak × 1,3.
+   - `ROT` = 1/1,2 + 3,2/6 × 1,3 = **1,5267** ; `B` = 0,6 × 5 = **3,0**.
+3. DPS = 80 × 1,5267 × 1,04 × 1,0 = **127,02** ; salve = 80 × 3,0 × 1,04 = **249,6**.
 4. PV effectifs :
    - Lanternes : 2 × 418 / (104/113,6 = 0,9155) = 913,2.
    - Loup : 570 / (104/123,2 = 0,8442) = 675,2.
    - Total : 1 588,4.
-5. `clear_time` = 1 588,4 / 120,2 + 2 = 15,21 s, donc `cycle` = 21,21 s.
+5. `clear_time` = (1 588,4 − 249,6) / 127,02 + 0,5 = **11,04 s**, donc `cycle` = 17,04 s.
 6. Survie :
    - Dégâts subis : (2 × 10,5 + 13,75) × 0,6 = 20,85/s.
-   - Réserve : 895 + 343,75 × (15,21/18 + 1) = 1 529.
-   - Survie : 73,3 s ≥ 1,25 × 15,21 = 19,0. Condition remplie.
-7. N = 28 800 × 0,25 / 21,21 = **339,46** rencontres.
+   - Réserve : 895 + 343,75 × (11,04/18 + 1) = 1 449,6.
+   - Survie : 69,5 s ≥ 1,25 × 11,04 = 13,8. Condition remplie.
+7. N = 28 800 × 0,25 / 17,04 = **422,53** rencontres.
 8. Gains :
 
 | Gain | Espérance par rencontre | Total |
 |---|---|---|
-| XP | 3 × 20 = 60 (écart de 1 : pas de pénalité) | 20 368 → niveau 8 → 9 (11 454 / 12 104) |
-| Or | 3 × 8,8 = 26,4 | 8 962 |
-| Poussière de mana | 3 × 0,15 × 1,5 = 0,675 | 229 + Bernoulli(0,14) |
-| Éclat runique | 0,12 | 40 + Bernoulli(0,74) |
-| Page de grimoire | 0,01 | 3 + Bernoulli(0,39) |
-| Objets | 0,25 | 84 + Bernoulli(0,87) tirés ; 30 gardés ; ~55 recyclés ≈ 324 poussières (espérance 5,89 par objet ilvl 7) |
-| Runes | 0,03 | 10 + Bernoulli(0,18) |
+| XP | 3 × 20 = 60 (écart de 1 : pas de pénalité) | **25 351** → niveau 8 → **10** (4 331 / 15 920) |
+| Or | 3 × 8,8 = 26,4 | **11 154** |
+| Poussière de mana | 3 × 0,15 × 1,5 = 0,675 | 285 + Bernoulli(0,21) |
+| Éclat runique | 0,12 | 50 + Bernoulli(0,70) |
+| Page de grimoire | 0,01 | 4 + Bernoulli(0,23) |
+| Objets | 0,25 | 105 + Bernoulli(0,63) tirés ; 30 gardés ; ~76 recyclés (espérance 5,89 poussières par objet ilvl 7 avant tri) |
+| Runes | 0,03 | 12 + Bernoulli(0,68) |
 
 ## 21. Tables de cohérence
 
@@ -679,7 +726,7 @@ Base : chasse au même niveau, 145 rencontres/h (cycle de 24,8 s). Les quêtes a
 | L15 | 2 039 | 14,1 | Jour 4-5 |
 | L20 | 4 686 | 32,3 | ~2 semaines en jeu léger |
 
-Gain par nuit de 8 h (équivalent à 2 h de chasse avec `OFFLINE_EFFICIENCY = 0,25`) : ~+1 niveau vers L8, ~+0,6 niveau vers L15. La colonne « estimation réelle » ci-dessus a été établie avec 0,40 : le banc (§22) doit la recaler ; si L20 dépasse nettement 2 semaines, compenser par l'XP des quêtes plutôt que par le hors ligne. **Point à surveiller** en test (T6) : voir §22.
+Gain par nuit de 8 h (équivalent à 2 h de chasse avec `OFFLINE_EFFICIENCY = 0,25`) : ~+2 niveaux vers L8 d'après l'exemple du §20.4 recalé sur la simulation au jalon 5 (~+1 avec l'ancien modèle), à revoir au banc pour L15. La colonne « estimation réelle » ci-dessus a été établie avec 0,40 : le banc (§22) doit la recaler ; si L20 dépasse nettement 2 semaines, compenser par l'XP des quêtes plutôt que par le hors ligne. **Point à surveiller** en test (T6) : voir §22.
 
 ### 21.3 Économie de l'or (ordre de grandeur sur la tranche)
 
@@ -714,7 +761,7 @@ Les puits absorbent 85 à 100 % des revenus. Il ne doit pas y avoir d'or « inut
 | Élite, `idle` / `script_optimal`, typique | 30-60 % / ≥ 90 % |
 | Boss, `idle` / `script_optimal`, typique niveau 11 | ≤ 20 % / ≥ 80 %, durée p50 150-210 s |
 | Boss, `confus` | ≤ 10 % (la défaite doit enseigner quelque chose) |
-| Hors ligne : `clear_time` analytique vs p50 simulé | écart ≤ 15 % sur chaque rencontre éligible. Sinon, recalibrer `OFFLINE_DPS_CALIBRATION` |
+| Hors ligne : `clear_time` analytique vs p50 simulé | écart ≤ 15 % sur chaque rencontre éligible, Fern typique au niveau de la rencontre (`tests/unit/combat/test_offline_bench.gd`). Sinon, recalibrer `OFFLINE_DPS_CALIBRATION` ou la rotation (§20.2) |
 | Déterminisme | même graine + mêmes entrées ⇒ même hachage du journal d'événements |
 
 ### 22.2 Stratégies dominantes à chercher

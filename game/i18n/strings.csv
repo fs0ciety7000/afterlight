@@ -512,3 +512,25 @@ npc.maelle.name,Maëlle
 npc.maelle.role,Graveuse de runes
 npc.aubelin_merchant.name,Rosalie
 npc.aubelin_merchant.role,Potions et élixirs
+error.offline.unknown_encounter,Rencontre inconnue
+error.offline.not_normal,Les élites et les boss ne peuvent pas être chassés hors ligne
+error.offline.not_eligible,Cette rencontre ne peut pas être chassée hors ligne
+error.offline.not_cleared,Battez d'abord cette rencontre une fois
+error.offline.too_slow,Combat trop long : {seconds} s estimées (maximum {max} s)
+error.offline.unsafe,Fern ne tiendrait que {survival} s sur les {required} s nécessaires : choisissez une chasse plus facile
+error.offline.nothing_to_claim,Aucun gain en attente
+error.hunt.unknown_encounter,Rencontre inconnue
+error.hunt.not_cleared,Battez d'abord cette rencontre pour la chasser ici
+log.offline.hunt,Chasse : {encounter}
+log.offline.clock,L'horloge de l'appareil a reculé : aucun gain cette fois
+log.offline.duration,Durée prise en compte : {hours} h {minutes} min
+log.offline.capped,Plafond de {hours} h atteint
+log.offline.clears,{count} victoires estimées
+log.offline.xp,+{xp} XP
+log.offline.level_up,Niveau {level} atteint (+{levels})
+log.offline.gold,+{gold} or
+log.offline.material,+{qty} {material}
+log.offline.items_kept,{count} objet(s) gardé(s)
+log.offline.items_salvaged,{count} objet(s) recyclé(s) (+{dust} poussière de mana)
+log.offline.runes_kept,{count} rune(s) gardée(s)
+log.offline.runes_salvaged,{count} rune(s) recyclée(s) (+{shards} éclats runiques)

@@ -21,6 +21,10 @@ extends RefCounted
 ##   keep_log: bool (default true; the bench turns it off),
 ## }
 
+## Ticks stepped by every simulation of the process. Instrumentation only:
+## the offline tests check it does not move (ROADMAP 5.2).
+static var ticks_total := 0
+
 var content: Dictionary = {}
 var encounter: Dictionary = {}
 var seed_value := 0
@@ -189,6 +193,7 @@ func step() -> Array:
 		_flush_log()
 		return _events
 	tick += 1
+	ticks_total += 1
 	_apply_commands()
 	for u in units.duplicate():
 		if u["alive"]:
