@@ -174,3 +174,19 @@ func test_elite_gives_at_least_one_item_and_rewards_are_reproducible() -> void:
 	var b := CombatRewards.compute(_sim_with_all_enemies_killed("encounter.cloister_alpha", false))
 	assert_true(a["items"].size() >= 1, "guaranteed item")
 	assert_eq(a, b, "same seed, same loot")
+
+
+## Rolled affix values are stable through JSON (the save checksum is computed
+## on reloaded JSON): some raw doubles drifted by one ulp per round trip, and
+## a save holding one failed its write verification.
+func test_rolled_affix_values_are_stable_through_json() -> void:
+	var rng := SeededRng.new(SeededRng.derive_seed(7, "json_stable"))
+	var unstable := 0
+	for i in 6000:
+		var item := ItemFactory.roll_item(rng, _content(), "chest", 1 + i % 20)
+		for a in item["affixes"]:
+			var once: Variant = JSON.parse_string(JSON.stringify([a["value"]], "", true, true))[0]
+			var twice: Variant = JSON.parse_string(JSON.stringify([once], "", true, true))[0]
+			if once != twice:
+				unstable += 1
+	assert_eq(unstable, 0, "unstable affix values")

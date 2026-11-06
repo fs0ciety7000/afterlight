@@ -44,6 +44,10 @@ const AFFIX_TIER_STEP_ILVL := 5
 const AFFIX_PCT_SCALE_PER_TIER := 0.25
 ## Legendaries roll u in [LEGENDARY_ROLL_MIN, 1] (upper half of the range).
 const LEGENDARY_ROLL_MIN := 0.5
+## Rolled affix values are snapped to this step. Not a tuning value: some raw
+## doubles do not survive Godot's JSON round trip bit for bit, which broke the
+## save checksum (SaveStore.write verification).
+const AFFIX_VALUE_STEP := 0.000001
 
 # --- §13 Salvage and inventory (GDD §10.6) ----------------------------------------
 const SALVAGE_DUST := {

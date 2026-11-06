@@ -99,7 +99,8 @@ static func make_item(
 		used_groups[affix["group"]] = true
 		var u := rng.range_float(u_min, 1.0)
 		var span := affix_range(affix, ilvl)
-		affixes.append({"id": picked, "value": lerpf(span[0], span[1], u)})
+		var value := snappedf(lerpf(span[0], span[1], u), BalanceItems.AFFIX_VALUE_STEP)
+		affixes.append({"id": picked, "value": value})
 	var legendary := ""
 	if rarity == "legendary":
 		var weights := {}
