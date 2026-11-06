@@ -392,6 +392,11 @@ func _process(_delta: float) -> void:
 	UiProbe.world["combat_snapshot"] = {
 		"hero_hp": hero.get("hp", 0),
 		"hero_mana": hero.get("mana", 0),
+		"hero_max_hp": hero.get("max_hp", 0),
+		"ult_charge": hero.get("ult_charge", 0.0),
+		"ult_charge_max": hero.get("ult_charge_max", 100.0),
+		"consumables": hero.get("consumables", {}),
+		"enemy_casts": _enemy_casts(snap),
 		"cooldowns": hero.get("cooldowns", {}),
 		"queued": hero.get("queued", ""),
 		"focus": hero.get("focus", ""),
@@ -403,6 +408,16 @@ func _process(_delta: float) -> void:
 			. size()
 		),
 	}
+
+
+## What living enemies are casting ([{spell, remaining_s}]), for tests.
+static func _enemy_casts(snap: Dictionary) -> Array:
+	var out := []
+	for u: Dictionary in snap["units"]:
+		var c: Dictionary = u.get("cast", {})
+		if u["side"] == "enemy" and u["alive"] and not c.is_empty():
+			out.append({"spell": c["spell"], "remaining_s": c["remaining_s"]})
+	return out
 
 
 ## Screen points (window pixels) of living enemies, for tests and tooling.
@@ -554,7 +569,7 @@ func _on_finished(e: Dictionary) -> void:
 					tr("ui.combat.level_up").format({"level": summary["level"]}), "SubheadingLabel"
 				)
 			)
-		_loot(col, summary)
+		_loot(col, summary, _result.custom_minimum_size.x - 48.0)
 	else:
 		var body := Kit.label(tr("ui.combat.defeat_body"), "", true)
 		body.custom_minimum_size = Vector2(_result.custom_minimum_size.x - 48.0, 0)
@@ -618,9 +633,13 @@ func _on_hunt_delay() -> void:
 
 ## Loot of a victory: items with their rarity, runes, artifacts, materials
 ## and the summary lines (auto salvage, carry cap, XP lost at the cap).
-func _loot(col: VBoxContainer, summary: Dictionary) -> void:
+## Wrapped labels get `width` (or the width left beside a tile): without one
+## they measure one letter per line and push the panel and « Continuer » off
+## the screen (first clear of a pack with many rewards).
+func _loot(col: VBoxContainer, summary: Dictionary, width: float) -> void:
 	var rows := Kit.vbox(UiTokens.SPACE["sm"])
 	var tile_side := UiTokens.TOUCH_TARGET
+	var beside := maxf(width - tile_side - UiTokens.SPACE["md"], 80.0)
 	var items: Array = summary.get("items", [])
 	for i in items.size():
 		var item: Dictionary = GameState.progression.item(items[i])
@@ -633,6 +652,7 @@ func _loot(col: VBoxContainer, summary: Dictionary) -> void:
 		row.add_child(tile)
 		var text := Kit.vbox(UiTokens.SPACE["xs"])
 		var name_label := Kit.label(ProgressionText.item_name(item), "LeadLabel", true)
+		name_label.custom_minimum_size.x = beside
 		UiProbe.register("combat.loot.item.%d" % i, name_label)
 		text.add_child(name_label)
 		var rarity := Kit.label(ProgressionText.rarity_name(item["rarity"]), "MutedLabel")
@@ -656,17 +676,18 @@ func _loot(col: VBoxContainer, summary: Dictionary) -> void:
 			"LeadLabel",
 			true
 		)
+		label.custom_minimum_size.x = beside
 		UiProbe.register("combat.loot.rune.%d" % i, label)
 		row.add_child(label)
 		rows.add_child(row)
 	for id: String in summary.get("artifacts", []):
-		rows.add_child(
-			Kit.label(
-				tr("ui.combat.loot_artifact").format({"name": Content.display_name(id)}),
-				"LeadLabel",
-				true
-			)
+		var a := Kit.label(
+			tr("ui.combat.loot_artifact").format({"name": Content.display_name(id)}),
+			"LeadLabel",
+			true
 		)
+		a.custom_minimum_size.x = width
+		rows.add_child(a)
 	var materials: Dictionary = summary.get("materials", {})
 	if not materials.is_empty():
 		var m := Kit.label(
@@ -674,6 +695,7 @@ func _loot(col: VBoxContainer, summary: Dictionary) -> void:
 			"",
 			true
 		)
+		m.custom_minimum_size.x = width
 		UiProbe.register("combat.loot.materials", m)
 		rows.add_child(m)
 	var lines := PackedStringArray()
@@ -681,6 +703,7 @@ func _loot(col: VBoxContainer, summary: Dictionary) -> void:
 		lines.append(GameState.reason_text(line))
 	if not lines.is_empty():
 		var l := Kit.label("\n".join(lines), "MutedLabel", true)
+		l.custom_minimum_size.x = width
 		UiProbe.register("combat.loot.lines", l)
 		rows.add_child(l)
 	if rows.get_child_count() == 0:
