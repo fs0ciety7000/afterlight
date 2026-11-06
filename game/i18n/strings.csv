@@ -534,3 +534,51 @@ log.offline.items_kept,{count} objet(s) gardé(s)
 log.offline.items_salvaged,{count} objet(s) recyclé(s) (+{dust} poussière de mana)
 log.offline.runes_kept,{count} rune(s) gardée(s)
 log.offline.runes_salvaged,{count} rune(s) recyclée(s) (+{shards} éclats runiques)
+ui.offline.title,Pendant votre absence
+ui.offline.hunt,Chasse : {encounter}
+ui.offline.away,Absence : {duration}
+ui.offline.counted,Temps pris en compte : {duration}
+ui.offline.capped,Plafond de {hours} h atteint : le temps au-delà n'est pas compté
+ui.offline.efficiency,"Efficacité hors ligne : {value} % d'une chasse active"
+ui.offline.clears,Victoires estimées
+ui.offline.xp,Expérience
+ui.offline.level,Niveau
+ui.offline.level_value,{before} → {after}
+ui.offline.gold,Or
+ui.offline.materials,Matériaux
+ui.offline.items_kept,Objets gardés
+ui.offline.items_salvaged,Objets recyclés
+ui.offline.runes_kept,Runes gardées
+ui.offline.runes_salvaged,Runes recyclées
+ui.offline.count_plus,{count} (+{gain})
+ui.offline.none,Aucun
+ui.offline.warning_title,Aucun gain cette fois
+ui.offline.claim,Récupérer
+ui.offline.claimed,"Gains récupérés : +{xp} XP, +{gold} or"
+ui.offline.claim_failed,"Récupération impossible : {reason}"
+ui.hunts.title,Chasse hors ligne
+ui.hunts.intro,"Pendant votre absence, Fern rejoue la rencontre choisie : {hours} h comptées au plus, à {efficiency} % du rythme d'une chasse active. Ni élite ni boss, et seulement une rencontre déjà vaincue."
+ui.hunts.current,Chasse actuelle : {encounter}
+ui.hunts.current_none,Aucune chasse hors ligne choisie
+ui.hunts.choose,Choisir
+ui.hunts.chosen,Chasse en cours
+ui.hunts.set,Nouvelle chasse hors ligne : {encounter}
+ui.hunts.stats,"Victoire en ~{seconds} s · {xp} XP/h · {gold} or/h"
+ui.hunts.level,Niv. {level}
+ui.hunts.kind.normal,Rencontre
+ui.hunts.kind.elite,Élite
+ui.hunts.kind.boss,Boss
+ui.hunts.empty,Aucune rencontre connue pour l'instant : explorez la carte.
+ui.hunts.close,Fermer
+ui.explore.hunt,Chasse : {encounter}
+ui.explore.hunt_none,Choisir une chasse
+ui.map.hunts,Chasses hors ligne
+ui.hunt.here,Chasser ici
+ui.hunt.title,Chasser ici · {encounter}
+ui.hunt.wins,Victoires : {count}
+ui.hunt.stop,Arrêter la chasse
+ui.hunt.stopping,Arrêt après ce combat
+ui.hunt.next,Combat suivant dans un instant…
+ui.hunt.stopped_defeat,La chasse s'arrête après cette défaite.
+ui.hunt.started_offline,Chasse lancée : elle devient aussi votre chasse hors ligne
+ui.hunt.started_not_offline,"Chasse lancée, sans chasse hors ligne : {reason}"
