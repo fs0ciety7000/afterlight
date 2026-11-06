@@ -11,8 +11,8 @@
 | 2 | Monde | **Clos avec réserves** (2.8, 2.9) | 1 |
 | 3 | Combat | **Clos avec réserves** (3.7, 3.8, 3.9) | 1 (simulation) ; 2 (combat dans la scène) |
 | 4 | Progression | **Clos avec réserves** (4.7 E2E, effets de combat restants) | 3 |
-| 5 | Idle | À faire | 3, 4 |
-| 6 | Contenu | À faire | 2, 3, 4, 5 |
+| 5 | Idle | **Clos avec réserves** (E2E desktop seulement) | 3, 4 |
+| 6 | Contenu | **En cours** (spécification, moteur et données faits ; scènes et écrans en cours) | 2, 3, 4, 5 |
 | 7 | Finition | À faire | 6 |
 | A | Piste art (parallèle) | **En cours** (Fern v1, ennemis, décor, VFX) | Rien pour démarrer ; alimente 2, 3, 6, 7 |
 
@@ -200,6 +200,19 @@ Reste : la rune Écho, les effets légendaires, la Fleur pressée et la Cloche d
 | 5.6 | Le `clear_time` analytique est à ≤ 15 % du p50 simulé pour chaque rencontre éligible de la tranche | unitaire (sim) |
 | 5.7 | E2E avec horloge simulée : sauvegarde → avancer de 3 h → rechargement → résumé affiché avec les bonnes valeurs → « Récupérer » → ressources créditées une seule fois (un second rechargement ne recrédite rien) | E2E |
 | 5.8 | « Chasser ici » rejoue la rencontre en boucle, s'arrête à la défaite, et chaque victoire donne son butin | E2E |
+
+**État au 2026-11-06** :
+
+| # | État | Preuve ou reste à faire |
+|---|---|---|
+| 5.1 | Fait | `test_offline.gd` ; l'exemple de §20.4 a été recalculé avec le modèle de « rotation de chasse » (8 h vers L8 : N 422,53, 25 351 XP, 11 154 or, L8 → L10) |
+| 5.2, 5.3, 5.4 | Fait | `test_offline.gd` (aucun tick, 8 h en < 50 ms, bornes d'horloge, graine) |
+| 5.5 | Fait | `test_offline.gd` + `idle.spec.ts` desktop |
+| 5.6 | Fait | `test_offline_bench.gd` (écart ≤ 11 % au niveau de la rencontre) ; trop rapide de 24 % quand Fern dépasse largement le niveau ; `lantern_mire_04` exclue du hors ligne (−34 %) |
+| 5.7 | Fait desktop | `idle.spec.ts` (horloge simulée +3 h, crédité une seule fois) |
+| 5.8 | Fait desktop | `idle.spec.ts` (boucle, butin, arrêt, défaite) ; « Chasser ici » seulement depuis le panneau de victoire |
+
+Reste : E2E mobile et tablette du jalon 5 non lancés.
 
 ---
 
