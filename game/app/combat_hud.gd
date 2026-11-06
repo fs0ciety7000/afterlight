@@ -481,6 +481,7 @@ func _on_finished(e: Dictionary) -> void:
 					tr("ui.combat.level_up").format({"level": summary["level"]}), "SubheadingLabel"
 				)
 			)
+		_loot(col, summary)
 	else:
 		var body := Kit.label(tr("ui.combat.defeat_body"), "", true)
 		body.custom_minimum_size = Vector2(_result.custom_minimum_size.x - 48.0, 0)
@@ -493,6 +494,87 @@ func _on_finished(e: Dictionary) -> void:
 	_result.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_result.grow_vertical = Control.GROW_DIRECTION_BOTH
 	ok.call_deferred("grab_focus")
+
+
+## Loot of a victory: items with their rarity, runes, artifacts, materials
+## and the summary lines (auto salvage, carry cap, XP lost at the cap).
+func _loot(col: VBoxContainer, summary: Dictionary) -> void:
+	var rows := Kit.vbox(UiTokens.SPACE["sm"])
+	var tile_side := UiTokens.TOUCH_TARGET
+	var items: Array = summary.get("items", [])
+	for i in items.size():
+		var item: Dictionary = GameState.progression.item(items[i])
+		if item.is_empty():
+			continue
+		var row := Kit.hbox()
+		var tile := ItemTile.make(tile_side)
+		tile.show_item(item, GameState.progression.views.item_slot(item))
+		tile.focus_mode = Control.FOCUS_NONE
+		row.add_child(tile)
+		var text := Kit.vbox(UiTokens.SPACE["xs"])
+		var name_label := Kit.label(ProgressionText.item_name(item), "LeadLabel", true)
+		UiProbe.register("combat.loot.item.%d" % i, name_label)
+		text.add_child(name_label)
+		var rarity := Kit.label(ProgressionText.rarity_name(item["rarity"]), "MutedLabel")
+		rarity.add_theme_color_override(
+			"font_color", ProgressionText.rarity_color(item["rarity"]).darkened(0.3)
+		)
+		text.add_child(rarity)
+		row.add_child(text)
+		rows.add_child(row)
+	var runes: Array = summary.get("runes", [])
+	for i in runes.size():
+		var row := Kit.hbox()
+		var tile := ItemTile.make(tile_side)
+		tile.show_rune(runes[i]["id"], int(runes[i]["tier"]))
+		tile.focus_mode = Control.FOCUS_NONE
+		row.add_child(tile)
+		var label := Kit.label(
+			tr("ui.combat.loot_rune").format(
+				{"name": ProgressionText.rune_name(runes[i]["id"], int(runes[i]["tier"]))}
+			),
+			"LeadLabel",
+			true
+		)
+		UiProbe.register("combat.loot.rune.%d" % i, label)
+		row.add_child(label)
+		rows.add_child(row)
+	for id: String in summary.get("artifacts", []):
+		rows.add_child(
+			Kit.label(
+				tr("ui.combat.loot_artifact").format({"name": Content.display_name(id)}),
+				"LeadLabel",
+				true
+			)
+		)
+	var materials: Dictionary = summary.get("materials", {})
+	if not materials.is_empty():
+		var m := Kit.label(
+			tr("ui.combat.loot_materials").format({"list": ProgressionText.cost(0, materials)}),
+			"",
+			true
+		)
+		UiProbe.register("combat.loot.materials", m)
+		rows.add_child(m)
+	var lines := PackedStringArray()
+	for line: Dictionary in summary.get("lines", []):
+		lines.append(GameState.reason_text(line))
+	if not lines.is_empty():
+		var l := Kit.label("\n".join(lines), "MutedLabel", true)
+		UiProbe.register("combat.loot.lines", l)
+		rows.add_child(l)
+	if rows.get_child_count() == 0:
+		return
+	var limit := get_viewport_rect().size.y * 0.4
+	if rows.get_combined_minimum_size().y > limit:
+		var scroll := ScrollContainer.new()
+		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		scroll.custom_minimum_size = Vector2(0, limit)
+		rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		scroll.add_child(rows)
+		col.add_child(scroll)
+	else:
+		col.add_child(rows)
 
 
 static func _hero(snap: Dictionary) -> Dictionary:
