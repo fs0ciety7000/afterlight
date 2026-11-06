@@ -1,9 +1,9 @@
 class_name ItemTile
 extends Button
-## Square tile for an item, a rune, a consumable or a material, drawn in code
-## (no image): a glyph of the slot or kind, the rarity frame pattern
-## (DESIGN.md: simple, double, ornate; never colour alone) and the
-## enhancement level. Empty tiles show a faint frame.
+## Square tile for an item, a rune, a consumable or a material: the painted icon of the
+## item base, rune or material (GameIcons), else a line glyph of the slot or kind drawn
+## in code; the rarity frame pattern (DESIGN.md: simple, double, ornate; never colour
+## alone) and the enhancement level. Empty tiles show a faint frame.
 
 const KIND_ITEM := "item"
 const KIND_RUNE := "rune"
@@ -18,6 +18,8 @@ var rarity := ""
 var enhance := 0
 var tier := 0
 var selected := false
+## Painted icon, or null for the procedural glyph.
+var painted_icon: Texture2D
 
 
 static func make(side: float) -> ItemTile:
@@ -32,6 +34,7 @@ static func make(side: float) -> ItemTile:
 func show_item(item: Dictionary, slot: String) -> void:
 	kind = KIND_ITEM
 	glyph = slot
+	painted_icon = GameIcons.for_id(str(item.get("item_id", "")))
 	rarity = str(item.get("rarity", "common"))
 	enhance = int(item.get("enhance", 0))
 	tooltip_text = (
@@ -45,6 +48,7 @@ func show_item(item: Dictionary, slot: String) -> void:
 func show_rune(rune_id: String, rune_tier: int) -> void:
 	kind = KIND_RUNE
 	glyph = rune_id
+	painted_icon = GameIcons.for_id(rune_id)
 	tier = rune_tier
 	rarity = ""
 	tooltip_text = ProgressionText.rune_name(rune_id, rune_tier)
@@ -54,6 +58,7 @@ func show_rune(rune_id: String, rune_tier: int) -> void:
 func show_kind(what: String, id: String = "") -> void:
 	kind = what
 	glyph = id
+	painted_icon = GameIcons.for_id(id) if what != KIND_EMPTY else null
 	rarity = ""
 	tooltip_text = Content.display_name(id) if id != "" else ""
 	queue_redraw()
@@ -70,7 +75,10 @@ func _draw() -> void:
 		return
 	var frame: Color = ProgressionText.rarity_color(rarity) if rarity != "" else line
 	_draw_frame(inner, frame)
-	_draw_glyph(inner.grow(-pad * 2.0), palette["ink"])
+	if painted_icon:
+		draw_texture_rect(painted_icon, inner.grow(-pad), false)
+	else:
+		_draw_glyph(inner.grow(-pad * 2.0), palette["ink"])
 	var font := get_theme_default_font()
 	var font_size: int = UiTokens.FONT_SIZES["small"]
 	var badge := ""
@@ -81,6 +89,10 @@ func _draw() -> void:
 	if badge != "":
 		var at := Vector2(inner.end.x - pad, inner.end.y - pad)
 		var w := font.get_string_size(badge, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+		if painted_icon:
+			# backing chip so the badge stays readable over the painted icon
+			var chip := Rect2(at - Vector2(w + 3.0, font_size), Vector2(w + 5.0, font_size + 3.0))
+			draw_rect(chip, Color(palette["surface"], 0.85))
 		draw_string(
 			font,
 			at - Vector2(w, 0),

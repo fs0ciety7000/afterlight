@@ -1,7 +1,8 @@
 class_name SpellButton
 extends BaseButton
 ## Round spell button (DESIGN.md "HUD combat"): radial cooldown sweep with
-## the seconds left, key hint, dimmed when the spell cannot be cast.
+## the seconds left, key hint, dimmed when the spell cannot be cast. Shows the painted
+## icon (GameIcons) when the spell has one, else its initials.
 
 var spell_id := ""
 var key_hint := ""
@@ -11,6 +12,7 @@ var cooldown_total := 0.0
 var charge_ratio := 1.0
 var usable := true
 var _label_name := ""
+var _icon: Texture2D
 
 
 func setup(id: String, hint: String, is_ultimate: bool = false) -> void:
@@ -21,6 +23,7 @@ func setup(id: String, hint: String, is_ultimate: bool = false) -> void:
 	custom_minimum_size = Vector2(side, side)
 	focus_mode = Control.FOCUS_NONE
 	_label_name = Content.display_name(id)
+	_icon = GameIcons.for_id(id)
 	tooltip_text = _label_name
 
 
@@ -35,19 +38,23 @@ func _draw() -> void:
 	var ring: Color = p["accent"] if big else p["line"]
 	draw_arc(c, r, 0.0, TAU, 48, ring, 2.0 if big else 1.5, true)
 	var font := get_theme_default_font()
-	# Spell initials as a compact glyph until the icon set (A4) exists.
-	var initials := _initials(_label_name)
-	var fs := 22 if big else 18
-	var ts := font.get_string_size(initials, HORIZONTAL_ALIGNMENT_CENTER, -1, fs)
-	draw_string(
-		font,
-		c + Vector2(-ts.x / 2.0, ts.y / 3.0),
-		initials,
-		HORIZONTAL_ALIGNMENT_CENTER,
-		-1,
-		fs,
-		p["pearl"] if p.has("pearl") else p["ink"]
-	)
+	if _icon:
+		var side := r * 1.5
+		draw_texture_rect(_icon, Rect2(c - Vector2(side, side) / 2.0, Vector2(side, side)), false)
+	else:
+		# Spell initials as a compact glyph when the spell has no painted icon.
+		var initials := _initials(_label_name)
+		var fs := 22 if big else 18
+		var ts := font.get_string_size(initials, HORIZONTAL_ALIGNMENT_CENTER, -1, fs)
+		draw_string(
+			font,
+			c + Vector2(-ts.x / 2.0, ts.y / 3.0),
+			initials,
+			HORIZONTAL_ALIGNMENT_CENTER,
+			-1,
+			fs,
+			p["pearl"] if p.has("pearl") else p["ink"]
+		)
 	if charge_ratio < 1.0:
 		_draw_sector(c, r - 3.0, 1.0 - charge_ratio, Color(0, 0, 0, 0.55))
 	if cooldown_s > 0.0 and cooldown_total > 0.0:

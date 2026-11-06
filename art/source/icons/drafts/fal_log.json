@@ -1,0 +1,58 @@
+[
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "icons_spells_draft",
+  "seconds": 1.6,
+  "arguments": {
+   "image_size": "landscape_4_3",
+   "seed": 56,
+   "num_inference_steps": 4
+  },
+  "prompt": "A sheet of 6 original spell icons for a fantasy game, arranged in a grid of 3 columns and 2 rows. Top row, left to right: (1) a single straight piercing beam of white-violet light shooting diagonally from a small glowing magic circle, thin and precise; (2) a volley of five small glowing teal-blue mana bolts curving forward together in a fan; (3) a translucent pale-blue dome-shaped magic barrier made of hexagonal light panels. Bottom row, left to right: (4) many golden-white light rays raining down from a large glowing magic circle in the sky, the ultimate spell; (5) a small violet flame half hidden behind a soft drifting veil of mist, calm and secret; (6) a single small round teal-blue mana orb with a short bright trail. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/drafts/icons_spells_draft.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "icons_equipment_draft",
+  "seconds": 2.4,
+  "arguments": {
+   "image_size": "landscape_4_3",
+   "seed": 57,
+   "num_inference_steps": 4
+  },
+  "prompt": "A sheet of 12 original equipment icons for a young mage in a fantasy game, arranged in a grid of 4 columns and 3 rows. Top row, left to right: (1) a simple pale birch-wood mage staff with a small round amethyst at the top, drawn diagonally; (2) a dark ash-wood mage staff with a curled top holding a teal crystal, drawn diagonally; (3) a soft brown cloth traveler hood; (4) a slender gold circlet with a small amethyst. Middle row, left to right: (5) a simple cream wool robe; (6) an elegant black and white mage robe with gold trim; (7) a pair of plain brown cloth gloves; (8) a pair of dark leather gloves with glowing teal rune marks. Bottom row, left to right: (9) a pair of worn brown leather walking boots; (10) a pair of tall dark pathfinder boots with gold buckles; (11) a round copper amulet on a cord; (12) a silver amulet with a glowing pale moonstone. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/drafts/icons_equipment_draft.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "icons_runes_draft",
+  "seconds": 2.6,
+  "arguments": {
+   "image_size": "landscape_4_3",
+   "seed": 58,
+   "num_inference_steps": 4
+  },
+  "prompt": "A sheet of 8 original magic rune stone icons for a fantasy game, arranged in a grid of 4 columns and 2 rows. Every rune is the same small smooth rounded ivory stone tablet with one glowing carved symbol, the symbol and glow color differ: top row, left to right: (1) ember rune, a flame symbol glowing orange-red; (2) frost rune, a snowflake symbol glowing ice blue; (3) storm rune, a lightning bolt symbol glowing yellow-white; (4) acuity rune, an eye symbol glowing gold. Bottom row, left to right: (5) thrift rune, a small droplet with a downward arrow glowing teal; (6) swiftness rune, a feather wing symbol glowing pale green; (7) echo rune, two concentric rings symbol glowing violet; (8) potency rune, a bold upward arrow and star symbol glowing crimson. The symbols are simple invented glyph shapes, not letters. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/drafts/icons_runes_draft.jpg"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/flux/schnell",
+  "name": "icons_misc_draft",
+  "seconds": 2.2,
+  "arguments": {
+   "image_size": "landscape_4_3",
+   "seed": 59,
+   "num_inference_steps": 4
+  },
+  "prompt": "A sheet of 10 original item icons for a fantasy game, arranged in a grid of 5 columns and 2 rows. Top row, left to right: (1) a small heap of sparkling teal-blue mana dust; (2) a sharp pale-blue crystal shard with a carved rune line; (3) a single loose old parchment grimoire page with faint violet writing marks (no readable text); (4) a small dark glass vial of glowing ember-orange ashen essence with ash flakes; (5) a round glass potion bottle of red healing draught with a cork. Bottom row, left to right: (6) a slim glass flask of glowing blue mana elixir with a cork; (7) a cracked old brass hourglass with pale sand; (8) a pressed small blue flower; (9) an open brass traveler compass with a gold needle; (10) a small dark iron bell with glowing ember cracks. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/drafts/icons_misc_draft.jpg"
+  ]
+ }
+]

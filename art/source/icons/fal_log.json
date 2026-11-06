@@ -1,0 +1,71 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro",
+  "name": "icons_spells",
+  "seconds": 25.7,
+  "arguments": {
+   "aspect_ratio": "3:2",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 60
+  },
+  "prompt": "A sheet of EXACTLY 6 original spell icons for a fantasy game, arranged in a grid of 3 columns and 2 rows. Top row, left to right: a single straight piercing beam of white-violet light shooting diagonally from a small glowing magic circle, thin and precise; a volley of five small glowing teal-blue mana bolts curving forward together in a fan; a translucent pale-blue dome-shaped magic barrier made of hexagonal light panels. Bottom row, left to right: many golden-white light rays raining down from a large glowing magic circle in the sky, the ultimate spell; a small violet flame half hidden behind a soft drifting veil of mist, calm and secret; a single small round teal-blue mana orb with a short bright trail. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers, NO labels, NO captions. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/icons_spells.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "icons_equipment",
+  "seconds": 33.7,
+  "arguments": {
+   "aspect_ratio": "4:3",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 61,
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15e33/4f7791KCAi0ScoFhxgvDY_icons_spells.png"
+   ]
+  },
+  "prompt": "Use the reference image ONLY for the rendering style, line weight, palette, lighting and the plain grey background; draw completely new objects, not spells. Make every object solid and opaque with strong readable colors. A sheet of EXACTLY 12 original equipment icons for a young mage in a fantasy game, arranged in a grid of 4 columns and 3 rows. Top row, left to right: a simple pale birch-wood mage staff with a small round amethyst at the top, drawn diagonally; a dark ash-wood mage staff with a curled top holding a teal crystal, drawn diagonally; a soft brown cloth traveler hood; a slender gold circlet with a small amethyst. Middle row, left to right: a simple cream wool robe; an elegant black and white mage robe with gold trim; a pair of plain brown cloth gloves; a pair of dark leather gloves with glowing teal rune marks. Bottom row, left to right: a pair of worn brown leather walking boots; a pair of tall dark pathfinder boots with gold buckles; a round copper amulet on a cord; a silver amulet with a glowing pale moonstone. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers, NO labels, NO captions. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background, one single uniform background color across the whole image with no tiles, no panels and no cell boundaries. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/icons_equipment.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "icons_runes",
+  "seconds": 34.0,
+  "arguments": {
+   "aspect_ratio": "16:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 64,
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15e38/N9w_ylkREQL_zBUNP6S2V_icons_spells.png"
+   ]
+  },
+  "prompt": "Use the reference image ONLY for the rendering style, line weight, palette, lighting and the plain grey background; draw completely new objects, not spells. Make every object solid and opaque with strong readable colors. A sheet of EXACTLY 8 original magic rune stone icons for a fantasy game, arranged in a grid of 4 columns and 2 rows. Every rune is the same small smooth rounded ivory stone tablet with one glowing carved symbol, the symbol and glow color differ: top row, left to right: ember rune, a flame symbol glowing orange-red; frost rune, a snowflake symbol glowing ice blue; storm rune, a lightning bolt symbol glowing yellow-white; acuity rune, an eye symbol glowing gold. Bottom row, left to right: thrift rune, a small droplet with a downward arrow glowing teal; swiftness rune, a feather wing symbol glowing pale green; echo rune, two concentric rings symbol glowing violet; potency rune, a bold upward arrow and star symbol glowing crimson. The symbols are simple invented glyph shapes, not letters. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers, NO labels, NO captions. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background, one single uniform background color across the whole image with no tiles, no panels and no cell boundaries. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/icons_runes.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "icons_misc",
+  "seconds": 29.6,
+  "arguments": {
+   "aspect_ratio": "21:9",
+   "resolution": "2K",
+   "output_format": "png",
+   "seed": 65,
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab15e3b/jOBy4IVAmT50V6P2-RbOV_icons_spells.png"
+   ]
+  },
+  "prompt": "Use the reference image ONLY for the rendering style, line weight, palette, lighting and the plain grey background; draw completely new objects, not spells. Make every object solid and opaque with strong readable colors. A sheet of EXACTLY 10 original item icons for a fantasy game, arranged in a grid of 5 columns and 2 rows. Top row, left to right: a small heap of sparkling teal-blue mana dust; a sharp pale-blue crystal shard with a carved rune line; a single loose old parchment grimoire page with faint violet writing marks (no readable text); a small dark glass vial of glowing ember-orange ashen essence with ash flakes; a round glass potion bottle of red healing draught with a cork. Bottom row, left to right: a slim glass flask of glowing blue mana elixir with a cork; a cracked old brass hourglass with pale sand; a pressed small blue flower; an open brass traveler compass with a gold needle; a small dark iron bell with glowing ember cracks. Style: hand-painted fantasy RPG game icons in a soft cel-shaded anime game style, bold clean readable silhouettes that stay readable at 48 pixels, a few large shapes, thin dark brown-violet ink outlines, warm palette of ivory, warm gold and parchment with amethyst violet and teal-blue mana accents, soft afternoon light from the top left. Each icon is a single object only: NO frame, NO border, NO background plate, NO circle behind it, NO text, NO letters, NO numbers, NO labels, NO captions. Plain flat uniform light grey background everywhere (#c9c9c9), no shadows on the background, no gradients in the background, one single uniform background color across the whole image with no tiles, no panels and no cell boundaries. Icons laid out on a strict regular grid, each centered in its own equal cell, all the same size, with wide empty grey space between icons so they never touch or overlap.",
+  "files": [
+   "art/source/icons/icons_misc.png"
+  ]
+ }
+]

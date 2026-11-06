@@ -13,3 +13,13 @@ Journaux détaillés (prompt, modèle, graine) : `fal_log.json` du dossier de ch
 | 3 | 10:29 UTC | fal-ai/nano-banana/edit | `stone_sentinel_head_draft` (brouillon) | 3. Sentinelle | OK | 0,04 | 1,52 |
 | 4 | 10:30 UTC | fal-ai/nano-banana-pro/edit | `stone_sentinel_concept_v2` (final, 2K) | 3. Sentinelle | OK | 0,15 | 1,67 |
 | 5 | 10:31 UTC | tripo3d/h3.1/image-to-3d | `stone_sentinel_v2_tripo` | 3. Sentinelle | OK | 0,40 | 2,07 |
+| 6 | 10:36 UTC | fal-ai/flux/schnell | `icons_spells_draft` (brouillon, ~0,003 arrondi) | 4. Icônes | OK | 0,01 | 2,08 |
+| 7 | 10:36 UTC | fal-ai/flux/schnell | `icons_equipment_draft` (brouillon, ~0,003 arrondi) | 4. Icônes | OK | 0,01 | 2,09 |
+| 8 | 10:36 UTC | fal-ai/flux/schnell | `icons_runes_draft` (brouillon, ~0,003 arrondi) | 4. Icônes | OK | 0,01 | 2,10 |
+| 9 | 10:36 UTC | fal-ai/flux/schnell | `icons_misc_draft` (brouillon, ~0,003 arrondi) | 4. Icônes | OK | 0,01 | 2,11 |
+| 10 | 10:37 UTC | fal-ai/nano-banana-pro | `icons_spells` (final, 2K) | 4. Icônes | OK | 0,15 | 2,26 |
+| 11 | 10:37 UTC | fal-ai/nano-banana-pro/edit | `icons_equipment` (final, 2K, réf. de style : `icons_spells.png`) | 4. Icônes | OK | 0,15 | 2,41 |
+| 12 | 10:38 UTC | fal-ai/nano-banana-pro/edit | `icons_runes` (aspect_ratio 2:1) | 4. Icônes | refusé par validation, non facturé | 0,00 | 2,41 |
+| 13 | 10:38 UTC | fal-ai/nano-banana-pro/edit | `icons_misc` (aspect_ratio 5:2) | 4. Icônes | refusé par validation, non facturé | 0,00 | 2,41 |
+| 14 | 10:38 UTC | fal-ai/nano-banana-pro/edit | `icons_runes` (final, 2K, réf. de style : `icons_spells.png`) | 4. Icônes | OK | 0,15 | 2,56 |
+| 15 | 10:39 UTC | fal-ai/nano-banana-pro/edit | `icons_misc` (final, 2K, réf. de style : `icons_spells.png`) | 4. Icônes | OK | 0,15 | 2,71 |

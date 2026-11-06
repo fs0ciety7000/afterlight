@@ -16,7 +16,7 @@
         0.6
       ],
       "weight": 12,
-      "icon": "res://assets/textures/icons/rune.ember.png",
+      "icon": "res://assets/textures/icons/rune.ember.webp",
       "element": "fire"
     },
     {
@@ -33,7 +33,7 @@
         0.6
       ],
       "weight": 12,
-      "icon": "res://assets/textures/icons/rune.frost.png",
+      "icon": "res://assets/textures/icons/rune.frost.webp",
       "element": "frost"
     },
     {
@@ -50,7 +50,7 @@
         0.6
       ],
       "weight": 12,
-      "icon": "res://assets/textures/icons/rune.storm.png",
+      "icon": "res://assets/textures/icons/rune.storm.webp",
       "element": "lightning"
     },
     {
@@ -67,7 +67,7 @@
         0.18
       ],
       "weight": 12.8,
-      "icon": "res://assets/textures/icons/rune.acuity.png",
+      "icon": "res://assets/textures/icons/rune.acuity.webp",
       "stat": "crit_bonus"
     },
     {
@@ -84,7 +84,7 @@
         0.25
       ],
       "weight": 12.8,
-      "icon": "res://assets/textures/icons/rune.thrift.png",
+      "icon": "res://assets/textures/icons/rune.thrift.webp",
       "stat": "cost_reduction"
     },
     {
@@ -101,7 +101,7 @@
         0.2
       ],
       "weight": 12.8,
-      "icon": "res://assets/textures/icons/rune.swiftness.png",
+      "icon": "res://assets/textures/icons/rune.swiftness.webp",
       "stat": "cooldown_reduction"
     },
     {
@@ -118,7 +118,7 @@
         0.35
       ],
       "weight": 12.8,
-      "icon": "res://assets/textures/icons/rune.echo.png",
+      "icon": "res://assets/textures/icons/rune.echo.webp",
       "stat": "echo_chance"
     },
     {
@@ -135,7 +135,7 @@
         0.3
       ],
       "weight": 12.8,
-      "icon": "res://assets/textures/icons/rune.potency.png",
+      "icon": "res://assets/textures/icons/rune.potency.webp",
       "stat": "damage_bonus"
     }
   ]
