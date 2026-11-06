@@ -89,6 +89,7 @@ static func check(ctx: Dictionary, translations: Dictionary) -> void:
 						_check_condition(line["condition"], by_id, f)
 			"encounter":
 				_check_materials(e["first_clear_rewards"].get("materials", {}), by_id, f)
+				_check_first_clear_items(e, by_id, f)
 				if e["kind"] in ["boss", "elite"] and e["offline_eligible"]:
 					f.call("V10", "%s encounters cannot be offline_eligible" % e["kind"])
 				if e["kind"] == "boss" and e["speed_cap"] == 4:
@@ -97,6 +98,12 @@ static func check(ctx: Dictionary, translations: Dictionary) -> void:
 				_check_loot(e, by_id, f)
 			"quest":
 				_check_quest(e, by_id, f)
+			"tactics_preset":
+				_check_tactics_preset(e, by_id, f)
+			"tip":
+				_check_tip(e, f)
+				if not _translated(translations, id):
+					f.call("V9", "tip text '%s' missing from strings.csv" % id)
 	_check_quest_cycles(ctx)
 	_check_progression(ctx)
 	var starts: Array = ctx["by_type"].get("start", [])
@@ -518,6 +525,8 @@ static func _reach_place(id: String, fog: Array, ctx: Dictionary, reach: Diction
 				reach["materials"][entry["ref"]] = true
 		for m in enc["first_clear_rewards"].get("materials", {}):
 			reach["materials"][m] = true
+		for it in enc["first_clear_rewards"].get("items", []):
+			reach["materials"][it["base"]] = true
 	for disc in ctx["by_type"].get("discovery", []):
 		if disc["location"] != id:
 			continue
@@ -679,3 +688,58 @@ static func _is_content_id(text: String) -> bool:
 		and ContentSchemas.PREFIX_TO_TYPE.has(prefix)
 		and RegEx.create_from_string(ContentSchemas.ID_PATTERN).search(text) != null
 	)
+
+
+## GDD decision 29: a first clear item base must drop at the encounter's level.
+static func _check_first_clear_items(e: Dictionary, by_id: Dictionary, f: Callable) -> void:
+	for it in e["first_clear_rewards"].get("items", []):
+		var base: Dictionary = by_id.get(it["base"], {})
+		if not base.is_empty() and int(base.get("min_ilvl", 1)) > int(e["level"]):
+			f.call(
+				"V8",
+				(
+					"first_clear_rewards.items: %s min_ilvl %d > encounter level %d"
+					% [it["base"], int(base["min_ilvl"]), int(e["level"])]
+				)
+			)
+
+
+## A preset holds values CombatTactics accepts for its character's spells
+## and the consumables.
+static func _check_tactics_preset(e: Dictionary, by_id: Dictionary, f: Callable) -> void:
+	var hero: Dictionary = by_id.get(e["character"], {})
+	var spells := {}
+	for id in hero.get("spells", []) + [hero.get("ultimate", "")]:
+		if by_id.has(id):
+			spells[id] = by_id[id]
+	for id in by_id:
+		if by_id[id]["_type"] == "consumable":
+			spells[id] = by_id[id]
+	var t := CombatTactics.build(spells)
+	var overrides: Dictionary = e["tactics"]
+	for key in overrides:
+		if key in ["spells", "consumables"]:
+			if typeof(overrides[key]) != TYPE_DICTIONARY:
+				f.call("V7", "tactics.%s must be a dictionary" % key)
+				continue
+			for id in overrides[key]:
+				var why := CombatTactics.set_value(t, spells, str(id), overrides[key][id])
+				if why != "":
+					f.call("V7", "tactics.%s.%s: %s" % [key, id, why])
+		else:
+			var why := CombatTactics.set_value(t, spells, str(key), overrides[key])
+			if why != "":
+				f.call("V7", "tactics.%s: %s" % [key, why])
+
+
+## Each trigger needs its own field (GDD decision 27).
+static func _check_tip(e: Dictionary, f: Callable) -> void:
+	match e["trigger"]:
+		"level_reached":
+			if int(e["level"]) < 1:
+				f.call("V7", "a level_reached tip needs level")
+		"boss_cast", "defeat":
+			if e["abilities"].is_empty():
+				f.call("V7", "a %s tip needs abilities" % e["trigger"])
+	if e["actions"].has("apply_preset") and e["preset"] == "":
+		f.call("V7", "apply_preset needs a preset")

@@ -942,3 +942,74 @@ ui.story.fountain_name,Fontaine
 ui.story.campfire_name,Feu de camp
 ui.story.fountain_healed,La fontaine vous rend {pct} % de vos PV.
 ui.story.rested,"PV et mana au maximum, partie sauvegardée."
+tactics_preset.morvaine.name,Conseil contre Morvaine
+tip.barrier_unlocked.name,Barrière débloquée
+tip.barrier_unlocked,"Barrière débloquée (touche 3). Elle part seule avant un coup annoncé, ou sous 30 % de PV. Réglable dans Grimoire › Tactiques."
+tip.campfire_tactics.name,La gardienne du cadran
+tip.campfire_tactics,"Plus loin, la gardienne du cadran prépare un Sceau de cendre qu'on ne peut pas interrompre. Gardez la Barrière pour lui, et abattez ses lanternes d'abord."
+tip.morvaine_seal.name,Sceau de cendre
+tip.morvaine_seal,Sceau de cendre : impossible à interrompre. Barrière (3) avant l'impact !
+tip.defeat_ash_seal.name,Vaincue par le Sceau
+tip.defeat_ash_seal,Le Sceau de cendre vous a vaincue. Réglez la Barrière sur « Avant un coup télégraphé » pour la garder pour lui.
+tip.defeat_enrage.name,Vaincue par la Cendre totale
+tip.defeat_enrage,"Morvaine a tenu jusqu'à la Cendre totale. Ses lanternes la protègent : ciblez les lanceurs d'abord, et gardez l'ultime pour la dernière phase."
+ui.tactics.title,Tactiques
+ui.tactics.tab,Tactiques
+ui.tactics.new,Nouveau
+ui.tactics.default_suffix,(par défaut)
+ui.tactics.reset,Rétablir les réglages par défaut
+ui.tactics.apply_preset,Appliquer le conseil
+ui.tactics.open,Ouvrir les tactiques
+ui.tactics.later,Plus tard
+ui.tactics.close,Fermer
+ui.tactics.campfire_option,Régler les tactiques
+ui.tactics.diff_line,{setting} : {from} → {to}
+ui.tactics.diff_none,Vos réglages suivent déjà ce conseil.
+ui.tactics.setting.targeting,Ciblage
+ui.tactics.setting.mana_reserve,Réserve de mana
+ui.tactics.targeting.nearest,Le plus proche
+ui.tactics.targeting.lowest_hp,PV les plus bas
+ui.tactics.targeting.elites_first,Élites et boss d'abord
+ui.tactics.targeting.casters_first,Lanceurs d'abord
+ui.tactics.mode.manual,Manuel
+ui.tactics.mode.auto,Auto
+ui.tactics.mode.auto_elite_boss,Auto sur élite ou boss
+ui.tactics.mode.auto_interrupt,Seulement pour interrompre
+ui.tactics.mode.auto_min_enemies,Auto si au moins N ennemis
+ui.tactics.mode.auto_hp_below,Si PV sous X %
+ui.tactics.mode.auto_before_telegraph,Avant un coup télégraphé
+ui.tactics.mode.auto_telegraph_or_hp,"Avant un coup télégraphé, sinon sous X %"
+ui.tactics.mode.auto_full,Dès que pleine
+ui.tactics.value_pct,{x} %
+ui.tactics.value_enemies,{n} ennemis
+ui.tactics.say.targeting.nearest,Fern attaque l'ennemi le plus proche.
+ui.tactics.say.targeting.lowest_hp,Fern achève d'abord l'ennemi le plus blessé.
+ui.tactics.say.targeting.elites_first,"Fern vise l'élite ou le boss, puis le plus proche."
+ui.tactics.say.targeting.casters_first,Fern abat d'abord les lanternes et autres lanceurs.
+ui.tactics.say.zoltraak.manual,Zoltraak ne part que sur votre ordre (touche 1).
+ui.tactics.say.zoltraak.auto,"Fern lance Zoltraak dès qu'il est prêt, en priorité pour couper une incantation."
+ui.tactics.say.zoltraak.auto_elite_boss,Fern garde Zoltraak pour les élites et les boss.
+ui.tactics.say.zoltraak.auto_interrupt,Fern garde Zoltraak pour couper une incantation à anneau nacré.
+ui.tactics.say.mana_volley.manual,La Salve ne part que sur votre ordre (touche 2).
+ui.tactics.say.mana_volley.auto,Fern lance la Salve dès qu'elle est prête.
+ui.tactics.say.mana_volley.auto_min_enemies,Fern lance la Salve s'il reste au moins {n} ennemis à portée.
+ui.tactics.say.defensive_barrier.manual,La Barrière ne part que sur votre ordre (touche 3).
+ui.tactics.say.defensive_barrier.auto_hp_below,Fern se protège quand ses PV passent sous {x} %.
+ui.tactics.say.defensive_barrier.auto_before_telegraph,Fern se protège juste avant un coup annoncé au sol ou par une incantation.
+ui.tactics.say.defensive_barrier.auto_telegraph_or_hp,"Fern se protège juste avant un coup annoncé, ou si ses PV passent sous {x} %."
+ui.tactics.say.afterlight.manual,L'ultime ne part que sur votre ordre (touche R).
+ui.tactics.say.afterlight.auto_full,Fern libère l'ultime dès que la jauge est pleine.
+ui.tactics.say.mana_reserve,Les sorts automatiques laissent toujours {x} % de mana pour vos ordres.
+ui.encounter.level_above,Niveau {level} (au-dessus du vôtre)
+error.tactics.locked,Tactiques disponibles au niveau {level}
+error.tactics.unknown_setting,Réglage inconnu
+error.tactics.invalid_value,Valeur refusée pour ce réglage
+error.tactics.unknown_preset,Conseil inconnu
+error.tip.unknown,Conseil inconnu
+ui.tactics.mode.auto_low_hp,Auto si PV < {x} %
+ui.tactics.mode.auto_low_mana,Auto si mana < {x} %
+ui.tactics.say.healing_draught.manual,L'infusion de soin ne se boit que sur votre ordre.
+ui.tactics.say.healing_draught.auto_low_hp,Fern boit une infusion de soin quand ses PV passent sous {x} %.
+ui.tactics.say.mana_elixir.manual,L'élixir de mana ne se boit que sur votre ordre.
+ui.tactics.say.mana_elixir.auto_low_mana,Fern boit un élixir de mana quand sa mana passe sous {x} %.
+dialogue.fern_campfire.line_02,"Ce cadran sent la cendre. Si elle frappe fort, je garderai ma barrière pour ce coup-là."

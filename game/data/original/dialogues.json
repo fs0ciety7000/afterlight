@@ -502,6 +502,10 @@
         {
           "speaker": "character.fern",
           "key_suffix": "line_01"
+        },
+        {
+          "speaker": "character.fern",
+          "key_suffix": "line_02"
         }
       ]
     },

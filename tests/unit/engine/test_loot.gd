@@ -190,3 +190,23 @@ func test_rolled_affix_values_are_stable_through_json() -> void:
 			if once != twice:
 				unstable += 1
 	assert_eq(unstable, 0, "unstable affix values")
+
+
+## GDD decision 29: the first clear of whispering_wood_01 gives an uncommon
+## birch staff of item level 1, after the table draws; repeats do not.
+func test_first_clear_of_the_first_pack_gives_the_staff() -> void:
+	var r := CombatRewards.compute(
+		_sim_with_all_enemies_killed("encounter.whispering_wood_01", true)
+	)
+	var again := CombatRewards.compute(
+		_sim_with_all_enemies_killed("encounter.whispering_wood_01", false)
+	)
+	assert_eq(r["items"].size(), again["items"].size() + 1, "one more item on the first clear")
+	var staff: Dictionary = r["items"][-1]
+	assert_eq([staff["item_id"], staff["rarity"]], ["item.birch_staff", "uncommon"], "the staff")
+	assert_eq(staff["item_level"], 1, "ilvl = encounter level")
+	assert_eq(staff["affixes"].size(), BalanceItems.AFFIX_COUNT["uncommon"], "affixes rolled")
+	var a := CombatRewards.compute(
+		_sim_with_all_enemies_killed("encounter.whispering_wood_01", true)
+	)
+	assert_eq(a, r, "same seed, same staff")

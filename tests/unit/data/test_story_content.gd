@@ -125,7 +125,7 @@ func test_unlocks_follow_the_main_quests() -> void:
 	assert_eq(by_id["location.watch_ruins"]["encounters"].size(), 5, "5 ruins packs")
 	assert_eq(
 		by_id["encounter.watch_ruins_05"]["first_clear_rewards"],
-		{"materials": {"material.cloister_key": 1}},
+		{"materials": {"material.cloister_key": 1}, "items": []},
 		"the key"
 	)
 
@@ -153,3 +153,20 @@ func test_npcs_have_anchors_and_dialogues() -> void:
 		var last: Dictionary = npc["dialogues"][npc["dialogues"].size() - 1]
 		assert_eq(last["condition"], {}, "%s ends on an unconditional line" % npc["id"])
 	assert_eq(c["by_id"]["location.aubelin"]["npcs"].size(), 7, "all in Aubelin")
+
+
+## GDD decisions 29-30: the guaranteed staff, and the Volley test pack.
+func test_early_game_staff_and_volley_test() -> void:
+	var by_id: Dictionary = _content()["by_id"]
+	assert_eq(
+		by_id["encounter.whispering_wood_01"]["first_clear_rewards"]["items"],
+		[{"base": "item.birch_staff", "rarity": "uncommon"}],
+		"first clear of the first pack gives the staff"
+	)
+	var pack: Dictionary = by_id["encounter.whispering_wood_04"]
+	assert_eq(pack["level"], 3, "level 3")
+	var levels := []
+	for g in pack["enemies"]:
+		for i in int(g["count"]):
+			levels.append(int(pack["level"]) + int(g["level_offset"]))
+	assert_eq(levels, [2, 2, 1, 1], "same four wolves")

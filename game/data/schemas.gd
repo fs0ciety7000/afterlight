@@ -78,6 +78,8 @@ const FILES := {
 	"discoveries": ["discovery", ["discovery"]],
 	"lore": ["lore", ["lore"]],
 	"shops": ["shop", ["shop"]],
+	"tactics_presets": ["tactics_preset", ["tactics_preset"]],
+	"tips": ["tip", ["tip"]],
 }
 
 const PREFIX_TO_TYPE := {
@@ -108,12 +110,18 @@ const PREFIX_TO_TYPE := {
 	"discovery": "discovery",
 	"lore": "lore",
 	"shop": "shop",
+	"tactics_preset": "tactics_preset",
+	"tip": "tip",
 }
 
 ## Types whose entries must carry desc_key (§3).
 const NEEDS_DESC := ["spell", "passive", "item", "rune", "artifact", "quest", "legendary"]
+## When a tip may show (GDD decision 27; TacticsRules.next_tip context).
+const TIP_TRIGGERS := ["level_reached", "first_campfire", "boss_cast", "defeat"]
+const TIP_DISPLAYS := ["toast", "panel", "banner", "defeat"]
+const TIP_ACTIONS := ["apply_preset", "open_tactics", "later", "close"]
 
-const ID_PATTERN := "^[a-z]+\\.[a-z0-9_]+$"
+const ID_PATTERN := "^[a-z][a-z_]*\\.[a-z0-9_]+$"
 
 
 static func ref(types: Variant, optional: bool = false) -> Dictionary:
@@ -541,7 +549,23 @@ static func fields_for(type_name: String) -> Dictionary:
 				opt(
 					{
 						"type": "dict",
-						"fields": {"materials": opt({"type": "dict", "values": pos_int()}, {})}
+						"fields":
+						{
+							"materials": opt({"type": "dict", "values": pos_int()}, {}),
+							"items":
+							opt(
+								{
+									"type": "array",
+									"items":
+									{
+										"type": "dict",
+										"fields":
+										{"base": ref("item"), "rarity": enum_of(RARITIES)},
+									},
+								},
+								[]
+							),
+						}
 					},
 					{}
 				),
@@ -728,6 +752,23 @@ static func fields_for(type_name: String) -> Dictionary:
 			return {}
 		"shop":
 			return {"location": ref("location"), "stock": refs("consumable", 1)}
+		"tactics_preset":
+			# `tactics`: partial tactics, same shape as CombatTactics.build overrides
+			# (checked against the character's spells by ContentRules).
+			return {"character": ref("character"), "tactics": {"type": "dict"}}
+		"tip":
+			return {
+				"trigger": enum_of(TIP_TRIGGERS),
+				"display": enum_of(TIP_DISPLAYS),
+				"level": opt(pos_int(), 0),
+				"dungeon": ref("dungeon", true),
+				"encounter": ref("encounter", true),
+				"abilities": refs("ability"),
+				"repeat": opt({"type": "bool"}, false),
+				"duration_s": opt(num(), 0.0),
+				"preset": ref("tactics_preset", true),
+				"actions": opt({"type": "array", "items": enum_of(TIP_ACTIONS)}, []),
+			}
 	return {}
 
 

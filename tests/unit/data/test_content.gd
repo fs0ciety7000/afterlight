@@ -140,6 +140,7 @@ func _errors(files: Dictionary, raw: Dictionary = {}) -> String:
 		for e in files[path][1]:
 			keys.append("%s.name,x" % e["id"])
 			keys.append("%s.desc,x" % e["id"])
+			keys.append("%s,x" % e["id"])  # tip text
 	for path in raw:
 		_write(root.path_join(path), raw[path])
 	_write(root.path_join("strings.csv"), "\n".join(keys))
@@ -765,3 +766,57 @@ func test_v20_save_ids_must_still_exist() -> void:
 		0,
 		"retired through a migration"
 	)
+
+
+## Milestone 6 (GDD decisions 26, 27, 29): presets, tips, first clear items.
+func test_tactics_presets_and_tips() -> void:
+	var w := _base()
+	var preset := {"character": "character.a", "tactics": {"targeting": "casters_first"}}
+	w["original/tactics_presets.json"] = ["tactics_preset", [_entry("tactics_preset.p", preset)]]
+	var tip := {
+		"trigger": "defeat",
+		"display": "defeat",
+		"abilities": [],
+		"preset": "tactics_preset.p",
+		"actions": ["apply_preset"],
+	}
+	w["original/tips.json"] = ["tip", [_entry("tip.t", tip)]]
+	_expect(w, "V7", "a defeat tip needs abilities")
+	w["original/tips.json"][1][0]["trigger"] = "first_campfire"
+	assert_eq(_errors(w), "", "a two-part prefix (tactics_preset.) is a valid id")
+	w["original/tips.json"][1][0]["preset"] = ""
+	_expect(w, "V7", "apply_preset needs a preset")
+	w["original/tips.json"][1][0]["trigger"] = "level_reached"
+	_expect(w, "V7", "a level_reached tip needs level")
+	w["original/tips.json"][1][0]["trigger"] = "sometimes"
+	_expect(w, "V7", "'sometimes' not in")
+	w = _base()
+	preset["tactics"] = {"targeting": "everyone", "spells": {"spell.act": "auto_full"}}
+	w["original/tactics_presets.json"] = ["tactics_preset", [_entry("tactics_preset.p", preset)]]
+	_expect(w, "V7", "tactics.targeting: invalid_value")
+	_expect(w, "V7", "tactics.spells.spell.act: invalid_value")
+
+
+func test_first_clear_items_must_drop_at_the_encounter_level() -> void:
+	var w := _combat_world()
+	var enc: Dictionary = w["original/encounters.json"][1][0]
+	enc["first_clear_rewards"] = {"items": [{"base": "item.missing", "rarity": "uncommon"}]}
+	_expect(w, "V6", "unknown item 'item.missing'")
+	enc["first_clear_rewards"] = {"items": [{"base": "item.x", "rarity": "shiny"}]}
+	_expect(w, "V7", "'shiny' not in")
+	enc["first_clear_rewards"] = {"items": [{"base": "item.x", "rarity": "rare"}]}
+	w["original/equipment.json"] = [
+		"item",
+		[
+			_entry(
+				"item.x",
+				{
+					"desc_key": "item.x.desc",
+					"slot": "weapon",
+					"implicit": [{"stat": "power", "base": 6}],
+					"min_ilvl": 9,
+				}
+			)
+		]
+	]
+	_expect(w, "V8", "item.x min_ilvl 9 > encounter level 5")

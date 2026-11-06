@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "type": "tip",
+  "entries": [
+    {
+      "id": "tip.barrier_unlocked",
+      "origin": "original",
+      "name_key": "tip.barrier_unlocked.name",
+      "trigger": "level_reached",
+      "level": 2,
+      "display": "toast",
+      "actions": ["open_tactics", "close"],
+      "notes": "GDD decision 27 (1): when the Barrier unlocks; the text is the string tip.barrier_unlocked."
+    },
+    {
+      "id": "tip.campfire_tactics",
+      "origin": "original",
+      "name_key": "tip.campfire_tactics.name",
+      "trigger": "first_campfire",
+      "dungeon": "dungeon.silent_dial_cloister",
+      "display": "panel",
+      "preset": "tactics_preset.morvaine",
+      "actions": ["apply_preset", "open_tactics", "later"],
+      "notes": "GDD decision 27 (2): first arrival at the cloister campfire, after dialogue.fern_campfire."
+    },
+    {
+      "id": "tip.morvaine_seal",
+      "origin": "original",
+      "name_key": "tip.morvaine_seal.name",
+      "trigger": "boss_cast",
+      "encounter": "encounter.cloister_boss",
+      "abilities": ["ability.morvaine_ash_seal", "ability.morvaine_ash_seal_hollow"],
+      "display": "banner",
+      "duration_s": 3.0,
+      "notes": "GDD decision 27 (3): 3 s banner under the boss bar at the first Seal, no pause."
+    },
+    {
+      "id": "tip.defeat_ash_seal",
+      "origin": "original",
+      "name_key": "tip.defeat_ash_seal.name",
+      "trigger": "defeat",
+      "encounter": "encounter.cloister_boss",
+      "abilities": ["ability.morvaine_ash_seal", "ability.morvaine_ash_seal_hollow"],
+      "repeat": true,
+      "display": "defeat",
+      "preset": "tactics_preset.morvaine",
+      "actions": ["apply_preset", "open_tactics"],
+      "notes": "GDD decision 27 (4): every defeat whose last hit is the Seal."
+    },
+    {
+      "id": "tip.defeat_enrage",
+      "origin": "original",
+      "name_key": "tip.defeat_enrage.name",
+      "trigger": "defeat",
+      "encounter": "encounter.cloister_boss",
+      "abilities": ["ability.morvaine_enrage"],
+      "repeat": true,
+      "display": "defeat",
+      "actions": ["open_tactics"],
+      "notes": "GDD decision 27 (4): every defeat whose last hit is Cendre totale."
+    }
+  ]
+}

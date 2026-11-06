@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "type": "tactics_preset",
+  "entries": [
+    {
+      "id": "tactics_preset.morvaine",
+      "origin": "original",
+      "name_key": "tactics_preset.morvaine.name",
+      "character": "character.fern",
+      "tactics": {
+        "targeting": "casters_first",
+        "spells": {
+          "spell.defensive_barrier": "auto_before_telegraph"
+        },
+        "consumables": {
+          "consumable.healing_draught": "auto_low_hp"
+        }
+      },
+      "notes": "GDD decision 26: the advice of tip.campfire_tactics and tip.defeat_ash_seal (« Appliquer le conseil »). The healing infusion on Auto (owner answer 2)."
+    }
+  ]
+}

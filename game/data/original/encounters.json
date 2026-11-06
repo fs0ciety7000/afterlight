@@ -18,8 +18,16 @@
       "loot_table": "loot.field_normal",
       "offline_eligible": true,
       "speed_cap": 4,
+      "first_clear_rewards": {
+        "items": [
+          {
+            "base": "item.birch_staff",
+            "rarity": "uncommon"
+          }
+        ]
+      },
       "anchor": "encounter_01",
-      "notes": "First fight (GDD §16.1): two wolves, under the §11 budget on purpose."
+      "notes": "First fight (GDD §16.1): two wolves, under the §11 budget on purpose. First clear: the guaranteed staff (GDD decision 29)."
     },
     {
       "id": "encounter.whispering_wood_02",
@@ -68,22 +76,24 @@
       "name_key": "encounter.whispering_wood_04.name",
       "location": "location.whispering_wood",
       "kind": "normal",
-      "level": 2,
+      "level": 3,
       "enemies": [
-        {
-          "enemy": "enemy.mist_wolf",
-          "count": 2
-        },
         {
           "enemy": "enemy.mist_wolf",
           "count": 2,
           "level_offset": -1
+        },
+        {
+          "enemy": "enemy.mist_wolf",
+          "count": 2,
+          "level_offset": -2
         }
       ],
       "loot_table": "loot.field_normal",
       "offline_eligible": true,
       "speed_cap": 4,
-      "anchor": "encounter_04"
+      "anchor": "encounter_04",
+      "notes": "Test of the Volley (unlocked at level 3): level 2 -> 3, same four wolves (GDD decision 30, provisional, milestone 6)."
     },
     {
       "id": "encounter.whispering_wood_05",
