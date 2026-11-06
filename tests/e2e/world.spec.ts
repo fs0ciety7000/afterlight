@@ -41,7 +41,20 @@ test('Fern walks where the player clicks', async ({ page }) => {
   const start = await player(page);
   const ps = (await probe(page))!.world.player_screen as { x: number; y: number };
   const h = await page.evaluate(() => document.querySelector('canvas')!.height);
-  const target = await canvasPoint(page, ps.x, ps.y + h * 0.22);
+  const w = await page.evaluate(() => document.querySelector('canvas')!.width);
+  // A point on the ground that no HUD control covers (on phones the interact
+  // prompt sits right under Fern): below, right, left, then above her.
+  const controls = Object.values((await probe(page))!.controls) as { x: number; y: number; w: number; h: number; visible: boolean }[];
+  const free = (x: number, y: number) =>
+    !controls.some((c) => c.visible && x >= c.x && x <= c.x + c.w && y >= c.y && y <= c.y + c.h);
+  const candidates = [
+    { x: ps.x, y: ps.y + h * 0.22 },
+    { x: ps.x + w * 0.18, y: ps.y },
+    { x: ps.x - w * 0.18, y: ps.y },
+    { x: ps.x, y: ps.y - h * 0.22 },
+  ];
+  const pick = candidates.find((c) => free(c.x, c.y)) ?? candidates[0];
+  const target = await canvasPoint(page, pick.x, pick.y);
   await page.mouse.click(target.x, target.y);
   await expect.poll(async () => dist(start, await player(page)), { timeout: 20_000 }).toBeGreaterThanOrEqual(2);
 });

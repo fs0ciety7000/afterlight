@@ -204,6 +204,8 @@ func _card(parent: VBoxContainer, uid: String, is_worn: bool) -> void:
 	forge.pressed.connect(func() -> void: open("forge", {"uid": uid}))
 	actions.add_child(forge)
 	parent.add_child(actions)
+	# Right under the item's name: on phones the details run below the fold.
+	parent.move_child(actions, head.get_index() + 1)
 
 
 func _comparison(parent: VBoxContainer, uid: String, slot: String) -> void:

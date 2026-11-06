@@ -54,7 +54,10 @@ func _ready() -> void:
 		_gains(body)
 	else:
 		_refusal(body)
-	var limit := get_viewport_rect().size.y * (0.5 if narrow else 0.55)
+	# Phones: touch-sized buttons are tall, so the gains scroll sooner and
+	# « Récupérer » stays on screen.
+	var short := narrow or UiTokens.css_per_logical < 0.75
+	var limit := get_viewport_rect().size.y * (0.3 if short else 0.55)
 	if body.get_combined_minimum_size().y > limit:
 		var scroll := ScrollContainer.new()
 		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
