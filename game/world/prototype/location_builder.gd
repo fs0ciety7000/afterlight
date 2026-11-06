@@ -151,7 +151,7 @@ func _prepare_kit() -> void:
 		var src := mi.get_active_material(0) as BaseMaterial3D
 		var mat := ShaderMaterial.new()
 		mat.shader = ENV_TOON
-		mat.set_shader_parameter("albedo_tex", src.albedo_texture)
+		mat.set_shader_parameter("albedo_tex", _shared_texture(src.albedo_texture))
 		mat.set_shader_parameter("use_instance_custom", true)
 		mat.set_shader_parameter("shadow_tint", DAY["shadow_tint"])
 		if spec.has("wind"):
@@ -189,6 +189,21 @@ func _prepare_kit() -> void:
 		aabbs[kit_name] = mesh.get_aabb()
 		inst.free()
 	_prepare_cards()
+
+
+## Blender embeds the shared props atlas in every GLB, and the import extracts one copy per model:
+## materials point at the identical file in textures/ instead, so the export ships it once
+## (the per-model copies are left out by the Web preset's exclude filter).
+func _shared_texture(tex: Texture2D) -> Texture2D:
+	if tex == null or tex.resource_path == "":
+		return tex
+	var md5 := FileAccess.get_md5(tex.resource_path)
+	for file in DirAccess.get_files_at(ENV + "textures"):
+		var path := ENV + "textures/" + file
+		if not file.ends_with(".import") and path != tex.resource_path:
+			if FileAccess.get_md5(path) == md5:
+				return load(path)
+	return tex
 
 
 func _prepare_cards() -> void:

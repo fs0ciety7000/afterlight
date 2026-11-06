@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://assets/shaders/env_toon.gdshader" id="1_uk664"]
-[ext_resource type="Texture2D" path="res://assets/environment/ruins/brazier_village_props_atlas.webp" id="2_wqmdn"]
+[ext_resource type="Texture2D" path="res://assets/environment/textures/village_props_atlas.webp" id="2_wqmdn"]
 
 [resource]
 render_priority = 0

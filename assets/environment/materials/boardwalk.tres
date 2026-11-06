@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://assets/shaders/env_toon.gdshader" id="1_bggqf"]
-[ext_resource type="Texture2D" path="res://assets/environment/props/boardwalk_village_props_atlas.webp" id="2_juvvf"]
+[ext_resource type="Texture2D" path="res://assets/environment/textures/village_props_atlas.webp" id="2_juvvf"]
 
 [resource]
 render_priority = 0
