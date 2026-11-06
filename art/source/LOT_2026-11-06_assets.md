@@ -23,3 +23,17 @@ Journaux détaillés (prompt, modèle, graine) : `fal_log.json` du dossier de ch
 | 13 | 10:38 UTC | fal-ai/nano-banana-pro/edit | `icons_misc` (aspect_ratio 5:2) | 4. Icônes | refusé par validation, non facturé | 0,00 | 2,41 |
 | 14 | 10:38 UTC | fal-ai/nano-banana-pro/edit | `icons_runes` (final, 2K, réf. de style : `icons_spells.png`) | 4. Icônes | OK | 0,15 | 2,56 |
 | 15 | 10:39 UTC | fal-ai/nano-banana-pro/edit | `icons_misc` (final, 2K, réf. de style : `icons_spells.png`) | 4. Icônes | OK | 0,15 | 2,71 |
+| 16 | 10:46 UTC | fal-ai/flux/schnell | `npc_portraits_draft` (brouillon, ~0,003 arrondi) | 5. Portraits | OK | 0,01 | 2,72 |
+| 17 | 10:46 UTC | fal-ai/nano-banana-pro/edit | `npc_portraits` (final, 2K, réf. de cadrage : `assets/textures/portraits/fern.png`) | 5. Portraits | OK | 0,15 | 2,87 |
+
+**Total du lot : 15 appels facturés, 2,87 USD sur 5,00** (marge non dépensée : 2,13). Deux appels refusés à la
+validation (rapport d'aspect non accepté), non facturés et relancés une fois avec un rapport valide. Aucun élément
+n'a eu besoin d'un second essai. Les brouillons flux/schnell sont comptés à 0,01 (prix réel ≈ 0,003).
+
+| Élément | Estimé | Dépensé |
+|---|---|---|
+| 1. Clips de sorts de Fern | 0,92 | 0,92 |
+| 2. Clips de Morvaine | 0,56 | 0,56 |
+| 3. Tête de la sentinelle (brouillon + final + Tripo) | 0,55 | 0,59 |
+| 4. Icônes (4 brouillons + 4 planches) | 0,65 | 0,64 |
+| 5. Portraits (1 brouillon + 1 planche de 3) | 0,50 | 0,16 |

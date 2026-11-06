@@ -10,6 +10,14 @@ extends Screen
 const TABS := ["character", "bag", "grimoire", "forge", "runecarver", "merchant"]
 ## Tile side in logical pixels (DESIGN.md: 48 px target + frame).
 const TILE := UiTokens.TOUCH_TARGET + UiTokens.SPACE["lg"]
+## Shopkeepers shown at the top of their screen: portrait, name and role
+## (assets/textures/portraits/npc_<name>.webp, keys <npc>.name and <npc>.role).
+const NPCS := {
+	"forge": "npc.bastien",
+	"runecarver": "npc.maelle",
+	"merchant": "npc.aubelin_merchant",
+}
+const PORTRAITS_DIR := "res://assets/textures/portraits/"
 
 var screen_id := ""
 var _body: VBoxContainer
@@ -51,6 +59,8 @@ func _ready() -> void:
 		tabs.add_child(b)
 	col.add_child(tabs)
 	col.add_child(HSeparator.new())
+	if NPCS.has(screen_id):
+		col.add_child(_npc_header(NPCS[screen_id], narrow))
 
 	_body = Kit.vbox()
 	_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -61,6 +71,29 @@ func _ready() -> void:
 
 	GameState.changed.connect(_queue_refresh)
 	_refresh()
+
+
+## Portrait, name and role of the screen's shopkeeper.
+func _npc_header(npc_id: String, narrow: bool) -> Control:
+	var row := Kit.hbox()
+	var portrait := TextureRect.new()
+	var path := PORTRAITS_DIR + "npc_" + npc_id.get_slice(".", 1) + ".webp"
+	if ResourceLoader.exists(path):
+		portrait.texture = load(path)
+	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	var side := 48.0 if narrow else 72.0
+	portrait.custom_minimum_size = Vector2(side, side)
+	UiProbe.register(screen_id + ".npc_portrait", portrait)
+	row.add_child(portrait)
+	var text := Kit.vbox(UiTokens.SPACE["xs"])
+	text.alignment = BoxContainer.ALIGNMENT_CENTER
+	var npc_name := Kit.label(tr(npc_id + ".name"), "SubheadingLabel")
+	UiProbe.register(screen_id + ".npc_name", npc_name)
+	text.add_child(npc_name)
+	text.add_child(Kit.label(tr(npc_id + ".role"), "MutedLabel"))
+	row.add_child(text)
+	return row
 
 
 ## Switches to another progression screen; Back still returns to the world.

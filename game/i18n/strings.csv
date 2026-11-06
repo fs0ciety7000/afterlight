@@ -506,3 +506,9 @@ ui.shop.carried,Porté : {carried} / {max}
 ui.combat.loot_rune,Rune : {name}
 ui.combat.loot_artifact,Artefact : {name}
 ui.combat.loot_materials,Matériaux : {list}
+npc.bastien.name,Bastien
+npc.bastien.role,Forgeron d'Aubelin
+npc.maelle.name,Maëlle
+npc.maelle.role,Graveuse de runes
+npc.aubelin_merchant.name,La marchande
+npc.aubelin_merchant.role,Potions et élixirs

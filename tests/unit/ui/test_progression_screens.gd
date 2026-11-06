@@ -173,3 +173,17 @@ func test_progression_text_formats_values_and_ranges() -> void:
 
 func tr_text(key: String) -> String:
 	return TranslationServer.translate(key)
+
+
+func test_shopkeeper_screens_show_portrait_and_name() -> void:
+	_new_game()
+	var names := {"forge": "Bastien", "runecarver": "Maëlle", "merchant": "La marchande"}
+	for id: String in names:
+		var screen := _open(id)
+		var portrait := _control(id + ".npc_portrait") as TextureRect
+		assert_true(portrait != null and portrait.texture != null, "%s: portrait" % id)
+		assert_eq(_text(id + ".npc_name"), names[id], "%s: name" % id)
+		_close(screen)
+	var bag := _open("bag")
+	assert_true(_control("bag.npc_portrait") == null, "no shopkeeper on the bag screen")
+	_close(bag)
