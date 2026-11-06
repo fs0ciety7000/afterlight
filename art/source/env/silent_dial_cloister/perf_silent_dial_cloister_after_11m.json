@@ -1,0 +1,79 @@
+{
+	"cloister_campfire": {
+		"draw_calls": 66.0,
+		"fps": 1.0,
+		"objects": 66.0,
+		"primitives": 129866.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_courtyard": {
+		"draw_calls": 47.0,
+		"fps": 3.0,
+		"objects": 47.0,
+		"primitives": 116652.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_dial": {
+		"draw_calls": 61.0,
+		"fps": 2.0,
+		"objects": 61.0,
+		"primitives": 129048.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_dial_centre": {
+		"draw_calls": 54.0,
+		"fps": 2.0,
+		"objects": 54.0,
+		"primitives": 124082.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_dial_north": {
+		"draw_calls": 62.0,
+		"fps": 2.0,
+		"objects": 62.0,
+		"primitives": 130026.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_dial_vista": {
+		"draw_calls": 115.0,
+		"fps": 3.0,
+		"objects": 115.0,
+		"primitives": 147606.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_fountain": {
+		"draw_calls": 56.0,
+		"fps": 2.0,
+		"objects": 56.0,
+		"primitives": 97756.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_gallery": {
+		"draw_calls": 61.0,
+		"fps": 2.0,
+		"objects": 61.0,
+		"primitives": 103102.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_kennel": {
+		"draw_calls": 48.0,
+		"fps": 2.0,
+		"objects": 48.0,
+		"primitives": 108590.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_vestibule": {
+		"draw_calls": 52.0,
+		"fps": 2.0,
+		"objects": 52.0,
+		"primitives": 114634.0,
+		"video_mem_mb": 211.2
+	},
+	"cloister_vista": {
+		"draw_calls": 187.0,
+		"fps": 2.0,
+		"objects": 187.0,
+		"primitives": 199181.0,
+		"video_mem_mb": 211.2
+	}
+}

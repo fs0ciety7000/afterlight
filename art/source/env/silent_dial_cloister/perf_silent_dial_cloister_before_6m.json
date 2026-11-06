@@ -1,0 +1,58 @@
+{
+	"cloister_campfire": {
+		"draw_calls": 52.0,
+		"fps": 1.0,
+		"objects": 52.0,
+		"primitives": 107687.0,
+		"video_mem_mb": 187.7
+	},
+	"cloister_courtyard": {
+		"draw_calls": 42.0,
+		"fps": 1.0,
+		"objects": 42.0,
+		"primitives": 110764.0,
+		"video_mem_mb": 187.7
+	},
+	"cloister_dial": {
+		"draw_calls": 51.0,
+		"fps": 2.0,
+		"objects": 51.0,
+		"primitives": 107960.0,
+		"video_mem_mb": 187.7
+	},
+	"cloister_fountain": {
+		"draw_calls": 45.0,
+		"fps": 2.0,
+		"objects": 45.0,
+		"primitives": 99768.0,
+		"video_mem_mb": 187.7
+	},
+	"cloister_gallery": {
+		"draw_calls": 54.0,
+		"fps": 3.0,
+		"objects": 54.0,
+		"primitives": 99366.0,
+		"video_mem_mb": 187.7
+	},
+	"cloister_kennel": {
+		"draw_calls": 40.0,
+		"fps": 2.0,
+		"objects": 40.0,
+		"primitives": 99920.0,
+		"video_mem_mb": 187.7
+	},
+	"cloister_vestibule": {
+		"draw_calls": 53.0,
+		"fps": 2.0,
+		"objects": 53.0,
+		"primitives": 103686.0,
+		"video_mem_mb": 187.7
+	},
+	"cloister_vista": {
+		"draw_calls": 190.0,
+		"fps": 1.0,
+		"objects": 190.0,
+		"primitives": 168901.0,
+		"video_mem_mb": 187.7
+	}
+}

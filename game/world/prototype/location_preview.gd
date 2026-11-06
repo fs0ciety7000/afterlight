@@ -72,6 +72,9 @@ const SHOTS := {
 		["cloister_kennel", Vector2(-18.0, -98.0), 0.0, 180.0, false],
 		["cloister_campfire", Vector2(-18.0, -134.0), 0.0, 180.0, false],
 		["cloister_dial", Vector2(-18.0, -168.0), 0.0, 180.0, false],
+		["cloister_dial_centre", Vector2(-18.0, -177.0), 0.0, 180.0, false],
+		["cloister_dial_north", Vector2(-18.0, -186.0), 0.0, 180.0, false],
+		["cloister_dial_vista", Vector2(-18.0, -163.0), 0.0, 180.0, true],
 		["cloister_vista", Vector2(30.0, -92.0), 0.0, 180.0, true],
 	],
 }

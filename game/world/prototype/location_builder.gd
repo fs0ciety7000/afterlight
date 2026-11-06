@@ -22,6 +22,9 @@ const ENV_WATER: Shader = preload("res://assets/shaders/env_water.gdshader")
 const ENV_SHAFT: Shader = preload("res://assets/shaders/env_lightshaft.gdshader")
 const ENV_GLOW: Shader = preload("res://assets/shaders/env_glow.gdshader")
 const ENV_MIST: Shader = preload("res://assets/shaders/env_mist.gdshader")
+const ENV_MOONPOOL: Shader = preload("res://assets/shaders/env_moonpool.gdshader")
+const ENV_EMBER: Shader = preload("res://assets/shaders/env_ember.gdshader")
+const ENV_SHADE: Shader = preload("res://assets/shaders/env_shade.gdshader")
 const ENV_BACKDROP: Shader = preload("res://assets/shaders/env_backdrop.gdshader")
 const OUTLINE: Shader = preload("res://assets/shaders/outline.gdshader")
 
@@ -73,6 +76,14 @@ const KIT := {
 	"tower_ruin": {"dir": "ruins", "col": "box", "fade": true},
 	"rubble": {"dir": "ruins", "col": ""},
 	"lectern": {"dir": "ruins", "col": "post"},
+	# cloister set pieces (fal lot art/source/LOT_2026-11-06_decor.md,
+	# tools/blender/build_cloister_decor.py); colliders placed by the layout, outside the arenas
+	"clock_tower": {"dir": "ruins", "col": "", "fade": true},
+	"broken_arch": {"dir": "ruins", "col": "", "fade": true},
+	"fallen_column": {"dir": "ruins", "col": ""},
+	"watcher_statue": {"dir": "ruins", "col": "", "fade": true},
+	"dial_altar": {"dir": "ruins", "col": ""},
+	"cloister_bell": {"dir": "ruins", "col": "", "fade": true},
 }
 ## Grass / flower atlas cells (assets/environment/textures/grass_cards.png, 4 x 2).
 const CARD_GREEN := 0

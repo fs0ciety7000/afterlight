@@ -1,4 +1,4 @@
-extends "res://game/world/prototype/ruins_layout.gd"
+extends "res://game/world/prototype/cloister_pieces.gd"
 ## Silent Dial Cloister layout for the offline builder (build_locations.gd extends this chain).
 ## One scene with seven rooms laid out as docs/content/dungeon.md §2.4 (centres in metres, -Z north,
 ## 4 m corridors): vestibule, bell gallery, fountain, courtyard, kennel, campfire, dial (+6 m).
@@ -387,6 +387,7 @@ func _spot_down(id: String, at: Vector3, color: Color, energy: float, angle: flo
 	l.spot_range = at.y + 4.0
 	l.spot_angle = angle
 	l.spot_attenuation = 0.6
+	l.spot_angle_attenuation = 2.2  # soft cone edge: no hard rim on the floor
 	l.shadow_enabled = false
 
 
@@ -464,9 +465,15 @@ func _dress_vestibule() -> void:
 		_put_at("pillar", Vector3(c.x + s.x * 17.4, -0.05, c.y + s.y * 17.4), 0.0)
 	for p: Vector2 in [Vector2(-14, -9), Vector2(13, 6), Vector2(-6, 15.5), Vector2(15.5, -14)]:
 		_put_at("rubble", Vector3(p.x, -0.05, p.y), rng.randf() * TAU)
-	_roof(_room_rect("vestibule"), 10.0, [Rect2(c - Vector2(5, 5), Vector2(10, 10))])
-	_spot_down("vestibule", Vector3(c.x, 12.0, c.y), MOON, 1.4, 22.0)
+	# closed shadow roof: the moon through the fallen roof is a soft spot and a feathered pool, not a
+	# hard shadow-map rectangle
+	_roof(_room_rect("vestibule"), 10.0, [])
+	_spot_down("vestibule", Vector3(c.x, 12.0, c.y), MOON, 1.6, 30.0)
 	_shaft(Vector3(c.x - 1.0, 0.0, c.y), 11.0, 6.0, MOON, 0.16)
+	_moon_pool(Vector3(c.x - 0.5, 0.0, c.y + 0.5), 6.5, 0.15)
+	# two hooded watchers either side of the gallery gate (outside the arena disc)
+	for sx: float in [-1.0, 1.0]:
+		_statue(Vector2(c.x + sx * 5.8, c.y - 16.9), 0.0, 0.9)
 	# the postern stair (3 m up to the Ruins) and its head
 	_put_at("stairs", Vector3(0, -0.02, 31.0), 0.0)
 	_cap(Vector2(0, 38.4), 0.0)
@@ -488,13 +495,17 @@ func _dress_gallery() -> void:
 			if sx > 0 and absf(z + 66.0) < 3.5:
 				continue  # keep the east door clear
 			_place("pillar", Vector2(c.x + sx * 17.6, z), 0.0)
-	var slots := []
 	for k in 3:
 		var z := c.y - 12.0 + k * 12.0
 		_put_at("bell", Vector3(c.x, 3.9, z), rng.randf_range(-0.2, 0.2))
-		slots.append(Rect2(Vector2(c.x - 8, z - 1.6), Vector2(16, 3.2)))
 		_shaft(Vector3(c.x + 9.0, 0.0, z), 12.0, 3.2, MOON, 0.12)
-	_roof(_room_rect("gallery"), 9.0, slots)
+		# rays from the high east windows: soft oval pools on the nave floor
+		_moon_pool(Vector3(c.x + 1.5, 0.0, z), 4.2, 0.13, 2.2)
+	_spot_down("gallery", Vector3(c.x + 1.5, 10.0, c.y), MOON, 0.8, 50.0)
+	_roof(_room_rect("gallery"), 9.0, [])
+	# fallen drums at the two ends of the nave, beyond the arena disc
+	_fallen_column(Vector2(c.x - 10.0, c.y - 19.4), PI * 0.5 + 0.2, 0.8)
+	_fallen_column(Vector2(c.x + 11.0, c.y + 19.0), PI * 0.5 - 0.25, 0.75)
 	# the north door is walled up: a corridor to nowhere
 	var n := c + Vector2(0, -22.4)
 	_put_at("wall_broken", Vector3(n.x, -0.05, n.y - 0.1), 0.0)
@@ -564,22 +575,11 @@ func _dress_courtyard() -> void:
 		if rng.randf() < 0.05:
 			cell = CARD_DAISY
 		_card(p, cell, rng.randf_range(0.4, 0.65), 1.0, -0.2)
-	# the bell tower over the north arcades, its dial stopped at three o'clock: the boss landmark
+	# the clock tower over the north arcades, its dial stopped at three o'clock: the boss landmark
 	var t := c + Vector2(0, -30)
-	for level in 4:
-		for side in 4:
-			var yaw := side * PI * 0.5
-			var o := Vector2(cos(yaw + PI * 0.5), -sin(yaw + PI * 0.5)) * 2.4
-			_put_at(
-				"wall" if level < 3 else "wall_broken",
-				Vector3(t.x + o.x, level * 4.4 - 0.05, t.y + o.y),
-				yaw,
-				Vector3(1.2, 1.0, 1.0 + 0.015 * side)
-			)
-	# the floor dial piece stood up on the south face, 2.9 m across
-	var face := Basis(Vector3.RIGHT, PI * 0.5).scaled(Vector3.ONE * 0.12)
-	_instances.get_or_add("dial", []).append(
-		[Transform3D(face, Vector3(t.x, 14.0, t.y + 2.95)), Color(tint_bias, 1.0, 0.5, 0.0)]
+	# shaft stretched so its dial clears the arcades seen from the garth
+	_put_at(
+		"clock_tower", Vector3(t.x, _height(t.x, t.y) - 0.4, t.y), 0.0, Vector3(1.15, 1.6, 1.15)
 	)
 	_gate("courtyard", Vector2(9.6, -104), PI * 0.5, "courtyard", "encounter.cloister_courtyard")
 
@@ -634,41 +634,81 @@ func _dress_campfire() -> void:
 
 
 func _dress_dial() -> void:
-	# boss: 24 m floor dial, the bell 20 m up in an open shaft, four lantern alcoves, ember threads
+	# boss: the 24 m floor dial stopped at three o'clock under a soft pool of moonlight, the bell
+	# 20 m up in the open shaft, broken pillars and arches on the rim (outside the arena disc), the
+	# altar between two watchers at the north door, ember threads to the four lantern alcoves
 	var c: Vector2 = CLOISTER_ROOMS["dial"]["centre"]
 	_room_area("dial", 7)
 	_put_at("dial", Vector3(c.x, DIAL_Y + 0.01, c.y), 0.0)
-	_put_at("bell", Vector3(c.x, DIAL_Y + 20.0, c.y), 0.3, Vector3(1.6, 1.6, 1.6))
+	_put_at("cloister_bell", Vector3(c.x, DIAL_Y + 19.0, c.y), 0.3, Vector3.ONE * 1.4)
 	for k in 8:
 		var a := (k + 0.5) * TAU / 8.0 + TAU / 32.0
 		var p := c + Vector2(cos(a), -sin(a)) * 18.7
+		match k:
+			0, 4:
+				pass  # 33.75 and 213.75 deg: whole pillars
+			1:
+				continue  # 78.75 deg: the east watcher stands there
+			3, 7:
+				# 168.75 and 348.75 deg: a broken arch against the wall instead of a pillar
+				var q := c + Vector2(cos(a), -sin(a)) * 18.9
+				_put_at(
+					"broken_arch", Vector3(q.x, DIAL_Y - 0.08, q.y), _face(q, c), Vector3.ONE * 0.8
+				)
+				_box_collider(Vector3(q.x, DIAL_Y + 2.0, q.y), Vector3(5.6, 4.0, 1.4), _face(q, c))
+				continue
+			_:
+				# broken stump and its fallen drums lying along the wall
+				_put_at("pillar", Vector3(p.x, DIAL_Y - 0.05, p.y), 0.0, Vector3(1.0, 0.42, 1.0))
+				_box_collider(Vector3(p.x, DIAL_Y + 1.0, p.y), Vector3(0.9, 2.0, 0.9), 0.0)
+				var side := 1.0 if k % 2 == 0 else -1.0
+				var b := a + side * 0.17
+				var q := c + Vector2(cos(b), -sin(b)) * 18.8
+				_fallen_column(q, _face(q, c) + PI * 0.5, 0.7, DIAL_Y)
+				continue
 		_place("pillar", p, 0.0)
-	_spot_down("dial", Vector3(c.x, DIAL_Y + 16.0, c.y), MOON, 1.3, 24.0)
-	_shaft(Vector3(c.x, DIAL_Y, c.y), 18.0, 7.0, MOON, 0.14)
+	# north door: Morvaine's altar-lectern on the axis, two hooded watchers either side
+	var north := c + Vector2(0, -18.2)
+	_put_at("dial_altar", Vector3(north.x, DIAL_Y - 0.03, north.y), 0.0, Vector3.ONE * 1.1)
+	_box_collider(Vector3(north.x, DIAL_Y + 0.8, north.y - 0.1), Vector3(1.9, 1.6, 1.6), 0.0)
+	for side: float in [-1.0, 1.0]:
+		var a := PI * 0.5 + side * deg_to_rad(15.0)
+		_statue(c + Vector2(cos(a), -sin(a)) * 18.6, 0.0, 1.0, DIAL_Y, c)
+	# the stopped clock tower over the north wall (the belfry of the shaft), seen from the room
+	_put_at("clock_tower", Vector3(c.x + 12.0, DIAL_Y - 1.2, c.y - 27.0), -0.35, Vector3.ONE * 1.25)
+	# moon through the open shaft: a soft spot and a feathered pool (the roof stays closed, so no
+	# hard-edged patch), the shaft card, low mist rolling over the rim of the dial
+	_spot_down("dial", Vector3(c.x, DIAL_Y + 18.0, c.y), MOON, 1.7, 34.0)
+	_shaft(Vector3(c.x, DIAL_Y, c.y), 18.0, 7.0, MOON, 0.12)
+	_moon_pool(Vector3(c.x + 0.6, DIAL_Y + 0.07, c.y + 0.4), 12.5, 0.26)
+	_shade_ring(Vector3(c.x, DIAL_Y + 0.02, c.y), DIAL_R + 0.4, 0.5, 0.6)
+	_dial_mist(c, DIAL_Y)
 	var after := _omni(
 		"dial", "AfterLight", Vector3(c.x, DIAL_Y + 8.0, c.y), Color("#ffd8a0"), 3.0, 22.0
 	)
 	after.visible = false
-	# ember threads between Morvaine and her lanterns (GDD 9.3): red glows along four lines
+	# ember threads between Morvaine and her lanterns (GDD 9.3): glowing ribbons, a few sparks
 	var embers := []
+	var tips := []
 	for k in 4:
 		var a := (k * 8 + 3 + 0.5) * TAU / 32.0
 		var tip := c + Vector2(cos(a), -sin(a)) * 21.5
+		tips.append(Vector3(tip.x, DIAL_Y + 1.8, tip.y))
 		_omni(
 			"dial",
 			"Alcove_%s" % ["a", "b", "c", "d"][k],
 			Vector3(tip.x, DIAL_Y + 1.8, tip.y),
 			WARM,
-			0.6,
-			4.0
+			0.7,
+			4.5
 		)
-		for j in range(3, 20):
+		for j in [6, 11, 16]:
 			var q := c.lerp(tip, j / 20.0)
-			embers.append([Vector3(q.x, DIAL_Y + 0.8 + j * 0.06, q.y), 0.45])
-		embers.append([Vector3(tip.x, DIAL_Y + 1.8, tip.y), 0.7])
+			embers.append([Vector3(q.x, DIAL_Y + 1.0 + j * 0.03, q.y), 0.3])
+		embers.append([Vector3(tip.x, DIAL_Y + 1.8, tip.y), 0.8])
 	_glow("Embers", embers, Color("#ff5a3a"), 0.6)
-	var ring := Rect2(c - Vector2(24, 24), Vector2(48, 48))
-	_roof(ring, DIAL_Y + 12.0, [Rect2(c - Vector2(6, 6), Vector2(12, 12))])
+	_ember_threads(Vector3(c.x, DIAL_Y + 1.3, c.y), tips)
+	_roof(Rect2(c - Vector2(24, 24), Vector2(48, 48)), DIAL_Y + 12.0, [])
 	# outer stair after the boss, down the cliff to the Ruins
 	_put_at("stairs", Vector3(c.x, DIAL_Y - 3.02, -203.0), 0.0)
 	_cap(Vector2(c.x, -208.4), 0.0)
@@ -889,109 +929,3 @@ func _cloister_markers() -> void:
 			(scene_root.get_node("Anchors/room7_lantern_%s" % ["a", "b", "c", "d"][k]) as Node3D)
 			. set_meta("room", "dial")
 		)
-
-
-# --- terrain over any rectangle ------------------------------------------------------------------
-
-
-func _terrain_rect(label: String, rect: Rect2i, px_per_m: int) -> void:
-	# same as _terrain (location_builder.gd) on a rectangle that is not centred on the origin
-	var dir := "%sterrain/%s/" % [ENV, label]
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
-	var w := rect.size.x * px_per_m
-	var hpx := rect.size.y * px_per_m
-	var img := Image.create(w, hpx, false, Image.FORMAT_RGBA8)
-	for j in hpx:
-		for i in w:
-			var x := rect.position.x + (i + 0.5) / px_per_m
-			var z := rect.position.y + (j + 0.5) / px_per_m
-			img.set_pixel(i, j, _splat_fn.call(x, z))
-	var splat := ImageTexture.create_from_image(img)
-	ResourceSaver.save(splat, dir + "splat.res", ResourceSaver.FLAG_COMPRESS)
-	img.save_png(ProjectSettings.globalize_path("res://art/source/env/%s_splat.png" % label))
-	var mat := ShaderMaterial.new()
-	mat.shader = ENV_TERRAIN
-	mat.set_shader_parameter("splat_tex", load(dir + "splat.res"))
-	for t in ["grass", "dirt", "cobble", "forest"]:
-		mat.set_shader_parameter(t + "_tex", load("%stextures/ground_%s.jpg" % [ENV, t]))
-	mat.set_shader_parameter(
-		"splat_rect", Vector4(rect.position.x, rect.position.y, rect.size.x, rect.size.y)
-	)
-	mat.set_shader_parameter("shadow_tint", Color("#4a5a80"))
-	mat.set_shader_parameter("grass_tint", Color(0.7, 0.8, 0.72))
-	ResourceSaver.save(mat, dir + "ground.tres")
-	mat = load(dir + "ground.tres")
-	var nx := rect.size.x
-	var nz := rect.size.y
-	var hs := PackedFloat32Array()
-	hs.resize((nx + 1) * (nz + 1))
-	for j in nz + 1:
-		for i in nx + 1:
-			hs[j * (nx + 1) + i] = _height(rect.position.x + i, rect.position.y + j)
-	var ground := _group("Ground")
-	var chunk := 30
-	for cj in range(0, nz, chunk):
-		for ci in range(0, nx, chunk):
-			var mesh := _rect_chunk(hs, rect, ci, cj, mini(chunk, nx - ci), mini(chunk, nz - cj))
-			mesh.surface_set_material(0, mat)
-			var path := "%sground_%d_%d.res" % [dir, ci / chunk, cj / chunk]
-			ResourceSaver.save(mesh, path, ResourceSaver.FLAG_COMPRESS)
-			var mi := MeshInstance3D.new()
-			_add(ground, mi, "Ground_%d_%d" % [ci / chunk, cj / chunk])
-			mi.mesh = load(path)
-			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	var hm := HeightMapShape3D.new()
-	hm.map_width = nx + 1
-	hm.map_depth = nz + 1
-	hm.map_data = hs
-	var shape := CollisionShape3D.new()
-	shape.shape = hm
-	shape.position = Vector3(rect.position.x + nx * 0.5, 0, rect.position.y + nz * 0.5)
-	_add(scene_root.get_node("Walkable"), shape, "Ground")
-
-
-func _rect_chunk(
-	hs: PackedFloat32Array, rect: Rect2i, ci: int, cj: int, cw: int, ch: int
-) -> ArrayMesh:
-	var nx := rect.size.x
-	var nz := rect.size.y
-	var verts := PackedVector3Array()
-	var normals := PackedVector3Array()
-	var idx := PackedInt32Array()
-	for j in ch + 1:
-		for i in cw + 1:
-			var gi := ci + i
-			var gj := cj + j
-			verts.append(
-				Vector3(rect.position.x + gi, hs[gj * (nx + 1) + gi], rect.position.y + gj)
-			)
-			var hl := hs[gj * (nx + 1) + maxi(gi - 1, 0)]
-			var hr := hs[gj * (nx + 1) + mini(gi + 1, nx)]
-			var hd := hs[maxi(gj - 1, 0) * (nx + 1) + gi]
-			var hu := hs[mini(gj + 1, nz) * (nx + 1) + gi]
-			normals.append(Vector3(hl - hr, 2.0, hd - hu).normalized())
-	for j in ch:
-		for i in cw:
-			var a := j * (cw + 1) + i
-			var b := a + 1
-			var c := a + cw + 1
-			var d := c + 1
-			idx.append_array([a, b, c, b, d, c])
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = verts
-	arrays[Mesh.ARRAY_NORMAL] = normals
-	arrays[Mesh.ARRAY_INDEX] = idx
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	return mesh
-
-
-func _save_to(dir: String, file_name: String) -> void:
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
-	var packed := PackedScene.new()
-	var err := packed.pack(scene_root)
-	assert(err == OK)
-	ResourceSaver.save(packed, dir + file_name)
-	print("saved ", dir + file_name, " nodes=", _count(scene_root))
-	scene_root.free()
