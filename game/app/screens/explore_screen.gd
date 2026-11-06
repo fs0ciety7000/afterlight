@@ -288,7 +288,10 @@ func _build_hud() -> void:
 	right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	right.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	right.position = Vector2(-margin, margin)
-	right.alignment = BoxContainer.ALIGNMENT_END
+	# Top-aligned: if a child is briefly tall while the HUD is built, the box
+	# keeps that height, and an END alignment would push the column down.
+	right.alignment = BoxContainer.ALIGNMENT_BEGIN
+	right.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var minimap := MinimapButton.new()
 	minimap.diameter = 104.0 if narrow else 148.0
 	minimap.pressed.connect(func() -> void: Router.go_to("world_map"))
