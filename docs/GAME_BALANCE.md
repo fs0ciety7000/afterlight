@@ -623,9 +623,10 @@ Chaque terme est multiplié par `(1 + bonus_s)` (couche additive de `CombatRules
 | `whispering_wood_01` (L1) | 11,1 s | 11,5 s | −4 % |
 | `whispering_wood_02` (L1) | 16,4 s | 15,4 s | +6 % |
 | `whispering_wood_03` (L2) | 17,2 s | 16,6 s | +4 % |
-| `whispering_wood_04` (L2) | 20,1 s | 20,5 s | −2 % *(passe au niveau 3 au jalon 6, §22.6 : ligne à remesurer)* |
+| `whispering_wood_04` (L3 depuis le jalon 6) | 15,5 s | 19,3 s | −19 % *(provisoire, jalon 6 : tolérance 22 %, §22.6)* |
 | `whispering_wood_05` (L3) | 14,4 s | 13,0 s | +11 % |
 | `lantern_mire_01` (L4) | 11,0 s | 11,0 s | 0 % |
+| `lantern_mire_03` (L5) | 14,5 s | 19,3 s | −25 % *(provisoire, jalon 6 : la Barrière au premier bond coupe le Mana voilé, tolérance 30 %, §22.6)* |
 | `watch_ruins_01` (L7) | 19,6 s | 19,3 s | +2 % |
 
 ### 20.3 Durée de cycle, survie, gains
@@ -751,6 +752,7 @@ Les puits absorbent 85 à 100 % des revenus. Il ne doit pas y avoir d'or « inut
 - **Profils de joueur** :
   - `idle` : tactiques par défaut, aucune action manuelle.
   - `idle_tuned` *(provisoire, jalon 6)* : défauts + préréglage `tactics_preset.morvaine` (le bouton « Appliquer le conseil »), aucune action manuelle.
+  - *(provisoire, jalon 6)* Chaque profil porte 3 Infusions de soin et 2 Élixirs de mana ; seuls les modes automatiques (`idle_tuned`) ou le script (`script_optimal`) les boivent.
   - `script_optimal` : un script interrompt, bouclie le Sceau et focalise les lanternes.
   - `confus` : rune de feu contre les lanternes, Barrière en manuel jamais lancée.
 - **Mesures** : taux de victoire, durée p50 et p90, PV restants, temps passé sans mana, part de dégâts par sort, interruptions réussies.
@@ -827,8 +829,12 @@ Décisions 22 à 31 du GDD. Toutes `[H]`, à confirmer par le banc (200 graines 
 |---|---|---|---|
 | `TACTIC_BARRIER_HP_DEFAULT` | **0,3** *(provisoire, jalon 6)* | 0,5 | Seuil de `auto_hp_below` et du repli de `auto_telegraph_or_hp`. Plage inchangée 0,3-0,7, pas de 0,1 |
 | `TACTIC_BARRIER_PRECAST_S` | 1,0 | - | Inchangée ; le Sceau (3 s d'incantation) est vu à 1 s de l'impact, bouclier de 4 s |
-| `TACTIC_MIN_ENEMIES_DEFAULT` | 3 | - | Curseur affiché 2-5 (le moteur accepte 1-5) |
+| `TACTIC_MIN_ENEMIES_DEFAULT` | 3 | - | Curseur affiché 2-5 (`TACTIC_MIN_ENEMIES_SHOWN_MIN` / `_MAX` ; le moteur accepte 1-5) |
 | `TACTIC_MANA_RESERVE_DEFAULT` | 0,2 | - | |
+| `TACTIC_HEAL_HP_PCT` | **0,35** *(provisoire, jalon 6)* | - | Réponse 2 du propriétaire : Infusion de soin « Auto si PV < 35 % » (`auto_low_hp`), défaut Manuel. Seuil fixe, sans curseur |
+| `TACTIC_ELIXIR_MANA_PCT` | **0,2** *(provisoire, jalon 6)* | - | Élixir de mana « Auto si mana < 20 % » (`auto_low_mana`), défaut Manuel. Les deux partagent la recharge des potions ; le soin passe d'abord |
+
+Préréglage `tactics_preset.morvaine` *(provisoire, jalon 6)* : Ciblage « Lanceurs d'abord », Barrière « Avant un coup télégraphé », **Infusion de soin « Auto si PV < 35 % »** (réponse 2 : le conseil met l'infusion en automatique ; l'élixir reste en manuel, sans effet mesurable au banc). Le hors ligne ignore les consommables comme les tactiques sauvegardées (§20.1).
 
 Pourquoi 0,3 : un Sceau non bouclié fait ~35 % des PV de Fern typique niveau 11 (§10.2 note ¹). Sous 30 % de PV, il tue de toute façon ; la Barrière lancée sur le seuil n'est donc jamais « volée » à un Sceau qu'on aurait survécu. Recharge de la Barrière 18 s < Sceau 25 s en phase 2 : en `auto_before_telegraph`, chaque Sceau de phase 2 est bouclié ; en phase 3 (Sceau toutes les 15 s), un sur deux environ sans rune de Célérité. C'est la part laissée au jeu actif.
 
@@ -866,6 +872,52 @@ Constat mesuré au jalon 6 (équipement nu, `idle`) : 0 % au niveau 2, 60 % au n
 | `whispering_wood_01`, profil nu, niveau 1 | inchangé (ROADMAP 3.5) |
 
 Si `_04` reste sous 95 % au niveau 3 : levier de la décision 31 (gants peu communs ilvl 2 à la première victoire de `_03`, +2,5 de puissance et +1 de défense), puis retrait d'un loup de niveau 1. Remesurer aussi la ligne `_04` du §20.2 (niveau 3) dans `test_offline_bench.gd`.
+
+**Banc du 2026-11-06** *(provisoire, jalon 6)* : `tools/combat_bench.gd -- 200`, après les décisions 22 à 30 et les réponses du propriétaire (consommables en tactique, préréglage avec l'infusion en automatique). Déterminisme : 0 écart sur 300 combats.
+
+Début de partie (`starter`, `idle`) : **toutes les cibles tenues**, aucun levier de la décision 31 appliqué.
+
+| Rencontre | Niveau | Victoire | p50 | PV p50 |
+|---|---|---|---|---|
+| `whispering_wood_01` | 1 | 100 % | 10,3 s | 64 % |
+| `whispering_wood_02` | 1 | 100 % | 16,6 s | 25 % |
+| `whispering_wood_03` | 2 | 100 % | 19,3 s | 42 % |
+| `whispering_wood_04` | 3 | 100 % | 19,2 s | 51 % |
+| `whispering_wood_05` | 3 | 100 % | 15,4 s | 60 % |
+| `whispering_wood_04` au niveau 2 (sans seuil) | 2 | 100 % | 21,7 s | 24 % |
+
+Le bâton seul suffit : `_04` au niveau 2 est gagné aussi (attendu 30-60 %), avec 24 % de PV restants. Toutes les normales restent à 100 % (typique et malchanceux), p90 ≤ 24,1 s.
+
+Boss (Morvaine, typique ; cause de défaite ; Sceaux boucliés / reçus) :
+
+| Profil | Niveau | Victoire | Cible | p50 | Défaites Sceau / Cendre totale / autre | Sceaux boucliés |
+|---|---|---|---|---|---|---|
+| `idle` | 11 | 0 % | ≤ 20 % ✓ | 49,9 s | 0 / 0 / 200 | 0 / 0 |
+| `idle` | 14 | 0 % | ≥ 40 % ✗ | 70,5 s | 5 / 0 / 195 | 18 / 23 |
+| `idle` | 16 | 0 % | ≥ 70 % ✗ | 78,9 s | 198 / 0 / 2 | 0 / 198 |
+| `idle` | 20 | 0 % | ≥ 90 % ✗ | 88,4 s | 68 / 0 / 132 | 207 / 409 |
+| `idle_tuned` | 11 | 1 % | 40-65 % ✗ | 190,3 s | 147 / 0 / 51 | 803 / 975 |
+| `idle_tuned` | 12 | 65,5 % | ≥ 60 % ✓ | 189,4 s | 18 / 0 / 51 | 947 / 1 164 |
+| `idle_tuned` | 14 | 100 % | ≥ 85 % ✓ | 164,2 s | 0 / 0 / 0 | 767 / 1 045 |
+| `script_optimal` | 11 | 87 % | ≥ 80 % ✓, p50 150-210 s ✓ | 157,1 s | 7 / 0 / 19 | 677 / 881 |
+| `confus` | 11 | 0 % | ≤ 10 % ✓ | 48,0 s | 0 / 0 / 200 | 0 / 0 |
+| `confus` | 12 | 0 % | ≤ 10 % ✓ | 49,9 s | 0 / 0 / 200 | 0 / 0 |
+
+Écarts au niveau 11 : `idle_tuned` − `idle` = 1 point (exigé ≥ 20) ✗ ; `script_optimal` − `idle_tuned` = 86 points (≥ 15) ✓.
+
+Lecture : sans soin, Fern `idle` meurt d'usure (Trait de cendre, Brûlure, lanternes ~12 PV/s), pas d'un Sceau mal bouclié. Au niveau 16, le repli à 30 % de PV dépense la Barrière ~8 s avant le premier Sceau de phase 2, qui achève Fern (0 / 198 boucliés). Ce n'est pas la Barrière qui manque, c'est le soin.
+
+Leviers essayés, dans l'ordre (16 graines par ligne, aucun retenu, **aucune valeur changée**) :
+1. `idle` > 20 % au niveau 11 : non déclenché.
+2. `idle` sous la cible aux niveaux 14-20 : défaites par le Sceau au niveau 16. `incoming_big_hit` voit bien le Sceau (207 / 409 boucliés au niveau 20, 803 / 975 en `idle_tuned`). `TACTIC_BARRIER_PRECAST_S` 1,0 → 1,5 : `idle` 0 % aux niveaux 16 et 20, `idle_tuned` 0 % au niveau 14 sur l'ancien préréglage : sans effet, rétabli à 1,0. Plafond des Lanternes liées 4 → 3 (condition « Cendre totale » non remplie, mesuré pour information) : sans effet, rétabli.
+3. `idle_tuned` < 40 % au niveau 11, défaites hors enrage : retirer « Lanceurs d'abord » du préréglage donne 0 % (niv. 11), 0 % (niv. 12), 69 % (niv. 14) : pire, non retenu. La question ouverte 2 (Infusion automatique) est déjà dans le préréglage (réponse du propriétaire).
+4. Non déclenché (écart avec `script_optimal` de 86 points).
+
+**Points ouverts pour `game-designer`** (mesures à 16 graines, pour décider) :
+- `idle` avec l'Infusion de soin en **Auto par défaut** (au lieu de Manuel, réponse 2) et 3 infusions portées : 0 % (niv. 11), 38 % (niv. 14), 100 % (niv. 16), 100 % (niv. 20) : tient presque toutes les cibles `idle`. Avec le défaut Manuel décidé, un joueur qui n'ouvre jamais les tactiques ne boit jamais et reste à 0 % jusqu'au niveau 20 (cible du niveau 16 acceptée par le propriétaire, réponse 1, non tenue).
+- `idle_tuned` au niveau 11 : le préréglage + l'ultime en « Dès que pleine » donne 31 % (niv. 11) et 100 % (niv. 12) ; le préréglage + l'élixir en automatique ne change rien (6 %). Les défaites restantes viennent surtout du Sceau en phase 3 (recharge de la Barrière 18 s > Sceau 15 s).
+- Élite (`cloister_alpha`, `idle`) : **10 %** (cible §22.1 : 30-60 %), conséquence du seuil 0,3 de la décision 22 (37 % avec 0,5 ; le mode télégraphe n'y change rien). Le test garde seulement le plafond.
+- Hors ligne : la Barrière part désormais au premier bond de loup (coup télégraphé) et coupe le Mana voilé ; `lantern_mire_03` passe à −25 % (16 graines : 14,5 s analytiques contre 19,3 s simulées) et `whispering_wood_04` au niveau 3 à −19 % (tueries « quantifiées » de 4 loups plus faibles que Fern). Aucun `OFFLINE_DPS_CALIBRATION` unique ne tient les 14 rencontres (écarts de −25 % à +11 %) ; tolérances provisoires 30 % et 22 % dans `test_offline_bench.gd`.
 
 ## 23. Quêtes, contrats, coffres et bestiaire (jalon 6)
 
