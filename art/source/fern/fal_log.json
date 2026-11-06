@@ -1,0 +1,93 @@
+[
+ {
+  "endpoint": "fal-ai/nano-banana-pro/edit",
+  "name": "fern_concept_v1",
+  "seconds": 27.5,
+  "arguments": {
+   "aspect_ratio": "2:3",
+   "resolution": "2K",
+   "output_format": "png",
+   "image_urls": [
+    "https://v3b.fal.media/files/b/0ab14f3e/xKi4wka5uSU2Rbqo1XlYK_A_world.jpg",
+    "https://v3b.fal.media/files/b/0ab14f3e/Nscv_6uID3KTZmw-WvoGJ_B_combat.jpg"
+   ]
+  },
+  "prompt": "Character design sheet for a 3D game model, in exactly the same anime cel-shaded stylized 3D art style as the young mage woman in the reference images (clean thin ink outlines, flat two-tone shading). Draw ONLY her, alone, full body from head to toe, centered, FRONT VIEW facing the camera straight on, standing in a symmetrical A-pose: legs straight and slightly apart, both arms held straight down and away from the body at about 45 degrees, hands open and relaxed, fingers visible, not touching the body. Neutral calm expression, eyes looking forward. Young woman mage, slender, about 6.5 heads tall. Long straight violet hair reaching her waist, blunt straight bangs, two long side locks framing the face in front of the shoulders, violet eyes. Black long coat reaching the ankles, open at the front, with wide bell sleeves, worn over a white high-collared long dress with a small ruffled collar and a few small buttons, the white dress visible down the front. Black knee boots. No staff, nothing in her hands. Plain flat light grey background, even soft studio lighting, no cast shadow on the floor, no scenery, no text, no UI, no other characters. Clean readable silhouette, gap between arms and body, gap between the legs.",
+  "files": [
+   "art/source/fern/fern_concept_v1.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/birefnet/v2",
+  "name": "fern_cutout",
+  "seconds": 2.8,
+  "arguments": {
+   "model": "General Use (Heavy)",
+   "operating_resolution": "2048x2048",
+   "image_url": "https://v3b.fal.media/files/b/0ab14f42/GdRrdbuFyg3uVBAIB_pZ5_fern_concept_v1.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/fern/fern_cutout.png"
+  ]
+ },
+ {
+  "endpoint": "meshy/v7.1/image-to-3d",
+  "name": "fern_meshy",
+  "seconds": 123.3,
+  "arguments": {
+   "pose_mode": "a-pose",
+   "enable_pbr": false,
+   "should_texture": true,
+   "target_polycount": 30000,
+   "topology": "triangle",
+   "symmetry_mode": "auto",
+   "image_url": "https://v3b.fal.media/files/b/0ab14f43/HFHa5NRBg51e0iwpp6ds7_fern_cutout.png"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/fern/fern_meshy_0.glb",
+   "art/source/fern/fern_meshy_1.png",
+   "art/source/fern/fern_meshy_2.glb",
+   "art/source/fern/fern_meshy_3.fbx",
+   "art/source/fern/fern_meshy_4.obj",
+   "art/source/fern/fern_meshy_5.usdz",
+   "art/source/fern/fern_meshy_6.stl",
+   "art/source/fern/fern_meshy_7.png"
+  ]
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "fern_rig",
+  "seconds": 71.3,
+  "arguments": {
+   "animation_action_ids": [
+    0,
+    1,
+    14,
+    125
+   ],
+   "height_meters": 1.6,
+   "model_url": "https://v3b.fal.media/files/b/0ab14f57/PeJ-iuxejA5DX9IqLzxMK_fern_meshy_0.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/fern/fern_rig_0.glb",
+   "art/source/fern/fern_rig_1.fbx",
+   "art/source/fern/fern_rig_2.glb",
+   "art/source/fern/fern_rig_3.fbx",
+   "art/source/fern/fern_rig_4.glb",
+   "art/source/fern/fern_rig_5.glb",
+   "art/source/fern/fern_rig_6.fbx",
+   "art/source/fern/fern_rig_7.glb",
+   "art/source/fern/fern_rig_8.glb",
+   "art/source/fern/fern_rig_9.fbx",
+   "art/source/fern/fern_rig_10.glb",
+   "art/source/fern/fern_rig_11.fbx",
+   "art/source/fern/fern_rig_12.glb",
+   "art/source/fern/fern_rig_13.fbx",
+   "art/source/fern/fern_rig_14.glb",
+   "art/source/fern/fern_rig_15.fbx"
+  ]
+ }
+]
