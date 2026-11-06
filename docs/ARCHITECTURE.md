@@ -123,6 +123,23 @@ Règles : taille utile de 40 à 80 m de côté ; Fern mesure 1,6 m (pieds à y =
 
 Un test (`tests/unit/world/test_location_scenes.gd`) charge chaque scène citée par les données et vérifie ce contrat : nœuds présents, `default` défini, chaque sortie mène à un lieu et à un point d'apparition existants.
 
+## Taille de l'export et chargement (web)
+
+Critère 7.2 : premier écran interactif en moins de 10 s à 20 Mb/s (2,5 Mo/s). Le chargeur web de Godot télécharge `index.wasm` puis tout `index.pck` avant d'afficher le titre : chaque mégaoctet du pack retarde le premier écran.
+
+| Mesure | Cible | Vérification |
+|---|---|---|
+| `build/web/index.pck` | **≤ 30 Mo** (25,7 Mo le 2026-11-06) | `tests/unit/test_export_size.gd` sur le dernier build ; détail : `python3 tools/pck_report.py` |
+| Téléchargement avant le titre (wasm + pck, gzip) | ≤ 22 Mo, soit < 10 s avec le démarrage | `gzip -c build/web/index.{wasm,pck} \| wc -c` ; `pnpm serve` sert en gzip comme un hébergeur |
+
+Règles d'import et d'export :
+
+- **Textures** : WebP avec perte (`compress/mode=1`, qualité 0,8 ; 0,85 pour carte, titre et portraits). Défaut du projet (`[importer_defaults]` dans `project.godot`), donc aussi pour les textures extraites des GLB. Sans perte toléré pour les pictogrammes (`assets/textures/icons/`). Pas de compression VRAM : en WebGL 2 il faudrait livrer S3TC et ETC2, deux copies plus lourdes que le WebP ; la texture est décompressée en RGBA8 au chargement, la mémoire reste dans le budget 7.1 (un lieu chargé à la fois).
+- **Tailles** : 1024 px maximum pour décor, accessoires et personnages (`process/size_limit`) ; toile de fond des lieux 2048 px ; carte et image du titre jusqu'à 2560 px. Mipmaps pour la 3D seulement.
+- **Exclus du pack** (`export_presets.cfg`) : `art/`, `tools/`, `tests/`, `build/`, `docs/`, les GLB de `assets/environment/` (sources de `meshes/*.res`, cuits par `location_builder.gd`) et les copies de l'atlas d'accessoires extraites par GLB (les matériaux utilisent `assets/environment/textures/village_props_atlas.webp`). Le test vérifie qu'aucun matériau ni scène de `game/world` n'utilise un fichier exclu.
+- **Chargement** : au démarrage, seuls le code, le thème, les polices, les données et l'image du titre servent ; lieux, personnages et ennemis sont chargés au voyage (`load()` dans `explore_view.gd`, `player.gd`).
+- **Étape suivante si le téléchargement reste au-dessus de 22 Mo** : un second pack `content.pck` (preset d'export à part avec `assets/environment/`, `assets/models/`, `game/world/locations/`, `game/world/dungeons/`), téléchargé pendant l'écran titre puis monté par `ProjectSettings.load_resource_pack()` avant le premier voyage. Voir `art/source/perf/export_size.md`.
+
 ## Arborescence
 
 ```
