@@ -82,32 +82,32 @@ export async function clearStorage(page: Page): Promise<void> {
   });
 }
 
+/** Reads a file of user:// as stored in IndexedDB ('' when absent). The web
+ * build syncs user:// to IndexedDB asynchronously, a second or two after a write. */
+export async function readUserFile(page: Page, file: string): Promise<string> {
+  return page.evaluate(
+    (path) =>
+      new Promise<string>((resolve) => {
+        const req = indexedDB.open('/userfs');
+        req.onerror = () => resolve('');
+        req.onsuccess = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains('FILE_DATA')) return resolve('');
+          const get = db.transaction('FILE_DATA', 'readonly').objectStore('FILE_DATA').get(path);
+          get.onsuccess = () => {
+            const v = get.result as { contents?: Uint8Array } | undefined;
+            resolve(v?.contents ? new TextDecoder().decode(v.contents) : '');
+          };
+          get.onerror = () => resolve('');
+        };
+      }),
+    `/userfs/godot/app_userdata/Afterlight/${file}`,
+  );
+}
+
 /** Waits until the save file stored in IndexedDB contains `text`. */
 export async function waitSaved(page: Page, text: string): Promise<void> {
   await expect
-    .poll(
-      () =>
-        page.evaluate(
-          () =>
-            new Promise<string>((resolve) => {
-              const req = indexedDB.open('/userfs');
-              req.onerror = () => resolve('');
-              req.onsuccess = () => {
-                const db = req.result;
-                if (!db.objectStoreNames.contains('FILE_DATA')) return resolve('');
-                const get = db
-                  .transaction('FILE_DATA', 'readonly')
-                  .objectStore('FILE_DATA')
-                  .get('/userfs/godot/app_userdata/Afterlight/saves/slot_0.json');
-                get.onsuccess = () => {
-                  const v = get.result as { contents?: Uint8Array } | undefined;
-                  resolve(v?.contents ? new TextDecoder().decode(v.contents) : '');
-                };
-                get.onerror = () => resolve('');
-              };
-            }),
-        ),
-      { timeout: 45_000, message: `save contains ${text}` },
-    )
+    .poll(() => readUserFile(page, 'saves/slot_0.json'), { timeout: 45_000, message: `save contains ${text}` })
     .toContain(text);
 }

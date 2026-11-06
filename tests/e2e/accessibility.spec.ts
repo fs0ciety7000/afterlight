@@ -1,5 +1,5 @@
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { boot, clearStorage, click, probe, waitScreen, type Probe } from './helpers';
+import { boot, clearStorage, click, probe, readUserFile, waitScreen, type Probe } from './helpers';
 
 // Milestone 7 accessibility (ROADMAP 1.11, 7.3, 7.6, 7.7). Software WebGL is
 // slow: generous timeouts.
@@ -71,6 +71,22 @@ async function capture(page: Page, info: TestInfo, name: string) {
 }
 
 /** From the current game: travel to the wood and walk into the nearest pack. */
+/** Zoltraak's default tactic is Auto (GDD decision 23): Fern recasts it as soon
+ * as it is ready. Set it to Manual from the paused fight, as a player would, so
+ * only the keys cast it; then resume. */
+async function zoltraakManual(page: Page): Promise<void> {
+  await click(page, 'combat.pause');
+  await expect.poll(async () => (await probe(page))!.world.combat_paused).toBe(true);
+  await click(page, 'tactics.open.combat');
+  await expect.poll(async () => (await probe(page))!.world.tactics_open, { timeout: 15_000 }).toBe(true);
+  await click(page, 'tactics.opt.zoltraak.manual');
+  await expect.poll(async () => (await probe(page))!.controls['tactics.status']?.text).toBe('Réglage enregistré.');
+  await click(page, 'tactics.close');
+  await expect.poll(async () => (await probe(page))!.world.tactics_open).toBe(false);
+  await click(page, 'combat.pause');
+  await expect.poll(async () => (await probe(page))!.world.combat_paused).toBe(false);
+}
+
 async function walkIntoCombat(page: Page): Promise<void> {
   await click(page, 'hud.map');
   await waitScreen(page, 'world_map');
@@ -135,8 +151,14 @@ test('7.6 spell 1 rebound to G survives a reload and casts', async ({ page }) =>
   expect((await control(page, 'controls.key.interact'))!.text).toBe('E');
   await expect.poll(async () => (await full(page)).settings.bindings?.combat_spell_1).toBeTruthy();
 
-  // Persisted (user:// is IndexedDB on the web): the reload keeps it.
-  await page.waitForTimeout(1500);
+  // Persisted (user:// is IndexedDB on the web, synced a second or two after
+  // the write): once the last binding is stored, the reload keeps it.
+  // Final state: only spell 1 differs from the defaults (spell 2 is back on 2).
+  const stored = async () => {
+    const cfg = (await readUserFile(page, 'settings.cfg')).replace(/\s+/g, '');
+    return cfg.includes('"combat_spell_1":{"key":[{"p":71}]}') && !cfg.includes('combat_spell_2');
+  };
+  await expect.poll(stored, { timeout: 15_000, message: 'settings.cfg holds the final bindings' }).toBe(true);
   await page.reload();
   await expect.poll(async () => (await probe(page))?.ready ?? false, { timeout: 60_000 }).toBe(true);
   expect((await full(page)).settings.bindings?.combat_spell_1).toBeTruthy();
@@ -149,6 +171,7 @@ test('7.6 spell 1 rebound to G survives a reload and casts', async ({ page }) =>
   await click(page, 'title.new_game');
   await waitScreen(page, 'explore');
   await walkIntoCombat(page);
+  await zoltraakManual(page);
   await page.locator('canvas').focus();
   await expect.poll(() => zoltraakCooldown(page), { timeout: 30_000 }).toBe(0);
   await page.keyboard.press('Digit1');
