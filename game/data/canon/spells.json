@@ -42,7 +42,8 @@
         {
           "rank": 5
         }
-      ]
+      ],
+      "vfx": "vfx.beam_precise"
     }
   ]
 }

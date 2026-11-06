@@ -13,6 +13,7 @@ var target: Node3D
 var cut_radius := 0.22
 var zoom_index := 0
 var camera: Camera3D
+var _trauma := 0.0
 var _distance := 11.0
 
 
@@ -29,6 +30,11 @@ func snap() -> void:
 	if target:
 		global_position = target.global_position
 	_place_camera()
+
+
+## Camera shake request (crits, boss hits); decays quickly.
+func add_shake(trauma: float) -> void:
+	_trauma = clampf(_trauma + trauma, 0.0, 1.0)
 
 
 func zoom(step: int) -> void:
@@ -53,3 +59,7 @@ func _place_camera() -> void:
 	var pitch := deg_to_rad(PITCH_DEG)
 	camera.position = Vector3(0.0, sin(pitch) * _distance + 0.8, cos(pitch) * _distance)
 	camera.rotation = Vector3(-pitch, 0.0, 0.0)
+	if _trauma > 0.0:
+		var amp := _trauma * _trauma * 0.25
+		camera.position += Vector3(randf_range(-amp, amp), randf_range(-amp, amp), 0.0)
+		_trauma = maxf(_trauma - get_process_delta_time() * 2.5, 0.0)

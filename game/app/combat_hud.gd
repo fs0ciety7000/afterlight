@@ -386,6 +386,8 @@ func _on_finished(e: Dictionary) -> void:
 			)
 		)
 		if summary["levels_gained"] > 0:
+			if view.vfx:
+				view.vfx.play("vfx.level_up", {"caster": view.actor("p3")})
 			col.add_child(
 				Kit.label(
 					tr("ui.combat.level_up").format({"level": summary["level"]}), "SubheadingLabel"

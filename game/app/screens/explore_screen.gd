@@ -303,7 +303,7 @@ func _start_combat(encounter_id: String, anchor: Node3D) -> void:
 	_combat = CombatView.new()
 	_combat.name = "Combat"
 	view.add_child(_combat)
-	var error := _combat.start(encounter_id, anchor, view.player, setup)
+	var error := _combat.start(encounter_id, anchor, view.player, setup, view.rig)
 	if error != "":
 		push_error("Combat %s: %s" % [encounter_id, error])
 		_combat.queue_free()

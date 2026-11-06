@@ -9,12 +9,21 @@ signal finished(completed: Dictionary)
 
 const MAX_STEPS_PER_FRAME := 40
 const SPEEDS := [1, 2, 4]
+const GLOW_KEYS := [
+	"glow_enabled",
+	"glow_intensity",
+	"glow_strength",
+	"glow_bloom",
+	"glow_blend_mode",
+	"glow_hdr_threshold",
+]
 
 var sim: CombatSim
 var paused := false
 var speed_index := 0
 var encounter_id := ""
 var ticks := 0
+var vfx: Vfx
 var _anchor: Node3D
 var _player: ExplorePlayer
 var _actors := {}
@@ -23,21 +32,80 @@ var _curr := {}
 var _acc := 0.0
 var _done := false
 var _speed_cap := 4
+var _fx: CombatFx
+var _rig: CameraRig
+var _hit_stop := 0.0
+var _look: Environment
+var _look_saved := {}
 
 
 ## Builds the sim from the game state. Returns "" or an error message.
-func start(id: String, anchor: Node3D, player: ExplorePlayer, setup: Dictionary) -> String:
+func start(
+	id: String, anchor: Node3D, player: ExplorePlayer, setup: Dictionary, rig: CameraRig = null
+) -> String:
 	encounter_id = id
 	_anchor = anchor
 	_player = player
+	_rig = rig
 	var full := setup.duplicate(true)
 	full["encounter"] = id
 	sim = CombatSim.create(full, Content.index())
 	if sim.error != "":
 		return sim.error
 	_player.combat_driven = true
+	_setup_vfx()
 	_step_once()
 	return ""
+
+
+func _setup_vfx() -> void:
+	vfx = Vfx.new()
+	vfx.name = "Vfx"
+	vfx.reduce_motion = Settings.reduce_motion
+	vfx.quality = Settings.graphics_quality
+	add_child(vfx)
+	_fx = CombatFx.new(vfx, self)
+	vfx.hit_stop_requested.connect(func(s: float) -> void: _hit_stop = maxf(_hit_stop, s))
+	vfx.shake_requested.connect(_on_shake)
+	if _rig:
+		vfx.prewarm(_rig.camera)
+	_enable_glow()
+
+
+func _on_shake(trauma: float) -> void:
+	if _rig:
+		_rig.add_shake(trauma)
+
+
+## Glow for spell cores (docs/VFX.md 1.3, day values); restored after combat.
+func _enable_glow() -> void:
+	var worlds := get_tree().root.find_children("*", "WorldEnvironment", true, false)
+	if worlds.is_empty():
+		return
+	_look = (worlds[0] as WorldEnvironment).get("environment")
+	if _look == null:
+		return
+	for key in GLOW_KEYS:
+		_look_saved[key] = _look.get(key)
+	_look.glow_enabled = true
+	_look.glow_intensity = 0.4
+	_look.glow_strength = 1.0
+	_look.glow_bloom = 0.0
+	_look.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	_look.glow_hdr_threshold = 0.85
+
+
+func _exit_tree() -> void:
+	if _look:
+		for key in _look_saved:
+			_look.set(key, _look_saved[key])
+
+
+func snapshot_unit(uid: String) -> Dictionary:
+	for u in snapshot().get("units", []):
+		if u["uid"] == uid:
+			return u
+	return {}
 
 
 func speed() -> int:
@@ -79,7 +147,9 @@ func snapshot() -> Dictionary:
 func _process(delta: float) -> void:
 	if sim == null or _done:
 		return
-	if not paused:
+	if _hit_stop > 0.0:
+		_hit_stop -= delta
+	elif not paused:
 		_acc += delta * speed()
 		var steps := 0
 		while _acc >= BalanceCombat.TICK_SECONDS and steps < MAX_STEPS_PER_FRAME and not _done:
@@ -99,6 +169,8 @@ func _step_once() -> void:
 		_curr[u["uid"]] = u
 	for e in events:
 		_handle(e)
+		if _fx:
+			_fx.handle(e)
 		sim_event.emit(e)
 
 

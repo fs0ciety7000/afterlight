@@ -21,7 +21,8 @@
       ],
       "tags": [
         "projectile"
-      ]
+      ],
+      "vfx": "vfx.projectile_bolt"
     },
     {
       "id": "spell.mana_volley",
@@ -61,7 +62,8 @@
       ],
       "tags": [
         "projectile"
-      ]
+      ],
+      "vfx": "vfx.volley_homing"
     },
     {
       "id": "spell.defensive_barrier",
@@ -103,7 +105,8 @@
         {
           "rank": 5
         }
-      ]
+      ],
+      "vfx": "vfx.barrier_dome"
     },
     {
       "id": "spell.afterlight",
@@ -140,7 +143,8 @@
         {
           "rank": 5
         }
-      ]
+      ],
+      "vfx": "vfx.sky_rain"
     },
     {
       "id": "passive.veiled_mana",
