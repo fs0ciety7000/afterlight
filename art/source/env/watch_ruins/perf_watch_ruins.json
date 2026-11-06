@@ -1,0 +1,44 @@
+{
+	"ruins_arrival": {
+		"draw_calls": 69.0,
+		"fps": 3.0,
+		"objects": 69.0,
+		"primitives": 151408.0,
+		"video_mem_mb": 233.7
+	},
+	"ruins_gate": {
+		"draw_calls": 65.0,
+		"fps": 4.0,
+		"objects": 65.0,
+		"primitives": 153224.0,
+		"video_mem_mb": 233.7
+	},
+	"ruins_guardroom": {
+		"draw_calls": 55.0,
+		"fps": 3.0,
+		"objects": 55.0,
+		"primitives": 140611.0,
+		"video_mem_mb": 233.7
+	},
+	"ruins_postern": {
+		"draw_calls": 65.0,
+		"fps": 3.0,
+		"objects": 65.0,
+		"primitives": 131292.0,
+		"video_mem_mb": 233.7
+	},
+	"ruins_tower": {
+		"draw_calls": 80.0,
+		"fps": 2.0,
+		"objects": 80.0,
+		"primitives": 150467.0,
+		"video_mem_mb": 233.7
+	},
+	"ruins_vista": {
+		"draw_calls": 167.0,
+		"fps": 1.0,
+		"objects": 167.0,
+		"primitives": 260390.0,
+		"video_mem_mb": 233.7
+	}
+}

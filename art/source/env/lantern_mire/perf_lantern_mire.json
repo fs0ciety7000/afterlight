@@ -3,56 +3,56 @@
 		"draw_calls": 52.0,
 		"fps": 2.0,
 		"objects": 52.0,
-		"primitives": 161900.0,
-		"video_mem_mb": 192.4
+		"primitives": 161864.0,
+		"video_mem_mb": 193.3
 	},
 	"mire_beacon": {
 		"draw_calls": 58.0,
 		"fps": 2.0,
 		"objects": 58.0,
-		"primitives": 159688.0,
-		"video_mem_mb": 192.4
+		"primitives": 159836.0,
+		"video_mem_mb": 193.3
 	},
 	"mire_chest": {
 		"draw_calls": 59.0,
-		"fps": 3.0,
+		"fps": 2.0,
 		"objects": 59.0,
-		"primitives": 176416.0,
-		"video_mem_mb": 192.4
+		"primitives": 176436.0,
+		"video_mem_mb": 193.3
 	},
 	"mire_east": {
 		"draw_calls": 67.0,
 		"fps": 2.0,
 		"objects": 67.0,
-		"primitives": 171504.0,
-		"video_mem_mb": 192.4
+		"primitives": 171548.0,
+		"video_mem_mb": 193.3
 	},
 	"mire_ferry": {
 		"draw_calls": 58.0,
 		"fps": 2.0,
 		"objects": 58.0,
-		"primitives": 177432.0,
-		"video_mem_mb": 192.4
+		"primitives": 165940.0,
+		"video_mem_mb": 193.3
 	},
 	"mire_north": {
 		"draw_calls": 51.0,
-		"fps": 3.0,
+		"fps": 2.0,
 		"objects": 51.0,
-		"primitives": 166858.0,
-		"video_mem_mb": 192.4
+		"primitives": 166862.0,
+		"video_mem_mb": 193.3
 	},
 	"mire_pontoon": {
 		"draw_calls": 66.0,
 		"fps": 3.0,
 		"objects": 66.0,
-		"primitives": 171542.0,
-		"video_mem_mb": 192.4
+		"primitives": 171558.0,
+		"video_mem_mb": 193.3
 	},
 	"mire_vista": {
 		"draw_calls": 135.0,
-		"fps": 2.0,
+		"fps": 1.0,
 		"objects": 135.0,
-		"primitives": 262092.0,
-		"video_mem_mb": 192.4
+		"primitives": 256480.0,
+		"video_mem_mb": 193.3
 	}
 }

@@ -7,6 +7,7 @@ extends Node3D
 ##   --distance=11 : gameplay camera distance for the shots (default: CameraRig's first zoom step)
 ##   --tag=before  : file name suffix (shot_<name>_<tag>.jpg, perf_<location>_<tag>.json)
 ##   --out=res://art/source/env/lantern_mire/ : folder for the shots (default art/source/env/)
+##   --only=a,b    : only these shots (names without the shot_ prefix)
 ##   --top         : also writes an orthographic top-down view of the place (top_<location>.jpg)
 ## Keys: arrows move Fern, Q / E turn the camera, Z zoom, P print the render monitors.
 
@@ -14,7 +15,12 @@ const LOCATIONS := {
 	"aubelin": "res://game/world/locations/aubelin.tscn",
 	"whispering_wood": "res://game/world/locations/whispering_wood.tscn",
 	"lantern_mire": "res://game/world/locations/lantern_mire.tscn",
+	"watch_ruins": "res://game/world/locations/watch_ruins.tscn",
+	"aubelin_npcs": "res://game/world/locations/aubelin.tscn",
+	"silent_dial_cloister": "res://game/world/dungeons/silent_dial_cloister.tscn",
 }
+## Top-down frame per place (centre x, z and width in metres); default (0, 0), 84 m.
+const TOP := {"silent_dial_cloister": [Vector2(4, -88), 290.0]}
 const FERN := "res://assets/models/characters/fern/fern.glb"
 const SHOT_DIR := "res://art/source/env/"
 ## name, Fern position (x, z), camera yaw (degrees), Fern yaw (degrees), vista (low pitch, wide)
@@ -44,6 +50,30 @@ const SHOTS := {
 		["mire_north", Vector2(4.0, -31.0), 0.0, 180.0, false],
 		["mire_vista", Vector2(-12.0, 14.0), -15.0, 160.0, true],
 	],
+	"watch_ruins":
+	[
+		["ruins_arrival", Vector2(0.0, 33.0), 0.0, 180.0, false],
+		["ruins_gate", Vector2(1.0, 24.0), 0.0, 180.0, false],
+		["ruins_guardroom", Vector2(-21.0, -5.0), 0.0, 200.0, false],
+		["ruins_tower", Vector2(27.0, -19.0), 0.0, 160.0, false],
+		["ruins_postern", Vector2(24.0, -31.0), 0.0, 180.0, false],
+		["ruins_vista", Vector2(0.0, 22.0), -10.0, 170.0, true],
+	],
+	"aubelin_npcs":
+	[
+		["aubelin_npcs_square", Vector2(0.5, 5.5), 0.0, 180.0, false],
+	],
+	"silent_dial_cloister":
+	[
+		["cloister_vestibule", Vector2(0.0, 8.0), 0.0, 180.0, false],
+		["cloister_gallery", Vector2(0.0, -44.0), 0.0, 180.0, false],
+		["cloister_fountain", Vector2(30.0, -63.0), 0.0, 180.0, false],
+		["cloister_courtyard", Vector2(30.0, -96.0), 0.0, 180.0, false],
+		["cloister_kennel", Vector2(-18.0, -98.0), 0.0, 180.0, false],
+		["cloister_campfire", Vector2(-18.0, -134.0), 0.0, 180.0, false],
+		["cloister_dial", Vector2(-18.0, -168.0), 0.0, 180.0, false],
+		["cloister_vista", Vector2(30.0, -92.0), 0.0, 180.0, true],
+	],
 }
 
 var location := "aubelin"
@@ -53,6 +83,7 @@ var _vista := false
 var _distance := 0.0
 var _tag := ""
 var _out := SHOT_DIR
+var _only: PackedStringArray = []
 
 
 func _ready() -> void:
@@ -65,7 +96,13 @@ func _ready() -> void:
 			_tag = "_" + a.get_slice("=", 1)
 		elif a.begins_with("--out="):
 			_out = a.get_slice("=", 1)
+		elif a.begins_with("--only="):
+			_only = a.get_slice("=", 1).split(",")
 	add_child((load(LOCATIONS[location]) as PackedScene).instantiate())
+	if "--nofog" in OS.get_cmdline_user_args():  # diagnosis: what the fog does to a view
+		for node in find_children("*", "WorldEnvironment", true, false):
+			var env: Environment = (node as WorldEnvironment).environment
+			env.fog_enabled = false
 	fern = (load(FERN) as PackedScene).instantiate()
 	add_child(fern)
 	Toon.apply(fern)
@@ -153,6 +190,8 @@ func _take_shots() -> void:
 	await _frames(10)
 	var report := {}
 	for s in SHOTS[location]:
+		if not _only.is_empty() and not s[0] in _only:
+			continue
 		var at: Vector2 = s[1]
 		fern.global_position = _ground(Vector3(at.x, 0, at.y))
 		fern.rotation.y = deg_to_rad(s[3])
@@ -187,10 +226,11 @@ func _top_down() -> void:
 	rig.set_process(false)
 	var cam := rig.camera
 	cam.projection = Camera3D.PROJECTION_ORTHOGONAL
-	cam.size = 84.0
+	var frame: Array = TOP.get(location, [Vector2.ZERO, 84.0])
+	cam.size = frame[1]
 	cam.far = 200.0
 	cam.global_transform = Transform3D(
-		Basis.from_euler(Vector3(-PI * 0.5, 0, 0)), Vector3(0, 80, 0)
+		Basis.from_euler(Vector3(-PI * 0.5, 0, 0)), Vector3(frame[0].x, 80, frame[0].y)
 	)
 	for node in find_children("*", "WorldEnvironment", true, false):
 		var env: Environment = (node as WorldEnvironment).environment
