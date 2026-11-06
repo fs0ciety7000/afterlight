@@ -572,7 +572,7 @@ Pas de revente d'objets contre de l'or : seul le recyclage existe, pour éviter 
 | `OFFLINE_RUNE_KEEP_MAX` | 20 | | Au-delà, recyclage en éclats |
 | `OFFLINE_RUNE_SAMPLE_MAX` | 500 | | *(provisoire, jalon 5)* Comme les objets : au-delà, recyclage à l'espérance |
 
-Entrées : `last_save_unix` (= `meta.last_active_at` de l'état), `now_unix` (passé en paramètre au moteur), la rencontre de chasse (`farming` dans l'état) (définition + niveau), l'instantané des statistiques dérivées du groupe et de ses sorts et runes au moment du calcul, et la table de butin. Les tactiques ne sont pas sauvegardées : le groupe absent joue les tactiques par défaut. Le calcul ne fait tourner **aucun tick** (code : `game/engine/idle/`).
+Entrées : `last_save_unix` (= `meta.last_active_at` de l'état), `now_unix` (passé en paramètre au moteur), la rencontre de chasse (`farming` dans l'état) (définition + niveau), l'instantané des statistiques dérivées du groupe et de ses sorts et runes au moment du calcul, et la table de butin. Le groupe absent joue toujours les tactiques **par défaut**, même si le joueur en a sauvegardé d'autres *(provisoire, jalon 6 : les tactiques sont désormais sauvegardées, GDD décision 25 ; le hors ligne les ignore)*. Le calcul ne fait tourner **aucun tick** (code : `game/engine/idle/`).
 
 ```
 Δ = now − last_save
@@ -598,7 +598,7 @@ si Δ < OFFLINE_MIN_S → pas de résumé
 |---|---|
 | Dégâts, interruption (`auto`) | Cadence soutenue `taux_s × r` |
 | Zone (`auto_min_enemies`) | Un lancer d'ouverture par rencontre si la meute compte au moins `TACTIC_MIN_ENEMIES_DEFAULT` ennemis (salve `B`), rien ensuite |
-| Bouclier (`auto_hp_below`) | Aucun dégât ; son coût compte dans `S` (prudent) et son bouclier dans la réserve (§20.3) |
+| Bouclier (`auto_telegraph_or_hp` depuis le jalon 6, avant `auto_hp_below`) | Aucun dégât ; son coût compte dans `S` (prudent) et son bouclier dans la réserve (§20.3). Même traitement quel que soit le mode automatique |
 | Ultime (`manual`) | Jamais lancé : 0 |
 
 ```
@@ -623,7 +623,7 @@ Chaque terme est multiplié par `(1 + bonus_s)` (couche additive de `CombatRules
 | `whispering_wood_01` (L1) | 11,1 s | 11,5 s | −4 % |
 | `whispering_wood_02` (L1) | 16,4 s | 15,4 s | +6 % |
 | `whispering_wood_03` (L2) | 17,2 s | 16,6 s | +4 % |
-| `whispering_wood_04` (L2) | 20,1 s | 20,5 s | −2 % |
+| `whispering_wood_04` (L2) | 20,1 s | 20,5 s | −2 % *(passe au niveau 3 au jalon 6, §22.6 : ligne à remesurer)* |
 | `whispering_wood_05` (L3) | 14,4 s | 13,0 s | +11 % |
 | `lantern_mire_01` (L4) | 11,0 s | 11,0 s | 0 % |
 | `watch_ruins_01` (L7) | 19,6 s | 19,3 s | +2 % |
@@ -747,9 +747,10 @@ Les puits absorbent 85 à 100 % des revenus. Il ne doit pas y avoir d'or « inut
 ### 22.1 Banc de simulation (tests GDScript sans interface)
 
 - Le module de combat tourne seul, sans rendu, à pleine vitesse. Pour chaque rencontre et chaque profil : **200 graines**.
-- **Profils d'équipement** : nu, typique, bon (§21.1), et malchanceux (tous les tirages au 10e centile).
+- **Profils d'équipement** : nu, typique, bon (§21.1), et malchanceux (tous les tirages au 10e centile). *(provisoire, jalon 6)* `starter` : seulement le bâton garanti (§22.6).
 - **Profils de joueur** :
   - `idle` : tactiques par défaut, aucune action manuelle.
+  - `idle_tuned` *(provisoire, jalon 6)* : défauts + préréglage `tactics_preset.morvaine` (le bouton « Appliquer le conseil »), aucune action manuelle.
   - `script_optimal` : un script interrompt, bouclie le Sceau et focalise les lanternes.
   - `confus` : rune de feu contre les lanternes, Barrière en manuel jamais lancée.
 - **Mesures** : taux de victoire, durée p50 et p90, PV restants, temps passé sans mana, part de dégâts par sort, interruptions réussies.
@@ -760,6 +761,8 @@ Les puits absorbent 85 à 100 % des revenus. Il ne doit pas y avoir d'or « inut
 | Normale, `idle`, malchanceux, même niveau | victoire ≥ 85 % |
 | Élite, `idle` / `script_optimal`, typique | 30-60 % / ≥ 90 % |
 | Boss, `idle` / `script_optimal`, typique niveau 11 | ≤ 20 % / ≥ 80 %, durée p50 150-210 s |
+| Boss, `idle_tuned`, montée en niveau de `idle` | voir §22.6 *(provisoire, jalon 6)* |
+| Début, `starter`, `idle`, rencontres du Bois au niveau de la rencontre | voir §22.6 *(provisoire, jalon 6)* |
 | Boss, `confus` | ≤ 10 % (la défaite doit enseigner quelque chose) |
 | Hors ligne : `clear_time` analytique vs p50 simulé | écart ≤ 15 % sur chaque rencontre éligible, Fern typique au niveau de la rencontre (`tests/unit/combat/test_offline_bench.gd`). Sinon, recalibrer `OFFLINE_DPS_CALIBRATION` ou la rotation (§20.2) |
 | Déterminisme | même graine + mêmes entrées ⇒ même hachage du journal d'événements |
@@ -813,6 +816,56 @@ Pour chacun, noter le résultat et la règle à changer si besoin :
 ### 22.5 Télémétrie locale (debug uniquement, aucun serveur)
 
 Journal local optionnel, exportable : durée par rencontre, défaites (cause : dernier coup subi), temps sans mana, utilisation des sorts, runes serties, gains hors ligne. Il sert pendant les tests de jeu à confirmer ou réfuter les `[H]`.
+
+### 22.6 Tactiques et début de partie (provisoire, jalon 6)
+
+Décisions 22 à 31 du GDD. Toutes `[H]`, à confirmer par le banc (200 graines par ligne) puis par T5, T9 et T10.
+
+**Constantes** (`game/engine/balance/combat.gd`) :
+
+| Constante | Valeur | Avant | Note |
+|---|---|---|---|
+| `TACTIC_BARRIER_HP_DEFAULT` | **0,3** *(provisoire, jalon 6)* | 0,5 | Seuil de `auto_hp_below` et du repli de `auto_telegraph_or_hp`. Plage inchangée 0,3-0,7, pas de 0,1 |
+| `TACTIC_BARRIER_PRECAST_S` | 1,0 | - | Inchangée ; le Sceau (3 s d'incantation) est vu à 1 s de l'impact, bouclier de 4 s |
+| `TACTIC_MIN_ENEMIES_DEFAULT` | 3 | - | Curseur affiché 2-5 (le moteur accepte 1-5) |
+| `TACTIC_MANA_RESERVE_DEFAULT` | 0,2 | - | |
+
+Pourquoi 0,3 : un Sceau non bouclié fait ~35 % des PV de Fern typique niveau 11 (§10.2 note ¹). Sous 30 % de PV, il tue de toute façon ; la Barrière lancée sur le seuil n'est donc jamais « volée » à un Sceau qu'on aurait survécu. Recharge de la Barrière 18 s < Sceau 25 s en phase 2 : en `auto_before_telegraph`, chaque Sceau de phase 2 est bouclié ; en phase 3 (Sceau toutes les 15 s), un sur deux environ sans rune de Célérité. C'est la part laissée au jeu actif.
+
+**Cibles du boss** (Morvaine niveau 12, équipement typique au niveau de Fern) :
+
+| Profil | L11 | L12 | L14 | L16 | L20 |
+|---|---|---|---|---|---|
+| `idle` (défauts du jalon 6) | ≤ 20 % (§22.1) | - | ≥ 40 % | ≥ 70 % | ≥ 90 % |
+| `idle_tuned` (défauts + conseil) | 40-65 % | ≥ 60 % | ≥ 85 % | - | - |
+| `script_optimal` | ≥ 80 %, p50 150-210 s (§22.1) | - | - | - | - |
+| `confus` (Barrière manuelle jamais lancée) | ≤ 10 % | ≤ 10 % | - | - | - |
+
+Écarts exigés au niveau 11 : `idle_tuned` − `idle` ≥ 20 points (l'écran des tactiques doit payer) ; `script_optimal` − `idle_tuned` ≥ 15 points (le jeu actif doit payer davantage). Mesure ajoutée par ligne : **cause de défaite** (Sceau, *Cendre totale*, autre), et nombre de Sceaux boucliés / lancés.
+
+**Leviers, dans l'ordre**, si une cible n'est pas tenue (un seul changement par passe, puis rebanc complet) :
+1. `idle` > 20 % au niveau 11 : passer le repli à 0 (`auto_before_telegraph` pur comme défaut) avant de toucher au boss.
+2. `idle` < cible aux niveaux 14-20 avec défaites surtout par *Cendre totale* : plafond des Lanternes liées 4 → 3 (−0,45 → −0,30 de dégâts subis au plus). Par le Sceau : vérifier que `incoming_big_hit` voit bien le Sceau, puis `TACTIC_BARRIER_PRECAST_S` 1,0 → 1,5.
+3. `idle_tuned` < 40 % au niveau 11 : retirer « Lanceurs d'abord » du préréglage si les défaites ne viennent pas de l'enrage ; sinon question ouverte 2 (Infusion automatique).
+4. `idle_tuned` > 65 % au niveau 11 ou écart avec `script_optimal` < 15 points : `ability.morvaine_ash_seal` recharge de phase 3 15 → 13 s.
+
+**Début de partie** :
+
+Profil `starter` : Fern sans autre équipement que `item.birch_staff` peu commun ilvl 1, +0, affixes au tirage médian. Puissance : implicite 6 × 1,0 × 1,1 = **6,6**, soit 41,1 au niveau 2 et 45,6 au niveau 3 (nu : 34,5 et 39,0 ; typique : ~49 et ~56).
+
+| Rencontre | Avant | Après | Composition (niveau des ennemis) | PV effectifs (§11, Fern au niveau de la rencontre) | Budget §11 ±25 % |
+|---|---|---|---|---|---|
+| `whispering_wood_04` | `level` 2 | **`level` 3** *(provisoire, jalon 6)* | 2 loups `level_offset` −1 (niv. 2) + 2 loups −2 (niv. 1) : inchangée | ~1 500 | 1 053-1 755 |
+
+Constat mesuré au jalon 6 (équipement nu, `idle`) : 0 % au niveau 2, 60 % au niveau 3. Cause : 4 attaquants au contact (~35 dégâts/s contre 458 PV au niveau 2) avant le déblocage de la Salve (niveau 3), et un équipement « typique » que les tirages ne donnent pas aussi tôt (objet à 25 % par rencontre, bâton ~4 % par rencontre).
+
+| Cible (`starter`, `idle`) | Seuil |
+|---|---|
+| `whispering_wood_01` à `_05`, au niveau de la rencontre | victoire ≥ 95 % |
+| `whispering_wood_04` au niveau 2 (joueur qui ignore l'avertissement) | mesuré, sans seuil ; attendu 30-60 % |
+| `whispering_wood_01`, profil nu, niveau 1 | inchangé (ROADMAP 3.5) |
+
+Si `_04` reste sous 95 % au niveau 3 : levier de la décision 31 (gants peu communs ilvl 2 à la première victoire de `_03`, +2,5 de puissance et +1 de défense), puis retrait d'un loup de niveau 1. Remesurer aussi la ligne `_04` du §20.2 (niveau 3) dans `test_offline_bench.gd`.
 
 ## 23. Quêtes, contrats, coffres et bestiaire (jalon 6)
 

@@ -133,9 +133,9 @@ Les ressources : la **mana** se dépense, se régénère et revient avec les att
 | Réglage | Valeurs | Par défaut |
 |---|---|---|
 | Ciblage | Plus proche / PV les plus bas / Élites et boss d'abord / Lanceurs d'abord | Plus proche |
-| Zoltraak | Manuel / Auto / Auto si élite ou boss / Auto pour interrompre | Auto pour interrompre |
+| Zoltraak | Manuel / Auto / Auto si élite ou boss / Auto pour interrompre | Auto (décision 6) |
 | Salve de mana | Manuel / Auto / Auto si ≥ 3 ennemis | Auto si ≥ 3 ennemis |
-| Barrière défensive | Manuel / Auto si PV < X % (X : 30-70, pas de 10) / Auto avant un coup télégraphé | Auto si PV < 50 % |
+| Barrière défensive | Manuel / Auto si PV < X % (X : 30-70, pas de 10) / Auto avant un coup télégraphé / Auto avant un coup télégraphé, sinon si PV < X % | Avant un coup télégraphé, sinon si PV < 30 % (décision 22) |
 | Lumière d'après | Manuel / Auto dès que pleine | Manuel |
 | Réserve de mana | 0-50 % (pas de 10) : les sorts auto ne descendent pas sous ce seuil | 20 % |
 
@@ -371,7 +371,8 @@ Les règles techniques (périodicité, emplacement, copie de secours, récupéra
 | Carte du monde | `screen.world_map` | Régions, lieux, brouillard, Voyager, chasse hors ligne |
 | Personnage | `panel.character` | Statistiques détaillées, 6 emplacements, artefacts, puissance estimée |
 | Sac | `panel.inventory` | Grille, filtres, comparaison, recyclage groupé |
-| Grimoire | `panel.spellbook` | Sorts, rangs, emplacements de runes, tactiques |
+| Grimoire | `panel.spellbook` | Sorts, rangs, emplacements de runes, onglet Tactiques |
+| Tactiques | `panel.tactics` | Ciblage, mode de chaque sort, réserve de mana (décisions 22-27) |
 | Forge | `panel.forge` | Amélioration (chance, coût, aperçu) |
 | Graveuse de runes | `panel.runecarver` | Fusion |
 | Marchande | `panel.merchant` | Consommables |
@@ -450,4 +451,71 @@ Spécification complète du contenu : `docs/content/` (`quests.md`, `dialogues.m
 3. **Raccourci du donjon** : conservé.
 4. **Hors ligne** : les victoires hors ligne ne comptent ni pour les quêtes, ni pour les contrats, ni pour le bestiaire.
 5. **XP des quêtes** : `QUEST_XP_MAIN` sera relevé après le banc pour revenir aux ~30 % de GAME_BALANCE §21.2.
+
+### Décisions du 2026-11-06 (jalon 6, tactiques et début)
+
+Constat (`fullrun.spec.ts`, banc §22.4) : (1) aucune interface ne permet de régler les tactiques ; avec les défauts, la Barrière part sur un seuil de PV, souvent juste avant le Sceau de cendre, qui tue Fern : Morvaine `idle` 0 % du niveau 12 au niveau 20 avec l'équipement typique, alors que le banc 6.7 (87 %) utilise des réglages inaccessibles. (2) Fern commence sans équipement et le bâton garanti du §16.1 n'existe pas dans les données : `whispering_wood_04` (4 loups, avant la Salve) est à 0 % au niveau 2 et 60 % au niveau 3. Toutes les décisions sont `[H]` ; les chiffres sont dans GAME_BALANCE §22.6.
+
+| # | Sujet | Décision | Remplace ou précise |
+|---|---|---|---|
+| 22 | Défaut de la Barrière | Nouveau mode `auto_telegraph_or_hp` : la Barrière part quand un coup télégraphé va toucher Fern dans `TACTIC_BARRIER_PRECAST_S` (même test que `auto_before_telegraph`), sinon quand ses PV passent sous `barrier_hp_pct`. **Défaut du rôle `shield`** dès le déblocage (niveau 2). `TACTIC_BARRIER_HP_DEFAULT` 0,5 → **0,3** : sous 30 %, un Sceau non bouclié tue de toute façon, la Barrière n'est donc plus gaspillée avant lui | §7.4 ; `CombatTactics.MODES`, `modes_for`, `default_mode` |
+| 23 | Écran des tactiques | `panel.tactics`, un seul écran, ouvert depuis : (a) Grimoire (K), onglet « Tactiques » ; chaque carte de sort du grimoire affiche son mode actuel en pastille, un clic ouvre l'écran sur ce sort ; (b) feu de camp du donjon, option d'interaction « Régler les tactiques » ; (c) pause en combat, bouton « Tactiques » (commande `set_tactic`, effet au tick suivant) ; (d) panneau de défaite, quand le conseil porte sur une tactique. Disponible au niveau 2 (onglet caché avant, point « nouveau » à l'apparition) | §5.3 salle 6, §7.2, §17 |
+| 24 | Contenu de l'écran | Une ligne par réglage, dans cet ordre : Ciblage, Zoltraak, Salve de mana, Barrière défensive, Lumière d'après, Réserve de mana. Sorts non débloqués masqués. Chaque ligne : icône, nom, sélecteur (boutons segmentés sur desktop, liste sur mobile), curseur seulement si le mode l'utilise, puis **une phrase en clair** qui dit ce que Fern fera (tableau ci-dessous). Le défaut porte la mention « (par défaut) ». Bouton « Rétablir les réglages par défaut ». Aucun bouton « Valider » : chaque changement s'applique et se sauvegarde à la fermeture | - |
+| 25 | Sauvegarde | Les tactiques sont sauvegardées par personnage : `characters.<id>.tactics`, dictionnaire **partiel** (seuls les écarts au défaut), même forme que les `overrides` de `CombatTactics.build`. Migration : `{}`. Au chargement, une valeur refusée par `CombatTactics.set_value` est ignorée (journal). Un sort nouvellement débloqué prend son défaut. Combat, « Chasser ici » et donjon les utilisent. **Le hors ligne garde les tactiques par défaut** (modèle analytique inchangé) | GAME_BALANCE §20.1 |
+| 26 | Conseils et préréglage | Préréglage `tactics_preset.morvaine` : Ciblage « Lanceurs d'abord », Barrière « Avant un coup télégraphé ». Bouton « Appliquer le conseil » qui affiche d'abord l'écart (« Ciblage : Le plus proche → Lanceurs d'abord ») puis applique. Proposé par `tip.campfire_tactics` et par le conseil de défaite du Sceau (décision 27) | - |
+| 27 | Enseigner le Sceau | (1) `tip.barrier_unlocked` au niveau 2. (2) `tip.campfire_tactics`, panneau à la première arrivée au feu de camp, après `dialogue.fern_campfire`, boutons « Appliquer le conseil », « Ouvrir les tactiques », « Plus tard ». (3) `tip.morvaine_seal`, bandeau de 3 s sous la barre de boss au **premier** Sceau du premier essai, sans pause automatique. (4) Conseil de défaite selon la cause (dernier coup subi, déjà journalisé §22.5) : `tip.defeat_ash_seal` si c'est le Sceau, `tip.defeat_enrage` si c'est *Cendre totale*. Chaque conseil n'apparaît qu'une fois par sauvegarde (`progress.tips_seen`, tableau d'ID), sauf les conseils de défaite (à chaque défaite contre le boss) | §7.5, §9.3 |
+| 28 | Cibles du boss | Trois couches d'engagement, chacune doit payer : défauts seuls, défauts + conseil appliqué (`idle_tuned`), jeu actif (`script_optimal`). Cibles et écarts minimaux : GAME_BALANCE §22.6. Un joueur qui n'ouvre jamais les tactiques bat Morvaine en prenant des niveaux (≥ 70 % au niveau 16) ; il n'est jamais bloqué pour de bon (pilier P2) | §7.4 dernier paragraphe, GAME_BALANCE §22.1 |
+| 29 | Bâton garanti | Le §16.1 devient vrai : la **première victoire** sur `encounter.whispering_wood_01` donne `item.birch_staff`, **peu commun**, ilvl = niveau de la rencontre (1), affixes tirés dans le flux `loot`. Nouveau champ de données `first_clear_rewards.items` : `[{ "base": "item.*", "rarity": "common" \| "uncommon" \| "rare" \| "epic" \| "legendary" }]` (règle de validation : base existante, `min_ilvl` ≤ niveau de la rencontre). La consigne « Équiper » suit | §11, §16.1 ; CONTENT_PIPELINE (schéma `encounter`) |
+| 30 | `whispering_wood_04` | Devient le **test de la Salve** (débloquée au niveau 3) : `level` 2 → **3**, mêmes 4 loups aux mêmes niveaux (`level_offset` −1 ×2 → niveau 2, −2 ×2 → niveau 1). XP et or inchangés (niveau des ennemis), ilvl du butin 3. Le cercle de la meute affiche son niveau au survol (§5.4) ; s'il dépasse celui de Fern, le libellé passe en couleur `danger` avec pictogramme : « Niveau 3 (au-dessus du vôtre) ». `quest.main_01` (3 meutes) reste faisable avec `_01` à `_03` | §5.2 (Bois : introduire, puis tester) |
+| 31 | Levier de secours du début | Si le banc `starter` (GAME_BALANCE §22.6) reste sous 95 % sur `whispering_wood_04` au niveau 3 : la première victoire sur `whispering_wood_03` donne aussi `item.cloth_gloves` peu commun. Si cela ne suffit pas : retirer un loup de niveau 1 de `_04` | - |
+
+**Libellés** (clés `ui.tactics.*`, textes du jeu en français) :
+
+| Réglage (clé d'état) | Mode (ID) | Libellé | Phrase affichée (`ui.tactics.say.*`) |
+|---|---|---|---|
+| Ciblage (`targeting`) | `nearest` | Le plus proche | Fern attaque l'ennemi le plus proche. |
+| | `lowest_hp` | PV les plus bas | Fern achève d'abord l'ennemi le plus blessé. |
+| | `elites_first` | Élites et boss d'abord | Fern vise l'élite ou le boss, puis le plus proche. |
+| | `casters_first` | Lanceurs d'abord | Fern abat d'abord les lanternes et autres lanceurs. |
+| Zoltraak | `manual` | Manuel | Zoltraak ne part que sur votre ordre (touche 1). |
+| | `auto` | Auto | Fern lance Zoltraak dès qu'il est prêt, en priorité pour couper une incantation. |
+| | `auto_elite_boss` | Auto sur élite ou boss | Fern garde Zoltraak pour les élites et les boss. |
+| | `auto_interrupt` | Seulement pour interrompre | Fern garde Zoltraak pour couper une incantation à anneau nacré. |
+| Salve de mana | `manual` | Manuel | La Salve ne part que sur votre ordre (touche 2). |
+| | `auto` | Auto | Fern lance la Salve dès qu'elle est prête. |
+| | `auto_min_enemies` | Auto si au moins N ennemis | Fern lance la Salve s'il reste au moins {n} ennemis à portée. (curseur `min_enemies` 2-5) |
+| Barrière défensive | `manual` | Manuel | La Barrière ne part que sur votre ordre (touche 3). |
+| | `auto_hp_below` | Si PV sous X % | Fern se protège quand ses PV passent sous {x} %. |
+| | `auto_before_telegraph` | Avant un coup télégraphé | Fern se protège juste avant un coup annoncé au sol ou par une incantation. |
+| | `auto_telegraph_or_hp` | Avant un coup télégraphé, sinon sous X % | Fern se protège juste avant un coup annoncé, ou si ses PV passent sous {x} %. |
+| Lumière d'après | `manual` | Manuel | L'ultime ne part que sur votre ordre (touche R). |
+| | `auto_full` | Dès que pleine | Fern libère l'ultime dès que la jauge est pleine. |
+| Réserve de mana (`mana_reserve`) | 0-50 %, pas de 10 | Réserve de mana | Les sorts automatiques laissent toujours {x} % de mana pour vos ordres. |
+
+**Conseils** (clés `tip.*`) :
+
+| Clé | Texte |
+|---|---|
+| `tip.barrier_unlocked` | Barrière débloquée (touche 3). Elle part seule avant un coup annoncé, ou sous 30 % de PV. Réglable dans Grimoire › Tactiques. |
+| `tip.campfire_tactics` | Plus loin, la gardienne du cadran prépare un Sceau de cendre qu'on ne peut pas interrompre. Gardez la Barrière pour lui, et abattez ses lanternes d'abord. |
+| `tip.morvaine_seal` | Sceau de cendre : impossible à interrompre. Barrière (3) avant l'impact ! |
+| `tip.defeat_ash_seal` | Le Sceau de cendre vous a vaincue. Réglez la Barrière sur « Avant un coup télégraphé » pour la garder pour lui. |
+| `tip.defeat_enrage` | Morvaine a tenu jusqu'à la Cendre totale. Ses lanternes la protègent : ciblez les lanceurs d'abord, et gardez l'ultime pour la dernière phase. |
+
+**Lecture pour un nouveau joueur** : la phrase de chaque ligne change en direct avec le réglage ; on comprend l'effet sans connaître les ID ni ouvrir d'aide. Les modes « Auto si… » ne promettent rien que l'IA ne fait pas (elle ne voit que ce que voit le joueur : télégraphes, anneaux, PV).
+
+**Plan de test de jeu (ajout à §19)** :
+
+| Test | Joueur | Ce qu'on observe | Seuil |
+|---|---|---|---|
+| T9 Tactiques | Nouveau, au feu de camp | Lit-il le conseil ? Peut-il dire, après lecture de l'écran, ce que fera la Barrière ? | ≥ 4 joueurs sur 5 l'expliquent avec leurs mots |
+| T5 (précision) | Niveau 11-12 | Après une défaite par le Sceau, applique-t-il le conseil ou règle-t-il la Barrière avant le 2e essai ? | ≥ 50 % ; victoire en ≤ 3 essais |
+| T10 Début | Nouveau, sans aide | Équipe-t-il le bâton ? Entre-t-il dans `_04` sous le niveau 3 malgré l'avertissement ; s'il perd, comprend-il pourquoi ? | Bâton équipé dans les 30 s ; aucune défaite au Bois au niveau de la rencontre |
+
+**Questions ouvertes pour le propriétaire** :
+
+1. **Battre le boss en jouant passif** (décision 28) : accepter qu'un joueur qui n'ouvre jamais les tactiques gagne à ≥ 70 % au niveau 16 (jour 5-6 environ) ? Sinon, il reste bloqué jusqu'à ce qu'il lise un conseil.
+2. **Consommables automatiques** : ajouter une tactique « Infusion de soin : Manuel / Auto si PV < 35 % » ? Pas décidé ici (hors du problème constaté) ; ce serait le premier levier si `idle_tuned` reste sous sa cible.
+3. **Ligne diégétique** : doubler `tip.campfire_tactics` d'une ligne de Fern (`dialogue.fern_campfire.line_02`, proposition originale : « Ce cadran sent la cendre. Si elle frappe fort, je garderai ma barrière pour ce coup-là. ») ? À relire avec les autres dialogues (critère 6.2).
+4. **Tactiques dès le niveau 1** plutôt qu'au niveau 2 ? Proposé : niveau 2, pour garder les deux premières minutes simples.
 
