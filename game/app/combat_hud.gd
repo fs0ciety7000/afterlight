@@ -176,7 +176,23 @@ func _build() -> void:
 	log_panel.set_anchors_and_offsets_preset(
 		Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, margin
 	)
-	log_panel.visible = get_viewport_rect().size.x >= 1100.0
+	# Narrow screens (phones, tablets): the log is folded behind a toggle.
+	if get_viewport_rect().size.x < 1100.0:
+		log_panel.visible = false
+		var toggle := Kit.button(tr("ui.combat.log"), false, "combat.log_toggle")
+		toggle.focus_mode = Control.FOCUS_NONE
+		toggle.toggle_mode = true
+		toggle.custom_minimum_size.y = UiTokens.at_least_css(UiTokens.TOUCH_TARGET)
+		toggle.toggled.connect(func(on: bool) -> void: log_panel.visible = on)
+		add_child(toggle)
+		toggle.set_anchors_and_offsets_preset(
+			Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, margin
+		)
+		# The panel opens under the toggle, never over it.
+		var below := toggle.get_combined_minimum_size().y / 2.0 + UiTokens.SPACE["sm"]
+		var half := log_panel.get_combined_minimum_size().y / 2.0
+		log_panel.offset_top += below + half
+		log_panel.offset_bottom += below + half
 
 	_toast = Kit.label("", "LeadLabel")
 	_toast.add_theme_color_override("font_color", UiTokens.NIGHT["danger"])

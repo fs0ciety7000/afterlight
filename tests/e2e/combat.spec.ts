@@ -114,6 +114,7 @@ test('3.12 the combat log lists damage and filters by source', async ({ page }) 
   await enterCombat(page);
   await expect.poll(async () => (await probe(page))!.controls['combat.log']?.text ?? '', { timeout: 30_000 }).toMatch(/Loup des brumes inflige/);
   await expect.poll(async () => (await probe(page))!.controls['combat.log'].text).toMatch(/Fern (inflige|lance)/);
+  if (!(await probe(page))!.controls['combat.log_filter.enemies']?.visible) await click(page, 'combat.log_toggle');
   await click(page, 'combat.log_filter.enemies');
   await expect.poll(async () => (await probe(page))!.controls['combat.log'].text).not.toMatch(/^Fern /m);
   await click(page, 'combat.log_filter.party');
