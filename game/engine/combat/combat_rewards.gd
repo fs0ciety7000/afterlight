@@ -3,8 +3,9 @@ extends RefCounted
 ## Rewards of a won encounter (GAME_BALANCE §12-§14, §17): XP and gold per
 ## enemy of the encounter (summons give nothing, so stalling a boss for its
 ## adds pays nothing); materials, items, runes, artifacts and consumables from
-## the loot table. Draws use the "loot" stream, so the combat sequence never
-## shifts them. Items have no uid yet: CombatOutcome assigns it.
+## the loot table, plus the encounter's first_clear_rewards on a first
+## victory. Draws use the "loot" stream, so the combat sequence never shifts
+## them. Items have no uid yet: CombatOutcome assigns it.
 
 
 static func compute(sim: CombatSim) -> Dictionary:
@@ -92,6 +93,10 @@ static func compute(sim: CombatSim) -> Dictionary:
 							runes.append(rune)
 	if sim.first_clear:
 		xp *= BalanceEnemies.FIRST_CLEAR_XP_MULT
+		# Encounter-specific first victory rewards (the cloister key).
+		var extra: Dictionary = sim.encounter.get("first_clear_rewards", {}).get("materials", {})
+		for id in extra:
+			materials[id] = int(materials.get(id, 0)) + int(extra[id])
 	return {
 		"xp": floori(xp),
 		"gold": gold,

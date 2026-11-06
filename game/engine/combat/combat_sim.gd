@@ -48,6 +48,11 @@ var first_clear := false
 var consumables_start: Dictionary = {}
 var keep_log := true
 var event_log: Array = []
+## What the fight did, for quests, contracts and the bestiary (filled by emit):
+## {defeated: {enemy id: n} (summons included), interrupts: {def id: n}
+## (casts cut by an interrupt), statuses: {status id: {source def id: n}}
+## (applied on enemies)}.
+var tally := {"defeated": {}, "interrupts": {}, "statuses": {}}
 
 var _by_uid: Dictionary = {}
 var _events: Array = []
@@ -394,6 +399,25 @@ func emit(type: String, fields: Dictionary) -> void:
 	var e := {"type": type, "tick": tick}
 	e.merge(fields)
 	_events.append(e)
+	_count(e)
+
+
+func _count(e: Dictionary) -> void:
+	match e["type"]:
+		"enemy_defeated":
+			_bump(tally["defeated"], str(e["def_id"]))
+		"cast_interrupted":
+			if e["reason"] == "interrupt" and unit(str(e["unit"])).get("side", "") == "enemy":
+				_bump(tally["interrupts"], str(unit(str(e["by"])).get("def_id", "")))
+		"status_applied":
+			if unit(str(e["target"])).get("side", "") == "enemy":
+				var by_source: Dictionary = tally["statuses"].get(e["status"], {})
+				_bump(by_source, str(unit(str(e["source"])).get("def_id", "")))
+				tally["statuses"][e["status"]] = by_source
+
+
+static func _bump(counts: Dictionary, key: String) -> void:
+	counts[key] = int(counts.get(key, 0)) + 1
 
 
 func _queue_event(type: String, fields: Dictionary) -> void:
@@ -590,8 +614,24 @@ func _finish(outcome: String) -> void:
 			"consumables_used": consumables_used(),
 			"first_clear": first_clear,
 			"last_hit": last_hit.duplicate(),
+			"location": str(encounter.get("location", "")),
+			"tally": tally.duplicate(true),
+			"leader": _leader_vitals(),
 		}
 	)
+
+
+## HP, mana (fractions) and ultimate charge of the leader at the end (dungeon
+## rooms carry them to the next fight).
+func _leader_vitals() -> Dictionary:
+	if units.is_empty():
+		return {"hp_pct": 0.0, "mana_pct": 0.0, "ult_charge": 0.0}
+	var u: Dictionary = units[0]
+	return {
+		"hp_pct": snappedf(float(u["hp"]) / maxf(1.0, float(u["max_hp"])), 0.0001),
+		"mana_pct": snappedf(float(u["mana"]) / maxf(1.0, float(u["max_mana"])), 0.0001),
+		"ult_charge": snappedf(float(u.get("ult_charge", 0.0)), 0.01),
+	}
 
 
 ## {consumable id: count} the leader used during this fight.

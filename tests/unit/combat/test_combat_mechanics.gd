@@ -149,6 +149,9 @@ func test_normal_fight_is_won_with_rewards() -> void:
 	assert_eq(done["rewards"]["xp"], 72, "3 wolves L1 × 8 XP × first clear")
 	assert_true(done["rewards"]["gold"] >= 9 and done["rewards"]["gold"] <= 15, "gold 3 × 4 ± 20 %")
 	assert_eq(_of(events, "enemy_defeated").size(), 3, "three kills")
+	assert_eq(done["tally"]["defeated"], {"enemy.mist_wolf": 3}, "tally of kills")
+	assert_eq(done["location"], "location.whispering_wood", "location of the encounter")
+	assert_true(done["leader"]["hp_pct"] > 0.0 and done["leader"]["hp_pct"] <= 1.0, "leader HP")
 
 
 func test_defeat_has_no_rewards_and_names_the_last_hit() -> void:
@@ -396,6 +399,8 @@ func test_zoltraak_interrupts_lantern_blaze() -> void:
 	assert_eq(cut[0]["by"], FERN, "by Fern")
 	assert_eq(_of(events, "status_applied", {"status": "status.stun"}).size(), 1, "stunned")
 	assert_eq(_of(_steps(sim, 60), "zone_spawned").size(), 0, "no fire zone")
+	assert_eq(sim.tally["interrupts"], {"character.fern": 1}, "interrupt tallied for Fern")
+	assert_eq(sim.tally["statuses"]["status.stun"], {"character.fern": 1}, "stun tallied")
 
 
 func test_default_tactics_interrupt_and_blaze_zone_is_left() -> void:
@@ -536,6 +541,13 @@ func test_alpha_howl_summons_and_frenzies_when_not_interrupted() -> void:
 	assert_true(alpha["statuses"].has("status.haste_buff"), "alpha frenzied")
 	assert_true(sim.unit(spawned[0]["uid"])["statuses"].has("status.haste_buff"), "pack frenzied")
 	assert_eq(alpha["triggers"]["ability.alpha_howl"], 1, "first threshold used")
+	sim.run(20000)
+	if sim.result == "victory":
+		assert_eq(
+			sim.tally["defeated"],
+			{"enemy.mist_wolf_alpha": 1, "enemy.mist_wolf": 2},
+			"summons count for the bestiary"
+		)
 
 
 # --- Statuses and reactions ---------------------------------------------------
