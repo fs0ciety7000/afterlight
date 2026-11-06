@@ -106,23 +106,36 @@ test('walking into a zone exit leads to the neighbouring place', async ({ page }
     const c = document.querySelector('canvas')!;
     return { w: c.width, h: c.height };
   });
+  const onHud = (x: number, y: number, controls: Record<string, { x: number; y: number; w: number; h: number; visible: boolean }>) =>
+    Object.entries(controls).some(
+      ([id, c]) => id.startsWith('hud.') && c.visible && x >= c.x - 20 && x <= c.x + c.w + 20 && y >= c.y - 20 && y <= c.y + c.h + 20,
+    );
+  let last = await player(page);
+  let turn = 0;
   for (let i = 0; i < 60; i++) {
-    const w = (await probe(page))!.world;
-    if (w.location_id === 'location.whispering_wood') break;
-    const exit = w.exits?.['location.whispering_wood'] as { x: number; y: number } | undefined;
-    const ps = w.player_screen as { x: number; y: number };
-    // Step toward the exit: click a point at most 300 px away on screen.
-    const target = exit ?? { x: ps.x - 300, y: ps.y - 150 };
-    const dx = target.x - ps.x;
-    const dy = target.y - ps.y;
-    // Short steps that stay clear of the HUD corners on small screens.
-    const step = Math.min(size.w, size.h) * 0.3;
-    const k = Math.min(1, step / Math.max(1, Math.hypot(dx, dy)));
-    const tx = Math.min(Math.max(ps.x + dx * k, size.w * 0.2), size.w * 0.8);
-    const ty = Math.min(Math.max(ps.y + dy * k, size.h * 0.22), size.h * 0.78);
-    const p = await canvasPoint(page, tx, ty);
+    const snap = (await probe(page))!;
+    if (snap.world.location_id === 'location.whispering_wood') break;
+    const exit = snap.world.exits?.['location.whispering_wood'] as { x: number; y: number } | undefined;
+    const ps = snap.world.player_screen as { x: number; y: number };
+    // Head for the exit (off-screen points are still projected), turning when stuck.
+    let angle = Math.atan2((exit?.y ?? ps.y - 150) - ps.y, (exit?.x ?? ps.x - 300) - ps.x) + turn;
+    const remaining = exit ? Math.hypot(exit.x - ps.x, exit.y - ps.y) : Infinity;
+    let target = { x: ps.x, y: ps.y };
+    for (const f of [0.4, 0.3, 0.2]) {
+      const r = Math.min(remaining, Math.min(size.w, size.h) * f);
+      const x = Math.min(Math.max(ps.x + Math.cos(angle) * r, 8), size.w - 8);
+      const y = Math.min(Math.max(ps.y + Math.sin(angle) * r, 8), size.h - 8);
+      if (!onHud(x, y, snap.controls)) {
+        target = { x, y };
+        break;
+      }
+    }
+    const p = await canvasPoint(page, target.x, target.y);
     await page.mouse.click(p.x, p.y);
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(2000);
+    const now = await player(page);
+    turn = dist(now, last) < 0.5 ? (turn <= 0 ? -turn + Math.PI / 4 : -turn) : 0;
+    last = now;
   }
   await expect.poll(async () => (await probe(page))!.world.location_id, { timeout: 20_000 }).toBe('location.whispering_wood');
   expect((await probe(page))!.state.location_id).toBe('location.whispering_wood');
