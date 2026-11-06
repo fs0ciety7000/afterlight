@@ -23,6 +23,7 @@ GameState="*res://game/state/game_state.gd"
 SaveService="*res://game/persistence/save_service.gd"
 UiProbe="*res://game/ui/ui_probe.gd"
 Router="*res://game/app/router.gd"
+Audio="*res://game/audio/audio.gd"
 
 [display]
 

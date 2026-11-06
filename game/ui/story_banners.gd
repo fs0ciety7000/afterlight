@@ -15,6 +15,7 @@ func _ready() -> void:
 	alignment = BoxContainer.ALIGNMENT_BEGIN
 	add_theme_constant_override("separation", UiTokens.SPACE["sm"])
 	GameState.story_events.connect(_on_events)
+	Audio.captioned.connect(show_text)
 
 
 func _on_events(events: Array) -> void:

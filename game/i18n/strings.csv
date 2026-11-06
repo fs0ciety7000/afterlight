@@ -1081,3 +1081,5 @@ ui.pad.right_stick_up,Stick D haut
 ui.pad.right_stick_down,Stick D bas
 ui.pad.right_stick_left,Stick D gauche
 ui.pad.right_stick_right,Stick D droite
+ui.caption.telegraph,[Grondement] Une attaque ennemie se prépare.
+ui.caption.ash_seal,[Sceau de cendre] Un coup dévastateur se prépare : protégez-vous.

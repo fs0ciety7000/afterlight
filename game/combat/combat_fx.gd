@@ -23,6 +23,7 @@ func _init(vfx_node: Vfx, combat: CombatView) -> void:
 
 
 func handle(e: Dictionary) -> void:
+	Audio.on_combat_event(e, view)
 	match e["type"]:
 		"spell_cast":
 			_on_cast(e)

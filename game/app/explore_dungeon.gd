@@ -367,4 +367,5 @@ func after_combat(encounter_id: String, victory: bool) -> void:
 	lines.append_array(StoryText.dialogue_lines("dialogue.fern_after_boss"))
 	lines.append({"speaker": "", "key": "story.bell.subtitle"})
 	UiProbe.world["bell_rung"] = true
+	Audio.ring_bell()
 	story.play_lines(lines, true)

@@ -321,6 +321,7 @@ func _after_talk(npc_id: String, t: Dictionary) -> void:
 
 func _after_hand_in(npc_id: String, t: Dictionary, r: Dictionary) -> void:
 	if str(r.get("turned_in", "")) == "quest.main_04":
+		Audio.ring_bell(true)
 		play_cards("epilogue", func() -> void: _after_hand_in(npc_id, t, {}))
 		return
 	if str(r.get("next_dialogue", "")) != "":

@@ -21,6 +21,7 @@ static func button(text: String, primary: bool = false, probe_id: String = "") -
 	b.focus_mode = Control.FOCUS_ALL
 	if probe_id != "":
 		UiProbe.register(probe_id, b)
+	Audio.hook_button(b, primary, probe_id)
 	return b
 
 
