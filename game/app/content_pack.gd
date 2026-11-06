@@ -98,6 +98,9 @@ func _request(url: String, download_to: String) -> void:
 	_http.download_file = download_to
 	_http.download_chunk_size = 1 << 20
 	_http.timeout = 0.0 if download_to != "" else 20.0
+	# On the web the browser already undoes Content-Encoding: gzip; decoding it
+	# a second time fails (StreamPeerGZIP) and the pack never mounts.
+	_http.accept_gzip = not OS.has_feature("web")
 	add_child(_http)
 	_http.request_completed.connect(_on_completed)
 	var err := _http.request(url, PackedStringArray(["Cache-Control: no-cache"]))
@@ -117,6 +120,7 @@ func _on_completed(
 			_pack_path = FALLBACK_PACK_PATH  # no MEMFS /tmp: keep it in user://
 			_fetch_pack()
 			return
+		push_warning("Content pack: HTTPRequest result %d" % result)
 		_fail(tr("ui.content.error.network"))
 		return
 	if code != 200:
@@ -125,7 +129,7 @@ func _on_completed(
 	if not _fetching_pack:
 		_on_manifest(body)
 	else:
-		_on_pack()
+		_on_pack(body)
 
 
 func _on_manifest(body: PackedByteArray) -> void:
@@ -142,17 +146,28 @@ func _on_manifest(body: PackedByteArray) -> void:
 
 func _fetch_pack() -> void:
 	_fetching_pack = true
-	_request(_pack_url, _pack_path)
+	# Web: HTTPRequest.download_file leaves an empty file in the browser's
+	# virtual FS, so the body is kept in memory and written here (user://).
+	_request(_pack_url, "" if OS.has_feature("web") else _pack_path)
 
 
-func _on_pack() -> void:
+func _on_pack(body: PackedByteArray = PackedByteArray()) -> void:
 	_drop_http()
+	if not body.is_empty():
+		_pack_path = FALLBACK_PACK_PATH
+		var w := FileAccess.open(_pack_path, FileAccess.WRITE)
+		if w == null:
+			_fail(tr("ui.content.error.incomplete"))
+			return
+		w.store_buffer(body)
+		w.close()
 	var size := 0
 	var f := FileAccess.open(_pack_path, FileAccess.READ)
 	if f != null:
 		size = f.get_length()
 		f.close()
 	if size == 0 or (_expected_bytes > 0 and size != _expected_bytes):
+		push_warning("Content pack: %d bytes on disk, %d expected" % [size, _expected_bytes])
 		_fail(tr("ui.content.error.incomplete"))
 		return
 	if not ProjectSettings.load_resource_pack(_pack_path) or not is_mounted():

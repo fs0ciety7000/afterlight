@@ -1,9 +1,9 @@
 // Minimal static server for the Godot web export (no dependencies).
-// Gzips .wasm/.js/.html/.pck (index.pck, then content.pck fetched by the title) when the browser accepts it, like any static host would: the
+// Gzips .wasm/.js/.html and index.pck (content.pck is sent as is, see below) when the browser accepts it, like any static host would: the
 // download a player waits for (docs/ARCHITECTURE.md "Taille de l'export") is the gzipped size.
 import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { extname, join, normalize } from 'node:path';
+import { basename, extname, join, normalize } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
 const [root = 'build/web', port = '8060'] = process.argv.slice(2);
@@ -31,12 +31,15 @@ createServer((req, res) => {
   if (!existsSync(file)) { res.writeHead(404).end(); return; }
   const ext = extname(file);
   const headers = { 'Content-Type': types[ext] ?? 'application/octet-stream' };
-  if (compressible.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '')) {
+  // content.pck is fetched by Godot's HTTPRequest, which stops at Content-Length: with gzip the browser
+  // hands it the larger decoded body and the pack is cut. Hosts must serve it uncompressed too.
+  const raw = basename(file) === 'content.pck';
+  if (!raw && compressible.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '')) {
     const body = gzipped(file, statSync(file));
     res.writeHead(200, { ...headers, 'Content-Encoding': 'gzip', 'Content-Length': body.length, Vary: 'Accept-Encoding' });
     res.end(body);
     return;
   }
-  res.writeHead(200, headers);
+  res.writeHead(200, { ...headers, 'Content-Length': statSync(file).size });
   createReadStream(file).pipe(res);
 }).listen(Number(port), () => console.log(`Serving ${root} on http://localhost:${port}`));
