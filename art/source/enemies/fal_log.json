@@ -223,5 +223,30 @@
   ],
   "est_cost_usd": 0.92,
   "batch": "enemies_generated_2026-11-06 (cap 5 USD)"
+ },
+ {
+  "endpoint": "fal-ai/meshy/rigging/multi-animation",
+  "name": "morvaine_rig2",
+  "seconds": 58.0,
+  "arguments": {
+   "animation_action_ids": [
+    133,
+    137,
+    186
+   ],
+   "height_meters": 1.9,
+   "model_url": "https://v3b.fal.media/files/b/0ab15dca/sC4H43jkWvUuxiMAclYB1_morvaine_meshy_0.glb"
+  },
+  "prompt": null,
+  "files": [
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_0.glb",
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_2.glb",
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_4.glb",
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_5.glb",
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_7.glb",
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_8.glb",
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_10.glb",
+   "art/source/enemies/raw/morvaine_rig/morvaine_rig2_12.glb"
+  ]
  }
 ]

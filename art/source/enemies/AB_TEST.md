@@ -127,3 +127,10 @@ Budget et journal : `BUDGET.md` (3,22 USD, 6 appels) et `fal_log.json`. Chaîne 
 Comparaison : `compare_placeholder_vs_generated.jpg` (Godot, même scène, même caméra ; `placeholder_shot_*` et
 `placeholder_qa_*` = anciens remplaçants). Nouvelles vues : `qa_<id>_*.jpg`, `shot_*_11m.jpg`, `shot_*_6m.jpg`,
 `shot_*_6m_right.jpg` (sentinelle et Morvaine à 6 m).
+
+### Clips de Morvaine refaits (lot du 2026-11-06, `art/source/LOT_2026-11-06_assets.md`)
+
+Un appel Meshy (`morvaine_rig2`, 0,56 USD) : `attack` = mage_soell_cast_4 (fente et lancer du bras en tournoyant),
+`cast` = mage_soell_cast_8 (deux mains levées, incantation tenue), `death` = Strangled_and_Fall_Forward rogné
+aux images 80 à 185 (à genoux, puis chute vers l'avant, 4,4 s). Idle, run et hit inchangés. Planches :
+`qa_morvaine_poses_before_lot2.jpg` (avant) et `qa_morvaine_poses.jpg` (après).

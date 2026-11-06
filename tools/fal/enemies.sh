@@ -75,6 +75,12 @@ gen-morvaine-rig)  # Meshy humanoid rig + 6 clips (0.2 + 6 x 0.12 USD): Idle_3, 
 	python3 "$FAL" fal-ai/meshy/rigging/multi-animation -o "$OUT/raw/morvaine_rig" --name morvaine_rig \
 		--file model_url="$OUT/raw/morvaine_meshy/morvaine_meshy_0.glb" \
 		--arg animation_action_ids='[243,1,125,129,178,189]' --arg height_meters=1.9 ;;
+gen-morvaine-rig2)  # better attack / cast / death (lot 2026-11-06, art/source/LOT_2026-11-06_assets.md, 0.56 USD):
+	# mage_soell_cast_4(133) lunge throw, mage_soell_cast_8(137) raised channel,
+	# Strangled_and_Fall_Forward(186) -> morvaine_rig2_0 (rig), _8, _10, _12
+	python3 "$FAL" fal-ai/meshy/rigging/multi-animation -o "$OUT/raw/morvaine_rig" --name morvaine_rig2 \
+		--file model_url="$OUT/raw/morvaine_meshy/morvaine_meshy_0.glb" \
+		--arg animation_action_ids='[133,137,186]' --arg height_meters=1.9 ;;
 cutout-gen)  # local cut-outs of the new concepts (no fal call)
 	python3 tools/fal/cutout_sheet.py "$OUT/stone_sentinel_concept.png" "$OUT" stone_sentinel front34
 	python3 tools/fal/cutout_sheet.py "$OUT/morvaine_concept.png" "$OUT" morvaine front,side,back ;;
@@ -98,8 +104,8 @@ build-gen)  # generated meshes on the procedural skeletons / Meshy rig -> assets
 		--mesh "$OUT/raw/stone_sentinel_tripo/stone_sentinel_tripo_0.glb" --albedo "$OUT/stone_sentinel_albedo.png" | grep @@REPORT
 	R="$OUT/raw/morvaine_rig"
 	$B -P tools/blender/build_character_v1.py -- --rig "$R/morvaine_rig_0.glb" \
-		--clip idle="$R/morvaine_rig_8.glb:1:120" --clip run="$R/morvaine_rig_10.glb" --clip attack="$R/morvaine_rig_12.glb" \
-		--clip cast="$R/morvaine_rig_14.glb" --clip hit="$R/morvaine_rig_16.glb" --clip death="$R/morvaine_rig_18.glb" \
+		--clip idle="$R/morvaine_rig_8.glb:1:120" --clip run="$R/morvaine_rig_10.glb" --clip attack="$R/morvaine_rig2_8.glb" \
+		--clip cast="$R/morvaine_rig2_10.glb" --clip hit="$R/morvaine_rig_16.glb" --clip death="$R/morvaine_rig2_12.glb:80:185" \
 		--loop idle,run --in-place hit=0.15,attack=0.3,cast=0.3,death=0.5 --albedo "$OUT/morvaine_albedo.png" \
 		--out assets/models/enemies/morvaine/morvaine.glb --blend "$OUT/morvaine_gen.blend" --target-tris 28000 \
 		--height 1.9 --hand-scale 0.95 --no-staff --name Morvaine --class-mode robe | grep @@REPORT ;;
@@ -129,5 +135,5 @@ compare)  # placeholder (placeholder_shot_*) vs generated (shot_*), same scene a
 		"$OUT/placeholder_shot_idle_11m.jpg" "$OUT/shot_idle_11m.jpg" "$OUT/placeholder_shot_attack_11m.jpg" \
 		"$OUT/shot_attack_11m.jpg" "$OUT/placeholder_shot_idle_6m.jpg" "$OUT/shot_idle_6m.jpg" \
 		"$OUT/placeholder_shot_cast_6m.jpg" "$OUT/shot_cast_6m.jpg" ;;
-*) echo "usage: $0 concept|views|cutout|ab-birch|ab-wolf-meshy|ab-wolf-tripo|gen-wolf|gen-sentinel-concept|gen-sentinel|gen-morvaine-concept|gen-morvaine|gen-morvaine-rig|cutout-gen|albedo|build-gen|build|build-placeholders|qa|shots|compare"; exit 1 ;;
+*) echo "usage: $0 concept|views|cutout|ab-birch|ab-wolf-meshy|ab-wolf-tripo|gen-wolf|gen-sentinel-concept|gen-sentinel|gen-morvaine-concept|gen-morvaine|gen-morvaine-rig|gen-morvaine-rig2|cutout-gen|albedo|build-gen|build|build-placeholders|qa|shots|compare"; exit 1 ;;
 esac
