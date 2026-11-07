@@ -5,9 +5,16 @@ extends Screen
 ## credited by « Récupérer » (GameState.claim_offline, once). A summary that
 ## credits nothing (unsafe hunt, ineligible hunt, clock moved back) shows why.
 
+## The gains list never shrinks below this (about three rows).
+const MIN_LIST_HEIGHT := 96.0
+
 var _summary: Dictionary = {}
 var _claim: Button
 var _status: Label
+var _card: PanelContainer
+## The gains list and the most of the screen height it may take.
+var _scroll: ScrollContainer
+var _scroll_limit := 0.0
 
 
 ## Screen to open after a load: this one while a summary waits, else the world.
@@ -22,12 +29,12 @@ func _ready() -> void:
 	var center := CenterContainer.new()
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(center)
-	var card := Kit.panel()
+	_card = Kit.panel()
 	var width := minf(560.0, get_viewport_rect().size.x - 32.0)
-	card.custom_minimum_size = Vector2(width, 0)
-	center.add_child(card)
+	_card.custom_minimum_size = Vector2(width, 0)
+	center.add_child(_card)
 	var col := Kit.vbox(UiTokens.SPACE["md"])
-	card.add_child(col)
+	_card.add_child(col)
 
 	var title := Kit.label(tr("ui.offline.title"), "HeadingLabel", true)
 	UiProbe.register("offline.title", title)
@@ -57,21 +64,36 @@ func _ready() -> void:
 	# Phones: touch-sized buttons are tall, so the gains scroll sooner and
 	# « Récupérer » stays on screen.
 	var short := narrow or UiTokens.css_per_logical < 0.75
-	var limit := get_viewport_rect().size.y * (0.3 if short else 0.55)
-	if body.get_combined_minimum_size().y > limit:
-		var scroll := ScrollContainer.new()
-		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		scroll.custom_minimum_size = Vector2(0, limit)
-		scroll.add_child(body)
-		col.add_child(scroll)
-	else:
-		col.add_child(body)
+	_scroll_limit = get_viewport_rect().size.y * (0.3 if short else 0.55)
+	_scroll = ScrollContainer.new()
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.custom_minimum_size = Vector2(
+		0, minf(body.get_combined_minimum_size().y, _scroll_limit)
+	)
+	_scroll.add_child(body)
+	col.add_child(_scroll)
 
 	col.add_child(HSeparator.new())
 	_status = Kit.label("", "MutedLabel", true)
 	UiProbe.register("offline.status", _status)
 	col.add_child(_status)
 	_add_claim(col, tr("ui.offline.claim"))
+	get_viewport().size_changed.connect(_fit_to_screen)
+	_fit_to_screen.call_deferred()
+
+
+## Large text makes the header and footer taller: the gains list gives up
+## height so the whole card, « Récupérer » included, stays on screen. Runs once
+## the wrapped labels have their real height.
+func _fit_to_screen() -> void:
+	await get_tree().process_frame
+	if not is_instance_valid(_scroll) or _scroll.get_child_count() == 0:
+		return
+	var body := _scroll.get_child(0) as Control
+	var wanted := minf(body.get_combined_minimum_size().y, _scroll_limit)
+	var others := _card.get_combined_minimum_size().y - _scroll.custom_minimum_size.y
+	var room := get_viewport_rect().size.y - 2.0 * UiTokens.SPACE["md"] - others
+	_scroll.custom_minimum_size.y = clampf(room, minf(wanted, MIN_LIST_HEIGHT), wanted)
 
 
 func _add_claim(col: VBoxContainer, text: String) -> void:
