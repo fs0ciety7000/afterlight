@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { START_URL, boot, clearStorage, click, probe, waitSaved, waitScreen } from './helpers';
+import { START_URL, boot, clearStorage, click, probe, readUserFile, waitSaved, waitScreen } from './helpers';
 
 // Milestone 6 (ROADMAP 6.3): the whole vertical slice in one run.
 // New game → quests main_01..main_03 → the cloister's 7 rooms → Morvaine
@@ -422,6 +422,19 @@ test('6.3 full run: quests 1-3, the cloister, Morvaine, the bell, the epilogue, 
   await waitScreen(page, 'explore');
   await waitSaved(page, `"farming": "encounter.${hunt!.slice('hunts.choose.'.length)}"`);
   const before = await state(page);
+  // Loading on a later local day also claims yesterday's completed contracts
+  // (docs/content/contracts.md): whether 3 h later is another day depends on
+  // when the run starts, so work out that gold from the save and the clock.
+  type Book = { day_index: number; offers: { state: string; reward: { gold: number } }[] };
+  const book = (JSON.parse(await readUserFile(page, 'saves/slot_0.json')).state.progress.contracts) as Book;
+  const contractGold = await page.evaluate(
+    ({ offset, b }) => {
+      const day = Math.floor((Date.now() / 1000 + offset - new Date().getTimezoneOffset() * 60) / 86400);
+      if (day <= b.day_index) return 0;
+      return b.offers.filter((o) => o.state === 'completed').reduce((sum, o) => sum + o.reward.gold, 0);
+    },
+    { offset: 3 * 3600, b: book },
+  );
 
   // --- Reload 3 h later: the save holds, the absence pays. -----------------------------
   await page.goto(`${START_URL}&clock_offset_s=${3 * 3600}`);
@@ -431,11 +444,14 @@ test('6.3 full run: quests 1-3, the cloister, Morvaine, the bell, the epilogue, 
   expect((await state(page)).level).toBe(before.level);
   await click(page, 'title.continue');
   await waitScreen(page, 'offline_summary');
+  expect((await state(page)).gold, 'the saved gold, plus any contracts of yesterday').toBe(
+    (before.gold as number) + contractGold,
+  );
   const gold = Number((await text(page, 'offline.gold')).replace('+', ''));
   expect(gold).toBeGreaterThan(0);
   await click(page, 'offline.claim');
   await waitScreen(page, 'explore');
-  expect((await state(page)).gold).toBe((before.gold as number) + gold);
+  expect((await state(page)).gold).toBe((before.gold as number) + contractGold + gold);
   await expect.poll(async () => (await quests(page))['quest.main_04']).toBe('turned_in');
   for (const q of ['quest.main_01', 'quest.main_02', 'quest.main_03']) expect((await quests(page))[q]).toBe('turned_in');
   log(`done in ${Math.round((Date.now() - t0) / 1000)} s`);
