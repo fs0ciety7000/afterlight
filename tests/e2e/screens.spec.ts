@@ -298,7 +298,8 @@ for (const size of SIZES) {
       }
       await r.check('hunts-won');
       await click(page, `hunts.choose.${short}`);
-      expect((await state(page)).farming).toBe(`encounter.${short}`);
+      // The click lands on the next frame: poll, as a player would watch.
+      await expect.poll(async () => (await state(page)).farming).toBe(`encounter.${short}`);
       await waitSaved(page, `"farming": "encounter.${short}"`);
 
       // Three hours later: « Pendant votre absence ».
